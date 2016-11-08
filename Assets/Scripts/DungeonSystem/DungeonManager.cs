@@ -9,6 +9,7 @@ public class DungeonManager : MonoBehaviour
     private GameObject[] players = new GameObject[MaxPlayerNum];
     public GameObject[] Players { get { return players; } }
 
+    InputManager inputManager;
     DataSender dataSender;
     GameObject m_camera;
 
@@ -127,6 +128,10 @@ public class DungeonManager : MonoBehaviour
 
         dataSender = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<DataSender>();
         dataSender.CreateUnitSend(0, player.transform.position);
+
+        inputManager = GameObject.FindGameObjectWithTag("InputManager").GetComponent<InputManager>();
+        inputManager.InitializeManager();
+        StartCoroutine(inputManager.GetKeyInput());
 
         return player;
     }

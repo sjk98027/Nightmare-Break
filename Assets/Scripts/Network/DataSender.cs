@@ -140,7 +140,7 @@ public class DataSender : MonoBehaviour
         Debug.Log("메시지 보냄 (출처) : " + msg[2]);
         Debug.Log("메시지 보냄 (타입) : " + msg[3]);
 
-        tcpSock.Send(msg, 0, msg.Length, SocketFlags.None);
+        //tcpSock.Send(msg, 0, msg.Length, SocketFlags.None);
 
         tcpSock.Close();
         udpSock.Close();

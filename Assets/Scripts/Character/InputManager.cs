@@ -14,13 +14,15 @@ public class InputManager : MonoBehaviour
     public void InitializeManager()
     {
         characterManager = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterManager>();
-        StartCoroutine(GetKeyInput());
     }
 
     public IEnumerator GetKeyInput()
     {
+        Debug.Log("Input Key Start");
+
         while (true)
         {
+            Debug.Log("Input Key Start");
             yield return null;
 
             vertical = Input.GetAxisRaw("Vertical");

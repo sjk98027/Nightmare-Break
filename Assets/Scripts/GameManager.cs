@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
 
         dungeonManager = (Instantiate(Resources.Load("Manager/DungeonManager")) as GameObject).GetComponent<DungeonManager>();
         dungeonManager.name = "DungeonManager";
+        dungeonManager.tag = "DungeonManager";
         dungeonManager.InitializeManager();
 
         inputManager = (Instantiate(Resources.Load("Manager/InputManager")) as GameObject).GetComponent<InputManager>();

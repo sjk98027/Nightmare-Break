@@ -58,7 +58,7 @@ public class CharacterManager : MonoBehaviour
 
 	void Start ()
 	{
-		stat = GetComponent<CharacterStatus> ();
+		//stat = GetComponent<CharacterStatus> ();
 		animator = GetComponent<Animator> ();
 		state = CharacterState.Idle;
 		enemy = null;
@@ -67,7 +67,7 @@ public class CharacterManager : MonoBehaviour
 		wall = GameObject.FindGameObjectWithTag ("Wall");
 		JumpMove = false;
 		esPadaSwordCastSword = GameObject.Find("EsPadaSwordCast");
-		esPadaSwordCastSword.SetActive(false);
+		//esPadaSwordCastSword.SetActive(false);
 		//esPadaSword = Resources.Load<GameObject> ("EsPadasword");
 	}
 

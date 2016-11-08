@@ -15,9 +15,8 @@ public class NetworkManager : MonoBehaviour
 
     //테스트 중에서는 하나의 컴퓨터에서 진행하므로 다른 ip 대신에 다른 port를 이용한다
     public const int mainServerPortNumber = 8800;
-    public const int serverPortNumber = 9000;
-    public const int client1PortNumber = 9003;
-    public const int client2PortNumber = 9001;
+    public const int client1PortNumber = 9001;
+    public const int client2PortNumber = 9003;
     public IPEndPoint mainServer;
     public IPEndPoint client1;
     public IPEndPoint client2;
