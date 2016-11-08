@@ -7,6 +7,7 @@ using System.Net.Sockets;
 
 public class DataSender : MonoBehaviour
 {
+    NetworkManager networkManager;
     CharacterManager characterManager;
 
     Socket tcpSock;
@@ -17,6 +18,7 @@ public class DataSender : MonoBehaviour
 
     public void Initialize(Queue<DataPacket> newSendMsgs, object newSendLock, Socket newTcpSock, Socket newUdpSock)
     {
+        networkManager = GetComponent<NetworkManager>();
         //characterManager = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterManager>();
 
         sendMsgs = newSendMsgs;
@@ -91,7 +93,7 @@ public class DataSender : MonoBehaviour
         CreateUnitDataPacket createUnitDataPacket = new CreateUnitDataPacket(createUnitData);
 
         DataPacket packet = CreatePacket(createUnitDataPacket.GetPacketData(), (int)DataHandler.Source.ClientSource, P2PPacketId.CreateUnit);
-        packet.endPoint = NetworkManager.client1;
+        packet.endPoint = networkManager.client2;
         sendMsgs.Enqueue(packet);
     }
 
@@ -118,7 +120,7 @@ public class DataSender : MonoBehaviour
             //현재는 client로 고정되있지만
             //차후 수정으로 매개변수 newIPEndPoint를 설정하여 여러명의 클라이언트에 동시에 보내도록 수정할 예정
             DataPacket packet = CreatePacket(characterStateDataPacket.GetPacketData(), (int)DataHandler.Source.ClientSource, P2PPacketId.CharacterState);
-            packet.endPoint = NetworkManager.client1;
+            packet.endPoint = networkManager.client2;
             sendMsgs.Enqueue(packet);
         }
     }
