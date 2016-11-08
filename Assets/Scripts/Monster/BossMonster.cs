@@ -16,6 +16,14 @@ public class BossMonster : Monster {
 
 	private MonsterState monsterState;
 
+	public AnimationCurve critical;
+	public AnimationCurve hurt;
+	public AnimationCurve healthy;
+
+	private float criticalValue;
+	private float hurtValue;
+	private float healthyValue;
+
 	public GameObject muzzle;
 	public GameObject bullet;
 
@@ -36,12 +44,11 @@ public class BossMonster : Monster {
 	void Update () {
 		
 	}
-
-	Vector3 leftMinVec3 = new Vector3(-0.3f,0,-0.3f);
-	Vector3 leftMaxVec3 = new Vector3(-0.3f,0,0.3f);
-	Vector3 rightMinVec3 = new Vector3(0.3f,0,-0.3f);
-	Vector3 rightMaxVec3 = new Vector3(0.3f,0,0.3f);
-
+	void FuzzyHPValue(){
+		criticalValue = critical.Evaluate (currentLife);
+		hurtValue = hurt.Evaluate (currentLife);
+		healthyValue = healthy.Evaluate (currentLife);
+	}
 	IEnumerator CheckMonsterState(){
 		while (IsAlive) 
 		{
@@ -74,8 +81,9 @@ public class BossMonster : Monster {
 						monsterState = MonsterState.Walk;
 						//walk
 
-
 					}else if(currentDistance < (perceive * 0.2f)) {
+						FuzzyHPValue ();
+
 						int attackState = Random.Range (4,9);
 
 						monsterState = (MonsterState)attackState;
@@ -146,7 +154,7 @@ public class BossMonster : Monster {
 			currentBaseState = anim.GetCurrentAnimatorStateInfo (0);
 
 			if (currentBaseState.IsName ("TwoHandSmash")) {
-				yield return new WaitForSeconds (0.5f);
+				yield return new WaitForSeconds (1.0f);
 				GameObject.FindGameObjectWithTag ("Floor").GetComponent<EarthQuake> ().Running = true;
 				yield return new WaitForSeconds (1.5f);
 
