@@ -1,118 +1,120 @@
 fileFormatVersion: 2
-guid: 7d66b4e75051c7f48bac36023454f819
-timeCreated: 1478502563
+guid: 00487b3d43c9afd4783f64164a304001
+timeCreated: 1478575884
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: Bip01
-    100002: Bip01 Head
-    100004: Bip01 HeadNub
-    100006: Bip01 L Calf
-    100008: Bip01 L Clavicle
-    100010: Bip01 L Finger0
-    100012: Bip01 L Finger0Nub
-    100014: Bip01 L Finger1
-    100016: Bip01 L Finger1Nub
-    100018: Bip01 L Finger2
-    100020: Bip01 L Finger2Nub
-    100022: Bip01 L Finger3
-    100024: Bip01 L Finger3Nub
-    100026: Bip01 L Foot
-    100028: Bip01 L Forearm
-    100030: Bip01 L Hand
-    100032: Bip01 L Thigh
-    100034: Bip01 L Toe0
-    100036: Bip01 L Toe0Nub
-    100038: Bip01 L UpperArm
-    100040: Bip01 Neck
-    100042: Bip01 Pelvis
-    100044: Bip01 R Calf
-    100046: Bip01 R Clavicle
-    100048: Bip01 R Finger0
-    100050: Bip01 R Finger0Nub
-    100052: Bip01 R Finger1
-    100054: Bip01 R Finger1Nub
-    100056: Bip01 R Finger2
-    100058: Bip01 R Finger2Nub
-    100060: Bip01 R Finger3
-    100062: Bip01 R Finger3Nub
-    100064: Bip01 R Foot
-    100066: Bip01 R Forearm
-    100068: Bip01 R Hand
-    100070: Bip01 R Thigh
-    100072: Bip01 R Toe0
-    100074: Bip01 R Toe0Nub
-    100076: Bip01 R UpperArm
-    100078: Bip01 Spine
-    100080: Bip01 Spine1
-    100082: //RootNode
-    100084: Box03
-    100086: Object02
-    100088: Object03
-    100090: Object04
-    100092: Object05
-    100094: Object06
+    100002: Bip01 Footsteps
+    100004: Bip01 Head
+    100006: Bip01 HeadNub
+    100008: Bip01 L Calf
+    100010: Bip01 L Clavicle
+    100012: Bip01 L Finger0
+    100014: Bip01 L Finger0Nub
+    100016: Bip01 L Finger1
+    100018: Bip01 L Finger1Nub
+    100020: Bip01 L Finger2
+    100022: Bip01 L Finger2Nub
+    100024: Bip01 L Finger3
+    100026: Bip01 L Finger3Nub
+    100028: Bip01 L Foot
+    100030: Bip01 L Forearm
+    100032: Bip01 L Hand
+    100034: Bip01 L Thigh
+    100036: Bip01 L Toe0
+    100038: Bip01 L Toe0Nub
+    100040: Bip01 L UpperArm
+    100042: Bip01 Neck
+    100044: Bip01 Pelvis
+    100046: Bip01 R Calf
+    100048: Bip01 R Clavicle
+    100050: Bip01 R Finger0
+    100052: Bip01 R Finger0Nub
+    100054: Bip01 R Finger1
+    100056: Bip01 R Finger1Nub
+    100058: Bip01 R Finger2
+    100060: Bip01 R Finger2Nub
+    100062: Bip01 R Finger3
+    100064: Bip01 R Finger3Nub
+    100066: Bip01 R Foot
+    100068: Bip01 R Forearm
+    100070: Bip01 R Hand
+    100072: Bip01 R Thigh
+    100074: Bip01 R Toe0
+    100076: Bip01 R Toe0Nub
+    100078: Bip01 R UpperArm
+    100080: Bip01 Spine
+    100082: Bip01 Spine1
+    100084: Boss_arm
+    100086: //RootNode
+    100088: Boss_body
+    100090: Boss_head
+    100092: Boss_leg
+    100094: Boss_ribbon
+    100096: Box03
     400000: Bip01
-    400002: Bip01 Head
-    400004: Bip01 HeadNub
-    400006: Bip01 L Calf
-    400008: Bip01 L Clavicle
-    400010: Bip01 L Finger0
-    400012: Bip01 L Finger0Nub
-    400014: Bip01 L Finger1
-    400016: Bip01 L Finger1Nub
-    400018: Bip01 L Finger2
-    400020: Bip01 L Finger2Nub
-    400022: Bip01 L Finger3
-    400024: Bip01 L Finger3Nub
-    400026: Bip01 L Foot
-    400028: Bip01 L Forearm
-    400030: Bip01 L Hand
-    400032: Bip01 L Thigh
-    400034: Bip01 L Toe0
-    400036: Bip01 L Toe0Nub
-    400038: Bip01 L UpperArm
-    400040: Bip01 Neck
-    400042: Bip01 Pelvis
-    400044: Bip01 R Calf
-    400046: Bip01 R Clavicle
-    400048: Bip01 R Finger0
-    400050: Bip01 R Finger0Nub
-    400052: Bip01 R Finger1
-    400054: Bip01 R Finger1Nub
-    400056: Bip01 R Finger2
-    400058: Bip01 R Finger2Nub
-    400060: Bip01 R Finger3
-    400062: Bip01 R Finger3Nub
-    400064: Bip01 R Foot
-    400066: Bip01 R Forearm
-    400068: Bip01 R Hand
-    400070: Bip01 R Thigh
-    400072: Bip01 R Toe0
-    400074: Bip01 R Toe0Nub
-    400076: Bip01 R UpperArm
-    400078: Bip01 Spine
-    400080: Bip01 Spine1
-    400082: //RootNode
-    400084: Box03
-    400086: Object02
-    400088: Object03
-    400090: Object04
-    400092: Object05
-    400094: Object06
-    4300000: Object02
-    4300002: Object03
-    4300004: Object04
-    4300006: Object05
-    4300008: Object06
+    400002: Bip01 Footsteps
+    400004: Bip01 Head
+    400006: Bip01 HeadNub
+    400008: Bip01 L Calf
+    400010: Bip01 L Clavicle
+    400012: Bip01 L Finger0
+    400014: Bip01 L Finger0Nub
+    400016: Bip01 L Finger1
+    400018: Bip01 L Finger1Nub
+    400020: Bip01 L Finger2
+    400022: Bip01 L Finger2Nub
+    400024: Bip01 L Finger3
+    400026: Bip01 L Finger3Nub
+    400028: Bip01 L Foot
+    400030: Bip01 L Forearm
+    400032: Bip01 L Hand
+    400034: Bip01 L Thigh
+    400036: Bip01 L Toe0
+    400038: Bip01 L Toe0Nub
+    400040: Bip01 L UpperArm
+    400042: Bip01 Neck
+    400044: Bip01 Pelvis
+    400046: Bip01 R Calf
+    400048: Bip01 R Clavicle
+    400050: Bip01 R Finger0
+    400052: Bip01 R Finger0Nub
+    400054: Bip01 R Finger1
+    400056: Bip01 R Finger1Nub
+    400058: Bip01 R Finger2
+    400060: Bip01 R Finger2Nub
+    400062: Bip01 R Finger3
+    400064: Bip01 R Finger3Nub
+    400066: Bip01 R Foot
+    400068: Bip01 R Forearm
+    400070: Bip01 R Hand
+    400072: Bip01 R Thigh
+    400074: Bip01 R Toe0
+    400076: Bip01 R Toe0Nub
+    400078: Bip01 R UpperArm
+    400080: Bip01 Spine
+    400082: Bip01 Spine1
+    400084: Boss_arm
+    400086: //RootNode
+    400088: Boss_body
+    400090: Boss_head
+    400092: Boss_leg
+    400094: Boss_ribbon
+    400096: Box03
+    4300000: Boss_body
+    4300002: Boss_head
+    4300004: Boss_arm
+    4300006: Boss_leg
+    4300008: Boss_ribbon
     7400000: NormalAttack
     9500000: //RootNode
-    13700000: Object02
-    13700002: Object03
-    13700004: Object04
-    13700006: Object05
-    13700008: Object06
+    13700000: Boss_arm
+    13700002: Boss_body
+    13700004: Boss_head
+    13700006: Boss_leg
+    13700008: Boss_ribbon
   materials:
     importMaterials: 1
     materialName: 0
@@ -162,6 +164,8 @@ ModelImporter:
       - path: 
         weight: 1
       - path: Bip01
+        weight: 1
+      - path: Bip01/Bip01 Footsteps
         weight: 1
       - path: Bip01/Bip01 Pelvis
         weight: 1
@@ -270,17 +274,17 @@ ModelImporter:
       - path: Bip01/Bip01 Pelvis/Bip01 Spine/Bip01 Spine1/Bip01 Neck/Bip01 R Clavicle/Bip01
           R UpperArm/Bip01 R Forearm/Bip01 R Hand/Bip01 R Finger3/Bip01 R Finger3Nub
         weight: 1
+      - path: Boss_arm
+        weight: 1
+      - path: Boss_body
+        weight: 1
+      - path: Boss_head
+        weight: 1
+      - path: Boss_leg
+        weight: 1
+      - path: Boss_ribbon
+        weight: 1
       - path: Box03
-        weight: 1
-      - path: Object02
-        weight: 1
-      - path: Object03
-        weight: 1
-      - path: Object04
-        weight: 1
-      - path: Object05
-        weight: 1
-      - path: Object06
         weight: 1
       maskType: 0
       maskSource: {instanceID: 0}
