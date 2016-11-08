@@ -13,7 +13,9 @@ public class CharacterManager : MonoBehaviour
 		Jump,
 		CutOff,
 		Maelstrom,
-		EsPadaSwordSummon
+		EsPadaSwordSummon,
+		HitDamage,
+		Death
 	}
 
 	Animator animator;
@@ -104,7 +106,7 @@ public class CharacterManager : MonoBehaviour
 	{
 		CharState ("Idle");
 		JumpMove = false;
-		esPadaSwordCastSword.SetActive(false);
+//		esPadaSwordCastSword.SetActive(false);
 		Debug.Log ("anima End");
 	}
 
@@ -113,6 +115,7 @@ public class CharacterManager : MonoBehaviour
 	{
 		if (state == CharacterState.Idle || state == CharacterState.Run)
 		{
+			
 			runState = this.animator.GetCurrentAnimatorStateInfo (0);
 
 			if (!animator.GetBool ("Attack"))
@@ -155,9 +158,9 @@ public class CharacterManager : MonoBehaviour
 
 	public void NormalAttack ()
 	{
-		if (state != CharacterState.CutOff && state != CharacterState.Attack && state != CharacterState.Maelstrom && state != CharacterState.EsPadaSwordSummon)
+		if (state != CharacterState.CutOff && state != CharacterState.Attack  && state != CharacterState.Maelstrom && state != CharacterState.EsPadaSwordSummon && state != CharacterState.HitDamage && state != CharacterState.Death)
 		{
-			Debug.Log (state);
+			
 			CharState ("Attack");
 		}
 	}
@@ -175,10 +178,13 @@ public class CharacterManager : MonoBehaviour
 
 	public void Jump ()
 	{
+		runState = this.animator.GetCurrentAnimatorStateInfo (0);
+
 		if (state != CharacterState.Jump && state != CharacterState.Maelstrom && state != CharacterState.CutOff && state != CharacterState.Maelstrom)
 		{
 			CharState ("Jump");
 		}
+
 	}
 
 	public void JumpForce ()
@@ -191,9 +197,9 @@ public class CharacterManager : MonoBehaviour
 	//swordmaster Skill
 	public void Espada ()
 	{
-		if (state != CharacterState.Jump && state != CharacterState.Maelstrom && state != CharacterState.CutOff && state != CharacterState.EsPadaSwordSummon)
+		if (state != CharacterState.Jump && state != CharacterState.Maelstrom && state != CharacterState.CutOff && state != CharacterState.EsPadaSwordSummon && state != CharacterState.HitDamage && state != CharacterState.Death)
 		{
-			esPadaSwordCastSword.SetActive(true);
+			//esPadaSwordCastSword.SetActive(true);
 			CharState ("EsPadaSwordSummon");
 		}
 	}
@@ -204,14 +210,14 @@ public class CharacterManager : MonoBehaviour
 		if (charVer)
 		{
 			espadaPos = 10.0f;
-			Debug.Log ("in");
+
 		}
 		else
 		{
 			espadaPos = -10.0f;
 		}
 
-		EspadaTemp = (GameObject)Instantiate (Resources.Load<GameObject> ("EsPadasword"), transform.position + new Vector3 (0.0f, 10.0f, espadaPos), Quaternion.Euler (new Vector3 (0.0f, -90, 0.0f)));
+		EspadaTemp = Instantiate (Resources.Load<GameObject> ("EsPadasword"), transform.position + new Vector3 (0.0f, 10.0f, espadaPos), Quaternion.Euler (new Vector3 (0.0f, -90, 0.0f))) as GameObject;
 		EspadaTemp.gameObject.GetComponent<Rigidbody> ().AddForce (-Vector3.up * esPadaSwordSpeed, ForceMode.Impulse);
 		esPadaSwordRendTime = true;
 	}
@@ -251,7 +257,7 @@ public class CharacterManager : MonoBehaviour
 
 	public void CutOff ()
 	{
-		if (state != CharacterState.Jump && state != CharacterState.CutOff && state != CharacterState.Maelstrom && state != CharacterState.EsPadaSwordSummon)
+		if (state != CharacterState.Jump && state != CharacterState.CutOff && state != CharacterState.Maelstrom && state != CharacterState.EsPadaSwordSummon && state != CharacterState.HitDamage && state != CharacterState.Death)
 		{
 			CharState ("CutOff");
 		}
@@ -261,21 +267,17 @@ public class CharacterManager : MonoBehaviour
 	{
 		Instantiate (Resources.Load<GameObject> ("Effect/SwordShadow"), new Vector3 (transform.position.x, transform.position.y + 1.0f, transform.position.z), Quaternion.identity);
 
-
 		Ray cutOffDistance = new Ray (this.transform.position, transform.forward); //(this.transform.position);
 		RaycastHit rayHit;
 
 		if (Physics.Raycast (cutOffDistance, out rayHit, 5f, 1 << LayerMask.NameToLayer ("Map")))
 		{
-
 			transform.Translate (0, 0, rayHit.distance - 0.5f);
 		}
 		else
 		{
 			transform.Translate (0, 0, 5);
-
 		}
-
 		//animation stop and keyboardinput Lock
 	}
 
@@ -309,40 +311,51 @@ public class CharacterManager : MonoBehaviour
 
 	public void CharState (string Inputstate)
 	{
-		SetStateDefault ();
-		//idle=0,run=1,attack=2
-		switch (Inputstate)
+		if (charAlive)
 		{
-		case "Idle":
-			state = CharacterState.Idle;
-			animator.SetBool ("Idle", true);
-			break;
+			SetStateDefault ();
+			//idle=0,run=1,attack=2
+			switch (Inputstate)
+			{
+			case "Idle":
+				state = CharacterState.Idle;
+				animator.SetBool ("Idle", true);
+				break;
 
-		case "Run":
-			state = CharacterState.Run;
-			animator.SetBool ("Run", true);
-			break;
+			case "Run":
+				state = CharacterState.Run;
+				animator.SetBool ("Run", true);
+				break;
 
-		case "Attack":
-			state = CharacterState.Attack;
-			animator.SetTrigger ("Attack");
-			break;
-		case "Jump":
-			state = CharacterState.Jump;
-			animator.SetTrigger ("Jump");
-			break;
-		case "CutOff":
-			state = CharacterState.CutOff;
-			animator.SetTrigger ("CutOff");
-			break;
-		case "Maelstrom":
-			state = CharacterState.Maelstrom;
-			animator.SetTrigger ("Maelstrom");
-			break;
-		case "EsPadaSwordSummon":
-			state = CharacterState.EsPadaSwordSummon;
-			animator.SetTrigger ("EsPadaSwordSummon");
-			break;
+			case "Attack":
+				state = CharacterState.Attack;
+				animator.SetTrigger ("Attack");
+				break;
+			case "Jump":
+				state = CharacterState.Jump;
+				animator.SetTrigger ("Jump");
+				break;
+			case "CutOff":
+				state = CharacterState.CutOff;
+				animator.SetTrigger ("CutOff");
+				break;
+			case "Maelstrom":
+				state = CharacterState.Maelstrom;
+				animator.SetTrigger ("Maelstrom");
+				break;
+			case "EsPadaSwordSummon":
+				state = CharacterState.EsPadaSwordSummon;
+				animator.SetTrigger ("EsPadaSwordSummon");
+				break;
+			case "HitDamage":
+				state = CharacterState.HitDamage;
+				animator.SetTrigger ("PlayerHitTrigger");
+				break;
+			case "Death":
+				state = CharacterState.Death;
+				animator.SetTrigger ("PlayerDie");
+				break;
+			}
 		}
 	}
 
@@ -354,19 +367,18 @@ public class CharacterManager : MonoBehaviour
 			if (charstate.HealthPoint > 0)
 			{
 				this.charstate.HealthPoint -= _damage;
-				//Hit Animation
+				CharState ("HitDamage");
 				Debug.Log("Hit Char"+ this.charstate.HealthPoint);
 			}
 			if (charstate.HealthPoint <= 0)
 			{
 				//Death Animation
+				CharState ("Death");
 				charAlive= false;
 				Debug.Log ("death");
 			}
 		}
 	}
-
-
 	//NetWork
 	public CharacterState GetCharacterState (int state)
 	{
@@ -385,7 +397,6 @@ public class CharacterManager : MonoBehaviour
 			return CharacterState.Idle;
 		}
 	}
-
 	public void SetState (CharacterStateData newStateData)
 	{
 		Debug.Log ("상태 설정");
