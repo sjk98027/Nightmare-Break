@@ -5,13 +5,15 @@ public class ExampleObject : MonoBehaviour {
 	public GameObject[] boomObject;
 	public GameObject exampleObject;
 	Vector3[] pointVector = new Vector3[10];
+	Vector3[] objectPosition = new Vector3[10];
 	Vector3 garbagepointVector;
 	[SerializeField]Vector3 addedVector;
 
 	[SerializeField]Vector3 centerpoint = Vector3.zero;
 
 	float moveSpeed = 0.1f;
-	string pointVectorText;
+	float limitDistanceMonsterToCenter=6.0f;
+	float[] currentDistanceMonsterToCenter = new float[10];
 	//[SerializeField]float[] currentDistance;
 
 	// Use this for initialization
@@ -32,10 +34,17 @@ public class ExampleObject : MonoBehaviour {
 		pointVector[6] = new Vector3(0,0,1);
 		pointVector[7] = new Vector3(-1,0,1);
 		pointVector[8] = new Vector3(0,0,0);
-		//currentDistance = new float[boomObject.Length];
 	}
 
-
+	void InpointVector2(){
+		for (int i = 0; i < boomObject.Length; i++) {
+			pointVector [i] = boomObject [i].transform.position - exampleObject.transform.position;
+			currentDistanceMonsterToCenter[i] = Vector3.Distance (boomObject [i].transform.position, exampleObject.transform.position);
+		}
+		for (int j = 0; j < boomObject.Length; j++) {
+			
+		}
+	}
 
 	public IEnumerator pointVectorchange(){
 		while (true) {
@@ -84,7 +93,7 @@ public class ExampleObject : MonoBehaviour {
 			//currentDistance [i] = Vector3.Distance (boomObject [i].transform.position, exampleObject.transform.position);
 			boomObject [i].transform.Translate ((pointVector[i]+addedVector) * moveSpeed);
 		}
-	
+		exampleObject.transform.Translate ((new Vector3 (0, 0, 1) * 0.01f));
 
 
 	}
