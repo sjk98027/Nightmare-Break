@@ -2,7 +2,6 @@
 {
     public class CharacterStateDataSerializer : Serializer
     {
-
         public bool Serialize(CharacterStateData data)
         {
             bool ret = true;

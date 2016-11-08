@@ -2,6 +2,7 @@
 using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Collections;
 using System.Collections.Generic;
 
 public class NetworkManager : MonoBehaviour
@@ -79,11 +80,24 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
-    public void ConnectP2P()
+    public void ConnectP2P(string[] newIp)
     {
         //아이피 목록 생성
         clients = new List<EndPoint>();
-        clients.Add(client1);
+
+        for (int i = 0; i < newIp.Length; i++)
+        {            
+            string m_ip = newIp[i].Substring(0, newIp[i].IndexOf(":"));
+            string n_ip = serverSock.RemoteEndPoint.ToString().Substring(0, serverSock.RemoteEndPoint.ToString().IndexOf(":"));
+
+            Debug.Log(m_ip);
+            Debug.Log(n_ip);
+
+            if (m_ip != n_ip)
+            {
+                clients.Add(new IPEndPoint(IPAddress.Parse(n_ip), client2PortNumber));
+            }
+        }
 
         dataReceiver.StartUdpReceive(clientSock, clients);
         dataSender.ConnectionCheck(clients);

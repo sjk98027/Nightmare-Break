@@ -30,7 +30,6 @@ public class DataHandler : MonoBehaviour
     private Dictionary<int, ServerRecvNotifier> server_notifier = new Dictionary<int, ServerRecvNotifier>();
 
     DungeonManager dungeonManager;
-    InputManager inputManager;
 
     public void Initialize(Queue<DataPacket> receiveQueue, object newReceiveLock, Queue<DataPacket> sendQueue, object newSendLock)
     {
@@ -96,7 +95,11 @@ public class DataHandler : MonoBehaviour
 
     public ServerPacketId Match(byte[] data)
     {
-        networkManager.ConnectP2P();
+        Debug.Log("매치 완료");
+        MatchDataPacket matchDataPacket = new MatchDataPacket(data);
+        MatchData matchData = matchDataPacket.GetData();
+
+        networkManager.ConnectP2P(matchData.ip);
 
         return ServerPacketId.None;
     }

@@ -99,7 +99,11 @@ public class DataReceiver : MonoBehaviour
             headerSerializer.SetDeserializedData(asyncData.msg);
             headerSerializer.Deserialize(ref headerData);
 
-            DataPacket packet = new DataPacket(headerData, asyncData.msg);
+            byte[] msg = new byte[asyncData.msgSize - NetworkManager.packetSource - NetworkManager.packetId];
+            Array.Copy(asyncData.msg, NetworkManager.packetSource + NetworkManager.packetId, msg, 0, msg.Length);
+            Debug.Log(msg.Length);
+
+            DataPacket packet = new DataPacket(headerData, msg);
 
             lock (receiveLock)
             {
