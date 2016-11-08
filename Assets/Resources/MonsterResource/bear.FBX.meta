@@ -106,7 +106,7 @@ ModelImporter:
     4300004: Object04
     4300006: Object05
     4300008: Object06
-    7400000: Take 001
+    7400000: BossAttack
     9500000: //RootNode
     13700000: Object02
     13700002: Object03
@@ -135,7 +135,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: Take 001
+      name: BossAttack
       takeName: Take 001
       firstFrame: 0
       lastFrame: 68

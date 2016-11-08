@@ -249,7 +249,7 @@ public class BoomMonster : Monster {
 
 	void OnTriggerEnter(Collider coll){
 
-		Debug.Log ("hit");
+		//Debug.Log ("hit");
 		//if (coll.gameObject.layer == LayerMask.NameToLayer("Weapon")) {
 			Pattern (StatePosition.TakeDamage);
 			//BCM.DamageCarculateProcess (coll.gameObject.transform.parent.gameObject, this.gameObject, coll.gameObject);//this method need conference;

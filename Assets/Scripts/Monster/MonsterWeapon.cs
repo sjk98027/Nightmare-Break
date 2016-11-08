@@ -9,27 +9,24 @@ public class MonsterWeapon : MonoBehaviour {
 
 	void Start () 
 	{
-	
+		monster = this.GetComponent<GameObject> ();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
-	}
+	void Update () 
+	{
 
+	}
 	void OnTriggerEnter(Collider coll)
 	{
 		if (coll.gameObject.layer == LayerMask.NameToLayer ("Player"))
 		{
 			CharacterManager CharObject = coll.gameObject.GetComponent<CharacterManager> ();
-	
 
 			if (damage != 0)
 			{
 				CharObject.HitDamage (damage);
 			}
-
 		}
 	}
-
 }
