@@ -6,9 +6,6 @@
     Login,
     Logout,
     GameClose,
-    CreateRoom,
-    EnterRoom,
-    ExitRoom,
 }
 
 public enum ServerPacketId
