@@ -41,6 +41,7 @@ public class MatchDataPacket : IPacket<MatchData>
             }
 
             element.playerNum = playerNum;
+            element.ip = new string[element.playerNum];
 
             for (int i = 0; i < playerNum; i++)
             {

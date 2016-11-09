@@ -16,8 +16,8 @@ public class NetworkManager : MonoBehaviour
 
     //테스트 중에서는 하나의 컴퓨터에서 진행하므로 다른 ip 대신에 다른 port를 이용한다
     public const int mainServerPortNumber = 8800;
-    public const int client1PortNumber = 9001;
-    public const int client2PortNumber = 9003;
+    public const int client1PortNumber = 9003;
+    public const int client2PortNumber = 9001;
     public IPEndPoint mainServer;
     public IPEndPoint client1;
     public IPEndPoint client2;
@@ -85,16 +85,19 @@ public class NetworkManager : MonoBehaviour
         //아이피 목록 생성
         clients = new List<EndPoint>();
 
+        string m_ip = serverSock.LocalEndPoint.ToString().Substring(0, serverSock.LocalEndPoint.ToString().IndexOf(":"));
+
         for (int i = 0; i < newIp.Length; i++)
-        {            
-            string m_ip = newIp[i].Substring(0, newIp[i].IndexOf(":"));
-            string n_ip = serverSock.RemoteEndPoint.ToString().Substring(0, serverSock.RemoteEndPoint.ToString().IndexOf(":"));
+        {
+            Debug.Log(newIp[i]);
+            Debug.Log(serverSock.LocalEndPoint.ToString());
 
-            Debug.Log(m_ip);
-            Debug.Log(n_ip);
-
-            if (m_ip != n_ip)
+            if (newIp[i] != serverSock.LocalEndPoint.ToString())
             {
+                string n_ip = newIp[i].Substring(0, newIp[i].IndexOf(":"));
+
+                Debug.Log(n_ip + "추가");
+
                 clients.Add(new IPEndPoint(IPAddress.Parse(n_ip), client2PortNumber));
             }
         }

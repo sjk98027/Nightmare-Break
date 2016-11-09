@@ -22,7 +22,6 @@ public class InputManager : MonoBehaviour
 
         while (true)
         {
-            Debug.Log("Input Key Start");
             yield return null;
 
             vertical = Input.GetAxisRaw("Vertical");
