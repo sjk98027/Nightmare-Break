@@ -29,6 +29,10 @@ public class CharacterManager : MonoBehaviour
 	public bool charVer;
 	public bool JumpMove;
 	public Rigidbody rigdbody;
+	public BoxCollider charWeapon;
+	public bool normalAttackState = false;
+	public bool skillAttackState = false;
+	public int basicDamage;
 
 	public InputManager inputmanager;
 
@@ -50,6 +54,8 @@ public class CharacterManager : MonoBehaviour
 	public GameObject EspadaTemp;
 	public GameObject esPadaSwordCastSword;
 
+	public int BasicDamage {get {return this.basicDamage;}}
+
 	public Animator Animator { get { return animator; } }
 
 	[SerializeField]CharacterState state;
@@ -57,6 +63,10 @@ public class CharacterManager : MonoBehaviour
 	public CharacterStatus Charstate {get {return this.charstate;}}
 
 	public CharacterState State { get { return state; } }
+
+	public bool NormalAttackState {get {return this.normalAttackState;}}
+
+	public bool SkillAttackState{get {return this.skillAttackState;}}
 
 	void Start ()
 	{
@@ -66,6 +76,7 @@ public class CharacterManager : MonoBehaviour
 		enemy = null;
 		rigdbody = GetComponent<Rigidbody> ();
 		mealstromState = false;
+		charVer = true;
 		wall = GameObject.FindGameObjectWithTag ("Wall");
 		JumpMove = false;
 		esPadaSwordCastSword = GameObject.Find("EsPadaSwordCast");
@@ -75,28 +86,39 @@ public class CharacterManager : MonoBehaviour
 
 	void Update ()
 	{
-		enemy = GameObject.FindGameObjectsWithTag ("Enemy");
-
-		if (mealstromState)
+		if (charAlive)
 		{
-			Maelstrom ();
-		}
-		if (esPadaSwordRendTime && EspadaTemp != null)
-		{
-			rend = EspadaTemp.gameObject.GetComponent<Renderer> ();
-			esPadaSwordMatarial += Time.deltaTime;
+			enemy = GameObject.FindGameObjectsWithTag ("Enemy");
 
-			if (EspadaTemp.transform.position.y > 0.1)
+			if (mealstromState)
 			{
-				// float esPadaSwordAlpha = 0.8f - esPadaSwordMatarial;
-				float esPadaSwordAlpha = 1;
-				rend.material.color = new Color (0, 0, 0, esPadaSwordAlpha);
+				Maelstrom ();
+			}
+			if (esPadaSwordRendTime && EspadaTemp != null)
+			{
+				rend = EspadaTemp.gameObject.GetComponent<Renderer> ();
+				esPadaSwordMatarial += Time.deltaTime;
 
-				if (esPadaSwordAlpha < 0.5)
+				if (EspadaTemp.transform.position.y > 0.1)
 				{
-					esPadaSwordMatarial = 0;
-					Destroy (EspadaTemp, 0.5f);
+					// float esPadaSwordAlpha = 0.8f - esPadaSwordMatarial;
+					float esPadaSwordAlpha = 1;
+					rend.material.color = new Color (0, 0, 0, esPadaSwordAlpha);
+
+					if (esPadaSwordAlpha < 0.5)
+					{
+						esPadaSwordMatarial = 0;
+						Destroy (EspadaTemp, 0.5f);
+					}
 				}
+			}
+			if (normalAttackState || skillAttackState)
+			{
+				charWeapon.size = new Vector3 (0.11f,0.11f,1.28f);
+			}
+			else
+			{
+				charWeapon.size = new Vector3 (0,0,0);
 			}
 		}
 
@@ -108,6 +130,7 @@ public class CharacterManager : MonoBehaviour
 		JumpMove = false;
 //		esPadaSwordCastSword.SetActive(false);
 		Debug.Log ("anima End");
+		normalAttackState = false;
 	}
 
 	//char state Method
@@ -130,7 +153,7 @@ public class CharacterManager : MonoBehaviour
 						transform.rotation = Quaternion.Euler (new Vector3 (0, 180.0f, 0));
 						charVer = false;
 					}
-					else if (ver >= 0)
+					else if (ver > 0 || ver == 0)
 					{
 						transform.rotation = Quaternion.Euler (new Vector3 (0, 0.0f, 0));
 						charVer = true;
@@ -160,7 +183,7 @@ public class CharacterManager : MonoBehaviour
 	{
 		if (state != CharacterState.CutOff && state != CharacterState.Attack  && state != CharacterState.Maelstrom && state != CharacterState.EsPadaSwordSummon && state != CharacterState.HitDamage && state != CharacterState.Death)
 		{
-			
+			normalAttackState = true;
 			CharState ("Attack");
 		}
 	}
@@ -180,7 +203,7 @@ public class CharacterManager : MonoBehaviour
 	{
 		runState = this.animator.GetCurrentAnimatorStateInfo (0);
 
-		if (state != CharacterState.Jump && state != CharacterState.Maelstrom && state != CharacterState.CutOff && state != CharacterState.Maelstrom)
+		if (state != CharacterState.Jump && state != CharacterState.Maelstrom && state != CharacterState.CutOff && state != CharacterState.Maelstrom && state != CharacterState.EsPadaSwordSummon)
 		{
 			CharState ("Jump");
 		}

@@ -7,8 +7,8 @@ using System;
 public class Monster : MonoBehaviour {
 	//public DungeonManager dungeonManager;
 
-	public GameObject[] player;
-//	public Animator animator;
+	public GameObject[] player;//
+	public Animator animator;
 //	public AnimationState aniState;
 
 	public GameObject targetPlayer;
@@ -74,7 +74,8 @@ public class Monster : MonoBehaviour {
 	}
 
 	//start monster Haves infomation setting(playersuch,monsterset)
-	public void PlayerSearch(){
+	public void PlayerSearch()
+	{
 		
 		player= GameObject.FindGameObjectsWithTag("Player");
 		currentDisTanceArray = new float[player.Length];
@@ -86,20 +87,13 @@ public class Monster : MonoBehaviour {
 		isAlive = true;
 		isHited = false;
 		moveAble = true;
-//		animator = this.gameObject.GetComponent<Animator> ();
+		animator = this.gameObject.GetComponent<Animator> ();
 		StartCoroutine(LookatChange ());
 		maxLife = 100;
 		currentLife = 100;
 //		attackCollider = GameObject.FindGameObjectWithTag("Finish");
 //		attackCollider.SetActive (false);
 	}
-
-
-	public virtual void HitDamage(float _Damage){
-
-    }
-
-
     public void ChasePlayer(){
 		//Debug.Log (changeTargetTime);
 		if(!isHited)
@@ -213,12 +207,18 @@ public class Monster : MonoBehaviour {
 		attackCollider.SetActive (true);
 	}
 
-	public void LookAtPattern(StateDirecion state){
+	public void LookAtPattern(StateDirecion state)
+	{
 		switch(state){
 		case StateDirecion.right: 
 			{transform.rotation = Quaternion.Euler(rightVector3);break;}
 		case StateDirecion.left:
 			{transform.rotation = Quaternion.Euler(leftVector3);break;}
 		}
+	}
+
+	public virtual void HitDamage(float _Damage)
+	{
+
 	}
 }
