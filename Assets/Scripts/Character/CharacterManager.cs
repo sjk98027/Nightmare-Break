@@ -447,23 +447,28 @@ public class CharacterManager : MonoBehaviour
 	{
 		Debug.Log ("상태 설정");
 
-		animator.SetFloat ("Ver", newStateData.ver);
-		animator.SetFloat ("Hor", newStateData.hor);
+        Debug.Log(transform);
+        Debug.Log(newStateData.posX);
+        Debug.Log(newStateData.posY);
+        Debug.Log(newStateData.posZ);
 
-		if (newStateData.ver < 0)
-		{
-			transform.rotation = Quaternion.Euler(new Vector3(0, 180.0f, 0));
-			charVer = false;
-		}
-		else if (newStateData.ver >= 0)
-		{
-			transform.rotation = Quaternion.Euler(new Vector3(0, 0.0f, 0));
-			charVer = true;
-		}
+        //animator.SetFloat ("Ver", newStateData.ver);
+        //animator.SetFloat ("Hor", newStateData.hor);
 
-		transform.position = new Vector3 (newStateData.posX, newStateData.posY, newStateData.posZ);
+        //if (newStateData.ver < 0)
+        //{
+        //	transform.rotation = Quaternion.Euler(new Vector3(0, 180.0f, 0));
+        //	charVer = false;
+        //}
+        //else if (newStateData.ver >= 0)
+        //{
+        //	transform.rotation = Quaternion.Euler(new Vector3(0, 0.0f, 0));
+        //	charVer = true;
+        //}
 
-		CharState((int)newStateData.state);
+        transform.position = new Vector3 (newStateData.posX, newStateData.posY, newStateData.posZ);
+
+		//CharState(newStateData.state);
 	}
 }
 

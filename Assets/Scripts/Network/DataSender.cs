@@ -133,26 +133,25 @@ public class DataSender : MonoBehaviour
     //캐릭터 움직임 - Udp
     public IEnumerator CharacterDataSend()
     {
-        characterManager = GameObject.FindGameObjectWithTag("CharacterManager").GetComponent<CharacterManager>();
+        characterManager = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterManager>();
         
         while (true)
         {
-            yield return new WaitForEndOfFrame();
+            yield return null;
 
             byte state = (byte)characterManager.State;
             float vertical = characterManager.Animator.GetFloat("Ver");
             float horizontal = characterManager.Animator.GetFloat("Hor");
-            bool direction = characterManager.Animator.GetBool("Direction");
             float xPos = characterManager.transform.position.x;
             float yPos = characterManager.transform.position.y;
             float zPos = characterManager.transform.position.z;
 
-            CharacterStateData characterStateData = new CharacterStateData(state, direction, horizontal, vertical, xPos, yPos, zPos);
-            CharacterStatePacket characterStateDataPacket = new CharacterStatePacket(characterStateData);
+            CharacterStateData characterStateData = new CharacterStateData(state, horizontal, vertical, xPos, yPos, zPos);
+            CharacterStatePacket characterStatePacket = new CharacterStatePacket(characterStateData);
             
             //현재는 client로 고정되있지만
             //차후 수정으로 매개변수 newIPEndPoint를 설정하여 여러명의 클라이언트에 동시에 보내도록 수정할 예정
-            DataPacket packet = CreatePacket(characterStateDataPacket.GetPacketData(), (int)P2PPacketId.CharacterState);
+            DataPacket packet = CreatePacket(characterStatePacket.GetPacketData(), (int)P2PPacketId.CharacterState);
             packet.endPoint = networkManager.client2;
             sendMsgs.Enqueue(packet);
         }

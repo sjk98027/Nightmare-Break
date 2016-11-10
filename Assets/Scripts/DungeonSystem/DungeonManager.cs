@@ -9,7 +9,7 @@ public class DungeonManager : MonoBehaviour
 	//MonsterController change-> DungeonManager;
 	//DungeonScene change -> DungeonManager;
     private const int MaxPlayerNum = 4;
-    private GameObject[] players = new GameObject[MaxPlayerNum];
+    [SerializeField] private GameObject[] players = new GameObject[MaxPlayerNum];
 	public GameObject[] Players { get { return players; } }
 	public SceneChangeObject nextSceneObject;
 	public SceneChangeObject beforeScneObject;
@@ -84,18 +84,18 @@ public class DungeonManager : MonoBehaviour
 //            //			defenceWave[i].StartDefenceMonsterSet ();
 //        }
 
-		MonsterSet ();
+		//MonsterSet ();
 
-		if (mapNumber == 0) {
-			nextSceneObject.SceneChangeObjectSet (mapNumber+1);
-		}
-		else if(mapNumber!= 0 || mapNumber!=4){
-			nextSceneObject.SceneChangeObjectSet (mapNumber+1);
-			beforeScneObject.SceneChangeObjectSet (mapNumber-1);
-		}
-		else if (mapNumber == 4) {
-			beforeScneObject.SceneChangeObjectSet (mapNumber - 1);
-		}
+		//if (mapNumber == 0) {
+		//	nextSceneObject.SceneChangeObjectSet (mapNumber+1);
+		//}
+		//else if(mapNumber!= 0 || mapNumber!=4){
+		//	nextSceneObject.SceneChangeObjectSet (mapNumber+1);
+		//	beforeScneObject.SceneChangeObjectSet (mapNumber-1);
+		//}
+		//else if (mapNumber == 4) {
+		//	beforeScneObject.SceneChangeObjectSet (mapNumber - 1);
+		//}
     }
 
 	public void MonsterSet(){
@@ -176,6 +176,7 @@ public class DungeonManager : MonoBehaviour
         inputManager = GameObject.FindGameObjectWithTag("InputManager").GetComponent<InputManager>();
         inputManager.InitializeManager();
         StartCoroutine(inputManager.GetKeyInput());
+        StartCoroutine(dataSender.CharacterDataSend());
 
         return player;
     }

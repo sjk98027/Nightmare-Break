@@ -7,8 +7,11 @@ TagManager:
   - InputManager
   - NetworkManager
   - DungeonManager
-  - Enemy
+  - CharacterManager
   - Wall
+  - Floor
+  - BossBody
+  - Enermy
   layers:
   - Default
   - TransparentFX

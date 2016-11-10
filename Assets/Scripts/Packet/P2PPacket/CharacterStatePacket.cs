@@ -6,7 +6,6 @@
         {
             bool ret = true;
             ret &= Serialize(data.state);
-            ret &= Serialize(data.direction);
             ret &= Serialize(data.hor);
             ret &= Serialize(data.ver);
             ret &= Serialize(data.posX);
@@ -25,7 +24,6 @@
 
             bool ret = true;
             byte state = 0;
-            bool direction = true;
             float ver = 0;
             float hor = 0;
             float posX = 0;
@@ -33,14 +31,12 @@
             float posZ = 0;
 
             ret &= Deserialize(ref state);
-            ret &= Deserialize(ref direction);
             ret &= Deserialize(ref ver);
             ret &= Deserialize(ref hor);
             ret &= Deserialize(ref posX);
             ret &= Deserialize(ref posY);
             ret &= Deserialize(ref posZ);
             element.state = state;
-            element.direction = direction;
             element.ver = ver;
             element.hor = hor;
             element.posX = posX;
@@ -85,7 +81,6 @@
 public class CharacterStateData
 {
     public byte state;
-    public bool direction;
     public float ver;
     public float hor;
     public float posX;
@@ -95,7 +90,6 @@ public class CharacterStateData
     public CharacterStateData()
     {
         state = 0;
-        direction = true;
         ver = 0;
         hor = 0;
         posX = 0;
@@ -103,10 +97,9 @@ public class CharacterStateData
         posZ = 0;
     }
 
-    public CharacterStateData(byte newState, bool newDirection, float newVer, float newHor, float newX, float newY, float newZ)
+    public CharacterStateData(byte newState, float newVer, float newHor, float newX, float newY, float newZ)
     {
         state = newState;
-        direction = newDirection;
         ver = newVer;
         hor = newHor;
         posX = newX;
