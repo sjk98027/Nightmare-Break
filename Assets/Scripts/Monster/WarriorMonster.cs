@@ -11,7 +11,7 @@ public class WarriroMonster : Monster {
 	private float currentDisTance;
 
 	private Vector3 movePoint;
-	private Vector3 idlePoint;
+	private Vector3 idlePoint = Vector3.forward;
 
 
 

@@ -100,6 +100,8 @@ public class DataSender : MonoBehaviour
     //캐릭터의 애니메이션, 방향, 위치를 보내주는 메소드
     public IEnumerator CharacterDataSend()
     {
+        characterManager = GameObject.FindGameObjectWithTag("CharacterManager").GetComponent<CharacterManager>();
+        
         while (true)
         {
             yield return new WaitForEndOfFrame();

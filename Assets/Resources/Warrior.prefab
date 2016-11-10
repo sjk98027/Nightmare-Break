@@ -83,7 +83,6 @@ GameObject:
   - 114: {fileID: 114000013628196336}
   - 54: {fileID: 54000011013011988}
   - 65: {fileID: 65000013559956098}
-  - 114: {fileID: 114000010880084330}
   m_Layer: 0
   m_Name: Warrior
   m_TagString: Player
@@ -1848,19 +1847,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114000010880084330
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010232941182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a3b2f65734ee8646acd5fefc24a8f56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthPoint: 100
-  manaPoint: 100
 --- !u!114 &114000013628196336
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1881,7 +1867,6 @@ MonoBehaviour:
     needExp: 0
     healthPoint: 0
     magicPoint: 0
-    attack: 0
     defense: 0
     critical: 0
     dreamStone: 0
@@ -1891,6 +1876,10 @@ MonoBehaviour:
   charVer: 0
   JumpMove: 0
   rigdbody: {fileID: 0}
+  charWeapon: {fileID: 0}
+  normalAttackState: 0
+  skillAttackState: 0
+  basicDamage: 0
   inputmanager: {fileID: 0}
   enemy: []
   wall: {fileID: 0}

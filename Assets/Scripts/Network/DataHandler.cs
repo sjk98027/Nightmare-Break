@@ -19,8 +19,7 @@ public class DataHandler : MonoBehaviour
 
     object receiveLock;
 
-    byte[] msg = new byte[1024];
-    EndPoint ipEndPoint;
+    byte[] msg;
 
     public delegate P2PPacketId P2PRecvNotifier(byte[] data);
     public delegate ServerPacketId ServerRecvNotifier(byte[] data);
@@ -37,6 +36,8 @@ public class DataHandler : MonoBehaviour
         receiveLock = newReceiveLock;
 
         networkManager = GetComponent<NetworkManager>();
+
+        msg = new byte[1024];
 
         SetServerNotifier();
         SetUdpNotifier();
@@ -60,9 +61,14 @@ public class DataHandler : MonoBehaviour
         {
             //패킷을 Dequeue 한다 
             //패킷 : 메시지 타입 + 메시지 내용
-            DataPacket packet = receiveMsgs.Dequeue();
+            DataPacket packet;
+
+            lock (receiveLock)
+            {
+                packet = receiveMsgs.Dequeue();
+            }
+            
             msg = packet.msg;
-            ipEndPoint = packet.endPoint;
 
             Debug.Log("Dequeue Message Length : " + msg.Length);
 

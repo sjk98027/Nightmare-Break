@@ -29,12 +29,14 @@ public class Monster : MonoBehaviour {
 	public bool Mode{
 		set { mode = value;}
 	}
-	[SerializeField]private int gateArrayNumber;
-	public int GateArrayNumber{
-		set{ gateArrayNumber = value;}
-	}
+    [SerializeField]
+    private int gateArrayNumber;
+    public int GateArrayNumber
+    {
+        set { gateArrayNumber = value; }
+    }
 
-	[SerializeField]private int monsterArrayNumber;
+    [SerializeField]private int monsterArrayNumber;
 	public int MonsterArrayNumber{
 		set{ monsterArrayNumber = value;}
 	}
