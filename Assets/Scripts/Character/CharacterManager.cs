@@ -13,7 +13,8 @@ public class CharacterManager : MonoBehaviour
 		Jump,
 		CutOff,
 		Maelstrom,
-		EsPadaSwordSummon,
+		GiganticSwordSummon,
+		SwordDance,
 		HitDamage,
 		Death
 	}
@@ -39,20 +40,20 @@ public class CharacterManager : MonoBehaviour
 	public GameObject[] enemy;
 	public GameObject wall;
 
-	private CharacterStatus stat;
+	CharacterStatus stat= null;
 	private int potionCount = 3;
 
 	public float charSpeed;
 	public float jumpPower;
 	public bool charAlive = true;
 
-	//espadasword
-	public GameObject esPadaSword;
-	public float esPadaSwordSpeed;
-	public float esPadaSwordMatarial;
-	public bool esPadaSwordRendTime;
-	public GameObject EspadaTemp;
-	public GameObject esPadaSwordCastSword;
+	//GiganticSword
+	public GameObject GiganticSword;
+	public float giganticSwordSpeed;
+	public float giganticSwordMatarial;
+	public bool giganticSwordRendTime;
+	public GameObject giganticSwordTemp;
+	public GameObject giganticSwordCastSword;
 
 	public int BasicDamage {get {return this.basicDamage;}}
 
@@ -74,41 +75,40 @@ public class CharacterManager : MonoBehaviour
 		animator = GetComponent<Animator> ();
 		state = CharacterState.Idle;
 		enemy = null;
-		rigdbody = GetComponent<Rigidbody> ();
+		rigdbody = this.GetComponent<Rigidbody>();
 		mealstromState = false;
 		charVer = true;
 		wall = GameObject.FindGameObjectWithTag ("Wall");
 		JumpMove = false;
-		esPadaSwordCastSword = GameObject.Find("EsPadaSwordCast");
-		//esPadaSwordCastSword.SetActive(false);
-		//esPadaSword = Resources.Load<GameObject> ("EsPadasword");
+		giganticSwordCastSword = GameObject.Find("GiganticSwordSwordCast");
+		//giganticSwordCastSword.SetActive(false);
+		//giganticSword = Resources.Load<GameObject> ("GiganticSword");
 	}
 
 	void Update ()
 	{
 		if (charAlive)
 		{
-			enemy = GameObject.FindGameObjectsWithTag ("Enemy");
-
+			enemy = GameObject.FindGameObjectsWithTag ("Enermy");
 			if (mealstromState)
 			{
 				Maelstrom ();
 			}
-			if (esPadaSwordRendTime && EspadaTemp != null)
+			if (giganticSwordRendTime && giganticSwordTemp != null)
 			{
-				rend = EspadaTemp.gameObject.GetComponent<Renderer> ();
-				esPadaSwordMatarial += Time.deltaTime;
+				rend = GiganticSword.gameObject.GetComponent<Renderer> ();
+				giganticSwordMatarial += Time.deltaTime;
 
-				if (EspadaTemp.transform.position.y > 0.1)
+				if (giganticSwordTemp.transform.position.y > 0.1)
 				{
-					// float esPadaSwordAlpha = 0.8f - esPadaSwordMatarial;
-					float esPadaSwordAlpha = 1;
-					rend.material.color = new Color (0, 0, 0, esPadaSwordAlpha);
+					
+					float giganticSwordAlpha = 1;
+				//	rend.material.color = new Color (0, 0, 0, giganticSwordAlpha);
 
-					if (esPadaSwordAlpha < 0.5)
+					if (giganticSwordAlpha < 0.5)
 					{
-						esPadaSwordMatarial = 0;
-						Destroy (EspadaTemp, 0.5f);
+						giganticSwordMatarial = 0;
+						Destroy (giganticSwordTemp, 0.5f);
 					}
 				}
 			}
@@ -126,9 +126,9 @@ public class CharacterManager : MonoBehaviour
 
 	public void AnimationEnd ()
 	{
-		CharState ("Idle");
+		CharState ((int)CharacterState.Idle);
 		JumpMove = false;
-//		esPadaSwordCastSword.SetActive(false);
+		//		giganticSwordCastSword.SetActive(false);
 		Debug.Log ("anima End");
 		normalAttackState = false;
 	}
@@ -153,22 +153,22 @@ public class CharacterManager : MonoBehaviour
 						transform.rotation = Quaternion.Euler (new Vector3 (0, 180.0f, 0));
 						charVer = false;
 					}
-					else if (ver > 0 || ver == 0)
+					else if (ver > 0)
 					{
 						transform.rotation = Quaternion.Euler (new Vector3 (0, 0.0f, 0));
 						charVer = true;
 					}
-					CharState ("Run");
+					CharState ((int)CharacterState.Run);
+
 					if (runState.IsName ("Run"))
 					{
 						transform.Translate ((Vector3.forward * ver - Vector3.right * hor) * Time.deltaTime * charSpeed, Space.World);
-
 					}
 				}
 				else if (ver == 0 && hor == 0)
 				{
 					animator.SetBool ("Run", false);
-					CharState ("Idle");
+					CharState ((int)CharacterState.Idle);
 				}
 			}
 		}
@@ -181,10 +181,10 @@ public class CharacterManager : MonoBehaviour
 
 	public void NormalAttack ()
 	{
-		if (state != CharacterState.CutOff && state != CharacterState.Attack  && state != CharacterState.Maelstrom && state != CharacterState.EsPadaSwordSummon && state != CharacterState.HitDamage && state != CharacterState.Death)
+		if (state != CharacterState.CutOff && state != CharacterState.Attack  && state != CharacterState.Maelstrom && state != CharacterState.GiganticSwordSummon && state != CharacterState.HitDamage && state != CharacterState.Death)
 		{
 			normalAttackState = true;
-			CharState ("Attack");
+			CharState ((int)CharacterState.Attack);
 		}
 	}
 
@@ -194,7 +194,7 @@ public class CharacterManager : MonoBehaviour
 		{
 			if (transform.position.y <= 0.1f)
 			{
-				CharState ("Idle");
+				CharState ((int)CharacterState.Idle);
 			}
 		}
 	}
@@ -203,9 +203,9 @@ public class CharacterManager : MonoBehaviour
 	{
 		runState = this.animator.GetCurrentAnimatorStateInfo (0);
 
-		if (state != CharacterState.Jump && state != CharacterState.Maelstrom && state != CharacterState.CutOff && state != CharacterState.Maelstrom && state != CharacterState.EsPadaSwordSummon)
+		if (state != CharacterState.Jump && state != CharacterState.Maelstrom && state != CharacterState.CutOff && state != CharacterState.Maelstrom && state != CharacterState.GiganticSwordSummon)
 		{
-			CharState ("Jump");
+			CharState ((int)CharacterState.Jump);
 		}
 
 	}
@@ -220,47 +220,50 @@ public class CharacterManager : MonoBehaviour
 	//swordmaster Skill
 	public void Espada ()
 	{
-		if (state != CharacterState.Jump && state != CharacterState.Maelstrom && state != CharacterState.CutOff && state != CharacterState.EsPadaSwordSummon && state != CharacterState.HitDamage && state != CharacterState.Death)
+		
+		if (state != CharacterState.Jump && state != CharacterState.Maelstrom && state != CharacterState.CutOff && state != CharacterState.GiganticSwordSummon && state != CharacterState.HitDamage && state != CharacterState.Death)
 		{
-			//esPadaSwordCastSword.SetActive(true);
-			CharState ("EsPadaSwordSummon");
+			Debug.Log ("sk3");
+			//giganticSwordCastSword.SetActive(true);
+			CharState ((int)CharacterState.GiganticSwordSummon);
 		}
 	}
 
-	public void EspadaSummon ()
+	public void GiganticSwordSummon ()
 	{
-		float espadaPos;
+		float giganticSwordPos;
 		if (charVer)
 		{
-			espadaPos = 10.0f;
+			giganticSwordPos = 10.0f;
 
 		}
 		else
 		{
-			espadaPos = -10.0f;
+			giganticSwordPos = -10.0f;
 		}
 
-		EspadaTemp = Instantiate (Resources.Load<GameObject> ("EsPadasword"), transform.position + new Vector3 (0.0f, 10.0f, espadaPos), Quaternion.Euler (new Vector3 (0.0f, -90, 0.0f))) as GameObject;
-		EspadaTemp.gameObject.GetComponent<Rigidbody> ().AddForce (-Vector3.up * esPadaSwordSpeed, ForceMode.Impulse);
-		esPadaSwordRendTime = true;
+		giganticSwordTemp = Instantiate (Resources.Load<GameObject> ("GiganticSword"), transform.position + new Vector3 (0.0f, 10.0f, giganticSwordPos), Quaternion.Euler (new Vector3 (0.0f, -90, 0.0f))) as GameObject;
+		giganticSwordTemp.gameObject.GetComponent<Rigidbody> ().AddForce (-Vector3.up *giganticSwordSpeed, ForceMode.Impulse);
+		giganticSwordRendTime = true;
 	}
 
 	public void Maelstrom ()
 	{
 
-		if (state != CharacterState.Run && state != CharacterState.Idle)
+		if (state == CharacterState.Run || state == CharacterState.Idle)
 		{
-			mealstromState = false;
-		}
-		else
-		{
-			CharState ("Maelstrom");
+
+			state = CharacterState.Maelstrom;
+			CharState ((int)CharacterState.Maelstrom);
+		}	
+			
+			
 			float maelstromSpeed = 0.5f;
 			float maelstromDistance;
-
+			
 			skillTime += Time.deltaTime;
 
-
+		
 			for (int i = 0; i < enemy.Length; i++)
 			{
 				maelstromDistance = Vector3.Distance (this.transform.position, enemy [i].transform.position);
@@ -275,14 +278,14 @@ public class CharacterManager : MonoBehaviour
 				mealstromState = false;
 				skillTime = 0;
 			}
-		}
+
 	}
 
 	public void CutOff ()
 	{
-		if (state != CharacterState.Jump && state != CharacterState.CutOff && state != CharacterState.Maelstrom && state != CharacterState.EsPadaSwordSummon && state != CharacterState.HitDamage && state != CharacterState.Death)
+		if (state != CharacterState.Jump && state != CharacterState.CutOff && state != CharacterState.Maelstrom && state != CharacterState.GiganticSwordSummon && state != CharacterState.HitDamage && state != CharacterState.Death)
 		{
-			CharState ("CutOff");
+			CharState ((int)CharacterState.CutOff);
 		}
 	}
 
@@ -302,6 +305,14 @@ public class CharacterManager : MonoBehaviour
 			transform.Translate (0, 0, 5);
 		}
 		//animation stop and keyboardinput Lock
+	}
+
+	public void SwordDance()
+	{
+		if (state != CharacterState.Jump && state != CharacterState.SwordDance && state != CharacterState.CutOff && state != CharacterState.Maelstrom && state != CharacterState.GiganticSwordSummon && state != CharacterState.HitDamage && state != CharacterState.Death)
+		{
+			CharState ((int)CharacterState.SwordDance);
+		}
 	}
 
 
@@ -332,7 +343,8 @@ public class CharacterManager : MonoBehaviour
 		animator.SetBool ("Run", false);
 	}
 
-	public void CharState (string Inputstate)
+
+	public void CharState (int Inputstate)
 	{
 		if (charAlive)
 		{
@@ -340,41 +352,52 @@ public class CharacterManager : MonoBehaviour
 			//idle=0,run=1,attack=2
 			switch (Inputstate)
 			{
-			case "Idle":
+			case 0:
 				state = CharacterState.Idle;
-				animator.SetBool ("Idle", true);
+				animator.SetBool ("Idle",true);
 				break;
 
-			case "Run":
+			case 1:
 				state = CharacterState.Run;
 				animator.SetBool ("Run", true);
 				break;
 
-			case "Attack":
+			case 2:
 				state = CharacterState.Attack;
 				animator.SetTrigger ("Attack");
 				break;
-			case "Jump":
+
+			case 3:
 				state = CharacterState.Jump;
 				animator.SetTrigger ("Jump");
 				break;
-			case "CutOff":
+
+			case 4:
 				state = CharacterState.CutOff;
 				animator.SetTrigger ("CutOff");
 				break;
-			case "Maelstrom":
+
+			case 5:
 				state = CharacterState.Maelstrom;
 				animator.SetTrigger ("Maelstrom");
 				break;
-			case "EsPadaSwordSummon":
-				state = CharacterState.EsPadaSwordSummon;
-				animator.SetTrigger ("EsPadaSwordSummon");
+
+			case 6:
+				state = CharacterState.GiganticSwordSummon;
+				animator.SetTrigger ("GiganticSwordSummon");
 				break;
-			case "HitDamage":
+
+			case 7:
+				state = CharacterState.SwordDance;
+				animator.SetTrigger ("SwordDance");
+				break;
+
+			case 8:
 				state = CharacterState.HitDamage;
 				animator.SetTrigger ("PlayerHitTrigger");
 				break;
-			case "Death":
+
+			case 9:
 				state = CharacterState.Death;
 				animator.SetTrigger ("PlayerDie");
 				break;
@@ -390,13 +413,13 @@ public class CharacterManager : MonoBehaviour
 			if (charstate.HealthPoint > 0)
 			{
 				this.charstate.HealthPoint -= _damage;
-				CharState ("HitDamage");
+				CharState ((int)CharacterState.HitDamage);
 				Debug.Log("Hit Char"+ this.charstate.HealthPoint);
 			}
 			if (charstate.HealthPoint <= 0)
 			{
 				//Death Animation
-				CharState ("Death");
+				CharState ((int)CharacterState.Death);
 				charAlive= false;
 				Debug.Log ("death");
 			}
@@ -423,12 +446,24 @@ public class CharacterManager : MonoBehaviour
 	public void SetState (CharacterStateData newStateData)
 	{
 		Debug.Log ("상태 설정");
-		animator.SetBool ("Direction", newStateData.direction);
+
 		animator.SetFloat ("Ver", newStateData.ver);
 		animator.SetFloat ("Hor", newStateData.hor);
+
+		if (newStateData.ver < 0)
+		{
+			transform.rotation = Quaternion.Euler(new Vector3(0, 180.0f, 0));
+			charVer = false;
+		}
+		else if (newStateData.ver >= 0)
+		{
+			transform.rotation = Quaternion.Euler(new Vector3(0, 0.0f, 0));
+			charVer = true;
+		}
+
 		transform.position = new Vector3 (newStateData.posX, newStateData.posY, newStateData.posZ);
 
-		//animator.SetBool(GetCharacterState(newStateData.state).ToString(), true);
+		CharState((int)newStateData.state);
 	}
 }
 

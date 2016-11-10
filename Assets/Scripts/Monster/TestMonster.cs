@@ -113,7 +113,7 @@ public class TestMonster : Monster {
 				if (currentDisTance > searchRange)
 				{
 					Pattern(StatePosition.Idle);
-					Debug.Log ("idle");
+
 				}
 				//if this object get Attackmotion pattern(stateposition.boom -> attack), and this monsterlife is 20%, boomPattern start;
 				else if (currentDisTance <= searchRange)

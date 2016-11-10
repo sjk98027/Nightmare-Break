@@ -28,6 +28,7 @@ public class TestInputManager : MonoBehaviour
 		horizontal = Input.GetAxisRaw("Horizontal");
 		characterManager.Move(vertical, horizontal);
 
+
 		if (Input.GetKeyDown(KeyCode.T))
 		{
 			characterManager.UsingPotion();
@@ -54,7 +55,14 @@ public class TestInputManager : MonoBehaviour
 		}
 		else if (Input.GetButtonDown("Skill3"))
 		{
+			
 			characterManager.Espada();
+		}
+		else if (Input.GetButtonDown("Skill4"))
+		{
+			Debug.Log ("swdan");
+
+			characterManager.SwordDance ();
 		}
 	}
 
