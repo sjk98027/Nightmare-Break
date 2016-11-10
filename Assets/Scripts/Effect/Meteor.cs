@@ -1,8 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEditor.SceneManagement;
 
 public class Meteor : MonoBehaviour {
 
+    
+    void Start()
+    {
+     
+    }
 
     void Update()
     {

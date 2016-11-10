@@ -19,7 +19,7 @@ public class FireSpell : MonoBehaviour {
 
 	IEnumerator meteorBurst()
 	{
-        GameObject[] meteor = new GameObject[8];
+        GameObject[] meteor = new GameObject[15];
       //  while (currentTime < time) {
             for (int i = 0; i < meteor.Length; i++)
             {
