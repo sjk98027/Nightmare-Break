@@ -10,9 +10,18 @@ public class NetworkManager : MonoBehaviour
     //패킷의 길이
     //패킷이 어디서 오는지
     //패킷의 종류
+    //Udp receive 확인 번호
     public const int packetLength = 2;
     public const int packetSource = 1;
-    public const int packetId = 1;    
+    public const int packetId = 1;
+    public const int udpId = 2;
+
+    //패킷이 어디서 오는지 - 서버/클라이언트
+    public enum Source
+    {
+        ServerSource = 0,
+        ClientSource = 1,
+    }
 
     //테스트 중에서는 하나의 컴퓨터에서 진행하므로 다른 ip 대신에 다른 port를 이용한다
     public const int mainServerPortNumber = 8800;

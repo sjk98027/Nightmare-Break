@@ -1650,6 +1650,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: []
+  animator: {fileID: 0}
   targetPlayer: {fileID: 0}
   mode: 0
   gateArrayNumber: 0
@@ -2263,6 +2264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: []
+  animator: {fileID: 0}
   targetPlayer: {fileID: 0}
   mode: 0
   gateArrayNumber: 0

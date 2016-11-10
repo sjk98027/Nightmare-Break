@@ -31,6 +31,9 @@ public class EnterRoomPacket : IPacket<EnterRoomData>
     }
 
     EnterRoomData m_data;
+    int packetId;
+
+    public int PacketId { get { return packetId; } set { packetId = value; } }
 
     public EnterRoomPacket(EnterRoomData data) // 데이터로 초기화(송신용)
     {
@@ -55,11 +58,6 @@ public class EnterRoomPacket : IPacket<EnterRoomData>
     public EnterRoomData GetData() // 데이터 얻기(수신용)
     {
         return m_data;
-    }
-
-    public int GetPacketId()
-    {
-        return (int)ClientPacketId.EnterRoom;
     }
 }
 

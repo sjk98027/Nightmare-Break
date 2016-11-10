@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-
+﻿
 public class MatchDataPacket : IPacket<MatchData>
 {
     public class MatchDataSerializer : Serializer
@@ -53,6 +52,9 @@ public class MatchDataPacket : IPacket<MatchData>
     }
 
     MatchData m_data;
+    int packetId;
+
+    public int PacketId { get { return packetId; } set { packetId = value; } }
 
     public MatchDataPacket(MatchData data) // 데이터로 초기화(송신용)
     {
@@ -78,11 +80,6 @@ public class MatchDataPacket : IPacket<MatchData>
     {
         return m_data;
     }
-
-    public int GetPacketId()
-    {
-        return (int)ClientPacketId.Create;
-    }
 }
 
 public class MatchData
@@ -92,7 +89,7 @@ public class MatchData
 
     public MatchData()
     {
-        playerNum = 4;
+        playerNum = 0;
         ip = new string[playerNum];
     }
 

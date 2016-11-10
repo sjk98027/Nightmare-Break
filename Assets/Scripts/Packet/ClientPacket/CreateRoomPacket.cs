@@ -39,6 +39,9 @@ public class CreateRoomPacket : IPacket<CreateRoomData>
     }
 
     CreateRoomData m_data;
+    int packetId;
+
+    public int PacketId { get { return packetId; } set { packetId = value; } }
 
     public CreateRoomPacket(CreateRoomData data) // 데이터로 초기화(송신용)
     {
@@ -63,11 +66,6 @@ public class CreateRoomPacket : IPacket<CreateRoomData>
     public CreateRoomData GetData() // 데이터 얻기(수신용)
     {
         return m_data;
-    }
-
-    public int GetPacketId()
-    {
-        return (int)ClientPacketId.CreateRoom;
     }
 }
 

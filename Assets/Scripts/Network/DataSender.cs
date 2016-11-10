@@ -19,7 +19,6 @@ public class DataSender : MonoBehaviour
     public void Initialize(Queue<DataPacket> newSendMsgs, object newSendLock, Socket newTcpSock, Socket newUdpSock)
     {
         networkManager = GetComponent<NetworkManager>();
-        //characterManager = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterManager>();
 
         sendMsgs = newSendMsgs;
         sendLock = newSendLock;
@@ -50,11 +49,11 @@ public class DataSender : MonoBehaviour
             byte[] header = headerSerializer.GetSerializedData();
             byte[] msg = CombineByte(header, packet.msg);
 
-            if (packet.headerData.source == (byte)DataHandler.Source.ClientSource)
+            if (packet.headerData.source == (byte)NetworkManager.Source.ClientSource)
             {
                 udpSock.BeginSendTo(msg, 0, msg.Length, SocketFlags.None, packet.endPoint, new AsyncCallback(SendData), null);
             }
-            else if(packet.headerData.source == (byte)DataHandler.Source.ServerSource)
+            else if(packet.headerData.source == (byte)NetworkManager.Source.ServerSource)
             {
                 tcpSock.Send(msg, 0, msg.Length, SocketFlags.None);
             }
@@ -67,68 +66,37 @@ public class DataSender : MonoBehaviour
         udpSock.EndSend(ar);
     }
 
-    //연결 확인
+    //연결 확인 - Udp
     public void ConnectionCheck(List<EndPoint> newEndPoint)
     {
         Debug.Log("연결 체크");
 
         foreach (EndPoint client in newEndPoint)
         {
-            Debug.Log(client.ToString());
-            DataPacket packet = CreateResultPacket(new byte[1], (int)DataHandler.Source.ClientSource, (int)P2PPacketId.ConnectionCheck);
+            Debug.Log("확인할 클라이언트 : " + client.ToString());
+            DataPacket packet = CreatePacket(new byte[1], (int)P2PPacketId.ConnectionCheck);
             packet.endPoint = client;
             sendMsgs.Enqueue(packet);
         }
     }
 
-    //캐릭터의 생성을 보내주는 메소드
-    public void CreateUnitSend(short newId, Vector3 position)
+    //계정 생성 - Tcp
+    public void CreateAccount(string id, string pw)
     {
-        short id = newId;
-        float xPos = position.x;
-        float yPos = position.y;
-        float zPos = position.z;
+        Debug.Log("가입 요청");
 
-        CreateUnitData createUnitData = new CreateUnitData(id, xPos, yPos, zPos);
-        CreateUnitDataPacket createUnitDataPacket = new CreateUnitDataPacket(createUnitData);
+        AccountData accountData = new AccountData(id, pw);
+        AccountDataPacket accountDataPacket = new AccountDataPacket(accountData);
+        accountDataPacket.PacketId = (int)ClientPacketId.CreateAccount;
 
-        DataPacket packet = CreatePacket(createUnitDataPacket.GetPacketData(), (int)DataHandler.Source.ClientSource, P2PPacketId.CreateUnit);
-        packet.endPoint = networkManager.client2;
-        sendMsgs.Enqueue(packet);
+        DataPacket packet = CreatePacket(accountDataPacket.GetPacketData(), accountDataPacket.PacketId);
     }
 
-    //캐릭터의 애니메이션, 방향, 위치를 보내주는 메소드
-    public IEnumerator CharacterDataSend()
-    {
-        characterManager = GameObject.FindGameObjectWithTag("CharacterManager").GetComponent<CharacterManager>();
-        
-        while (true)
-        {
-            yield return new WaitForEndOfFrame();
-
-            byte state = (byte)characterManager.State;
-            float vertical = characterManager.Animator.GetFloat("Ver");
-            float horizontal = characterManager.Animator.GetFloat("Hor");
-            bool direction = characterManager.Animator.GetBool("Direction");
-            float xPos = characterManager.transform.position.x;
-            float yPos = characterManager.transform.position.y;
-            float zPos = characterManager.transform.position.z;
-
-            CharacterStateData characterStateData = new CharacterStateData(state, direction, horizontal, vertical, xPos, yPos, zPos);
-            CharacterStateDataPacket characterStateDataPacket = new CharacterStateDataPacket(characterStateData);
-            
-            //현재는 client로 고정되있지만
-            //차후 수정으로 매개변수 newIPEndPoint를 설정하여 여러명의 클라이언트에 동시에 보내도록 수정할 예정
-            DataPacket packet = CreatePacket(characterStateDataPacket.GetPacketData(), (int)DataHandler.Source.ClientSource, P2PPacketId.CharacterState);
-            packet.endPoint = networkManager.client2;
-            sendMsgs.Enqueue(packet);
-        }
-    }
-
+    //게임 종료 - Tcp
     public void GameClose()
     {
         Debug.Log("게임 종료");
-        DataPacket packet = CreateResultPacket(new byte[1], (int)DataHandler.Source.ServerSource, (int)ClientPacketId.GameClose);
+        DataPacket packet = CreatePacket(new byte[1], (int)ClientPacketId.GameClose);
 
         HeaderSerializer headerSerializer = new HeaderSerializer();
         headerSerializer.Serialize(packet.headerData);
@@ -146,36 +114,66 @@ public class DataSender : MonoBehaviour
         udpSock.Close();
     }
 
-    //패킷의 헤더 부분을 생성하는 메소드
-    HeaderData CreateHeader(short msgSize, int source, P2PPacketId id)
+    //캐릭터의 생성 - Udp
+    public void CreateUnitSend(short newId, Vector3 position)
+    {
+        short id = newId;
+        float xPos = position.x;
+        float yPos = position.y;
+        float zPos = position.z;
+
+        CreateUnitData createUnitData = new CreateUnitData(id, xPos, yPos, zPos);
+        CreateUnitPacket createUnitDataPacket = new CreateUnitPacket(createUnitData);
+
+        DataPacket packet = CreatePacket(createUnitDataPacket.GetPacketData(), (int)P2PPacketId.CreateUnit);
+        packet.endPoint = networkManager.client2;
+        sendMsgs.Enqueue(packet);
+    }
+
+    //캐릭터 움직임 - Udp
+    public IEnumerator CharacterDataSend()
+    {
+        characterManager = GameObject.FindGameObjectWithTag("CharacterManager").GetComponent<CharacterManager>();
+        
+        while (true)
+        {
+            yield return new WaitForEndOfFrame();
+
+            byte state = (byte)characterManager.State;
+            float vertical = characterManager.Animator.GetFloat("Ver");
+            float horizontal = characterManager.Animator.GetFloat("Hor");
+            bool direction = characterManager.Animator.GetBool("Direction");
+            float xPos = characterManager.transform.position.x;
+            float yPos = characterManager.transform.position.y;
+            float zPos = characterManager.transform.position.z;
+
+            CharacterStateData characterStateData = new CharacterStateData(state, direction, horizontal, vertical, xPos, yPos, zPos);
+            CharacterStatePacket characterStateDataPacket = new CharacterStatePacket(characterStateData);
+            
+            //현재는 client로 고정되있지만
+            //차후 수정으로 매개변수 newIPEndPoint를 설정하여 여러명의 클라이언트에 동시에 보내도록 수정할 예정
+            DataPacket packet = CreatePacket(characterStateDataPacket.GetPacketData(), (int)P2PPacketId.CharacterState);
+            packet.endPoint = networkManager.client2;
+            sendMsgs.Enqueue(packet);
+        }
+    }
+
+    //패킷의 헤더 생성
+    HeaderData CreateHeader(short msgLength, int id)
     {
         HeaderData headerData = new HeaderData();
 
         headerData.id = (byte)id;
-        headerData.source = (byte)source;
-        headerData.length = msgSize;
+        headerData.source = (byte)NetworkManager.Source.ClientSource;
+        headerData.length = msgLength;
 
         return headerData;
     }
-
-    public static DataPacket CreateResultPacket(byte[] msg, int source, int id)
+    
+    //패킷 생성
+    DataPacket CreatePacket(byte[] msg, int id)
     {
-        HeaderData headerData = new HeaderData();
-
-        headerData.id = (byte)id;
-        headerData.source = (byte)source;
-        headerData.length = (short)msg.Length;
-
-        DataPacket dataPacket = new DataPacket(headerData, msg);
-
-        return dataPacket;
-    }
-
-    //패킷을 생성하는 메소드. 데이터 패킷과 패킷아이디를 적어주면 알아서 합쳐준다.
-    //Send를 하기 전 반드시 해야한다.
-    DataPacket CreatePacket(byte[] msg, int source, P2PPacketId id)
-    {
-        HeaderData header = CreateHeader((short)msg.Length, source, id);
+        HeaderData header = CreateHeader((short)msg.Length, id);
         DataPacket packet = new DataPacket(header, msg);
 
         return packet;
@@ -191,7 +189,7 @@ public class DataSender : MonoBehaviour
 
     public static byte[] CombineByte(byte[] array1, byte[] array2, byte[] array3)
     {
-        byte[] array4 = CombineByte(CombineByte(array1, array2), array3); ;
+        byte[] array4 = CombineByte(CombineByte(array1, array2), array3);
         return array4;
     }
 }

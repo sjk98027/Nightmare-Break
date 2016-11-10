@@ -1,8 +1,8 @@
 ﻿public enum ClientPacketId
 {
     None = 0,
-    Create,
-    Delete,
+    CreateAccount,
+    DeleteAccount,
     Login,
     Logout,
     GameClose,
