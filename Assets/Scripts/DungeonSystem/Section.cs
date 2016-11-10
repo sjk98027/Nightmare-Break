@@ -13,7 +13,7 @@ public class Section : MonoBehaviour {
 		set{ gateNumber = value;}
 	}
 	//all monster objects getting;
-	//public GameObject[] monsterCrowd;
+
 
 	protected bool modeForm;
 	public bool ModeForm{
@@ -53,7 +53,7 @@ public class Section : MonoBehaviour {
 	public void RemoveMonsterArray(){
 		monsterCount -= 1;
 		if (monsterCount == 0) {
-			dungeonManager.mapNumberChange ();
+			dungeonManager.SceneChange ();
 		}
 
 	}

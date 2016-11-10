@@ -13,7 +13,7 @@ public class BoomMonster : Monster {
 	private Vector3 idlePoint = new Vector3(0,0,0);
 
 	private Vector3 boomPoint = new Vector3(100,100,100);
-	private Vector3 attackPoint = new Vector3 (1, 0, 0);
+
 
 	private bool a;
 
