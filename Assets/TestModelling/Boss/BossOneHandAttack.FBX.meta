@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: fd3041530afed9b429e9f2a62f64e7d0
-timeCreated: 1478573418
+guid: 41595cdf9e8b0fc4c855479c5b95d4e6
+timeCreated: 1478672016
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -48,9 +48,9 @@ ModelImporter:
     100080: Bip01 Spine
     100082: Bip01 Spine1
     100084: Boss_arm
-    100086: Boss_body
-    100088: Boss_head
-    100090: //RootNode
+    100086: //RootNode
+    100088: Boss_body
+    100090: Boss_head
     100092: Boss_leg
     100094: Boss_ribbon
     100096: Box03
@@ -97,9 +97,9 @@ ModelImporter:
     400080: Bip01 Spine
     400082: Bip01 Spine1
     400084: Boss_arm
-    400086: Boss_body
-    400088: Boss_head
-    400090: //RootNode
+    400086: //RootNode
+    400088: Boss_body
+    400090: Boss_head
     400092: Boss_leg
     400094: Boss_ribbon
     400096: Box03
@@ -108,7 +108,7 @@ ModelImporter:
     4300004: Boss_arm
     4300006: Boss_leg
     4300008: Boss_ribbon
-    7400000: JumpAttack
+    7400000: OneHandAttack
     9500000: //RootNode
     13700000: Boss_arm
     13700002: Boss_body
@@ -137,10 +137,10 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: JumpAttack
+      name: OneHandAttack
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 63
+      lastFrame: 53
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -20,7 +20,6 @@ public class CharacterStatus
 	public int magicPoint;
 
 	//char AttackPoint and defensepoint
-	public int attack;
 	public int defense;
 
 	//critical point
@@ -48,8 +47,6 @@ public class CharacterStatus
 		set {healthPoint = value;}}
 	
 	public int ManaPoint {get {return this.magicPoint;}}
-
-	public int Attack {get {return this.attack;}}
 
 	public int Defense {get {return this.defense;}}
 
