@@ -1,13 +1,22 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 
 //this class manage monsterStageLevel, sumon, player sumon, player death;
 public class DungeonManager : MonoBehaviour
-{//MonsterController change-> DungeonManager;
+{
+	//MonsterController change-> DungeonManager;
+	//DungeonScene change -> DungeonManager;
     private const int MaxPlayerNum = 4;
     private GameObject[] players = new GameObject[MaxPlayerNum];
-    public GameObject[] Players { get { return players; } }
+	public GameObject[] Players { get { return players; } }
+	public SceneChangeObject nextSceneObject;
+	public SceneChangeObject beforeScneObject;
+
+	public int monsterCount;
+	public BoomMonster[] boomMonster;
+	public WarriroMonster[] warriorMonster;
 
     InputManager inputManager;
     DataSender dataSender;
@@ -45,48 +54,94 @@ public class DungeonManager : MonoBehaviour
         }
     }
 
-    public void mapNumberChange()
+    public void SceneChange()
     {
-        if (mapNumber < section.Length)
-        {
-            mapNumber += 1;
-        }
+		if(mapNumber<3){
+		SceneManager.LoadScene (mapNumber+1);// loadScene;
+		}
+		//mapNumber == 3 -> 2 player SceneChange
 
-        if (mapNumber == section.Length)
-        {
-            ModeChange(modeForm);
-        }
+//        if (mapNumber < section.Length)
+//        {
+//            mapNumber += 1;
+//			//SceneManager.LoadScene ();
+//        }
+//
+//        if (mapNumber == section.Length)
+//        {
+//            ModeChange(modeForm);
+//        }
     }
 
 	void DungeonConstruct()
     {
-        for (int i = 0; i <= section.Length - 1; i++)
-        {
+//        for (int i = 0; i <= section.Length - 1; i++)
+//        {
+//
+//            section[i].MonsterSet();
+//            section[i].GateNumber = i;
+//            section[i].ModeForm = modeForm;
+//            //			defenceWave[i].StartDefenceMonsterSet ();
+//        }
 
-            section[i].MonsterSet();
-            section[i].GateNumber = i;
-            section[i].ModeForm = modeForm;
-            //			defenceWave[i].StartDefenceMonsterSet ();
-        }
+		MonsterSet ();
+
+		if (mapNumber == 0) {
+			nextSceneObject.SceneChangeObjectSet (mapNumber+1);
+		}
+		else if(mapNumber!= 0 || mapNumber!=4){
+			nextSceneObject.SceneChangeObjectSet (mapNumber+1);
+			beforeScneObject.SceneChangeObjectSet (mapNumber-1);
+		}
+		else if (mapNumber == 4) {
+			beforeScneObject.SceneChangeObjectSet (mapNumber - 1);
+		}
     }
+
+	public void MonsterSet(){
+		
+		boomMonster = gameObject.transform.GetComponentsInChildren<BoomMonster> ();
+		//		warriorMonster = gameObject.GetComponentsInChildren<WarriroMonster> ();
+		monsterCount = (boomMonster.Length + warriorMonster.Length);
+
+		for (int i = 0; i < boomMonster.Length; i++) {
+			boomMonster [i].PlayerSearch ();
+			boomMonster [i].MonsterSet ();
+			boomMonster [i].Mode = modeForm;
+			boomMonster [i].GateArrayNumber = mapNumber;
+			boomMonster [i].MonsterArrayNumber = i;
+		}
+
+	}
+
+	public void RemoveMonsterArray(){
+		monsterCount -= 1;
+		if (monsterCount == 0) {
+			SceneChange ();
+		}
+
+	}
 
     void Start()
     {
-        DungeonConstruct();
-        mapNumber = 0;
+		DungeonConstruct();//mapNumber - > inspector define
         modeForm = false;
         ModeChange(modeForm);//client get modeform and ingame play ;
-
     }
 
     void Update()
     {
         if (!modeForm)
         {
-            for (int i = 0; i < section.Length; i++)
-            {
-                section[i].UpdateConduct(); //this.method change //section [mapNumber].UpdateConduct ();
-            }
+			for (int i = 0; i < boomMonster.Length; i++) {
+				boomMonster [i].UpdateConduct ();
+				//			warriorMonster [i].UpdateConduct ();
+			}
+
+//            for (int i = 0; i < section.Length; i++)
+//            {
+//                section[i].UpdateConduct(); //this.method change //section [mapNumber].UpdateConduct ();
+//            }
         }
 
         //if (modeForm)
@@ -97,17 +152,6 @@ public class DungeonManager : MonoBehaviour
         //    }
         //}
     }
-
-    public void GateNext()
-    {
-
-    }
-
-    //	public void MonsterArrayAliveCheck(GameObject monsterArray){
-    //		for (int i = 0; i < flock.Length; i++) {	
-    //			flock [i].UpdateConduct();
-    //		}
-    //	}
 
 
 
