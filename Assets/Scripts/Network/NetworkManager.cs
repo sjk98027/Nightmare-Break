@@ -85,8 +85,6 @@ public class NetworkManager : MonoBehaviour
         //아이피 목록 생성
         clients = new List<EndPoint>();
 
-        string m_ip = serverSock.LocalEndPoint.ToString().Substring(0, serverSock.LocalEndPoint.ToString().IndexOf(":"));
-
         for (int i = 0; i < newIp.Length; i++)
         {
             Debug.Log(newIp[i]);
