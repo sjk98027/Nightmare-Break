@@ -148,7 +148,6 @@ public class DataSender : MonoBehaviour
     HeaderData CreateHeader(short msgSize, int source, P2PPacketId id)
     {
         HeaderData headerData = new HeaderData();
-        HeaderSerializer headerSerializer = new HeaderSerializer();
 
         headerData.id = (byte)id;
         headerData.source = (byte)source;
@@ -160,7 +159,6 @@ public class DataSender : MonoBehaviour
     public static DataPacket CreateResultPacket(byte[] msg, int source, int id)
     {
         HeaderData headerData = new HeaderData();
-        HeaderSerializer HeaderSerializer = new HeaderSerializer();
 
         headerData.id = (byte)id;
         headerData.source = (byte)source;

@@ -3,17 +3,12 @@ using System.Collections;
 using UnityEngine.EventSystems;
 
 public class WarriroMonster : Monster {
-	public enum StateDirecion{
-		right,
-		left
-	};
 	Animator a;
 
 	private float perceive = 6.0f;
 	private float moveSpeed = 2f;
 
 	private float currentDisTance;
-	private Vector3 checkDirection;
 
 	private Vector3 movePoint;
 	private Vector3 idlePoint;

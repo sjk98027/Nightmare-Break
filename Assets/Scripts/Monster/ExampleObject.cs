@@ -5,11 +5,11 @@ public class ExampleObject : MonoBehaviour {
 	public GameObject[] boomObject;
 	public GameObject exampleObject;
 	[SerializeField]Vector3[] pointVector = new Vector3[10];
-	[SerializeField]Vector3[] objectPosition = new Vector3[10];
+	//[SerializeField]Vector3[] objectPosition = new Vector3[10];
 	Vector3 garbagepointVector;
 	[SerializeField]Vector3 addedVector;
 
-	[SerializeField]Vector3 centerpoint = Vector3.zero;
+	//[SerializeField]Vector3 centerpoint = Vector3.zero;
 
 	float moveSpeed = 0.1f;
 	float limitDistanceMonsterToCenter=6.0f;

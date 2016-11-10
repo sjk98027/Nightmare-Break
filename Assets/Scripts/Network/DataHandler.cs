@@ -70,7 +70,7 @@ public class DataHandler : MonoBehaviour
             {
                 if (server_notifier.TryGetValue(packet.headerData.id, out serverRecvNotifier))
                 {
-                    ServerPacketId packetId = serverRecvNotifier(msg);
+                    serverRecvNotifier(msg);
                 }
                 else
                 {
@@ -82,7 +82,7 @@ public class DataHandler : MonoBehaviour
             {
                 if (p2p_notifier.TryGetValue(packet.headerData.id, out p2pRecvNotifier))
                 {
-                    P2PPacketId packetId = p2pRecvNotifier(msg);
+                    p2pRecvNotifier(msg);
                 }
                 else
                 {
