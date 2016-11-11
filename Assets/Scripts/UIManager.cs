@@ -6,32 +6,32 @@ public class UIManager : MonoBehaviour
 {
 
     [SerializeField]
-    private Image hpUI;
+    public Image hpUI;
     [SerializeField]
-    private Image mpUI;
+    public Image mpUI;
     [SerializeField]
     private Image potionUI;
     private const float checkTime = 0.1f;
     [SerializeField]
     private Image[] skillUI; // 0 - SKill1 // 1 - SKill2 // 2 - Skill3 // 3 - Skill4 //
+    public Image bossHp;
 
 
     public IEnumerator SkillCoolTimeUI(int skillNum, float coolTime)
     {
-        skillUI[skillNum].fillAmount = 0;
+        skillUI[skillNum].gameObject.SetActive(true);
+        skillUI[skillNum].fillAmount = 1;
 
         float time = Time.smoothDeltaTime;
 
-        while (skillUI[skillNum].fillAmount <= 1.0f)
+        while (skillUI[skillNum].fillAmount != 0.0f)
         {
-            skillUI[skillNum].fillAmount += 1 * time / coolTime;
+            skillUI[skillNum].fillAmount -= 1 * time / coolTime;
             yield return null;
-            if (skillUI[skillNum].fillAmount >= 1.0f)
-            {
-                time = 0;
-            }
+           
         }
-
+        time = 0;
+        
         yield break;
     }
 
@@ -39,16 +39,14 @@ public class UIManager : MonoBehaviour
     {
         float potionCoolTime = 15.0f;
         float time = Time.smoothDeltaTime;
-        potionUI.fillAmount = 0;
-        while (potionUI.fillAmount <= 1.0f)
+        potionUI.gameObject.SetActive(true);
+        potionUI.fillAmount = 1;
+        while (potionUI.fillAmount != 0.0f)
         {
-            potionUI.fillAmount += 1 * time / potionCoolTime;
+            potionUI.fillAmount -= 1 * time / potionCoolTime;
             yield return null;
-            if (potionUI.fillAmount >= 1.0f)
-            {
-                time = 0;
-            }
         }
+        time = 0;
         yield break;
     }
 

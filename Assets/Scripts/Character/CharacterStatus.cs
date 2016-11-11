@@ -10,6 +10,8 @@ public class CharacterStatus
 
 	//Level
 	public int characherLevel;
+    public int maxHealthPoint;
+    public int maxManaPoint;
 
 	//exp
 	public int demendExp;
@@ -48,7 +50,19 @@ public class CharacterStatus
 	
 	public int ManaPoint {get {return this.magicPoint;}}
 
-	public int Defense {get {return this.defense;}}
+    public int MaxHealthPoint
+    {
+        get { return this.maxHealthPoint; }
+        set { maxHealthPoint = value; }
+    }
+
+    public int MaxManaPoint
+    {
+        get { return this.maxManaPoint; }
+        set { maxManaPoint = value; }
+    }
+
+    public int Defense {get {return this.defense;}}
 
 	public float Critical {get {return this.critical;}}
 

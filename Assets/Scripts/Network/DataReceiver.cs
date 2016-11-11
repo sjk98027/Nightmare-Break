@@ -40,12 +40,12 @@ public class DataReceiver : MonoBehaviour
         try
         {
             asyncData.msgSize = (short)tcpSock.EndReceive(asyncResult);
-            Debug.Log("메시지 받음");
-            Debug.Log(asyncData.EP);
         }
-        catch (Exception e)
+        catch
         {
-            Debug.Log("연결 끊김 : " + e.Message);
+            Debug.Log("NetworkManager::TcpReceiveLengthCallback.EndReceive 에러");
+            Debug.Log("서버 연결 끊김");
+            tcpSock.Close();
             return;
         }
 
@@ -54,9 +54,9 @@ public class DataReceiver : MonoBehaviour
             try
             {   //데이터 길이 변환에 성공하면 데이터를 받는다
                 //남은 데이터는 데이터 출처 + 데이터 아이디 + 데이터
-                short msgSize = BitConverter.ToInt16(asyncData.msg, 0);
                 asyncData = new AsyncData(tcpSock);
-                tcpSock.BeginReceive(asyncData.msg, 0, msgSize + NetworkManager.packetSource + NetworkManager.packetId, SocketFlags.None, new AsyncCallback(TcpReceiveDataCallback), asyncData);
+                asyncData.msgSize = BitConverter.ToInt16(asyncData.msg, 0);
+                tcpSock.BeginReceive(asyncData.msg, 0, asyncData.msgSize + NetworkManager.packetSource + NetworkManager.packetId, SocketFlags.None, new AsyncCallback(TcpReceiveDataCallback), asyncData);
             }
             catch
             {   //데이터 길이 변환 실패시 다시 데이터 길이를 받는다
@@ -85,13 +85,15 @@ public class DataReceiver : MonoBehaviour
         catch
         {
             Debug.Log("NetworkManager::HandleAsyncDataReceive.EndReceive 에러");
+            Debug.Log("서버 연결 끊김");
             tcpSock.Close();
             return;
         }
 
-        if (asyncData.msgSize >= NetworkManager.packetId)
+        if (asyncData.msgSize >= NetworkManager.packetSource + NetworkManager.packetId)
         {
-            Array.Resize(ref asyncData.msg, asyncData.msgSize + NetworkManager.packetSource + NetworkManager.packetId);
+            Debug.Log(asyncData.msg.Length);
+            Array.Resize(ref asyncData.msg, asyncData.msgSize);
             Debug.Log(asyncData.msg.Length);
 
             HeaderData headerData = new HeaderData();
@@ -104,18 +106,16 @@ public class DataReceiver : MonoBehaviour
             Debug.Log(msg.Length);
 
             DataPacket packet = new DataPacket(headerData, msg);
-
-            lock (receiveLock)
+            try
             {
-                try
-                {   //큐에 삽입
-                    Debug.Log("Enqueue Message Length : " + packet.msg.Length);
+                lock (receiveLock)
+                {
                     msgs.Enqueue(packet);
                 }
-                catch
-                {
-                    Console.WriteLine("NetworkManager::HandleAsyncDataReceive.Enqueue 에러");
-                }
+            }
+            catch
+            {
+                Console.WriteLine("NetworkManager::HandleAsyncDataReceive.Enqueue 에러");
             }
         }
 
@@ -146,9 +146,8 @@ public class DataReceiver : MonoBehaviour
 
         try
         {
-            Debug.Log("메시지 받음");
             asyncData.msgSize = (short)udpSock.EndReceive(asyncResult);
-            Debug.Log(asyncData.EP);
+            Debug.Log("메시지 받음 : " + asyncData.msgSize);
         }
         catch (Exception e)
         {
@@ -166,11 +165,11 @@ public class DataReceiver : MonoBehaviour
             headerSerializer.SetDeserializedData(asyncData.msg);
             headerSerializer.Deserialize(ref headerData);
 
+            ResizeByteArray(0, NetworkManager.packetSource + NetworkManager.packetId, ref asyncData.msg);
             DataPacket packet = new DataPacket(headerData, asyncData.msg, asyncData.EP);
 
             lock (receiveLock)
-            {   //큐에 삽입
-                Debug.Log("Enqueue Message Length : " + asyncData.msg.Length);
+            {
                 msgs.Enqueue(packet);
             }
 

@@ -85,7 +85,8 @@ public class Monster : MonoBehaviour {
 	}
 
 	public GameObject attackCollider;
-	public void MonsterSet(){
+	public void MonsterSet()
+	{
 		isAlive = true;
 		isHited = false;
 		moveAble = true;
@@ -118,7 +119,8 @@ public class Monster : MonoBehaviour {
     
 
 	//coutine need this method;
-	public void NormalchasePlayer(){
+	public void NormalchasePlayer()
+	{
 		for (int i = 0; i < player.Length; i++) {
 			currentDisTanceArray [i] = Vector3.Distance(player [i].transform.position, transform.position);		
 		}
@@ -130,7 +132,8 @@ public class Monster : MonoBehaviour {
 
 	}
 	//coutine need this method;
-	public void HitedchasePlayer(){
+	public void HitedchasePlayer()
+	{
 		for (int i = 0; i < player.Length; i++) {
 			currentDisTanceArray [i] = Vector3.Distance(player [i].transform.position, transform.position);		
 			if (currentDisTanceArray [i] < 2f) {
@@ -146,7 +149,8 @@ public class Monster : MonoBehaviour {
 		}
 	}
 
-	public void MonsterArrayEraser(GameObject thisGameObject){
+	public void MonsterArrayEraser(GameObject thisGameObject)
+	{
 		//gameObject = null;
 		isAlive=false;
 		thisGameObject.SetActive (false);

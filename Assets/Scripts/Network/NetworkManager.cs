@@ -25,8 +25,8 @@ public class NetworkManager : MonoBehaviour
 
     //테스트 중에서는 하나의 컴퓨터에서 진행하므로 다른 ip 대신에 다른 port를 이용한다
     public const int mainServerPortNumber = 8800;
-    public const int client1PortNumber = 9001;
-    public const int client2PortNumber = 9003;
+    public const int client1PortNumber = 9003;
+    public const int client2PortNumber = 9001;
     public IPEndPoint mainServer;
     public IPEndPoint client1;
     public IPEndPoint client2;
@@ -46,15 +46,16 @@ public class NetworkManager : MonoBehaviour
     DataHandler dataHandler;
     DataSender dataSender;
 
+    public List<EndPoint> Clients { get { return clients; } }
     public DataReceiver DataReceiver { get { return dataReceiver; } }
     public DataHandler DataHandler { get { return dataHandler; } }
     public DataSender DataSender { get { return dataSender; } }
-    
+
     public void InitializeManager(string ip)
     {
         mainServer = new IPEndPoint(IPAddress.Parse(ip), mainServerPortNumber);
         client1 = new IPEndPoint(IPAddress.Parse(ip), client1PortNumber);
-        client2 = new IPEndPoint(IPAddress.Parse(ip), client2PortNumber);
+        client2 = new IPEndPoint(IPAddress.Parse("192.168.94.67"), client2PortNumber);
 
         receiveMsgs = new Queue<DataPacket>();
         sendMsgs = new Queue<DataPacket>();
@@ -83,7 +84,7 @@ public class NetworkManager : MonoBehaviour
             serverSock.Connect(mainServer);
             Debug.Log("서버 연결 성공");
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Debug.Log("서버 연결 실패" + e.Message);
         }

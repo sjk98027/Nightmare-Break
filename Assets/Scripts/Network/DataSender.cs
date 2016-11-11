@@ -38,22 +38,21 @@ public class DataSender : MonoBehaviour
                 packet = sendMsgs.Dequeue();
             }
 
-            Debug.Log("메시지 보냄 : " + packet.endPoint);
-            Debug.Log("메시지 보냄 (길이) : " + packet.headerData.length);
-            Debug.Log("메시지 보냄 (출처) : " + packet.headerData.source);
-            Debug.Log("메시지 보냄 (타입) : " + packet.headerData.id);
-
             HeaderSerializer headerSerializer = new HeaderSerializer();
             headerSerializer.Serialize(packet.headerData);
 
             byte[] header = headerSerializer.GetSerializedData();
             byte[] msg = CombineByte(header, packet.msg);
 
+            Debug.Log("메시지 보냄 (길이) : " + msg.Length);
+            Debug.Log("메시지 출처 : " + header[2]);
+            Debug.Log("메시지 종류 : " + header[3]);
+
             if (packet.headerData.source == (byte)NetworkManager.Source.ClientSource)
             {
                 udpSock.BeginSendTo(msg, 0, msg.Length, SocketFlags.None, packet.endPoint, new AsyncCallback(SendData), null);
             }
-            else if(packet.headerData.source == (byte)NetworkManager.Source.ServerSource)
+            else if (packet.headerData.source == (byte)NetworkManager.Source.ServerSource)
             {
                 tcpSock.Send(msg, 0, msg.Length, SocketFlags.None);
             }
@@ -64,20 +63,6 @@ public class DataSender : MonoBehaviour
     private void SendData(IAsyncResult ar)
     {
         udpSock.EndSend(ar);
-    }
-
-    //연결 확인 - Udp
-    public void ConnectionCheck(List<EndPoint> newEndPoint)
-    {
-        Debug.Log("연결 체크");
-
-        foreach (EndPoint client in newEndPoint)
-        {
-            Debug.Log("확인할 클라이언트 : " + client.ToString());
-            DataPacket packet = CreatePacket(new byte[1], (int)P2PPacketId.ConnectionCheck);
-            packet.endPoint = client;
-            sendMsgs.Enqueue(packet);
-        }
     }
 
     //계정 생성 - Tcp
@@ -114,6 +99,20 @@ public class DataSender : MonoBehaviour
         udpSock.Close();
     }
 
+    //연결 확인 - Udp
+    public void ConnectionCheck(List<EndPoint> newEndPoint)
+    {
+        Debug.Log("연결 체크");
+
+        foreach (EndPoint client in newEndPoint)
+        {
+            Debug.Log("확인할 클라이언트 : " + client.ToString());
+            DataPacket packet = CreatePacket(new byte[1], (int)P2PPacketId.ConnectionCheck);
+            packet.endPoint = client;
+            sendMsgs.Enqueue(packet);
+        }
+    }
+
     //캐릭터의 생성 - Udp
     public void CreateUnitSend(short newId, Vector3 position)
     {
@@ -126,15 +125,19 @@ public class DataSender : MonoBehaviour
         CreateUnitPacket createUnitDataPacket = new CreateUnitPacket(createUnitData);
 
         DataPacket packet = CreatePacket(createUnitDataPacket.GetPacketData(), (int)P2PPacketId.CreateUnit);
-        packet.endPoint = networkManager.client2;
-        sendMsgs.Enqueue(packet);
+
+        foreach (EndPoint client in networkManager.Clients)
+        {
+            packet.endPoint = client;
+            sendMsgs.Enqueue(packet);
+        }
     }
 
     //캐릭터 움직임 - Udp
     public IEnumerator CharacterDataSend()
     {
         characterManager = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterManager>();
-        
+
         while (true)
         {
             yield return null;
@@ -148,12 +151,14 @@ public class DataSender : MonoBehaviour
 
             CharacterStateData characterStateData = new CharacterStateData(state, horizontal, vertical, xPos, yPos, zPos);
             CharacterStatePacket characterStatePacket = new CharacterStatePacket(characterStateData);
-            
-            //현재는 client로 고정되있지만
-            //차후 수정으로 매개변수 newIPEndPoint를 설정하여 여러명의 클라이언트에 동시에 보내도록 수정할 예정
+
             DataPacket packet = CreatePacket(characterStatePacket.GetPacketData(), (int)P2PPacketId.CharacterState);
-            packet.endPoint = networkManager.client2;
-            sendMsgs.Enqueue(packet);
+
+            foreach (EndPoint client in networkManager.Clients)
+            {
+                packet.endPoint = client;
+                sendMsgs.Enqueue(packet);
+            }
         }
     }
 
@@ -168,7 +173,7 @@ public class DataSender : MonoBehaviour
 
         return headerData;
     }
-    
+
     //패킷 생성
     DataPacket CreatePacket(byte[] msg, int id)
     {

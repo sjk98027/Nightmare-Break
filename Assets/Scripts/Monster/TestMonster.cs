@@ -2,175 +2,208 @@
 using System.Collections;
 
 
-public class TestMonster : Monster {
-	
-	private float searchRange = 6.0f;
-	public float moveSpeed;
-
-	public float currentDisTance;
-	public bool monsterAlive;
-
-
-	private Vector3 movePoint;
-	private Vector3 idlePoint = new Vector3(0,0,0);
-
-	private Vector3 boomPoint = new Vector3(100,100,100);
-	private Vector3 attackPoint = new Vector3 (1, 0, 0);
-
-	public enum StatePosition
+public class TestMonster : Monster 
+{
+	public enum BigBearBossPatternName
 	{
-		Idle=1,
-		Run,
-		Attack,
-		Boom,
-		Death
+		BigBearBossIdle =0,
+		BigBearBossRun,
+		BigBearBossAttack,
+		BigBearBossOneHandAttack,
+		BigBearJumpAttack,
+		BigBearBossRoar,
+		BigBearBossDeath
 	};
+	
+	public float searchRange;
+	public float moveSpeed;
+	bool secondAttack;
+	float AttackTime;
 
-	//
-	void Start(){
+    public UIManager uiManager;
+	public BoxCollider[] MonsterWeapon;
+	public bool monsterAlive;
+	public BigBearBossPatternName BigBearBossState;
+	AnimatorStateInfo stateInfo;
+	bool monsterAttack;
+	//public float searchRange;
+
+
+
+
+
+	void Start()
+	{
 		MonsterSet ();
 		PlayerSearch ();
+		secondAttack = false;
+		BoxCollider[] MonsterWeapon = new BoxCollider[2];
+	
 	}
 
 
 
 	//animation Set; move;
-	public void Pattern(StatePosition state)
+
+	void Update()
 	{
-		switch (state)
+
+		if (monsterAlive)
 		{
-		case StatePosition.Idle:
+			stateInfo = this.animator.GetCurrentAnimatorStateInfo (0);
+			searchRange = Vector3.Distance (player [0].transform.position, transform.position);
+			AttackTime += Time.deltaTime;
+
+			if(AttackTime >= 1)
 			{
-				this.transform.Translate(idlePoint * Time.deltaTime, 0);
-                animator.SetInteger("State", 0);
-				break;
-			}
-		case StatePosition.Boom:
-			{
-				idlePoint = this.gameObject.transform.position;
-				StartCoroutine("BoomCoroutine"); break;
-			} // animator boom -> setintter 4
-		case StatePosition.Attack:
-			{
-				StartCoroutine(AttackProcess());
-				break;
-			}
-		case StatePosition.Run:
-			{
-				AnimatorReset();
-				this.transform.Translate(movePoint * moveSpeed * Time.deltaTime, 0);
-				//                    animator.SetInteger("State", 2);
-				searchRange = 10;
-				break;
-			}
-		case StatePosition.Death:
-			{
-				//MonsterArrayEraser(this.gameObject);
-				break;
-			}
-		}
-	}
-
-
-
-	IEnumerator BoomCoroutine() {
-		AnimatorReset ();
-		transform.position = idlePoint;
-		      animator.SetInteger ("State", 4);
-		yield return new WaitForSeconds (3f);
-		//      animator.SetTrigger("Death");
-		yield return new WaitForSeconds (3f);
-		transform.position = boomPoint;
-		Pattern (StatePosition.Death);
-		StopCoroutine (BoomCoroutine());
-	}
-
-	IEnumerator AttackProcess(){
-		AnimatorReset ();
-		moveAble = false;
-		yield return new WaitForSeconds (1.8f);
-		//      animator.SetInteger ("State", 3);
-
-		Debug.Log ("Attack");//attackaniamtion start;
-		yield return new WaitForSeconds (0.03f);
-		//      animator.SetInteger ("State", 0);
-		isAttack= false;
-		moveAble = true;
-		Debug.Log ("AttackEnd");//attackanimation end;
-		StopCoroutine (AttackProcess ());
-	}
-	public void Update()
-	{
-		if (IsAlive)
-		{
-			ChasePlayer();// playerchase;
-
-			if (targetPlayer != null)
-			{
-				currentDisTance = Vector3.Distance(targetPlayer.transform.position, this.gameObject.transform.position);
-				checkDirection = targetPlayer.transform.position - this.gameObject.transform.position;
-
-				if (currentDisTance > searchRange)
+				if(secondAttack)
 				{
-					Pattern(StatePosition.Idle);
-
+					secondAttack = false;
 				}
-				//if this object get Attackmotion pattern(stateposition.boom -> attack), and this monsterlife is 20%, boomPattern start;
-				else if (currentDisTance <= searchRange)
+				else
 				{
-
-					movePoint = new Vector3(checkDirection.x, 0, checkDirection.z);
-
-					if (currentDisTance >= searchRange * 0.2f)
-					{
-						if (moveAble) {
-							Pattern (StatePosition.Run);
-						}
-					}
-					if (currentDisTance < searchRange * 0.2f)
-					{
-						if (!isAttack) {
-							isAttack = true;
-							Pattern (StatePosition.Attack);
-						}
-
-					}
-					if (currentLife / maxLife < 0.2)
-					{
-						Pattern(StatePosition.Boom);
-					}
-
-
-
-					//Debug.Log (animator.GetCurrentAnimatorStateInfo (0));
+					secondAttack = true;	
 				}
 
 
+				AttackTime = 0;
+			}
+
+		
+
+			if (searchRange < attackRange)
+			{
+				
+				if (secondAttack)
+				{
+
+					BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossAttack);
+
+				}
+				else if(!secondAttack)
+				{
+					BigBearBossPattern ((int)BigBearBossPatternName.BigBearJumpAttack);
+
+				}
+			}
+			else if(searchRange > RunRange)
+			{
+				BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossIdle);
+			}
+			else if (searchRange <= RunRange)
+			{
+				BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossRun);
+
+				if(stateInfo.IsName("BigBearBossRun"))
+				{
+
+					//transform.LookAt(player[0].transform.position);
+					transform.Translate ((transform.position-player [0].transform.position)*moveSpeed * Time.deltaTime);
+					//transform.position = Vector3.Lerp (transform.position, player [0].transform.position, Time.deltaTime * moveSpeed);
+				}
+			}
+
+			if (monsterAttack)
+			{
+				for (int i = 0; i < MonsterWeapon.Length; i++)
+				{
+                    //				MonsterWeapon [i].size = new Vector3 (3.6f, 1f, 1.1f);
+                    MonsterWeapon[i].size = new Vector3(0, 0, 0);
+                }
+			}
+			else if (!monsterAttack)
+			{
+				for (int i = 0; i < MonsterWeapon.Length; i++)
+				{
+					MonsterWeapon [i].size = new Vector3 (0,0,0);
+				}
 			}
 
 
 		}
-		if (!IsAlive)
+		if (!monsterAlive)
 		{
-			Pattern(StatePosition.Death);
+			Destroy (this.gameObject, 5);
 		}
 
 	}
+
+
+
+
 
 	public void HitDamage(int _Damage)
 	{
+		stateInfo = this.animator.GetCurrentAnimatorStateInfo (0);
+
+       
 		if (monsterAlive)
 		{
-			Debug.Log ("in");
+			Debug.Log ("in damage");
 			maxLife -= _Damage;
-			if (maxLife > 0)
+            
+            uiManager.bossHp.fillAmount = maxLife / currentLife;
+            if (maxLife > 0)
 			{
 				//hitanimation
 			}
 			else if (maxLife <= 0)
 			{
-				//DeathAni
+				if (!stateInfo.IsName ("BigBearBossDeath"))
+				{
+					BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossDeath);
+					monsterAlive = false;
+					return;
+				}
 			}
 		}
 	}
+
+	public void BigBearBossPattern(int bossState)
+	{
+		monsterAttack = false;
+		switch (bossState)
+		{
+			
+		case 0:
+			BigBearBossState = BigBearBossPatternName.BigBearBossIdle;
+			animator.SetInteger ("state", 0);
+			break;
+		case 1:
+			BigBearBossState = BigBearBossPatternName.BigBearBossRun;
+			animator.SetInteger ("state", 1);
+			break;
+		case 2:
+			BigBearBossState = BigBearBossPatternName.BigBearBossAttack;
+			animator.SetInteger ("state", 2);
+			monsterAttack = true;
+			break;
+
+		case 3:
+			BigBearBossState = BigBearBossPatternName.BigBearBossOneHandAttack;
+			animator.SetInteger ("state", 3);
+			monsterAttack = true;
+			break;
+
+		case 4:
+			BigBearBossState = BigBearBossPatternName.BigBearJumpAttack;
+			animator.SetInteger ("state", 4);
+			break;
+
+		case 5:
+			BigBearBossState = BigBearBossPatternName.BigBearBossRoar;
+			animator.SetInteger ("state", 5);
+			break;
+
+		case 6:
+			BigBearBossState = BigBearBossPatternName.BigBearBossDeath;
+			animator.SetTrigger ("BigBearBossDeath");
+			break;
+		}
+	}
+
+   
+    
+
+
 }

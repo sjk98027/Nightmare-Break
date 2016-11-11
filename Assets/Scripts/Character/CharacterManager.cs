@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class CharacterManager : MonoBehaviour
 {
@@ -54,6 +55,7 @@ public class CharacterManager : MonoBehaviour
 	public bool giganticSwordRendTime;
 	public GameObject giganticSwordTemp;
 	public GameObject giganticSwordCastSword;
+    public UIManager uiManager;
 
 	public int BasicDamage {get {return this.basicDamage;}}
 
@@ -73,6 +75,7 @@ public class CharacterManager : MonoBehaviour
 	{
 		//stat = GetComponent<CharacterStatus> ();
 		animator = GetComponent<Animator> ();
+        charstate.maxHealthPoint = charstate.healthPoint;
 		state = CharacterState.Idle;
 		enemy = null;
 		rigdbody = this.GetComponent<Rigidbody>();
@@ -81,6 +84,7 @@ public class CharacterManager : MonoBehaviour
 		wall = GameObject.FindGameObjectWithTag ("Wall");
 		JumpMove = false;
 		giganticSwordCastSword = GameObject.Find("GiganticSwordSwordCast");
+        
 		//giganticSwordCastSword.SetActive(false);
 		//giganticSword = Resources.Load<GameObject> ("GiganticSword");
 	}
@@ -114,6 +118,7 @@ public class CharacterManager : MonoBehaviour
 			}
 			if (normalAttackState || skillAttackState)
 			{
+				//charWeapon.center = new Vector3 (5.0f,2.1f,0.7f);
 				charWeapon.size = new Vector3 (0.11f,0.11f,1.28f);
 			}
 			else
@@ -220,8 +225,8 @@ public class CharacterManager : MonoBehaviour
 	//swordmaster Skill
 	public void Espada ()
 	{
-		
-		if (state != CharacterState.Jump && state != CharacterState.Maelstrom && state != CharacterState.CutOff && state != CharacterState.GiganticSwordSummon && state != CharacterState.HitDamage && state != CharacterState.Death)
+        StartCoroutine(uiManager.SkillCoolTimeUI(2, 3));
+        if (state != CharacterState.Jump && state != CharacterState.Maelstrom && state != CharacterState.CutOff && state != CharacterState.GiganticSwordSummon && state != CharacterState.HitDamage && state != CharacterState.Death)
 		{
 			Debug.Log ("sk3");
 			//giganticSwordCastSword.SetActive(true);
@@ -249,8 +254,8 @@ public class CharacterManager : MonoBehaviour
 
 	public void Maelstrom ()
 	{
-
-		if (state == CharacterState.Run || state == CharacterState.Idle)
+        StartCoroutine(uiManager.SkillCoolTimeUI(0, 3));
+        if (state == CharacterState.Run || state == CharacterState.Idle)
 		{
 
 			state = CharacterState.Maelstrom;
@@ -291,6 +296,7 @@ public class CharacterManager : MonoBehaviour
 
 	public void CutOffMove ()
 	{
+        StartCoroutine(uiManager.SkillCoolTimeUI(1, 3));
 		Instantiate (Resources.Load<GameObject> ("Effect/SwordShadow"), new Vector3 (transform.position.x, transform.position.y + 1.0f, transform.position.z), Quaternion.identity);
 
 		Ray cutOffDistance = new Ray (this.transform.position, transform.forward); //(this.transform.position);
@@ -309,11 +315,20 @@ public class CharacterManager : MonoBehaviour
 
 	public void SwordDance()
 	{
-		if (state != CharacterState.Jump && state != CharacterState.SwordDance && state != CharacterState.CutOff && state != CharacterState.Maelstrom && state != CharacterState.GiganticSwordSummon && state != CharacterState.HitDamage && state != CharacterState.Death)
+        StartCoroutine(uiManager.SkillCoolTimeUI(3, 3));
+        if (state != CharacterState.Jump && state != CharacterState.SwordDance && state != CharacterState.CutOff && state != CharacterState.Maelstrom && state != CharacterState.GiganticSwordSummon && state != CharacterState.HitDamage && state != CharacterState.Death)
 		{
 			CharState ((int)CharacterState.SwordDance);
 		}
-	}
+        if (transform.rotation.y == 0)
+        {
+            Instantiate(Resources.Load<GameObject>("Effect/SwordDance"), new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z + 0.5f), Quaternion.Euler(-90, 0, 0));
+        }
+        else
+        {
+            Instantiate(Resources.Load<GameObject>("Effect/SwordDance"), new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z - 0.5f), Quaternion.Euler(90, 0, 0));
+        }
+    }
 
 
 
@@ -323,14 +338,15 @@ public class CharacterManager : MonoBehaviour
 		GameObject potionEffect = Instantiate (Resources.Load<GameObject> ("Effect/Potion"), transform.position, Quaternion.identity) as GameObject;
 		potionEffect.transform.parent = gameObject.transform;
 		potionEffect.transform.position += Vector3.up;
-		StartCoroutine (Potion ());
+		StartCoroutine(Potion ());
+        StartCoroutine(uiManager.PotionCoolTimeUI());
 	}
 
 	IEnumerator Potion ()
 	{
 		for (int i = 0; i < potionCount; i++)
 		{
-			stat.healthPoint += (int)(stat.healthPoint * 0.3);
+            charstate.healthPoint += (int)(charstate.healthPoint * 0.3f);
 			yield return new WaitForSeconds (1f);
 		}
 	}
@@ -375,21 +391,25 @@ public class CharacterManager : MonoBehaviour
 			case 4:
 				state = CharacterState.CutOff;
 				animator.SetTrigger ("CutOff");
+				skillAttackState = true;
 				break;
 
 			case 5:
 				state = CharacterState.Maelstrom;
 				animator.SetTrigger ("Maelstrom");
+				skillAttackState = true;
 				break;
 
 			case 6:
 				state = CharacterState.GiganticSwordSummon;
 				animator.SetTrigger ("GiganticSwordSummon");
+				skillAttackState = true;
 				break;
 
 			case 7:
 				state = CharacterState.SwordDance;
 				animator.SetTrigger ("SwordDance");
+				skillAttackState = true;
 				break;
 
 			case 8:
@@ -408,14 +428,16 @@ public class CharacterManager : MonoBehaviour
 	public void HitDamage(int _damage)
 	{
 		if(charAlive)
-		{
-			
+        { 
 			if (charstate.HealthPoint > 0)
 			{
 				this.charstate.HealthPoint -= _damage;
-				CharState ((int)CharacterState.HitDamage);
+                uiManager.hpUI.fillAmount = (float)charstate.healthPoint /charstate.MaxHealthPoint;
+                CharState ((int)CharacterState.HitDamage);
 				Debug.Log("Hit Char"+ this.charstate.HealthPoint);
-			}
+                Debug.Log(uiManager.hpUI.fillAmount);
+
+            }
 			if (charstate.HealthPoint <= 0)
 			{
 				//Death Animation
@@ -443,32 +465,27 @@ public class CharacterManager : MonoBehaviour
 			return CharacterState.Idle;
 		}
 	}
-	public void SetState (CharacterStateData newStateData)
-	{
-		Debug.Log ("상태 설정");
+    public void SetState(CharacterStateData newStateData)
+    {
+        Debug.Log("상태 설정");
 
-        Debug.Log(transform);
-        Debug.Log(newStateData.posX);
-        Debug.Log(newStateData.posY);
-        Debug.Log(newStateData.posZ);
+        animator.SetFloat("Ver", newStateData.ver);
+        animator.SetFloat("Hor", newStateData.hor);
 
-        //animator.SetFloat ("Ver", newStateData.ver);
-        //animator.SetFloat ("Hor", newStateData.hor);
+        if (newStateData.ver < 0)
+        {
+            transform.rotation = Quaternion.Euler(new Vector3(0, 180.0f, 0));
+            charVer = false;
+        }
+        else if (newStateData.ver >= 0)
+        {
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0.0f, 0));
+            charVer = true;
+        }
 
-        //if (newStateData.ver < 0)
-        //{
-        //	transform.rotation = Quaternion.Euler(new Vector3(0, 180.0f, 0));
-        //	charVer = false;
-        //}
-        //else if (newStateData.ver >= 0)
-        //{
-        //	transform.rotation = Quaternion.Euler(new Vector3(0, 0.0f, 0));
-        //	charVer = true;
-        //}
+        transform.position = new Vector3(newStateData.posX, newStateData.posY, newStateData.posZ);
 
-        transform.position = new Vector3 (newStateData.posX, newStateData.posY, newStateData.posZ);
-
-		//CharState(newStateData.state);
-	}
+        CharState(newStateData.state);
+    }
 }
 

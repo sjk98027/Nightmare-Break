@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Net;
-using System.Net.Sockets;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -130,6 +127,10 @@ public class DataHandler : MonoBehaviour
 
         CharacterStatePacket characterStateDataPacket = new CharacterStatePacket(data);
         CharacterStateData characterStateData = characterStateDataPacket.GetData();
+
+        Debug.Log("캐릭터 State : " + characterStateData.state);
+        Debug.Log("캐릭터 Hor, Ver : " + characterStateData.hor + ", " + characterStateData.ver);
+        Debug.Log("캐릭터 위치 : " + characterStateData.posX + ", " + characterStateData.posY + ", " + characterStateData.posZ + ", ");
 
         CharacterManager characterManager = dungeonManager.Players[1].GetComponent<CharacterManager>();
         characterManager.SetState(characterStateData);
