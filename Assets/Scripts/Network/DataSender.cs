@@ -16,6 +16,9 @@ public class DataSender : MonoBehaviour
     Queue<DataPacket> sendMsgs;
     object sendLock;
 
+    float dTime;
+    float cTime;
+
     public void Initialize(Queue<DataPacket> newSendMsgs, object newSendLock, Socket newTcpSock, Socket newUdpSock)
     {
         networkManager = GetComponent<NetworkManager>();
@@ -24,39 +27,48 @@ public class DataSender : MonoBehaviour
         sendLock = newSendLock;
         tcpSock = newTcpSock;
         udpSock = newUdpSock;
+        cTime = Time.time;
+        dTime = Time.time;
     }
 
     //데이타를 전송하는 메소드. byte[] msg 를 newIPEndPoint로 전송한다.
     public void DataSend()
     {
-        if (sendMsgs.Count > 0)
+        cTime = Time.time;
+
+        if (cTime - dTime > 0.1f)
         {
-            DataPacket packet;
+            dTime = Time.time;
 
-            lock (sendLock)
+            if (sendMsgs.Count > 0)
             {
-                packet = sendMsgs.Dequeue();
+                DataPacket packet;
+
+                lock (sendLock)
+                {
+                    packet = sendMsgs.Dequeue();
+                }
+
+                HeaderSerializer headerSerializer = new HeaderSerializer();
+                headerSerializer.Serialize(packet.headerData);
+
+                byte[] header = headerSerializer.GetSerializedData();
+                byte[] msg = CombineByte(header, packet.msg);
+
+                Debug.Log("메시지 보냄 (길이) : " + msg.Length);
+                Debug.Log("메시지 출처 : " + header[2]);
+                Debug.Log("메시지 종류 : " + header[3]);
+
+                if (packet.headerData.source == (byte)NetworkManager.Source.ClientSource)
+                {
+                    udpSock.BeginSendTo(msg, 0, msg.Length, SocketFlags.None, packet.endPoint, new AsyncCallback(SendData), null);
+                }
+                else if (packet.headerData.source == (byte)NetworkManager.Source.ServerSource)
+                {
+                    tcpSock.Send(msg, 0, msg.Length, SocketFlags.None);
+                }
             }
-
-            HeaderSerializer headerSerializer = new HeaderSerializer();
-            headerSerializer.Serialize(packet.headerData);
-
-            byte[] header = headerSerializer.GetSerializedData();
-            byte[] msg = CombineByte(header, packet.msg);
-
-            Debug.Log("메시지 보냄 (길이) : " + msg.Length);
-            Debug.Log("메시지 출처 : " + header[2]);
-            Debug.Log("메시지 종류 : " + header[3]);
-
-            if (packet.headerData.source == (byte)NetworkManager.Source.ClientSource)
-            {
-                udpSock.BeginSendTo(msg, 0, msg.Length, SocketFlags.None, packet.endPoint, new AsyncCallback(SendData), null);
-            }
-            else if (packet.headerData.source == (byte)NetworkManager.Source.ServerSource)
-            {
-                tcpSock.Send(msg, 0, msg.Length, SocketFlags.None);
-            }
-        }
+        }        
     }
 
     //비동기 콜백 메소드
