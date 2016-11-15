@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 7a4e2e31381dc8741b4449cd0a2c4c31
-timeCreated: 1478744152
+guid: a16109e8564790e479fef302d05e86f6
+timeCreated: 1479112295
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -67,8 +67,8 @@ ModelImporter:
     100118: pants
     100120: shoes
     100122: sword
-    100124: //RootNode
-    100126: t_hair
+    100124: t_hair
+    100126: //RootNode
     400000: b_hair
     400002: Bip01
     400004: Bip01 Footsteps
@@ -131,8 +131,8 @@ ModelImporter:
     400118: pants
     400120: shoes
     400122: sword
-    400124: //RootNode
-    400126: t_hair
+    400124: t_hair
+    400126: //RootNode
     2300000: Object13
     3300000: Object13
     4300000: Object13
@@ -146,7 +146,7 @@ ModelImporter:
     4300016: face
     4300018: sword
     4300020: hide_sword
-    7400000: WarriorNormalAttack
+    7400000: Attack1
     9500000: //RootNode
     13700000: b_hair
     13700002: cloth
@@ -180,10 +180,10 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: WarriorNormalAttack
+      name: Attack1
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 110
+      lastFrame: 31
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -203,7 +203,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.9758658
+      - time: 0.99512196
         functionName: AnimationEnd
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: f571c7749b70cf74582caeb77568ff89,
