@@ -31,6 +31,8 @@ public class charWeapon : MonoBehaviour {
 
 	void OnTriggerEnter(Collider coll)
 	{
+		Debug.Log ("in git");
+
 		if (coll.gameObject.layer == LayerMask.NameToLayer ("Enermy"))
 		{
 			
