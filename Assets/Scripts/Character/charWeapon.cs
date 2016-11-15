@@ -31,7 +31,7 @@ public class charWeapon : MonoBehaviour {
 
 	void OnTriggerEnter(Collider coll)
 	{
-		if (coll.gameObject.layer == LayerMask.NameToLayer ("Monster"))
+		if (coll.gameObject.layer == LayerMask.NameToLayer ("Enermy"))
 		{
 			
 			TestMonster monsterDamage = coll.gameObject.GetComponent<TestMonster> ();
@@ -51,8 +51,7 @@ public class charWeapon : MonoBehaviour {
 				}
 				if(damage !=0)
 				{
-					Debug.Log (damage);
-					
+
 					monsterDamage.HitDamage(damage);
 					damage = 0;
 				}

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class CharacterManager : MonoBehaviour
 {
@@ -114,6 +115,7 @@ public class CharacterManager : MonoBehaviour
 			}
 			if (normalAttackState || skillAttackState)
 			{
+				//charWeapon.center = new Vector3 (5.0f,2.1f,0.7f);
 				charWeapon.size = new Vector3 (0.11f,0.11f,1.28f);
 			}
 			else
@@ -181,10 +183,24 @@ public class CharacterManager : MonoBehaviour
 
 	public void NormalAttack ()
 	{
-		if (state != CharacterState.CutOff && state != CharacterState.Attack  && state != CharacterState.Maelstrom && state != CharacterState.GiganticSwordSummon && state != CharacterState.HitDamage && state != CharacterState.Death)
+		//if ( state != CharacterState.CutOff && state != CharacterState.Attack  && state != CharacterState.Maelstrom && state != CharacterState.GiganticSwordSummon && state != CharacterState.HitDamage && state != CharacterState.Death)
+		if ( state != CharacterState.CutOff  && state != CharacterState.Maelstrom && state != CharacterState.GiganticSwordSummon && state != CharacterState.HitDamage && state != CharacterState.Death)
 		{
 			normalAttackState = true;
 			CharState ((int)CharacterState.Attack);
+
+			if (JumpMove)
+			{
+				rigdbody.mass = 100;
+				Debug.Log ("mass100");
+			}
+			else
+			{
+				rigdbody.mass = 1;
+				Debug.Log ("mass1");
+			}
+
+
 		}
 	}
 
@@ -203,17 +219,18 @@ public class CharacterManager : MonoBehaviour
 	{
 		runState = this.animator.GetCurrentAnimatorStateInfo (0);
 
-		if (state != CharacterState.Jump && state != CharacterState.Maelstrom && state != CharacterState.CutOff && state != CharacterState.Maelstrom && state != CharacterState.GiganticSwordSummon)
+		if (state != CharacterState.Jump  && state != CharacterState.Attack && state != CharacterState.Maelstrom && state != CharacterState.CutOff && state != CharacterState.Maelstrom && state != CharacterState.GiganticSwordSummon)
 		{
 			CharState ((int)CharacterState.Jump);
 		}
+
 
 	}
 
 	public void JumpForce ()
 	{
-		rigdbody.AddForce (Vector3.up * jumpPower, ForceMode.Impulse);
-		JumpMove = true;
+			rigdbody.AddForce (Vector3.up * jumpPower, ForceMode.Impulse);
+			JumpMove = true;
 	}
 
 
@@ -375,21 +392,25 @@ public class CharacterManager : MonoBehaviour
 			case 4:
 				state = CharacterState.CutOff;
 				animator.SetTrigger ("CutOff");
+				skillAttackState = true;
 				break;
 
 			case 5:
 				state = CharacterState.Maelstrom;
 				animator.SetTrigger ("Maelstrom");
+				skillAttackState = true;
 				break;
 
 			case 6:
 				state = CharacterState.GiganticSwordSummon;
 				animator.SetTrigger ("GiganticSwordSummon");
+				skillAttackState = true;
 				break;
 
 			case 7:
 				state = CharacterState.SwordDance;
 				animator.SetTrigger ("SwordDance");
+				skillAttackState = true;
 				break;
 
 			case 8:
@@ -447,28 +468,22 @@ public class CharacterManager : MonoBehaviour
 	{
 		Debug.Log ("상태 설정");
 
-        Debug.Log(transform);
-        Debug.Log(newStateData.posX);
-        Debug.Log(newStateData.posY);
-        Debug.Log(newStateData.posZ);
+        animator.SetFloat ("Ver", newStateData.ver);
+        animator.SetFloat ("Hor", newStateData.hor);
 
-        //animator.SetFloat ("Ver", newStateData.ver);
-        //animator.SetFloat ("Hor", newStateData.hor);
+        if (newStateData.ver < 0)
+        {
+        	transform.rotation = Quaternion.Euler(new Vector3(0, 180.0f, 0));
+        	charVer = false;
+        }
+        else if (newStateData.ver >= 0)
+        {
+        	transform.rotation = Quaternion.Euler(new Vector3(0, 0.0f, 0));
+        	charVer = true;
+        }
+		transform.position = new Vector3 ((float)Math.Round((double)newStateData.posX, 3), (float)Math.Round((double)newStateData.posY, 3), (float)Math.Round((double)newStateData.posZ, 3));
 
-        //if (newStateData.ver < 0)
-        //{
-        //	transform.rotation = Quaternion.Euler(new Vector3(0, 180.0f, 0));
-        //	charVer = false;
-        //}
-        //else if (newStateData.ver >= 0)
-        //{
-        //	transform.rotation = Quaternion.Euler(new Vector3(0, 0.0f, 0));
-        //	charVer = true;
-        //}
-
-        transform.position = new Vector3 (newStateData.posX, newStateData.posY, newStateData.posZ);
-
-		//CharState(newStateData.state);
+		CharState(newStateData.state);
 	}
 }
 
