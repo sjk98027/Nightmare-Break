@@ -14,10 +14,9 @@ public class DataReceiver : MonoBehaviour
     Queue<DataPacket> msgs;
 
     //클래스 초기화
-    public void Initialize(Queue<DataPacket> receiveMsgs, object newReceiveLock, Socket newSock)
+    public void Initialize(Queue<DataPacket> receiveMsgs, Socket newSock)
     {
         msgs = receiveMsgs;
-        receiveLock = newReceiveLock;
         tcpSock = newSock;
         StartTcpReceive();
     }
@@ -108,24 +107,7 @@ public class DataReceiver : MonoBehaviour
         {
             Array.Resize(ref asyncData.msg, asyncData.msgSize);
 
-            HeaderData headerData = new HeaderData();
-            HeaderSerializer headerSerializer = new HeaderSerializer();
-
-            try
-            {
-                headerSerializer.SetDeserializedData(asyncData.msg);
-                headerSerializer.Deserialize(ref headerData);
-            }
-            catch
-            {
-                Debug.Log("DataReceiver::TcpReceiveDataReceive.Desrerialize 에러");
-                asyncData = new AsyncData(tcpSock);
-                tcpSock.BeginReceive(asyncData.msg, 0, NetworkManager.packetLength, SocketFlags.None, new AsyncCallback(TcpReceiveLengthCallback), asyncData);
-                return;
-            }
-
-            ResizeByteArray(0, NetworkManager.packetSource + NetworkManager.packetId, ref asyncData.msg);
-            DataPacket packet = new DataPacket(headerData, asyncData.msg);
+            DataPacket packet = new DataPacket(asyncData.msg, tcpSock.RemoteEndPoint);
 
             try
             {
@@ -182,32 +164,15 @@ public class DataReceiver : MonoBehaviour
             {
                 byte[] msgSize = ResizeByteArray(0, NetworkManager.packetLength, ref asyncData.msg);
                 asyncData.msgSize = (short)(BitConverter.ToInt16(msgSize, 0) + NetworkManager.packetSource + NetworkManager.packetId);
-                Array.Resize(ref asyncData.msg, asyncData.msgSize);
 
-                HeaderData headerData = new HeaderData();
-                HeaderSerializer headerSerializer = new HeaderSerializer();
-
-                try
-                {
-                    headerSerializer.SetDeserializedData(asyncData.msg);
-                    headerSerializer.Deserialize(ref headerData);
-                }
-                catch
-                {
-                    Debug.Log("DataReceiver::UdpReceiveDataCallback.Deserialize 에러");
-                    break;
-                }
-
-                ResizeByteArray(0, NetworkManager.packetSource + NetworkManager.packetId, ref asyncData.msg);
                 byte[] msg = ResizeByteArray(0, asyncData.msgSize, ref asyncData.msg);
-
-                DataPacket packet = new DataPacket(headerData, msg, asyncData.EP);
+                DataPacket packet = new DataPacket(msg, asyncData.EP);
 
                 lock (receiveLock)
                 {
                     msgs.Enqueue(packet);
                 }
-            }            
+            }
 
             //다시 수신 준비
             asyncData = new AsyncData(udpSock, asyncData.EP);
@@ -262,20 +227,11 @@ public class AsyncData
 public class DataPacket
 {
     public byte[] msg;
-    public HeaderData headerData;
     public EndPoint endPoint;
 
-    public DataPacket(HeaderData newHeaderData, byte[] newMsg)
+    public DataPacket(byte[] newMsg, EndPoint newEndPoint)
     {
         msg = newMsg;
-        headerData = newHeaderData;
-        endPoint = null;
-    }
-
-    public DataPacket(HeaderData newHeaderData, byte[] newMsg, EndPoint newEndPoint)
-    {
-        msg = newMsg;
-        headerData = newHeaderData;
         endPoint = newEndPoint;
     }
 }

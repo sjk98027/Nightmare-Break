@@ -1,5 +1,4 @@
-﻿
-public class CreateRoomPacket : IPacket<CreateRoomData>
+﻿public class CreateRoomPacket : Packet<CreateRoomData>
 {
     public class CreateRoomSerializer : Serializer
     {
@@ -39,9 +38,6 @@ public class CreateRoomPacket : IPacket<CreateRoomData>
     }
 
     CreateRoomData m_data;
-    int packetId;
-
-    public int PacketId { get { return packetId; } set { packetId = value; } }
 
     public CreateRoomPacket(CreateRoomData data) // 데이터로 초기화(송신용)
     {
@@ -56,14 +52,14 @@ public class CreateRoomPacket : IPacket<CreateRoomData>
         serializer.Deserialize(ref m_data);
     }
 
-    public byte[] GetPacketData() // 바이트형 패킷(송신용)
+    public override byte[] GetPacketData() // 바이트형 패킷(송신용)
     {
         CreateRoomSerializer serializer = new CreateRoomSerializer();
         serializer.Serialize(m_data);
         return serializer.GetSerializedData();
     }
 
-    public CreateRoomData GetData() // 데이터 얻기(수신용)
+    public override CreateRoomData GetData() // 데이터 얻기(수신용)
     {
         return m_data;
     }

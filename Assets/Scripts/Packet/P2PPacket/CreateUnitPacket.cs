@@ -1,8 +1,7 @@
-﻿public class CreateUnitPacket : IPacket<CreateUnitData>
+﻿public class CreateUnitPacket : Packet<CreateUnitData>
 {
     public class CreateUnitSerializer : Serializer
     {
-
         public bool Serialize(CreateUnitData data)
         {
             bool ret = true;
@@ -39,9 +38,6 @@
     }
 
     CreateUnitData m_data;
-    int packetId;
-
-    public int PacketId { get { return packetId; } set { packetId = value; } }
 
     public CreateUnitPacket(CreateUnitData data) // 데이터로 초기화(송신용)
     {
@@ -56,14 +52,14 @@
         serializer.Deserialize(ref m_data);
     }
 
-    public byte[] GetPacketData() // 바이트형 패킷(송신용)
+    public override byte[] GetPacketData() // 바이트형 패킷(송신용)
     {
         CreateUnitSerializer serializer = new CreateUnitSerializer();
         serializer.Serialize(m_data);
         return serializer.GetSerializedData();
     }
 
-    public CreateUnitData GetData() // 데이터 얻기(수신용)
+    public override CreateUnitData GetData() // 데이터 얻기(수신용)
     {
         return m_data;
     }

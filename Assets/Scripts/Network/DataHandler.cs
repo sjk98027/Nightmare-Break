@@ -11,8 +11,6 @@ public class DataHandler : MonoBehaviour
 
     object receiveLock;
 
-    byte[] msg;
-
     public delegate P2PPacketId P2PRecvNotifier(byte[] data);
     public delegate ServerPacketId ServerRecvNotifier(byte[] data);
     P2PRecvNotifier p2pRecvNotifier;
@@ -20,14 +18,11 @@ public class DataHandler : MonoBehaviour
     private Dictionary<int, P2PRecvNotifier> p2p_notifier = new Dictionary<int, P2PRecvNotifier>();
     private Dictionary<int, ServerRecvNotifier> server_notifier = new Dictionary<int, ServerRecvNotifier>();
 
-    public void Initialize(Queue<DataPacket> receiveQueue, object newReceiveLock, Queue<DataPacket> sendQueue, object newSendLock)
+    public void Initialize(Queue<DataPacket> receiveQueue, Queue<DataPacket> sendQueue)
     {
         receiveMsgs = receiveQueue;
-        receiveLock = newReceiveLock;
 
         networkManager = GetComponent<NetworkManager>();
-
-        msg = new byte[1024];
 
         SetServerNotifier();
         SetUdpNotifier();
@@ -58,32 +53,35 @@ public class DataHandler : MonoBehaviour
                 packet = receiveMsgs.Dequeue();
             }
             
-            msg = packet.msg;
+            byte[] msg = packet.msg;
 
-            Debug.Log("Dequeue Message Length : " + msg.Length);
+            HeaderData headerData = new HeaderData();
+            HeaderSerializer headerSerializer = new HeaderSerializer();
+            headerSerializer.SetDeserializedData(msg);
+            headerSerializer.Deserialize(ref headerData);
 
-            if (packet.headerData.source == (byte)NetworkManager.Source.ServerSource)
+            DataReceiver.ResizeByteArray(0, NetworkManager.packetSource + NetworkManager.packetId, ref msg);
+
+            if (packet.endPoint != null)
             {
-                if (server_notifier.TryGetValue(packet.headerData.id, out serverRecvNotifier))
+                if (server_notifier.TryGetValue(headerData.id, out serverRecvNotifier))
                 {
                     serverRecvNotifier(msg);
                 }
                 else
                 {
-                    Debug.Log("DataHandler::Server.TryGetValue 에러 " + packet.headerData.id);
-                    packet.headerData.id = (byte)ServerPacketId.None;
+                    Debug.Log("DataHandler::Server.TryGetValue 에러 " + headerData.id);
                 }
             }
-            else if (packet.headerData.source == (byte)NetworkManager.Source.ClientSource)
+            else if (packet.endPoint == null)
             {
-                if (p2p_notifier.TryGetValue(packet.headerData.id, out p2pRecvNotifier))
+                if (p2p_notifier.TryGetValue(headerData.id, out p2pRecvNotifier))
                 {
                     p2pRecvNotifier(msg);
                 }
                 else
                 {
-                    Debug.Log("DataHandler::P2P.TryGetValue 에러 " + packet.headerData.id);
-                    packet.headerData.id = (byte)P2PPacketId.None;
+                    Debug.Log("DataHandler::P2P.TryGetValue 에러 " + headerData.id);
                 }
             }
         }

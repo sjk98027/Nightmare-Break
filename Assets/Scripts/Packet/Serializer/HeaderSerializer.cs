@@ -1,6 +1,5 @@
 ﻿public class HeaderSerializer : Serializer
 {
-
     public bool Serialize(HeaderData data)
     {
         // 기존 데이터를 클리어한다.

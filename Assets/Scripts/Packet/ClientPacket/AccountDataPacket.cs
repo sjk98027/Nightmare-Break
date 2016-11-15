@@ -1,5 +1,4 @@
-﻿
-public class AccountDataPacket : IPacket<AccountData>
+﻿public class AccountDataPacket : Packet<AccountData>
 {
     public class AccountDataSerializer : Serializer
     {
@@ -37,9 +36,6 @@ public class AccountDataPacket : IPacket<AccountData>
     }
 
     AccountData m_data;
-    int packetId;
-
-    public int PacketId { get { return packetId; } set { packetId = value; } }
 
     public AccountDataPacket(AccountData data) // 데이터로 초기화(송신용)
     {
@@ -54,14 +50,14 @@ public class AccountDataPacket : IPacket<AccountData>
         serializer.Deserialize(ref m_data);
     }
 
-    public byte[] GetPacketData() // 바이트형 패킷(송신용)
+    public override byte[] GetPacketData() // 바이트형 패킷(송신용)
     {
         AccountDataSerializer serializer = new AccountDataSerializer();
         serializer.Serialize(m_data);
         return serializer.GetSerializedData();
     }
 
-    public AccountData GetData()
+    public override AccountData GetData()
     {
         return m_data;
     }

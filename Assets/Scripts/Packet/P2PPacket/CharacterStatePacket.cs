@@ -1,4 +1,4 @@
-﻿public class CharacterStatePacket : IPacket<CharacterStateData>
+﻿public class CharacterStatePacket : Packet<CharacterStateData>
 {
     public class CharacterStateSerializer : Serializer
     {
@@ -48,9 +48,6 @@
     }
 
     CharacterStateData m_data;
-    int packetId;
-
-    public int PacketId { get { return packetId; } set { packetId = value; } }
 
     public CharacterStatePacket(CharacterStateData data) // 데이터로 초기화(송신용)
     {
@@ -65,14 +62,14 @@
         serializer.Deserialize(ref m_data);
     }
 
-    public byte[] GetPacketData() // 바이트형 패킷(송신용)
+    public override byte[] GetPacketData() // 바이트형 패킷(송신용)
     {
         CharacterStateSerializer serializer = new CharacterStateSerializer();
         serializer.Serialize(m_data);
         return serializer.GetSerializedData();
     }
 
-    public CharacterStateData GetData() // 데이터 얻기(수신용)
+    public override CharacterStateData GetData() // 데이터 얻기(수신용)
     {
         return m_data;
     }

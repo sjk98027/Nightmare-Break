@@ -14,17 +14,17 @@ public class DataSender : MonoBehaviour
     Socket udpSock;
 
     Queue<DataPacket> sendMsgs;
-    object sendLock;
+
+    byte[] udpMsg;
 
     float dTime;
     float cTime;
 
-    public void Initialize(Queue<DataPacket> newSendMsgs, object newSendLock, Socket newTcpSock, Socket newUdpSock)
+    public void Initialize(Queue<DataPacket> newSendMsgs, Socket newTcpSock, Socket newUdpSock)
     {
         networkManager = GetComponent<NetworkManager>();
 
         sendMsgs = newSendMsgs;
-        sendLock = newSendLock;
         tcpSock = newTcpSock;
         udpSock = newUdpSock;
         cTime = Time.time;
@@ -34,41 +34,23 @@ public class DataSender : MonoBehaviour
     //데이타를 전송하는 메소드. byte[] msg 를 newIPEndPoint로 전송한다.
     public void DataSend()
     {
-        cTime = Time.time;
+        dTime = Time.time;
 
-        if (cTime - dTime > 0.1f)
+        if (sendMsgs.Count > 0)
         {
-            dTime = Time.time;
+            DataPacket packet;
+            
+            packet = sendMsgs.Dequeue();
 
-            if (sendMsgs.Count > 0)
+            if (packet.endPoint != null)
             {
-                DataPacket packet;
-
-                lock (sendLock)
-                {
-                    packet = sendMsgs.Dequeue();
-                }
-
-                HeaderSerializer headerSerializer = new HeaderSerializer();
-                headerSerializer.Serialize(packet.headerData);
-
-                byte[] header = headerSerializer.GetSerializedData();
-                byte[] msg = CombineByte(header, packet.msg);
-
-                Debug.Log("메시지 보냄 (길이) : " + msg.Length);
-                Debug.Log("메시지 출처 : " + header[2]);
-                Debug.Log("메시지 종류 : " + header[3]);
-
-                if (packet.headerData.source == (byte)NetworkManager.Source.ClientSource)
-                {
-                    udpSock.BeginSendTo(msg, 0, msg.Length, SocketFlags.None, packet.endPoint, new AsyncCallback(SendData), null);
-                }
-                else if (packet.headerData.source == (byte)NetworkManager.Source.ServerSource)
-                {
-                    tcpSock.Send(msg, 0, msg.Length, SocketFlags.None);
-                }
+                udpSock.BeginSendTo(packet.msg, 0, packet.msg.Length, SocketFlags.None, packet.endPoint, new AsyncCallback(SendData), null);
             }
-        }        
+            else if (packet.endPoint == null)
+            {
+                tcpSock.Send(packet.msg, 0, packet.msg.Length, SocketFlags.None);
+            }
+        }
     }
 
     //비동기 콜백 메소드
@@ -84,22 +66,20 @@ public class DataSender : MonoBehaviour
 
         AccountData accountData = new AccountData(id, pw);
         AccountDataPacket accountDataPacket = new AccountDataPacket(accountData);
-        accountDataPacket.PacketId = (int)ClientPacketId.CreateAccount;
-
-        DataPacket packet = CreatePacket(accountDataPacket.GetPacketData(), accountDataPacket.PacketId);
+        accountDataPacket.SetPacketId((int)ClientPacketId.CreateAccount);
+        
+        byte[] packet = CreatePacket(accountDataPacket);
     }
 
     //게임 종료 - Tcp
     public void GameClose()
     {
         Debug.Log("게임 종료");
-        DataPacket packet = CreatePacket(new byte[1], (int)ClientPacketId.GameClose);
+        ResultData resultData = new ResultData(new byte());
+        ResultDataPacket resultDataPacket = new ResultDataPacket(resultData);
+        resultDataPacket.SetPacketId((int)ClientPacketId.GameClose);
 
-        HeaderSerializer headerSerializer = new HeaderSerializer();
-        headerSerializer.Serialize(packet.headerData);
-
-        byte[] header = headerSerializer.GetSerializedData();
-        byte[] msg = CombineByte(header, packet.msg);
+        byte[] msg = resultDataPacket.GetPacketData();
 
         Debug.Log("메시지 보냄 (길이) : " + msg.Length);
         Debug.Log("메시지 보냄 (출처) : " + msg[2]);
@@ -115,11 +95,14 @@ public class DataSender : MonoBehaviour
     public void ConnectionCheck(List<EndPoint> newEndPoint)
     {
         Debug.Log("연결 체크");
+        ResultData resultData = new ResultData(new byte());
+        ResultDataPacket resultDataPacket = new ResultDataPacket(resultData);
+        resultDataPacket.SetPacketId((int)P2PPacketId.ConnectionCheck);
 
-        foreach (EndPoint client in newEndPoint)
+        DataPacket packet = new DataPacket(resultDataPacket.GetPacketData(), null);
+
+        foreach (EndPoint client in networkManager.Clients)
         {
-            Debug.Log("확인할 클라이언트 : " + client.ToString());
-            DataPacket packet = CreatePacket(new byte[1], (int)P2PPacketId.ConnectionCheck);
             packet.endPoint = client;
             sendMsgs.Enqueue(packet);
         }
@@ -135,14 +118,11 @@ public class DataSender : MonoBehaviour
 
         CreateUnitData createUnitData = new CreateUnitData(id, xPos, yPos, zPos);
         CreateUnitPacket createUnitDataPacket = new CreateUnitPacket(createUnitData);
+        createUnitDataPacket.SetPacketId((int)P2PPacketId.CreateUnit);
 
-        DataPacket packet = CreatePacket(createUnitDataPacket.GetPacketData(), (int)P2PPacketId.CreateUnit);
-
-        foreach (EndPoint client in networkManager.Clients)
-        {
-            packet.endPoint = client;
-            sendMsgs.Enqueue(packet);
-        }
+        byte[] packet = CreatePacket(createUnitDataPacket);
+        
+        udpMsg = CombineByte(udpMsg, packet);
     }
 
     //캐릭터 움직임 - Udp
@@ -164,33 +144,47 @@ public class DataSender : MonoBehaviour
             CharacterStateData characterStateData = new CharacterStateData(state, horizontal, vertical, xPos, yPos, zPos);
             CharacterStatePacket characterStatePacket = new CharacterStatePacket(characterStateData);
 
-            DataPacket packet = CreatePacket(characterStatePacket.GetPacketData(), (int)P2PPacketId.CharacterState);
+            byte[] packet = CreatePacket(characterStatePacket);
 
-            foreach (EndPoint client in networkManager.Clients)
-            {
-                packet.endPoint = client;
-                sendMsgs.Enqueue(packet);
-            }
+            udpMsg = CombineByte(udpMsg, packet);
+        }
+    }
+
+    public void EnqueueMessage()
+    {
+        DataPacket packet = new DataPacket(udpMsg, null);
+
+        foreach (EndPoint client in networkManager.Clients)
+        {
+            packet.endPoint = client;
+            sendMsgs.Enqueue(packet);
         }
     }
 
     //패킷의 헤더 생성
-    HeaderData CreateHeader(short msgLength, int id)
+    byte[] CreateHeader<T>(Packet<T> data)
     {
+        byte[] msg = data.GetPacketData();
+
         HeaderData headerData = new HeaderData();
+        HeaderSerializer headerSerializer = new HeaderSerializer();
 
-        headerData.id = (byte)id;
-        headerData.source = (byte)NetworkManager.Source.ClientSource;
-        headerData.length = msgLength;
+        headerData.id = (byte)data.GetPacketId();
+        headerData.source = (byte)NetworkManager.Source.ServerSource;
+        headerData.length = (short)msg.Length;
 
-        return headerData;
+        headerSerializer.Serialize(headerData);
+        byte[] header = headerSerializer.GetSerializedData();
+
+        return header;
     }
 
     //패킷 생성
-    DataPacket CreatePacket(byte[] msg, int id)
+    byte[] CreatePacket<T>(Packet<T> data)
     {
-        HeaderData header = CreateHeader((short)msg.Length, id);
-        DataPacket packet = new DataPacket(header, msg);
+        byte[] msg = data.GetPacketData();
+        byte[] header = CreateHeader(data);
+        byte[] packet = CombineByte(header, msg);
 
         return packet;
     }
