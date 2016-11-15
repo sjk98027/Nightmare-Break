@@ -22,7 +22,6 @@
 		float luminosity = 0.299 * renderTex.r + 0.587 * renderTex.g+ 0.114 * renderTex.b;
 
 		 renderTex.r = lerp(renderTex.r,luminosity,_LuminosityAmount);
-
 		 renderTex.g = 0.0f;
 		 renderTex.b = 0.0f; 
 

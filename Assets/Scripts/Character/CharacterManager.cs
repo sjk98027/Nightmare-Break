@@ -331,9 +331,9 @@ public class CharacterManager : MonoBehaviour
     }
 
 
-
-	//using Potion
-	public void UsingPotion ()
+    
+    //using Potion
+    public void UsingPotion ()
 	{   //Potion Effect create
 		GameObject potionEffect = Instantiate (Resources.Load<GameObject> ("Effect/Potion"), transform.position, Quaternion.identity) as GameObject;
 		potionEffect.transform.parent = gameObject.transform;
@@ -350,11 +350,11 @@ public class CharacterManager : MonoBehaviour
 			yield return new WaitForSeconds (1f);
 		}
 	}
+   
 
-
-	//Animation Method
-	void SetStateDefault ()
-	{
+    //Animation Method
+    void SetStateDefault ()
+	{  
 		animator.SetBool ("Idle", false);
 		animator.SetBool ("Run", false);
 	}
