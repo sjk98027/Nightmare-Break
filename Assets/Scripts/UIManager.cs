@@ -50,14 +50,14 @@ public class UIManager : MonoBehaviour
         yield break;
     }
 
-    void HpUI(float currentHP)
+    void HpUI(int maxHp, int currentHP)
     {
-
+        hpUI.fillAmount = maxHp / currentHP;
     }
 
-    void MpUI(float currentMP)
+    void MpUI(int maxMp, int currentMP)
     {
-
+        mpUI.fillAmount = maxMp / currentMP;
     }
 
 
