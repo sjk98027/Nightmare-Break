@@ -26,5 +26,6 @@ public enum P2PPacketId
     ConnectionCheck,
     ConnectionAnswer,
     CreateUnit,
-    CharacterState,
+    CharacterPosition,
+    CharacterAction,
 }

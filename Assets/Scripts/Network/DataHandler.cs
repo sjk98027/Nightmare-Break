@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class DataHandler : MonoBehaviour
@@ -8,8 +7,6 @@ public class DataHandler : MonoBehaviour
     DungeonManager dungeonManager;
 
     public Queue<DataPacket> receiveMsgs;
-
-    object receiveLock;
 
     public delegate P2PPacketId P2PRecvNotifier(byte[] data);
     public delegate ServerPacketId ServerRecvNotifier(byte[] data);
@@ -37,7 +34,8 @@ public class DataHandler : MonoBehaviour
     {
         p2p_notifier.Add((int)P2PPacketId.ConnectionCheck, ConnectionAnswer);
         p2p_notifier.Add((int)P2PPacketId.CreateUnit, CreateUnit);
-        p2p_notifier.Add((int)P2PPacketId.CharacterState, CharacterState);
+        p2p_notifier.Add((int)P2PPacketId.CharacterPosition, CharacterPosition);
+        p2p_notifier.Add((int)P2PPacketId.CharacterAction, CharacterAction);
     }
 
     public void DataHandle()
@@ -48,10 +46,7 @@ public class DataHandler : MonoBehaviour
             //패킷 : 메시지 타입 + 메시지 내용
             DataPacket packet;
 
-            lock (receiveLock)
-            {
-                packet = receiveMsgs.Dequeue();
-            }
+            packet = receiveMsgs.Dequeue();
             
             byte[] msg = packet.msg;
 
@@ -60,9 +55,13 @@ public class DataHandler : MonoBehaviour
             headerSerializer.SetDeserializedData(msg);
             headerSerializer.Deserialize(ref headerData);
 
+            Debug.Log("패킷 길이 : " + msg.Length);
+            Debug.Log("패킷 아이디 : " + headerData.id);
+            Debug.Log("패킷 출처 : " + headerData.source);
+
             DataReceiver.ResizeByteArray(0, NetworkManager.packetSource + NetworkManager.packetId, ref msg);
 
-            if (packet.endPoint != null)
+            if (packet.endPoint == null)
             {
                 if (server_notifier.TryGetValue(headerData.id, out serverRecvNotifier))
                 {
@@ -73,7 +72,7 @@ public class DataHandler : MonoBehaviour
                     Debug.Log("DataHandler::Server.TryGetValue 에러 " + headerData.id);
                 }
             }
-            else if (packet.endPoint == null)
+            else if (packet.endPoint != null)
             {
                 if (p2p_notifier.TryGetValue(headerData.id, out p2pRecvNotifier))
                 {
@@ -87,6 +86,7 @@ public class DataHandler : MonoBehaviour
         }
     }
 
+    //Server
     public ServerPacketId Match(byte[] data)
     {
         Debug.Log("매치 완료");
@@ -98,6 +98,7 @@ public class DataHandler : MonoBehaviour
         return ServerPacketId.None;
     }
 
+    //Client
     public P2PPacketId ConnectionAnswer(byte[] data)
     {
         Debug.Log("연결 확인 답장");
@@ -107,8 +108,10 @@ public class DataHandler : MonoBehaviour
         return P2PPacketId.ConnectionAnswer;
     }
 
+    //Client
     public P2PPacketId CreateUnit(byte[] data)
     {
+        Debug.Log("유닛 생성");
         CreateUnitPacket createUnitPacket = new CreateUnitPacket(data);
         CreateUnitData createUnitData = createUnitPacket.GetData();
 
@@ -117,21 +120,35 @@ public class DataHandler : MonoBehaviour
         return P2PPacketId.None;
     }
 
-    //원래는 보낸 IP를 체크해서 몇번째 플레이어인지 확인 후 그 플레이어의 캐릭터를 조정해야한다.
-    //현재는 고정적으로 1번 플레이어를 설정
-    public P2PPacketId CharacterState(byte[] data)
+    //Client
+    public P2PPacketId CharacterPosition(byte[] data)
     {
         Debug.Log("캐릭터 상태 수신");
 
-        CharacterStatePacket characterStateDataPacket = new CharacterStatePacket(data);
-        CharacterStateData characterStateData = characterStateDataPacket.GetData();
+        CharacterPositionPacket characterPositionPacket = new CharacterPositionPacket(data);
+        CharacterPositionData characterPositionData = characterPositionPacket.GetData();
 
-        Debug.Log("캐릭터 State : " + characterStateData.state);
-        Debug.Log("캐릭터 Hor, Ver : " + characterStateData.hor + ", " + characterStateData.ver);
-        Debug.Log("캐릭터 위치 : " + characterStateData.posX + ", " + characterStateData.posY + ", " + characterStateData.posZ + ", ");
+        Debug.Log("캐릭터 방향 : " + characterPositionData.dir);
+        Debug.Log("캐릭터 위치 : " + characterPositionData.posX + ", " + characterPositionData.posY + ", " + characterPositionData.posZ + ", ");
 
         CharacterManager characterManager = dungeonManager.Players[1].GetComponent<CharacterManager>();
-        characterManager.SetState(characterStateData);
+        characterManager.SetPosition(characterPositionData);
+
+        return P2PPacketId.None;
+    }
+
+    //Client
+    public P2PPacketId CharacterAction(byte[] data)
+    {
+        Debug.Log("캐릭터 행동 수신");
+
+        CharacterActionPacket characterActionPacket = new CharacterActionPacket(data);
+        CharacterActionData characterActionData = characterActionPacket.GetData();
+
+        Debug.Log("캐릭터 행동" + characterActionData.action);
+
+        CharacterManager characterManager = dungeonManager.Players[1].GetComponent<CharacterManager>();
+        characterManager.CharState(characterActionData.action);
 
         return P2PPacketId.None;
     }

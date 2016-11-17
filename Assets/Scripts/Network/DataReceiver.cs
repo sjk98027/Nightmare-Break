@@ -9,8 +9,6 @@ public class DataReceiver : MonoBehaviour
     Socket tcpSock;
     Socket udpSock;
 
-    object receiveLock;
-
     Queue<DataPacket> msgs;
 
     //클래스 초기화
@@ -55,14 +53,16 @@ public class DataReceiver : MonoBehaviour
             return;
         }
 
+        Debug.Log("받은 메시지 길이 : " + asyncData.msgSize);
+
         if (asyncData.msgSize >= NetworkManager.packetLength)
         {
             try
             {   //데이터 길이 변환에 성공하면 데이터를 받는다
                 //남은 데이터는 데이터 출처 + 데이터 아이디 + 데이터
+                short msgSize = BitConverter.ToInt16(asyncData.msg, 0);
                 asyncData = new AsyncData(tcpSock);
-                asyncData.msgSize = BitConverter.ToInt16(asyncData.msg, 0);
-                tcpSock.BeginReceive(asyncData.msg, 0, asyncData.msgSize + NetworkManager.packetSource + NetworkManager.packetId, SocketFlags.None, new AsyncCallback(TcpReceiveDataCallback), asyncData);
+                tcpSock.BeginReceive(asyncData.msg, 0, msgSize + NetworkManager.packetSource + NetworkManager.packetId, SocketFlags.None, new AsyncCallback(TcpReceiveDataCallback), asyncData);
             }
             catch
             {   //데이터 길이 변환 실패시 다시 데이터 길이를 받는다
@@ -96,6 +96,8 @@ public class DataReceiver : MonoBehaviour
             return;
         }
 
+        Debug.Log("받은 메시지 길이 : " + asyncData.msgSize);
+
         if (asyncData.msgSize <= 0)
         {
             Debug.Log("서버와 연결이 끊겼습니다.");
@@ -107,14 +109,11 @@ public class DataReceiver : MonoBehaviour
         {
             Array.Resize(ref asyncData.msg, asyncData.msgSize);
 
-            DataPacket packet = new DataPacket(asyncData.msg, tcpSock.RemoteEndPoint);
+            DataPacket packet = new DataPacket(asyncData.msg, null);
 
             try
             {
-                lock (receiveLock)
-                {
-                    msgs.Enqueue(packet);
-                }
+                msgs.Enqueue(packet);
             }
             catch
             {
@@ -155,23 +154,29 @@ public class DataReceiver : MonoBehaviour
         catch (Exception e)
         {
             Debug.Log("연결 끊김 :" + e.Message);
-            udpSock.Close();
+            return;
         }
+
+        if (asyncData.msgSize <= 0)
+        {
+            Debug.Log("클라이언트와의 연결이 끊겼습니다." );
+            return;
+        }
+
+        Array.Resize(ref asyncData.msg, asyncData.msgSize);
 
         if (asyncData.msgSize > 0)
         {
-            while (asyncData.msg.Length != 0)
+            while (asyncData.msg.Length > 0)
             {
                 byte[] msgSize = ResizeByteArray(0, NetworkManager.packetLength, ref asyncData.msg);
                 asyncData.msgSize = (short)(BitConverter.ToInt16(msgSize, 0) + NetworkManager.packetSource + NetworkManager.packetId);
 
                 byte[] msg = ResizeByteArray(0, asyncData.msgSize, ref asyncData.msg);
+                Debug.Log(msg.Length);
                 DataPacket packet = new DataPacket(msg, asyncData.EP);
 
-                lock (receiveLock)
-                {
-                    msgs.Enqueue(packet);
-                }
+                msgs.Enqueue(packet);
             }
 
             //다시 수신 준비

@@ -538,7 +538,7 @@ GameObject:
   - 95: {fileID: 95000012600969674}
   - 54: {fileID: 54000011434209758}
   - 65: {fileID: 65000013312372848}
-  - 114: {fileID: 114000010153552830}
+  - 114: {fileID: 114000010473297528}
   m_Layer: 9
   m_Name: Warrior
   m_TagString: Untagged
@@ -1912,7 +1912,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114000010153552830
+--- !u!114 &114000010473297528
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1920,7 +1920,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000012208004432}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f571c7749b70cf74582caeb77568ff89, type: 3}
+  m_Script: {fileID: 11500000, guid: 681911709c74d9d4bac494224936b42c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rend: {fileID: 0}
@@ -1928,6 +1928,8 @@ MonoBehaviour:
     characterName: 
     characterNum: 0
     characherLevel: 0
+    maxHealthPoint: 0
+    maxManaPoint: 0
     demendExp: 0
     needExp: 0
     healthPoint: 0
@@ -1937,21 +1939,21 @@ MonoBehaviour:
     dreamStone: 0
     skillCoolTime: []
   skillTime: 0
-  mealstromState: 1
+  mealstromState: 0
   charVer: 0
   JumpMove: 0
   rigdbody: {fileID: 0}
-  charWeapon: {fileID: 65000013061797578}
+  charWeapon: {fileID: 0}
   normalAttackState: 0
   skillAttackState: 0
   basicDamage: 0
   inputmanager: {fileID: 0}
   enemy: []
   wall: {fileID: 0}
-  charSpeed: 10
-  jumpPower: 7
+  charSpeed: 0
+  jumpPower: 0
   charAlive: 1
-  GiganticSword: {fileID: 100122, guid: 4ad33f6b6eb1f4d45863645759f75a0c, type: 3}
+  GiganticSword: {fileID: 0}
   giganticSwordSpeed: 0
   giganticSwordMatarial: 0
   giganticSwordRendTime: 0

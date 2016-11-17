@@ -29,6 +29,8 @@ public class DataSender : MonoBehaviour
         udpSock = newUdpSock;
         cTime = Time.time;
         dTime = Time.time;
+
+        udpMsg = new byte[0];
     }
 
     //데이타를 전송하는 메소드. byte[] msg 를 newIPEndPoint로 전송한다.
@@ -75,20 +77,27 @@ public class DataSender : MonoBehaviour
     public void GameClose()
     {
         Debug.Log("게임 종료");
-        ResultData resultData = new ResultData(new byte());
+        ResultData resultData = new ResultData();
         ResultDataPacket resultDataPacket = new ResultDataPacket(resultData);
         resultDataPacket.SetPacketId((int)ClientPacketId.GameClose);
 
-        byte[] msg = resultDataPacket.GetPacketData();
+        byte[] msg = CreatePacket(resultDataPacket);
 
         Debug.Log("메시지 보냄 (길이) : " + msg.Length);
         Debug.Log("메시지 보냄 (출처) : " + msg[2]);
         Debug.Log("메시지 보냄 (타입) : " + msg[3]);
 
-        //tcpSock.Send(msg, 0, msg.Length, SocketFlags.None);
+        tcpSock.Send(msg, 0, msg.Length, SocketFlags.None);
 
-        tcpSock.Close();
-        udpSock.Close();
+        try
+        {
+            tcpSock.Close();
+            udpSock.Close();
+        }
+        catch
+        {
+            Debug.Log("이미 소켓이 닫혀있습니다.");
+        }        
     }
 
     //연결 확인 - Udp
@@ -99,7 +108,7 @@ public class DataSender : MonoBehaviour
         ResultDataPacket resultDataPacket = new ResultDataPacket(resultData);
         resultDataPacket.SetPacketId((int)P2PPacketId.ConnectionCheck);
 
-        DataPacket packet = new DataPacket(resultDataPacket.GetPacketData(), null);
+        DataPacket packet = new DataPacket(CreatePacket(resultDataPacket), null);
 
         foreach (EndPoint client in networkManager.Clients)
         {
@@ -126,7 +135,7 @@ public class DataSender : MonoBehaviour
     }
 
     //캐릭터 움직임 - Udp
-    public IEnumerator CharacterDataSend()
+    public IEnumerator CharacterPositionSend()
     {
         characterManager = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterManager>();
 
@@ -134,15 +143,14 @@ public class DataSender : MonoBehaviour
         {
             yield return null;
 
-            byte state = (byte)characterManager.State;
-            float vertical = characterManager.Animator.GetFloat("Ver");
-            float horizontal = characterManager.Animator.GetFloat("Hor");
+            bool dir = characterManager.charVer;            
             float xPos = characterManager.transform.position.x;
             float yPos = characterManager.transform.position.y;
             float zPos = characterManager.transform.position.z;
 
-            CharacterStateData characterStateData = new CharacterStateData(state, horizontal, vertical, xPos, yPos, zPos);
-            CharacterStatePacket characterStatePacket = new CharacterStatePacket(characterStateData);
+            CharacterPositionData CharacterPosition = new CharacterPositionData(dir, xPos, yPos, zPos);
+            CharacterPositionPacket characterStatePacket = new CharacterPositionPacket(CharacterPosition);
+            characterStatePacket.SetPacketId((int)P2PPacketId.CharacterPosition);
 
             byte[] packet = CreatePacket(characterStatePacket);
 
@@ -150,15 +158,35 @@ public class DataSender : MonoBehaviour
         }
     }
 
-    public void EnqueueMessage()
+    //캐릭터 움직임(공격, 점프, 스킬 등등) - Udp
+    public void CharacterActionSend(int action)
     {
-        DataPacket packet = new DataPacket(udpMsg, null);
+        CharacterActionData characterActionData = new CharacterActionData(action);
+        CharacterActionPacket characterActionPacket = new CharacterActionPacket(characterActionData);
+        characterActionPacket.SetPacketId((int)P2PPacketId.CharacterAction);
 
-        foreach (EndPoint client in networkManager.Clients)
+        byte[] packet = CreatePacket(characterActionPacket);
+
+        udpMsg = CombineByte(udpMsg, packet);
+    }
+
+    //0.1초 마다 Udp메시지를 큐에 넣는다.
+    public IEnumerator EnqueueMessage()
+    {
+        while (true)
         {
-            packet.endPoint = client;
-            sendMsgs.Enqueue(packet);
-        }
+            yield return new WaitForSeconds(0.1f);
+
+            DataPacket packet = new DataPacket(udpMsg, null);
+
+            foreach (EndPoint client in networkManager.Clients)
+            {
+                packet.endPoint = client;
+                sendMsgs.Enqueue(packet);
+            }
+
+            udpMsg = new byte[0];
+        }        
     }
 
     //패킷의 헤더 생성
