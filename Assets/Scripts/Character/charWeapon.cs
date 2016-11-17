@@ -56,7 +56,7 @@ public class charWeapon : MonoBehaviour {
 				if(damage !=0)
 				{
 					
-					monsterDamage.HitDamage(damage);
+					monsterDamage.HitDamage(damage,this.gameObject.GetComponentInParent<CharacterManager>().gameObject);
 					damage = 0;
 				}
 			}

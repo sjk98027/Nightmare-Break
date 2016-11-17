@@ -4,20 +4,34 @@ using System.Collections;
 
 public class BoomMonster : Monster {
 	private float searchRange = 6.0f;
-	private float moveSpeed = 1f;
+	private float moveSpeed = 0.5f;
 
 	public float currentDisTance;
 	float middleBossToMonsterLimitDistanceMonsterToCenter = 6.0f;
 	private float middleBossToMonsterMinDistance = 1.5f;
 	public AnimationState stateInfo;
-	public override void HitDamage(int _Damage)
-	{
-		Debug.Log ("in takeDanager");
 
+	[SerializeField]GameObject middleboss;
+	private Vector3 boomObjectPosition;
+
+	public override void HitDamage(int _Damage,GameObject attacker)
+
+	{
 		if (IsAlive)
 		{
-			
+			IsHited=true;
 			currentLife -= _Damage;
+			for (int i = 0; i < player.Length; i++) {
+				Debug.Log (i);
+
+				if (player [i] == attacker) {
+					Debug.Log ("in");
+					playerToMonsterDamage[i] += _Damage;
+					targetPlayer = player [i];
+				}
+
+			}
+
 
 			//uiManager.bossHp.fillAmount = currentLife / maxLife;
 			if (currentLife > 0)
@@ -115,13 +129,13 @@ public class BoomMonster : Monster {
                     AnimatorReset();
                     this.transform.Translate(movePoint * moveSpeed * Time.deltaTime, 0);
                     animator.SetInteger("State", 2);
-					searchRange = 10;
+					//searchRange = 10;
                     break;
                 }
             case StatePosition.TakeDamage:
                 {
-//				StartCoroutine(TakeDamageCorutine());
-				TakeDamageMethod();
+				StartCoroutine(TakeDamageCorutine());
+//				TakeDamageMethod();
                     break;
                 }
             case StatePosition.Death:
@@ -141,17 +155,17 @@ public class BoomMonster : Monster {
 
 	}
 
-	public void TakeDamageMethod(){
-		animator.SetTrigger ("TakeDamage");
-		IsHited = true;
-		if (stateInfo.name == "TakeDamage") {
-			isAttack = false;
-			moveAble = false;
-		} else
-			AnimatorReset ();
-		
-
-	}
+//	public void TakeDamageMethod(){
+//		animator.SetTrigger ("TakeDamage");
+//		IsHited = true;
+//		if (stateInfo.name == "TakeDamage") {
+//			isAttack = false;
+//			moveAble = false;
+//		} else
+//			AnimatorReset ();
+//		
+//
+//	}
 
 
 	IEnumerator BoomCoroutine() {
@@ -182,7 +196,7 @@ public class BoomMonster : Monster {
 	}
 
 
-	public void UpdateConductNormalMode()
+	public void UpdateNormalMode()
     {
         if (IsAlive)
         {
@@ -228,17 +242,27 @@ public class BoomMonster : Monster {
         }
 
     }
-	public void UpdateConductDefenceMode(){
+	public void UpdateDefenceMode(){
 		if (!IsHited) {
 			transform.Translate (transitionVector * moveSpeed * 0.5f * Time.deltaTime);
 		}
 		if (IsHited) {
+
+			if (checkDirection.z > 0) {
+				LookAtPattern (StateDirecion.right);
+			}
+			if (checkDirection.z <= 0) {
+				LookAtPattern (StateDirecion.left);
+			}
+
 			currentDisTance = Vector3.Distance(targetPlayer.transform.position, this.gameObject.transform.position);
 			checkDirection = targetPlayer.transform.position - this.gameObject.transform.position;
 
+
+
 			if (currentDisTance < middleBossToMonsterLimitDistanceMonsterToCenter*1.5f) {
 				movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
-				transform.Translate(movePoint * moveSpeed * Time.deltaTime, 0);
+				transform.Translate(movePoint.normalized * moveSpeed * Time.deltaTime, 0);
 				if (currentDisTance >= searchRange * 0.2f)
 				{
 					if (moveAble) {
@@ -255,12 +279,17 @@ public class BoomMonster : Monster {
 				}
 			}
 			if (currentDisTance >= middleBossToMonsterLimitDistanceMonsterToCenter*1.5f) {
+				LookAtPattern (StateDirecion.right);
 				IsHited = false;
+				targetPlayer = null;
+				transform.Translate (boomObjectPosition*Time.deltaTime);
 			}
 		}
 	}
 
-
+	public void middleBossPositionGetting(Vector3 _Position){
+		boomObjectPosition = _Position;
+	}
 
 
 

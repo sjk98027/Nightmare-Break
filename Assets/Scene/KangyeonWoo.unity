@@ -1583,6 +1583,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 114000011390068770, guid: 435ef0b7bac512942a731f586a5d0fa7,
+        type: 2}
+      propertyPath: characterManager
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 435ef0b7bac512942a731f586a5d0fa7, type: 2}
   m_IsPrefabParent: 0
@@ -2001,7 +2006,7 @@ MonoBehaviour:
   player: []
   animator: {fileID: 0}
   targetPlayer: {fileID: 0}
-  mode: 0
+  normalMode: 0
   gateArrayNumber: 0
   monsterArrayNumber: 0
   currentLife: 0
@@ -2009,20 +2014,39 @@ MonoBehaviour:
   RunRange: 0
   attackRange: 0
   attackCycle: 0
+  isAlive: 0
   isAttack: 0
   playerToMonsterDamage: []
   aggroRank: []
   changeTargetTime: 0
   currentDisTanceArray: []
-  attackCollider: {fileID: 0}
   stateDirecion: 0
+  attackCollider: {fileID: 0}
   currentDisTance: 0
+  middleboss: {fileID: 0}
   pointVector: []
   transitionVector: {x: 0, y: 0, z: 0}
 --- !u!4 &764583888 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400064, guid: 02689d90079f159418521d6075a06be9, type: 3}
   m_PrefabInternal: {fileID: 397499874}
+--- !u!65 &764583889
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 764583885}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.5, z: 1}
+  m_Center: {x: 0, y: 0.75, z: 0}
+--- !u!65 &806468180 stripped
+BoxCollider:
+  m_PrefabParentObject: {fileID: 65000012787959142, guid: b924f4c48d9d91b43af21db68d2922fe,
+    type: 2}
+  m_PrefabInternal: {fileID: 1090558876}
 --- !u!1 &815280445
 GameObject:
   m_ObjectHideFlags: 0
@@ -2184,7 +2208,7 @@ MonoBehaviour:
   player: []
   animator: {fileID: 0}
   targetPlayer: {fileID: 0}
-  mode: 0
+  normalMode: 0
   gateArrayNumber: 0
   monsterArrayNumber: 0
   currentLife: 0
@@ -2192,20 +2216,34 @@ MonoBehaviour:
   RunRange: 0
   attackRange: 0
   attackCycle: 0
+  isAlive: 0
   isAttack: 0
   playerToMonsterDamage: []
   aggroRank: []
   changeTargetTime: 0
   currentDisTanceArray: []
-  attackCollider: {fileID: 0}
   stateDirecion: 0
+  attackCollider: {fileID: 0}
   currentDisTance: 0
+  middleboss: {fileID: 0}
   pointVector: []
   transitionVector: {x: 0, y: 0, z: 0}
 --- !u!4 &886682383 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400064, guid: 02689d90079f159418521d6075a06be9, type: 3}
   m_PrefabInternal: {fileID: 84160583}
+--- !u!65 &886682384
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 886682380}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.5, z: 1}
+  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!1001 &888474966
 Prefab:
   m_ObjectHideFlags: 0
@@ -2243,7 +2281,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000010221899282, guid: dfccf1d5cae25e24eb1954c76eb064a3, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dfccf1d5cae25e24eb1954c76eb064a3, type: 2}
@@ -2285,7 +2323,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 424800, guid: d73b03dfd52c89b42b759687b7d135d0, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 424800, guid: d73b03dfd52c89b42b759687b7d135d0, type: 2}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -2325,7 +2363,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 107014, guid: d73b03dfd52c89b42b759687b7d135d0, type: 2}
       propertyPath: m_TagString
-      value: Untagged
+      value: MainCamera
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d73b03dfd52c89b42b759687b7d135d0, type: 2}
@@ -2749,7 +2787,8 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114000010949062502, guid: b924f4c48d9d91b43af21db68d2922fe, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: b924f4c48d9d91b43af21db68d2922fe, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &1094792198
@@ -3027,7 +3066,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1122668100
 Transform:
   m_ObjectHideFlags: 0
@@ -3072,7 +3111,7 @@ MonoBehaviour:
   player: []
   animator: {fileID: 0}
   targetPlayer: {fileID: 0}
-  mode: 0
+  normalMode: 0
   gateArrayNumber: 0
   monsterArrayNumber: 0
   currentLife: 0
@@ -3080,20 +3119,34 @@ MonoBehaviour:
   RunRange: 0
   attackRange: 0
   attackCycle: 0
+  isAlive: 0
   isAttack: 0
   playerToMonsterDamage: []
   aggroRank: []
   changeTargetTime: 0
   currentDisTanceArray: []
-  attackCollider: {fileID: 0}
   stateDirecion: 0
+  attackCollider: {fileID: 0}
   currentDisTance: 0
+  middleboss: {fileID: 0}
   pointVector: []
   transitionVector: {x: 0, y: 0, z: 0}
 --- !u!4 &1126291602 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400064, guid: 02689d90079f159418521d6075a06be9, type: 3}
   m_PrefabInternal: {fileID: 1721790169}
+--- !u!65 &1126291603
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1126291599}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.5, z: 1}
+  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!1 &1277712078
 GameObject:
   m_ObjectHideFlags: 0
@@ -3231,61 +3284,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1377711291}
---- !u!1 &1392678856 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 107014, guid: d73b03dfd52c89b42b759687b7d135d0, type: 2}
-  m_PrefabInternal: {fileID: 914824444}
---- !u!54 &1392678857
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1392678856}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &1392678858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1392678856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35144e9c839c75e45969fbbf20c85fcb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  magnitude: 26.6
-  shakingSpeed: 65
-  randomAmount: 0.5
-  duration: 1
-  forceByAxis: {x: 1, y: 0, z: 1}
-  forceOverTime:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  forceRecenter: 1
-  loop: 0
-  currentState: 
-  currentMagnitude: 0
 --- !u!1 &1410928054
 GameObject:
   m_ObjectHideFlags: 0
@@ -3314,16 +3312,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff60e76e302548641bddaa9327ad9b7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boomObject:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   middleBoss: {fileID: 1410928054}
   boomObjectPosition: []
   addedVector: {x: 0, y: 0, z: 0}
@@ -3381,7 +3369,7 @@ MonoBehaviour:
   player: []
   animator: {fileID: 0}
   targetPlayer: {fileID: 0}
-  mode: 0
+  normalMode: 0
   gateArrayNumber: 0
   monsterArrayNumber: 0
   currentLife: 0
@@ -3389,20 +3377,34 @@ MonoBehaviour:
   RunRange: 0
   attackRange: 0
   attackCycle: 0
+  isAlive: 0
   isAttack: 0
   playerToMonsterDamage: []
   aggroRank: []
   changeTargetTime: 0
   currentDisTanceArray: []
-  attackCollider: {fileID: 0}
   stateDirecion: 0
+  attackCollider: {fileID: 0}
   currentDisTance: 0
+  middleboss: {fileID: 0}
   pointVector: []
   transitionVector: {x: 0, y: 0, z: 0}
 --- !u!4 &1455260506 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400064, guid: 02689d90079f159418521d6075a06be9, type: 3}
   m_PrefabInternal: {fileID: 611467511}
+--- !u!65 &1455260507
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1455260503}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.5, z: 1}
+  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!1 &1461489084 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100064, guid: 02689d90079f159418521d6075a06be9, type: 3}
@@ -3421,7 +3423,7 @@ MonoBehaviour:
   player: []
   animator: {fileID: 0}
   targetPlayer: {fileID: 0}
-  mode: 0
+  normalMode: 0
   gateArrayNumber: 0
   monsterArrayNumber: 0
   currentLife: 0
@@ -3429,20 +3431,34 @@ MonoBehaviour:
   RunRange: 0
   attackRange: 0
   attackCycle: 0
+  isAlive: 0
   isAttack: 0
   playerToMonsterDamage: []
   aggroRank: []
   changeTargetTime: 0
   currentDisTanceArray: []
-  attackCollider: {fileID: 0}
   stateDirecion: 0
+  attackCollider: {fileID: 0}
   currentDisTance: 0
+  middleboss: {fileID: 0}
   pointVector: []
   transitionVector: {x: 0, y: 0, z: 0}
 --- !u!4 &1461489087 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400064, guid: 02689d90079f159418521d6075a06be9, type: 3}
   m_PrefabInternal: {fileID: 169975700}
+--- !u!65 &1461489088
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1461489084}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.5, z: 1}
+  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!1001 &1468833692
 Prefab:
   m_ObjectHideFlags: 0
@@ -4061,7 +4077,7 @@ MonoBehaviour:
   player: []
   animator: {fileID: 0}
   targetPlayer: {fileID: 0}
-  mode: 0
+  normalMode: 0
   gateArrayNumber: 0
   monsterArrayNumber: 0
   currentLife: 0
@@ -4069,13 +4085,14 @@ MonoBehaviour:
   RunRange: 0
   attackRange: 0
   attackCycle: 0
+  isAlive: 0
   isAttack: 0
   playerToMonsterDamage: []
   aggroRank: []
   changeTargetTime: 0
   currentDisTanceArray: []
-  attackCollider: {fileID: 0}
   stateDirecion: 0
+  attackCollider: {fileID: 0}
   critical:
     serializedVersion: 2
     m_Curve: []
@@ -4114,7 +4131,7 @@ MonoBehaviour:
   player: []
   animator: {fileID: 0}
   targetPlayer: {fileID: 0}
-  mode: 0
+  normalMode: 0
   gateArrayNumber: 0
   monsterArrayNumber: 0
   currentLife: 0
@@ -4122,20 +4139,34 @@ MonoBehaviour:
   RunRange: 0
   attackRange: 0
   attackCycle: 0
+  isAlive: 0
   isAttack: 0
   playerToMonsterDamage: []
   aggroRank: []
   changeTargetTime: 0
   currentDisTanceArray: []
-  attackCollider: {fileID: 0}
   stateDirecion: 0
+  attackCollider: {fileID: 0}
   currentDisTance: 0
+  middleboss: {fileID: 0}
   pointVector: []
   transitionVector: {x: 0, y: 0, z: 0}
 --- !u!4 &1791009973 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400064, guid: 02689d90079f159418521d6075a06be9, type: 3}
   m_PrefabInternal: {fileID: 1468833692}
+--- !u!65 &1791009974
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1791009970}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.5, z: 1}
+  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!1 &1797509689
 GameObject:
   m_ObjectHideFlags: 0
@@ -4213,7 +4244,7 @@ MonoBehaviour:
   player: []
   animator: {fileID: 0}
   targetPlayer: {fileID: 0}
-  mode: 0
+  normalMode: 0
   gateArrayNumber: 0
   monsterArrayNumber: 0
   currentLife: 0
@@ -4221,20 +4252,34 @@ MonoBehaviour:
   RunRange: 0
   attackRange: 0
   attackCycle: 0
+  isAlive: 0
   isAttack: 0
   playerToMonsterDamage: []
   aggroRank: []
   changeTargetTime: 0
   currentDisTanceArray: []
-  attackCollider: {fileID: 0}
   stateDirecion: 0
+  attackCollider: {fileID: 0}
   currentDisTance: 0
+  middleboss: {fileID: 0}
   pointVector: []
   transitionVector: {x: 0, y: 0, z: 0}
 --- !u!4 &1852993386 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400064, guid: 02689d90079f159418521d6075a06be9, type: 3}
   m_PrefabInternal: {fileID: 1094792198}
+--- !u!65 &1852993387
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1852993383}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 55.28305, y: 1.5, z: 1}
+  m_Center: {x: -27.141525, y: 0.75, z: 0}
 --- !u!1 &1863813055 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100064, guid: 02689d90079f159418521d6075a06be9, type: 3}
@@ -4257,7 +4302,7 @@ MonoBehaviour:
   player: []
   animator: {fileID: 0}
   targetPlayer: {fileID: 0}
-  mode: 0
+  normalMode: 0
   gateArrayNumber: 0
   monsterArrayNumber: 0
   currentLife: 0
@@ -4265,16 +4310,30 @@ MonoBehaviour:
   RunRange: 0
   attackRange: 0
   attackCycle: 0
+  isAlive: 0
   isAttack: 0
   playerToMonsterDamage: []
   aggroRank: []
   changeTargetTime: 0
   currentDisTanceArray: []
-  attackCollider: {fileID: 0}
   stateDirecion: 0
+  attackCollider: {fileID: 0}
   currentDisTance: 0
+  middleboss: {fileID: 0}
   pointVector: []
   transitionVector: {x: 0, y: 0, z: 0}
+--- !u!65 &1863813059
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1863813055}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.5, z: 1}
+  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!1 &1919561531
 GameObject:
   m_ObjectHideFlags: 0
@@ -4461,7 +4520,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
 --- !u!1 &1994268516
 GameObject:
   m_ObjectHideFlags: 0
@@ -4548,7 +4607,7 @@ MonoBehaviour:
   player: []
   animator: {fileID: 0}
   targetPlayer: {fileID: 0}
-  mode: 0
+  normalMode: 0
   gateArrayNumber: 0
   monsterArrayNumber: 0
   currentLife: 0
@@ -4556,17 +4615,87 @@ MonoBehaviour:
   RunRange: 0
   attackRange: 0
   attackCycle: 0
+  isAlive: 0
   isAttack: 0
   playerToMonsterDamage: []
   aggroRank: []
   changeTargetTime: 0
   currentDisTanceArray: []
-  attackCollider: {fileID: 0}
   stateDirecion: 0
+  attackCollider: {fileID: 0}
   currentDisTance: 0
+  middleboss: {fileID: 0}
   pointVector: []
   transitionVector: {x: 0, y: 0, z: 0}
 --- !u!4 &2110127565 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400064, guid: 02689d90079f159418521d6075a06be9, type: 3}
   m_PrefabInternal: {fileID: 300596596}
+--- !u!65 &2110127566
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2110127562}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.5, z: 1}
+  m_Center: {x: 0, y: 0.75, z: 0}
+--- !u!1 &2144446530 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000013147708160, guid: b924f4c48d9d91b43af21db68d2922fe,
+    type: 2}
+  m_PrefabInternal: {fileID: 1090558876}
+--- !u!114 &2144446531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2144446530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 681911709c74d9d4bac494224936b42c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rend: {fileID: 0}
+  charstate:
+    characterName: default
+    characterNum: 0
+    characterLevel: 0
+    maxHealthPoint: 0
+    maxManaPoint: 0
+    demendExp: 0
+    needExp: 0
+    healthPoint: 0
+    magicPoint: 0
+    defense: 0
+    critical: 0
+    charSpeed: 10
+    dreamStone: 0
+    skillCoolTime: []
+    activeSkillSet: []
+    passiveSkillSet: []
+    onSkill: 
+  skillTime: 0
+  mealstromState: 0
+  charDir: 0
+  JumpMove: 0
+  rigdbody: {fileID: 0}
+  charWeapon: {fileID: 806468180}
+  normalAttackState: 0
+  skillAttackState: 0
+  basicDamage: 10
+  inputmanager: {fileID: 0}
+  enermy: []
+  wall: {fileID: 0}
+  jumpPower: 0
+  charAlive: 1
+  GiganticSword: {fileID: 0}
+  giganticSwordSpeed: 0
+  giganticSwordMatarial: 0
+  giganticSwordRendTime: 0
+  giganticSwordTemp: {fileID: 0}
+  giganticSwordCastSword: {fileID: 0}
+  state: 0

@@ -25,9 +25,9 @@ public class Monster : MonoBehaviour {
 		set{ moveAble = value;}
 	}
 
-	[SerializeField]private bool mode;
-	public bool Mode{
-		set { mode = value;}
+	[SerializeField]private bool normalMode;
+	public bool NormalMode{
+		set { normalMode = value;}
 	}
     [SerializeField]
     private int gateArrayNumber;
@@ -221,7 +221,7 @@ public class Monster : MonoBehaviour {
 
 
 
-	public virtual void HitDamage(int _Damage)
+	public virtual void HitDamage(int _Damage, GameObject _weapon)
 	{
 
 	}
