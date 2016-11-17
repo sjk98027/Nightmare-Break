@@ -31,15 +31,17 @@ public class charWeapon : MonoBehaviour {
 
 	void OnTriggerEnter(Collider coll)
 	{
-		Debug.Log ("in git");
+		
 
 		if (coll.gameObject.layer == LayerMask.NameToLayer ("Enermy"))
 		{
-			
-			TestMonster monsterDamage = coll.gameObject.GetComponent<TestMonster> ();
+
+
+			Monster monsterDamage = coll.gameObject.GetComponent<Monster> ();
 
 			if (monsterDamage != null)
 			{
+				
 				if (normalAttack)
 				{
 					
@@ -53,7 +55,7 @@ public class charWeapon : MonoBehaviour {
 				}
 				if(damage !=0)
 				{
-
+					
 					monsterDamage.HitDamage(damage);
 					damage = 0;
 				}

@@ -200,6 +200,7 @@ public class DungeonManager : MonoBehaviour
         inputManager.InitializeManager();
         StartCoroutine(inputManager.GetKeyInput());
         StartCoroutine(dataSender.CharacterPositionSend());
+		StartCoroutine(dataSender.EnqueueMessage());
 
         return player;
     }

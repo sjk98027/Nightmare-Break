@@ -53,7 +53,7 @@ public class Monster : MonoBehaviour {
 	protected float IdleRandomTime=0;
 	//monster Speed variable;
 
-	private bool isAlive;
+	[SerializeField]private bool isAlive;
 	[SerializeField]protected bool isAttack;
 	private bool isHited;
 
@@ -69,11 +69,18 @@ public class Monster : MonoBehaviour {
 //	}
 	public bool IsAlive{
 		get{ return isAlive;}
+		set{ isAlive = value;}
 	}
 	public bool IsHited{
 		get{ return isHited;}
 		set{ isHited = value;}
 	}
+
+	public enum StateDirecion{
+		right,
+		left
+	};
+	public StateDirecion stateDirecion;
 
 	//start monster Haves infomation setting(playersuch,monsterset)
 	public void PlayerSearch()
@@ -97,6 +104,33 @@ public class Monster : MonoBehaviour {
 //		attackCollider = GameObject.FindGameObjectWithTag("Finish");
 //		attackCollider.SetActive (false);
 	}
+
+	public void LookAtPattern(StateDirecion state)
+	{
+		switch(state){
+		case StateDirecion.right: 
+			{transform.rotation = Quaternion.Euler(rightVector3);break;}
+		case StateDirecion.left:
+			{transform.rotation = Quaternion.Euler(leftVector3);break;}
+		}
+	}
+
+	IEnumerator LookatChange(){
+		while (true) {
+			if (!isAttack) {
+				if (targetPlayer != null) {
+					if ((targetPlayer.transform.position.z - transform.position.z) >= 0) {
+						LookAtPattern (StateDirecion.right);
+					}
+					if ((targetPlayer.transform.position.z - transform.position.z) < 0) {
+						LookAtPattern (StateDirecion.left);
+					}
+				}
+			}
+			yield return new WaitForSeconds (2f);
+		}
+	}
+
     public void ChasePlayer(){
 		//Debug.Log (changeTargetTime);
 		if(!isHited)
@@ -149,52 +183,24 @@ public class Monster : MonoBehaviour {
 		}
 	}
 
+
+
+
 	public void MonsterArrayEraser(GameObject thisGameObject)
 	{
 		//gameObject = null;
 		isAlive=false;
 		thisGameObject.SetActive (false);
-		if (!mode) {
-//			section.RemoveMonsterArray ();
-		}
-
-		if (mode) {
-		
-		}
-
-		//mode = asf1.GetComponent<DungeonManager> ().modeForm;
-		//dungeonManager.MonsterArrayAliveCheck(asdf)
-	}
-
-	public enum StateDirecion{
-		right,
-		left
-	};
-	public StateDirecion stateDirecion;
-
-	IEnumerator LookatChange(){
-		while (true) {
-			if (!isAttack) {
-				if (targetPlayer != null) {
-					if ((targetPlayer.transform.position.z - transform.position.z) >= 0) {
-						LookAtPattern (StateDirecion.right);
-					}
-					if ((targetPlayer.transform.position.z - transform.position.z) < 0) {
-						LookAtPattern (StateDirecion.left);
-					}
-				}
-			}
-			yield return new WaitForSeconds (2f);
-		}
+		//		section.RemoveMonsterArray ();
 	}
 
 	public void AttackEnd(){
 		
 		StartCoroutine (LookatChange ());
-		//Debug.Log ("animator.SetInteger (State, 0)");
+		Debug.Log ("animator.SetInteger (State, 0)");
 		moveAble=true;
 		isAttack = false;
-		//animator.SetInteger ("State", 0);
+		animator.SetInteger ("State", 0);
 		attackCollider.SetActive (false);
 		Debug.Log ("AttackEnd");
 	}
@@ -205,7 +211,7 @@ public class Monster : MonoBehaviour {
 		Debug.Log ("AttackStart");
 	}
 	public void AnimatorReset(){
-//		animator.SetInteger ("State", 0);
+		animator.SetInteger ("State", 0);
 		isAttack = false;
 	}
 	public void AttackBlitz()
@@ -213,17 +219,9 @@ public class Monster : MonoBehaviour {
 		attackCollider.SetActive (true);
 	}
 
-	public void LookAtPattern(StateDirecion state)
-	{
-		switch(state){
-		case StateDirecion.right: 
-			{transform.rotation = Quaternion.Euler(rightVector3);break;}
-		case StateDirecion.left:
-			{transform.rotation = Quaternion.Euler(leftVector3);break;}
-		}
-	}
 
-	public virtual void HitDamage(float _Damage)
+
+	public virtual void HitDamage(int _Damage)
 	{
 
 	}
