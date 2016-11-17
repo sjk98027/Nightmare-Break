@@ -12,6 +12,7 @@ public class TestInputManager : MonoBehaviour
 
 	void Awake()
 	{
+        
 		characterManager = GameObject.FindWithTag("Player").GetComponent<CharacterManager>();
 		cameraDistance = new Vector3(11f, 6.5f, 0);
 	}
