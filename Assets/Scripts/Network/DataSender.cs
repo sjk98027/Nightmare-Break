@@ -143,7 +143,7 @@ public class DataSender : MonoBehaviour
         {
             yield return null;
 
-            bool dir = characterManager.charVer;            
+            bool dir = characterManager.charDir;            
             float xPos = characterManager.transform.position.x;
             float yPos = characterManager.transform.position.y;
             float zPos = characterManager.transform.position.z;

@@ -199,7 +199,7 @@ public class DungeonManager : MonoBehaviour
         inputManager = GameObject.FindGameObjectWithTag("InputManager").GetComponent<InputManager>();
         inputManager.InitializeManager();
         StartCoroutine(inputManager.GetKeyInput());
-        StartCoroutine(dataSender.CharacterDataSend());
+        StartCoroutine(dataSender.CharacterPositionSend());
 
         return player;
     }

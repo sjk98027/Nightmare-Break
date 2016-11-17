@@ -490,28 +490,22 @@ public class CharacterManager : MonoBehaviour
 			return CharacterState.Idle;
 		}
 	}
-	public void SetState (CharacterStateData newStateData)
-	{
-		Debug.Log ("상태 설정");
 
-        animator.SetFloat ("Ver", newStateData.ver);
-        animator.SetFloat ("Hor", newStateData.hor);
+    public void SetPosition(CharacterPositionData newPositionData)
+    {
+        Debug.Log("캐릭터 위치 설정");
 
-        if (newStateData.ver < 0)
+        if (newPositionData.dir)
         {
-        	transform.rotation = Quaternion.Euler(new Vector3(0, 180.0f, 0));
-        	charDir = false;
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0.0f, 0));
+            charDir = true;
         }
-        else if (newStateData.ver >= 0)
+        else
         {
-        	transform.rotation = Quaternion.Euler(new Vector3(0, 0.0f, 0));
-        	charDir = true;
+            transform.rotation = Quaternion.Euler(new Vector3(0, 180.0f, 0));
+            charDir = false;
         }
-		transform.position = new Vector3 ((float)Math.Round((double)newStateData.posX, 3), (float)Math.Round((double)newStateData.posY, 3), (float)Math.Round((double)newStateData.posZ, 3));
-
-		CharState(newStateData.state);
-	}
-
-
+        transform.position = new Vector3(newPositionData.posX, newPositionData.posY, newPositionData.posZ);
+    }
 }
 
