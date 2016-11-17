@@ -9,8 +9,31 @@ public class BoomMonster : Monster {
 	public float currentDisTance;
 	float middleBossToMonsterLimitDistanceMonsterToCenter = 6.0f;
 	private float middleBossToMonsterMinDistance = 1.5f;
+	public AnimationState stateInfo;
+	public override void HitDamage(int _Damage)
+	{
+		Debug.Log ("in takeDanager");
 
+		if (IsAlive)
+		{
+			
+			currentLife -= _Damage;
 
+			//uiManager.bossHp.fillAmount = currentLife / maxLife;
+			if (currentLife > 0)
+			{
+				Pattern (StatePosition.TakeDamage);
+
+				//hitanimation
+			}
+			else if (currentLife <= 0)
+			{
+				Pattern (StatePosition.Death);
+				IsAlive = false;
+
+			}
+		}
+	}
 	private Vector3 movePoint;
 	private Vector3 idlePoint = new Vector3(0,0,0);
 
@@ -97,7 +120,8 @@ public class BoomMonster : Monster {
                 }
             case StatePosition.TakeDamage:
                 {
-				StartCoroutine(TakeDamageCorutine());
+//				StartCoroutine(TakeDamageCorutine());
+				TakeDamageMethod();
                     break;
                 }
             case StatePosition.Death:
@@ -114,6 +138,18 @@ public class BoomMonster : Monster {
 		AnimatorReset();
 		yield return new WaitForSeconds (0.05f);
 		StopCoroutine (TakeDamageCorutine ());
+
+	}
+
+	public void TakeDamageMethod(){
+		animator.SetTrigger ("TakeDamage");
+		IsHited = true;
+		if (stateInfo.name == "TakeDamage") {
+			isAttack = false;
+			moveAble = false;
+		} else
+			AnimatorReset ();
+		
 
 	}
 
@@ -183,7 +219,6 @@ public class BoomMonster : Monster {
                     {
                         Pattern(StatePosition.Boom);
                     }
-					//Debug.Log (animator.GetCurrentAnimatorStateInfo (0));
                 }
 			}
 		}
@@ -227,19 +262,6 @@ public class BoomMonster : Monster {
 
 
 
-	void OnTriggerEnter(Collider coll){
-
-		//Debug.Log ("hit");
-		//if (coll.gameObject.layer == LayerMask.NameToLayer("Weapon")) {
-			Pattern (StatePosition.TakeDamage);
-			//BCM.DamageCarculateProcess (coll.gameObject.transform.parent.gameObject, this.gameObject, coll.gameObject);//this method need conference;
-			//BCM.DamageCarculateProcess(coll.transform.parent.GetComponent<CharcterPlayer>())
-
-			//BCM.DamageCarculateProcess (coll.gameObject.transform.parent.GetComponent<CharcterPlayer> (), this.gameObject.GetComponent<Monster> (), coll.gameObject);
-		//}
-
-		//Takedamage cooldown need;
-	}
 
 
 	//may be delete this courotine;
@@ -263,7 +285,6 @@ public class BoomMonster : Monster {
 				//if this object get Attackmotion pattern(stateposition.boom -> attack), and this monsterlife is 20%, boomPattern start;
 				else if (currentDisTance <= searchRange)
 				{
-
 					movePoint = new Vector3(checkDirection.x, 0, checkDirection.z);
 
 					if (currentDisTance >= searchRange * 0.2f)
@@ -279,22 +300,14 @@ public class BoomMonster : Monster {
 							isAttack = true;
 							Pattern (StatePosition.Attack);
 						}
-
 					}
 					if (currentLife / maxLife < 0.2)
 					{
 						Pattern(StatePosition.Boom);
 					}
-
-
-
 					//Debug.Log (animator.GetCurrentAnimatorStateInfo (0));
 				}
-
-
 			}
-
-
 		}
 		if (!IsAlive)
 		{
