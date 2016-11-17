@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class DataHandler : MonoBehaviour
@@ -14,6 +15,8 @@ public class DataHandler : MonoBehaviour
     ServerRecvNotifier serverRecvNotifier;
     private Dictionary<int, P2PRecvNotifier> p2p_notifier = new Dictionary<int, P2PRecvNotifier>();
     private Dictionary<int, ServerRecvNotifier> server_notifier = new Dictionary<int, ServerRecvNotifier>();
+
+    public DateTime dTime;
 
     public void Initialize(Queue<DataPacket> receiveQueue, Queue<DataPacket> sendQueue)
     {
@@ -55,9 +58,9 @@ public class DataHandler : MonoBehaviour
             headerSerializer.SetDeserializedData(msg);
             headerSerializer.Deserialize(ref headerData);
 
-            Debug.Log("패킷 길이 : " + msg.Length);
-            Debug.Log("패킷 아이디 : " + headerData.id);
-            Debug.Log("패킷 출처 : " + headerData.source);
+            //Debug.Log("패킷 길이 : " + msg.Length);
+            //Debug.Log("패킷 아이디 : " + headerData.id);
+            //Debug.Log("패킷 출처 : " + headerData.source);
 
             DataReceiver.ResizeByteArray(0, NetworkManager.packetSource + NetworkManager.packetId, ref msg);
 
@@ -104,6 +107,8 @@ public class DataHandler : MonoBehaviour
         Debug.Log("연결 확인 답장");
         dungeonManager = GameObject.FindGameObjectWithTag("DungeonManager").GetComponent<DungeonManager>();
         dungeonManager.CreatePlayer(0);
+        dTime = DateTime.Now;
+        Debug.Log("시간 지정 : " + dTime.ToString("hh:mm:ss"));
 
         return P2PPacketId.ConnectionAnswer;
     }
@@ -128,8 +133,15 @@ public class DataHandler : MonoBehaviour
         CharacterPositionPacket characterPositionPacket = new CharacterPositionPacket(data);
         CharacterPositionData characterPositionData = characterPositionPacket.GetData();
 
+        Debug.Log("현재시간 : " + (DateTime.Now - dTime).TotalSeconds);
+        Debug.Log("시간 : " + characterPositionData.time);
         Debug.Log("캐릭터 방향 : " + characterPositionData.dir);
         Debug.Log("캐릭터 위치 : " + characterPositionData.posX + ", " + characterPositionData.posY + ", " + characterPositionData.posZ + ", ");
+        
+        if ((DateTime.Now - dTime).TotalSeconds - characterPositionData.time > 1)
+        {
+            return P2PPacketId.None;
+        }
 
         CharacterManager characterManager = dungeonManager.Players[1].GetComponent<CharacterManager>();
         characterManager.SetPosition(characterPositionData);
@@ -152,12 +164,4 @@ public class DataHandler : MonoBehaviour
 
         return P2PPacketId.None;
     }
-}
-
-public class HeaderData
-{
-    // 헤더 == [2바이트 - 패킷길이][1바이트 - ID]
-    public short length; // 패킷의 길이
-    public byte source;
-    public byte id; // 패킷 ID
 }

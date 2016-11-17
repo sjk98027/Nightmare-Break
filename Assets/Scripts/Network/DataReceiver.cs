@@ -173,7 +173,6 @@ public class DataReceiver : MonoBehaviour
                 asyncData.msgSize = (short)(BitConverter.ToInt16(msgSize, 0) + NetworkManager.packetSource + NetworkManager.packetId);
 
                 byte[] msg = ResizeByteArray(0, asyncData.msgSize, ref asyncData.msg);
-                Debug.Log(msg.Length);
                 DataPacket packet = new DataPacket(msg, asyncData.EP);
 
                 msgs.Enqueue(packet);

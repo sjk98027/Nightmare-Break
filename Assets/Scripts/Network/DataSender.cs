@@ -17,9 +17,6 @@ public class DataSender : MonoBehaviour
 
     byte[] udpMsg;
 
-    float dTime;
-    float cTime;
-
     public void Initialize(Queue<DataPacket> newSendMsgs, Socket newTcpSock, Socket newUdpSock)
     {
         networkManager = GetComponent<NetworkManager>();
@@ -27,8 +24,6 @@ public class DataSender : MonoBehaviour
         sendMsgs = newSendMsgs;
         tcpSock = newTcpSock;
         udpSock = newUdpSock;
-        cTime = Time.time;
-        dTime = Time.time;
 
         udpMsg = new byte[0];
     }
@@ -36,8 +31,6 @@ public class DataSender : MonoBehaviour
     //데이타를 전송하는 메소드. byte[] msg 를 newIPEndPoint로 전송한다.
     public void DataSend()
     {
-        dTime = Time.time;
-
         if (sendMsgs.Count > 0)
         {
             DataPacket packet;
@@ -144,12 +137,13 @@ public class DataSender : MonoBehaviour
         {
             yield return null;
 
-            bool dir = characterManager.charDir;            
+            short time = (short)((DateTime.Now - networkManager.DataHandler.dTime).TotalSeconds);
+            bool dir = characterManager.charDir;
             float xPos = characterManager.transform.position.x;
             float yPos = characterManager.transform.position.y;
             float zPos = characterManager.transform.position.z;
 
-            CharacterPositionData CharacterPosition = new CharacterPositionData(dir, xPos, yPos, zPos);
+            CharacterPositionData CharacterPosition = new CharacterPositionData(time, dir, xPos, yPos, zPos);
             CharacterPositionPacket characterStatePacket = new CharacterPositionPacket(CharacterPosition);
             characterStatePacket.SetPacketId((int)P2PPacketId.CharacterPosition);
 
@@ -198,9 +192,9 @@ public class DataSender : MonoBehaviour
         HeaderData headerData = new HeaderData();
         HeaderSerializer headerSerializer = new HeaderSerializer();
 
-        headerData.id = (byte)data.GetPacketId();
-        headerData.source = (byte)NetworkManager.Source.ServerSource;
         headerData.length = (short)msg.Length;
+        headerData.source = (byte)NetworkManager.Source.ServerSource;
+        headerData.id = (byte)data.GetPacketId();
 
         headerSerializer.Serialize(headerData);
         byte[] header = headerSerializer.GetSerializedData();

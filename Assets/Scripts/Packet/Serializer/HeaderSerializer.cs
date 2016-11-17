@@ -19,7 +19,7 @@
         return true;
     }
 
-    public bool Deserialize(ref HeaderData serialized)
+    public bool Deserialize(ref HeaderData element)
     {
         // 디시리얼라이즈하는 데이터를 설정한다.
         bool ret = (GetDataSize() > 0) ? true : false;
@@ -30,13 +30,21 @@
         }
 
         // 데이터의 요소별로 디시리얼라이즈한다.
-        byte packetSource = 0;
-        byte packetId = 0;
-        ret &= Deserialize(ref packetSource);
-        ret &= Deserialize(ref packetId);
-        serialized.source = packetSource;
-        serialized.id = packetId;
+        byte source = 0;
+        byte id = 0;
+        ret &= Deserialize(ref source);
+        ret &= Deserialize(ref id);
+        element.source = source;
+        element.id = id;
 
         return ret;
     }
+}
+
+public class HeaderData
+{
+    // 헤더 == [2바이트 - 패킷길이][1바이트 - 출처][1바이트 - ID]
+    public short length; // 패킷의 길이
+    public byte source; //패킷 출처
+    public byte id; // 패킷 ID
 }
