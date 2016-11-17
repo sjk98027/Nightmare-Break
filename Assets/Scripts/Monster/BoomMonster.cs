@@ -198,7 +198,30 @@ public class BoomMonster : Monster {
 			transform.Translate (transitionVector * moveSpeed * 0.5f * Time.deltaTime);
 		}
 		if (IsHited) {
-			
+			currentDisTance = Vector3.Distance(targetPlayer.transform.position, this.gameObject.transform.position);
+			checkDirection = targetPlayer.transform.position - this.gameObject.transform.position;
+
+			if (currentDisTance < middleBossToMonsterLimitDistanceMonsterToCenter*1.5f) {
+				movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
+				transform.Translate(movePoint * moveSpeed * Time.deltaTime, 0);
+				if (currentDisTance >= searchRange * 0.2f)
+				{
+					if (moveAble) {
+						Pattern (StatePosition.Run);
+						Debug.Log ("Run");
+					}
+				}
+				if (currentDisTance < searchRange * 0.2f)
+				{
+					if (!isAttack) {
+						isAttack = true;
+						Pattern (StatePosition.Attack);
+					}
+				}
+			}
+			if (currentDisTance >= middleBossToMonsterLimitDistanceMonsterToCenter*1.5f) {
+				IsHited = false;
+			}
 		}
 	}
 
