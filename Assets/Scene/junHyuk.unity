@@ -150,6 +150,7 @@ MonoBehaviour:
   stateDirecion: 0
   searchRange: 0
   moveSpeed: 0
+  uiManager: {fileID: 0}
   MonsterWeapon: []
   monsterAlive: 1
   BigBearBossState: 0
@@ -1510,7 +1511,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 12a03130e886a4c4196af3bef1563ddb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1757,7 +1758,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f5eb5642a1454044faf5f234990c2b49, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3901,7 +3902,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c768e428a549f304bab5d1a1c1b198b2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3961,19 +3962,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rend: {fileID: 0}
   charstate:
-    characterName: 
-    characterNum: 0
-    characherLevel: 0
-    maxHealthPoint: 0
-    maxManaPoint: 0
-    demendExp: 0
-    needExp: 0
-    healthPoint: 0
-    magicPoint: 0
-    defense: 0
-    critical: 0
+    characterName: Warrior
+    characterNum: 1
+    characterLevel: 1
+    maxHealthPoint: 1000
+    maxManaPoint: 1000
+    demendExp: 1
+    needExp: 1
+    healthPoint: 1000
+    magicPoint: 1000
+    defense: 10
+    critical: 10
+    charSpeed: 7
     dreamStone: 0
     skillCoolTime: []
+    activeSkillSet:
+    - skillId: 0
+      skillName: 0
+      skillCost: 0
+      skillLevel: 0
+      skillDamage: 0
+      skillCoolTime: 0
+      skillIcon: {fileID: 0}
+    - skillId: 0
+      skillName: 
+      skillCost: 0
+      skillLevel: 0
+      skillDamage: 0
+      skillCoolTime: 0
+      skillIcon: {fileID: 0}
+    - skillId: 0
+      skillName: 
+      skillCost: 0
+      skillLevel: 0
+      skillDamage: 0
+      skillCoolTime: 0
+      skillIcon: {fileID: 0}
+    - skillId: 0
+      skillName: 
+      skillCost: 0
+      skillLevel: 0
+      skillDamage: 0
+      skillCoolTime: 0
+      skillIcon: {fileID: 0}
+    passiveSkillSet: []
+    onSkill: 000000000000
   skillTime: 0
   mealstromState: 0
   charVer: 0
@@ -3986,7 +4019,6 @@ MonoBehaviour:
   inputmanager: {fileID: 0}
   enemy: []
   wall: {fileID: 0}
-  charSpeed: 10
   jumpPower: 7
   charAlive: 1
   GiganticSword: {fileID: 0}
@@ -4607,7 +4639,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f38ae710fc181c14998b6748a1e7f90a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5069,7 +5101,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a248bfb2d3e698f428e42b79937550bb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
