@@ -111,6 +111,14 @@ public class DungeonManager : MonoBehaviour
 
     }
 
+	public void SectionSet(){
+		
+		for (int i = 0; i < section.Length; i++) {
+			section [i].MonsterSet ();
+			section [i].GateNumber = i;
+		}
+	}
+
     public void RemoveMonsterArray()
     {
         monsterCount -= 1;
@@ -124,9 +132,25 @@ public class DungeonManager : MonoBehaviour
     void Start()
     {
         DungeonConstruct();//mapNumber - > inspector define
-        modeForm = false;
-        ModeChange(modeForm);//client get modeform and ingame play ;
+//        modeForm = false;
+//        ModeChange(modeForm);//client get modeform and ingame play ;
+		//section = transform.GetComponentsInChildren<Section> ();
+		modeForm = true;
+		section = transform.GetComponentsInChildren<Section> ();
+		if(section.Length != 0){
+			SectionSet ();
+		}
+
     }
+
+//	void Awake(){
+//		if (!modeForm) {
+//			for (int i = 0; i < section.Length; i++) {
+//				section [i].UpdateConduct ();
+//			}
+//		}
+//	}
+
 
     void Update()
     {
@@ -134,7 +158,7 @@ public class DungeonManager : MonoBehaviour
         {
             for (int i = 0; i < boomMonster.Length; i++)
             {
-                boomMonster[i].UpdateConduct();
+				boomMonster[i].UpdateConductNormalMode();
                 //			warriorMonster [i].UpdateConduct ();
             }
 
@@ -144,13 +168,12 @@ public class DungeonManager : MonoBehaviour
             //            }
         }
 
-        //if (modeForm)
-        //{
-        //    for (int i = 0; i < defenceWave.Length; i++)
-        //    {
-        //        defenceWave[i].WaveRespwan();
-        //    }
-        //}
+        if (modeForm)
+        {
+			for (int i = 0; i < section.Length; i++) {
+				section [i].UpdateConduct ();
+			}
+        }
     }
 
 
