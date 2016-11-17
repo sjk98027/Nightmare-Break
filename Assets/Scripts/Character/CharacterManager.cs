@@ -27,7 +27,7 @@ public class CharacterManager : MonoBehaviour
 	AnimatorStateInfo runState;
 	public CharacterStatus charstate;
 	public float skillTime;
-
+    DataSender dataSender;
 
 	public bool mealstromState;
 
@@ -87,10 +87,11 @@ public class CharacterManager : MonoBehaviour
 		wall = GameObject.FindGameObjectWithTag ("Wall");
 		JumpMove = false;
 		giganticSwordCastSword = GameObject.Find("GiganticSwordSwordCast");
-		//giganticSwordCastSword.SetActive(false);
-		//giganticSword = Resources.Load<GameObject> ("GiganticSword");
+        //giganticSwordCastSword.SetActive(false);
+        //giganticSword = Resources.Load<GameObject> ("GiganticSword");
+        dataSender = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<DataSender>();
 
-	}
+    }
 
 	void Update ()
 	{
@@ -122,11 +123,11 @@ public class CharacterManager : MonoBehaviour
 			if (normalAttackState || skillAttackState)
 			{
 				//charWeapon.center = new Vector3 (5.0f,2.1f,0.7f);
-				charWeapon.size = new Vector3 (0.11f,0.11f,1.28f);
+				//charWeapon.size = new Vector3 (0.11f,0.11f,1.28f);
 			}
 			else
 			{
-				charWeapon.size = new Vector3 (0,0,0);
+				//charWeapon.size = new Vector3 (0,0,0);
 			}
 		}
 
@@ -449,6 +450,8 @@ public class CharacterManager : MonoBehaviour
 				animator.SetTrigger ("PlayerDie");
 				break;
 			}
+
+            dataSender.CharacterActionSend(Inputstate);
 		}
 	}
 

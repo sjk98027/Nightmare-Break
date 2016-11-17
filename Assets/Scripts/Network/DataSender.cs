@@ -77,6 +77,7 @@ public class DataSender : MonoBehaviour
     public void GameClose()
     {
         Debug.Log("게임 종료");
+
         ResultData resultData = new ResultData();
         ResultDataPacket resultDataPacket = new ResultDataPacket(resultData);
         resultDataPacket.SetPacketId((int)ClientPacketId.GameClose);
