@@ -43,7 +43,7 @@ public class DataHandler : MonoBehaviour
 
     public void DataHandle()
     {
-        if (receiveMsgs.Count != 0)
+        if (receiveMsgs.Count > 0)
         {
             //패킷을 Dequeue 한다 
             //패킷 : 메시지 타입 + 메시지 내용
@@ -138,10 +138,10 @@ public class DataHandler : MonoBehaviour
         Debug.Log("캐릭터 방향 : " + characterPositionData.dir);
         Debug.Log("캐릭터 위치 : " + characterPositionData.posX + ", " + characterPositionData.posY + ", " + characterPositionData.posZ + ", ");
         
-        if ((DateTime.Now - dTime).TotalSeconds - characterPositionData.time > 1)
-        {
-            return P2PPacketId.None;
-        }
+        //if ((DateTime.Now - dTime).TotalSeconds - characterPositionData.time > 1)
+        //{
+        //    return P2PPacketId.None;
+        //}
 
         CharacterManager characterManager = dungeonManager.Players[1].GetComponent<CharacterManager>();
         characterManager.SetPosition(characterPositionData);

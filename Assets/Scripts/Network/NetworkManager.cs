@@ -52,7 +52,7 @@ public class NetworkManager : MonoBehaviour
     {
         mainServer = new IPEndPoint(IPAddress.Parse(ip), mainServerPortNumber);
         client1 = new IPEndPoint(IPAddress.Parse(ip), client1PortNumber);
-        client2 = new IPEndPoint(IPAddress.Parse("192.168.94.67"), client2PortNumber);
+        client2 = new IPEndPoint(IPAddress.Parse("192.168.94.60"), client2PortNumber);
 
         receiveMsgs = new Queue<DataPacket>();
         sendMsgs = new Queue<DataPacket>();
