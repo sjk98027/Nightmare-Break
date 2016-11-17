@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 
 [System.Serializable]
 public class CharacterStatus
@@ -9,7 +10,7 @@ public class CharacterStatus
 	public int characterNum;
 
 	//Level
-	public int characherLevel;
+	public int characterLevel;
     public int maxHealthPoint;
     public int maxManaPoint;
 
@@ -26,9 +27,9 @@ public class CharacterStatus
 
 	//critical point
 	public float critical;
+	public float charSpeed;
 
 	public int dreamStone;
-
 
 
 	//char stat
@@ -37,9 +38,15 @@ public class CharacterStatus
 
 	public float[] skillCoolTime;
 
+	public Skill[] activeSkillSet;
+
+	public Skill[] passiveSkillSet;
+
+	public bool[] onSkill;
+
 	public string CharacterName {get {return this.characterName;}}
 
-	public int CharacherLevel {	get {return this.characherLevel;}}
+	public int CharacterLevel {	get {return this.characterLevel;}}
 
 	public int DemendExp { get {return this.demendExp;}	}
 
@@ -69,4 +76,54 @@ public class CharacterStatus
 	public int DreamStone {	get {return this.dreamStone;}}
 
 	public float[] SkillCoolTime {get {return this.skillCoolTime;}}
+
+
+	public Skill[] ActiveSkillSet {get {return this.activeSkillSet;}}
+
+	public Skill[] PassiveSkillSet {get {return this.passiveSkillSet;}}
+
+	public bool[] OnSkill {	get {return this.onSkill;}}
+
+	public float CharSpeed {get {return this.charSpeed;}}
+
+	public CharacterStatus()
+	{
+		characterName = "default";
+
+	}
+
+
+
+	public CharacterStatus (CharacterStatus status)
+	{
+		characterName = status.characterName;
+		characterNum = status.characterNum;
+		characterLevel = status.characterLevel;
+		needExp = 1000;
+		MaxHealthPoint = 1000;
+		healthPoint =maxHealthPoint;
+
+		maxManaPoint = 1000;
+		magicPoint = maxManaPoint;
+		charSpeed = 7;
+		SkillInitalize ();
+	}
+
+	public void SkillInitalize()
+	{
+		activeSkillSet = new Skill[4];
+
+		for (int i = 0; i < activeSkillSet.Length; i++)
+		{
+			activeSkillSet [i] = new Skill ();
+		}
+
+		passiveSkillSet = new Skill[2];
+		for (int i = 0; i < passiveSkillSet.Length; i++)
+		{
+			passiveSkillSet [i] = new Skill ();
+		}
+		onSkill = new bool[6];
+		skillCoolTime = new float[6];		
+	}
 }
