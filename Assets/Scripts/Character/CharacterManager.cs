@@ -13,7 +13,7 @@ public class CharacterManager : MonoBehaviour
 		Attack,
 		Jump,
 
-		Skill1, //CutOff
+		Skill1,
 		Skill2,
 		Skill3,
 		Skill4,
@@ -27,9 +27,8 @@ public class CharacterManager : MonoBehaviour
 	AnimatorStateInfo runState;
 	public CharacterStatus charstate;
 	public float skillTime;
-    DataSender dataSender;
 
-	public bool mealstromState;
+	public float[] skillCoolTime;
 
 	public bool charDir;
 	public bool JumpMove;
@@ -44,7 +43,6 @@ public class CharacterManager : MonoBehaviour
 	public GameObject[] enermy;
 	public GameObject wall;
 
-	CharacterStatus stat= null;
 	private int potionCount = 3;
 
 	//public float charSpeed;
@@ -52,13 +50,6 @@ public class CharacterManager : MonoBehaviour
 	public float jumpPower;
 	public bool charAlive = true;
 
-	//GiganticSword
-	public GameObject GiganticSword;
-	public float giganticSwordSpeed;
-	public float giganticSwordMatarial;
-	public bool giganticSwordRendTime;
-	public GameObject giganticSwordTemp;
-	public GameObject giganticSwordCastSword;
 
 	public GameObject[] Enermy {get {return this.enermy;}}
 	public int BasicDamage {get {return this.basicDamage;}}
@@ -75,59 +66,66 @@ public class CharacterManager : MonoBehaviour
 
 	public bool SkillAttackState{get {return this.skillAttackState;}}
 
+	public UIManager uiManager;
+
 	void Start ()
 	{
-		//stat = GetComponent<CharacterStatus> ();
+		uiManager = GameObject.FindWithTag ("UI").GetComponent<UIManager> ();
+		charstate = new CharacterStatus(0);
 		animator = GetComponent<Animator> ();
 		state = CharacterState.Idle;
 		enermy = null;
 		rigdbody = this.GetComponent<Rigidbody>();
-		mealstromState = false;
 		charDir = true;
 		wall = GameObject.FindGameObjectWithTag ("Wall");
 		JumpMove = false;
-		giganticSwordCastSword = GameObject.Find("GiganticSwordSwordCast");
-        //giganticSwordCastSword.SetActive(false);
-        //giganticSword = Resources.Load<GameObject> ("GiganticSword");
-        dataSender = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<DataSender>();
+		enermy = GameObject.FindGameObjectsWithTag("Enermy");
+		skillCoolTime = new float[4];
+		CharCoolTime (0);
 
-    }
+	}
 
 	void Update ()
 	{
+		//Debug.Log(uiManager.skillUI [2].fillAmount);
 		if (charAlive)
 		{
-			
-			if (mealstromState)
+			// check skill state
+			if (skillAttackState)
 			{
-				Maelstrom ();
-			}
-			if (giganticSwordRendTime && giganticSwordTemp != null)
-			{
-//				rend = GiganticSword.gameObject.GetComponent<Renderer> ();
-				giganticSwordMatarial += Time.deltaTime;
+				// skill index
+				// skill process ProcessSkill1()
 
-				if (giganticSwordTemp.transform.position.y > 0.1)
+				switch (state)
 				{
-					
-					float giganticSwordAlpha = 1;
-				//	rend.material.color = new Color (0, 0, 0, giganticSwordAlpha);
+				case CharacterState.Skill1:
+					ProcessSkill1 ();
+					break;
+				
+				case CharacterState.Skill2:
+					ProcessSkill2 ();
+					break;
 
-					if (giganticSwordAlpha < 0.5)
-					{
-						giganticSwordMatarial = 0;
-						Destroy (giganticSwordTemp, 0.5f);
-					}
+				case CharacterState.Skill3:
+					ProcessSkill3 ();
+					break;
+
+				case CharacterState.Skill4:
+					ProcessSkill4 ();
+					break;
 				}
+					
 			}
+
+
 			if (normalAttackState || skillAttackState)
 			{
-				//charWeapon.center = new Vector3 (5.0f,2.1f,0.7f);
-				//charWeapon.size = new Vector3 (0.11f,0.11f,1.28f);
+				charWeapon.size = new Vector3 (0.11f,0.11f,1.28f);
 			}
 			else
 			{
-				//charWeapon.size = new Vector3 (0,0,0);
+				
+				charWeapon.size = new Vector3 (0,0,0);
 			}
 		}
 
@@ -140,6 +138,9 @@ public class CharacterManager : MonoBehaviour
 		//		giganticSwordCastSword.SetActive(false);
 		Debug.Log ("anima End");
 		normalAttackState = false;
+		skillAttackState = false;
+		basicDamage = 0;
+
 	}
 
 	//char state Method
@@ -207,12 +208,10 @@ public class CharacterManager : MonoBehaviour
 			if (JumpMove)
 			{
 				rigdbody.mass = 100;
-
 			}
 			else
 			{
 				rigdbody.mass = 1;
-			
 			}
 
 
@@ -249,10 +248,36 @@ public class CharacterManager : MonoBehaviour
 	}
 
 
-	//swordmaster Skill
-	public void Espada ()
+	public virtual void Skill1 ()
 	{
-		
+		if (state == CharacterState.Run || state == CharacterState.Idle)
+		{
+			state = CharacterState.Skill1;
+			CharState ((int)CharacterState.Skill1);
+
+		}
+	}
+
+
+	public void skill2 ()
+	{
+		if (state != CharacterState.Jump && state != CharacterState.Skill2 && state != CharacterState.Skill1 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
+		{
+			CharState ((int)CharacterState.Skill2);
+		}
+	}
+
+	public void skill3()
+	{
+		if (state != CharacterState.Jump && state != CharacterState.Skill3 && state != CharacterState.Skill2 && state != CharacterState.Skill1 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
+		{
+			CharState ((int)CharacterState.Skill3);
+		}
+	}
+
+	public void Skill4 ()
+	{
+
 		if (state != CharacterState.Jump && state != CharacterState.Skill1 && state != CharacterState.Skill2 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
 		{
 			Debug.Log ("sk3");
@@ -261,106 +286,29 @@ public class CharacterManager : MonoBehaviour
 		}
 	}
 
-	public void GiganticSwordSummon ()
-	{
-		float giganticSwordPos;
-		if (charDir)
-		{
-			giganticSwordPos = 10.0f;
-
-		}
-		else
-		{
-			giganticSwordPos = -10.0f;
-		}
-
-		giganticSwordTemp = Instantiate (Resources.Load<GameObject> ("GiganticSword"), transform.position + new Vector3 (0.0f, 10.0f, giganticSwordPos), Quaternion.Euler (new Vector3 (0.0f, -90, 0.0f))) as GameObject;
-		giganticSwordTemp.gameObject.GetComponent<Rigidbody> ().AddForce (-Vector3.up *giganticSwordSpeed, ForceMode.Impulse);
-		giganticSwordRendTime = true;
-	}
-
-	public void Maelstrom ()
-	{
 
 
-		if (state == CharacterState.Run || state == CharacterState.Idle)
-		{
-
-			state = CharacterState.Skill1;
-			CharState ((int)CharacterState.Skill1);
-		}	
 
 
-//		float maelstromSpeed = 0.5f;
-//		float maelstromDistance;
-//
-//		skillTime += Time.deltaTime;
-//
-//
-//		for (int i = 0; i < enemy.Length; i++)
-//		{
-//			maelstromDistance = Vector3.Distance (this.transform.position, enemy [i].transform.position);
-//
-//			if (maelstromDistance < 10)
-//			{
-//				enemy [i].transform.Translate ((this.transform.position - enemy [i].transform.position) * maelstromSpeed * Time.deltaTime, Space.World);
-//			}
-//		}
-//		if (skillTime >= 1.5f)
-//		{
-//			mealstromState = false;
-//			skillTime = 0;
-//		}
-//
-
-
-		//내 가지고있는 1번 스킬에 이름이 맞는 
-
-
-	}
-
-	public void CutOff ()
-	{
-		if (state != CharacterState.Jump && state != CharacterState.Skill2 && state != CharacterState.Skill1 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
-		{
-			CharState ((int)CharacterState.Skill2);
-		}
-	}
-
-	public void CutOffMove ()
-	{
-		Instantiate (Resources.Load<GameObject> ("Effect/SwordShadow"), new Vector3 (transform.position.x, transform.position.y + 1.0f, transform.position.z), Quaternion.identity);
-
-		Ray cutOffDistance = new Ray (this.transform.position, transform.forward); //(this.transform.position);
-		RaycastHit rayHit;
-
-		if (Physics.Raycast (cutOffDistance, out rayHit, 5f, 1 << LayerMask.NameToLayer ("Map")))
-		{
-			transform.Translate (0, 0, rayHit.distance - 0.5f);
-		}
-		else
-		{
-			transform.Translate (0, 0, 5);
-		}
-		//animation stop and keyboardinput Lock
-	}
-
-	public void SwordDance()
-	{
-		if (state != CharacterState.Jump && state != CharacterState.Skill3 && state != CharacterState.Skill2 && state != CharacterState.Skill1 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
-		{
-			CharState ((int)CharacterState.Skill3);
-		}
-	}
-
-
-	public void Skilluse()
-	{
+	public virtual void ProcessSkill1()
+	{	
 		
+	}
+
+	public virtual void ProcessSkill2()
+	{		
 
 	}
 
+	public virtual void ProcessSkill3()
+	{		
 
+	}
+
+	public virtual void ProcessSkill4()
+	{		
+
+	}
 	//using Potion
 	public void UsingPotion ()
 	{   //Potion Effect create
@@ -374,7 +322,7 @@ public class CharacterManager : MonoBehaviour
 	{
 		for (int i = 0; i < potionCount; i++)
 		{
-			stat.healthPoint += (int)(stat.healthPoint * 0.3);
+			charstate.healthPoint += (int)(charstate.healthPoint * 0.3);
 			yield return new WaitForSeconds (1f);
 		}
 	}
@@ -386,7 +334,6 @@ public class CharacterManager : MonoBehaviour
 		animator.SetBool ("Idle", false);
 		animator.SetBool ("Run", false);
 	}
-
 
 	public void CharState (int Inputstate)
 	{
@@ -409,6 +356,7 @@ public class CharacterManager : MonoBehaviour
 			case 2:
 				state = CharacterState.Attack;
 				animator.SetTrigger ("Attack");
+				basicDamage = 10;
 				break;
 
 			case 3:
@@ -417,28 +365,50 @@ public class CharacterManager : MonoBehaviour
 				break;
 
 			case 4:
-				state = CharacterState.Skill1;
-				animator.SetTrigger ("Skill1");
-				skillAttackState = true;
-				break;
+				if (uiManager.skillUI [0].fillAmount == 1)
+				{
+					StartCoroutine (uiManager.SkillCoolTimeUI (0, skillCoolTime [0]));
+					state = CharacterState.Skill1;
+					animator.SetTrigger ("Skill1");
+					skillAttackState = true;
+					//basicDamage = charstate.activeSkillSet [0].skillDamage;
+				}
+					break;
 
 			case 5:
-				state = CharacterState.Skill2;
-				animator.SetTrigger ("Skill2");
-				skillAttackState = true;
+				if (uiManager.skillUI [1].fillAmount == 1)
+				{
+					StartCoroutine (uiManager.SkillCoolTimeUI (1,skillCoolTime [1]));
+					state = CharacterState.Skill2;
+					animator.SetTrigger ("Skill2");
+					skillAttackState = true;
+					//basicDamage = charstate.activeSkillSet [1].skillDamage;
+				}
 				break;
 
 			case 6:
-				state = CharacterState.Skill4;
-				animator.SetTrigger ("Skill4");
-				skillAttackState = true;
+				if (uiManager.skillUI [2].fillAmount == 1)
+				{
+					StartCoroutine (uiManager.SkillCoolTimeUI (2, skillCoolTime [2]));
+					state = CharacterState.Skill3;
+					animator.SetTrigger ("Skill3");
+					skillAttackState = true;
+					//basicDamage = charstate.activeSkillSet [3].skillDamage;
+				}
 				break;
 
 			case 7:
-				state = CharacterState.Skill3;
-				animator.SetTrigger ("Skill3");
-				skillAttackState = true;
+
+				if (uiManager.skillUI [3].fillAmount == 1)
+				{
+					StartCoroutine (uiManager.SkillCoolTimeUI (3, skillCoolTime [3]));
+					state = CharacterState.Skill4;
+					animator.SetTrigger ("Skill4");
+					skillAttackState = true;
+					//basicDamage = charstate.activeSkillSet [2].skillDamage;
+				}
 				break;
+
 
 			case 8:
 				state = CharacterState.HitDamage;
@@ -450,10 +420,24 @@ public class CharacterManager : MonoBehaviour
 				animator.SetTrigger ("PlayerDie");
 				break;
 			}
-
-            dataSender.CharacterActionSend(Inputstate);
 		}
 	}
+
+
+
+	public void CharCoolTime(int _name)
+	{
+		
+		if (_name == 0)
+		{
+			skillCoolTime [0] = 10;
+			skillCoolTime [1] = 3;
+			skillCoolTime [2] = 30;
+			skillCoolTime [3] = 40;
+		}
+
+	}
+
 
 	public void HitDamage(int _damage)
 	{

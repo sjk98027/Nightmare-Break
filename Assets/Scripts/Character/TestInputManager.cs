@@ -12,7 +12,6 @@ public class TestInputManager : MonoBehaviour
 
 	void Awake()
 	{
-        
 		characterManager = GameObject.FindWithTag("Player").GetComponent<CharacterManager>();
 		cameraDistance = new Vector3(11f, 6.5f, 0);
 	}
@@ -47,23 +46,20 @@ public class TestInputManager : MonoBehaviour
 
 		if (Input.GetButtonDown("Skill1"))
 		{
-			characterManager.mealstromState = true;
+			characterManager.Skill1 ();
 			//Maelstrom ();
 		}
 		else if (Input.GetButtonDown("Skill2"))
 		{
-			characterManager.CutOff();
+			characterManager.skill2();
 		}
 		else if (Input.GetButtonDown("Skill3"))
 		{
-			
-			characterManager.Espada();
+			characterManager.skill3();
 		}
 		else if (Input.GetButtonDown("Skill4"))
 		{
-			Debug.Log ("swdan");
-
-			characterManager.SwordDance ();
+			characterManager.Skill4 ();
 		}
 	}
 

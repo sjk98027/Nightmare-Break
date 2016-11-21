@@ -4,6 +4,15 @@ using UnityEngine;
 [System.Serializable]
 public class CharacterStatus
 {
+	public enum CharClass
+	{
+		Warrior = 0,
+		Mage,
+		ShildWarrior,
+		Gunner	
+	}
+
+	public CharClass charClass;
 	//char status
 	//name
 	public string characterName;
@@ -30,19 +39,6 @@ public class CharacterStatus
 	public float charSpeed;
 
 	public int dreamStone;
-
-
-	//char stat
-
-	//public bool Alive{get {return this.alive;}}
-
-	public float[] skillCoolTime;
-
-	public Skill[] activeSkillSet;
-
-	public Skill[] passiveSkillSet;
-
-	public bool[] onSkill;
 
 	public string CharacterName {get {return this.characterName;}}
 
@@ -75,55 +71,21 @@ public class CharacterStatus
 
 	public int DreamStone {	get {return this.dreamStone;}}
 
-	public float[] SkillCoolTime {get {return this.skillCoolTime;}}
-
-
-	public Skill[] ActiveSkillSet {get {return this.activeSkillSet;}}
-
-	public Skill[] PassiveSkillSet {get {return this.passiveSkillSet;}}
-
-	public bool[] OnSkill {	get {return this.onSkill;}}
-
 	public float CharSpeed {get {return this.charSpeed;}}
 
-	public CharacterStatus()
+	public CharacterStatus(CharClass name)
 	{
-		characterName = "default";
-
-	}
-
-
-
-	public CharacterStatus (CharacterStatus status)
-	{
-		characterName = status.characterName;
-		characterNum = status.characterNum;
-		characterLevel = status.characterLevel;
-		needExp = 1000;
-		MaxHealthPoint = 1000;
-		healthPoint =maxHealthPoint;
-
-		maxManaPoint = 1000;
-		magicPoint = maxManaPoint;
-		charSpeed = 7;
-		SkillInitalize ();
-	}
-
-	public void SkillInitalize()
-	{
-		activeSkillSet = new Skill[4];
-
-		for (int i = 0; i < activeSkillSet.Length; i++)
+		if (name == CharClass.Warrior)
 		{
-			activeSkillSet [i] = new Skill ();
-		}
+			
+			Debug.Log ("charsta");
+			needExp = 1000;
+			MaxHealthPoint = 1000;
+			healthPoint = maxHealthPoint;
 
-		passiveSkillSet = new Skill[2];
-		for (int i = 0; i < passiveSkillSet.Length; i++)
-		{
-			passiveSkillSet [i] = new Skill ();
+			maxManaPoint = 1000;
+			magicPoint = maxManaPoint;
+			charSpeed = 7;
 		}
-		onSkill = new bool[6];
-		skillCoolTime = new float[6];		
 	}
 }

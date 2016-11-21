@@ -22,41 +22,41 @@ public class InputManager : MonoBehaviour
 
         while (true)
         {
-            yield return null;
-
-            vertical = Input.GetAxisRaw("Vertical");
-            horizontal = Input.GetAxisRaw("Horizontal");
-            characterManager.Move(vertical, horizontal);
-
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                characterManager.UsingPotion();
-            }
-
-            if (Input.GetKeyDown(KeyCode.X))
-            {
-                characterManager.NormalAttack();
-            }
-
-            if (Input.GetKeyDown(KeyCode.C))
-            {
-                characterManager.Jump();
-            }
-
-            if (Input.GetButtonDown("Skill1"))
-            {
-                characterManager.mealstromState = true;
-            }
-
-            else if (Input.GetButtonDown("Skill2"))
-            {
-                characterManager.CutOff();
-            }
-
-            else if (Input.GetButtonDown("Skill3"))
-            {
-                characterManager.Espada();
-            }
+//            yield return null;
+//
+//            vertical = Input.GetAxisRaw("Vertical");
+//            horizontal = Input.GetAxisRaw("Horizontal");
+//            characterManager.Move(vertical, horizontal);
+//
+//            if (Input.GetKeyDown(KeyCode.T))
+//            {
+//                characterManager.UsingPotion();
+//            }
+//
+//            if (Input.GetKeyDown(KeyCode.X))
+//            {
+//                characterManager.NormalAttack();
+//            }
+//
+//            if (Input.GetKeyDown(KeyCode.C))
+//            {
+//                characterManager.Jump();
+//            }
+//
+//            if (Input.GetButtonDown("Skill1"))
+//            {
+//                characterManager.mealstromState = true;
+//            }
+//
+//            else if (Input.GetButtonDown("Skill2"))
+//            {
+//                characterManager.CutOff();
+//            }
+//
+//            else if (Input.GetButtonDown("Skill3"))
+//            {
+//                characterManager.Espada();
+//            }
         }        
     }
 }
