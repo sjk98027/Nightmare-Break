@@ -13,7 +13,12 @@ public class UIManager : MonoBehaviour
     private Image potionUI;
     private const float checkTime = 0.1f;
     [SerializeField]
-    private Image[] skillUI; // 0 - SKill1 // 1 - SKill2 // 2 - Skill3 // 3 - Skill4 //
+	public Image[] skillUI; // 0 - SKill1 // 1 - SKill2 // 2 - Skill3 // 3 - Skill4 //
+	public UIManager (Image[] skillUI)
+	{
+		this.skillUI = skillUI;
+	}
+	
     public Image bossHp;
 
 

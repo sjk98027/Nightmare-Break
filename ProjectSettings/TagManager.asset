@@ -12,6 +12,8 @@ TagManager:
   - Floor
   - BossBody
   - Enermy
+  - Enemy
+  - UI
   layers:
   - Default
   - TransparentFX

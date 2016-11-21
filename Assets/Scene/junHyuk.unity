@@ -133,7 +133,7 @@ MonoBehaviour:
   player: []
   animator: {fileID: 0}
   targetPlayer: {fileID: 0}
-  mode: 0
+  normalMode: 0
   gateArrayNumber: 0
   monsterArrayNumber: 0
   currentLife: 100
@@ -141,13 +141,14 @@ MonoBehaviour:
   RunRange: 0
   attackRange: 0
   attackCycle: 0
+  isAlive: 0
   isAttack: 0
   playerToMonsterDamage: []
   aggroRank: []
   changeTargetTime: 0
   currentDisTanceArray: []
-  attackCollider: {fileID: 0}
   stateDirecion: 0
+  attackCollider: {fileID: 0}
   searchRange: 0
   moveSpeed: 0
   uiManager: {fileID: 0}
@@ -714,6 +715,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   warriorMonster: []
+  middleBoss: {fileID: 0}
+  boomMonsterPosition: []
+  pointVector: []
   monsterCount: 0
   gateNumber: 0
 --- !u!4 &289901749
@@ -1069,6 +1073,76 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 720e616eb7aadd341aadc3cc230807c5,
         type: 3}
+    - target: {fileID: 224000012865843844, guid: f729b490846df5d4d96cb8641dade98a,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000012865843844, guid: f729b490846df5d4d96cb8641dade98a,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000010234852354, guid: f729b490846df5d4d96cb8641dade98a,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0.34487712
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000010234852354, guid: f729b490846df5d4d96cb8641dade98a,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000010234852354, guid: f729b490846df5d4d96cb8641dade98a,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000012740852962, guid: f729b490846df5d4d96cb8641dade98a,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000013526216092, guid: f729b490846df5d4d96cb8641dade98a,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000013526216092, guid: f729b490846df5d4d96cb8641dade98a,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000013526216092, guid: f729b490846df5d4d96cb8641dade98a,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000013526216092, guid: f729b490846df5d4d96cb8641dade98a,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000013954992742, guid: f729b490846df5d4d96cb8641dade98a,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000013954992742, guid: f729b490846df5d4d96cb8641dade98a,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000012609636232, guid: f729b490846df5d4d96cb8641dade98a,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000012609636232, guid: f729b490846df5d4d96cb8641dade98a,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: -17
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f729b490846df5d4d96cb8641dade98a, type: 2}
   m_IsPrefabParent: 0
@@ -1433,6 +1507,10 @@ Prefab:
       propertyPath: skillUI.Array.data[5]
       value: 
       objectReference: {fileID: 856310311}
+    - target: {fileID: 1000014059943478, guid: 92c9d5cdbf09a754786d38e01b118b41, type: 2}
+      propertyPath: m_TagString
+      value: UI
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 92c9d5cdbf09a754786d38e01b118b41, type: 2}
   m_IsPrefabParent: 0
@@ -2503,6 +2581,7 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114000010153552830, guid: d7e06b340bc70db47bfaed018e15ced1, type: 2}
+    - {fileID: 114000011027176632, guid: d7e06b340bc70db47bfaed018e15ced1, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: d7e06b340bc70db47bfaed018e15ced1, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &914824444
@@ -2913,74 +2992,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 588376595}
   m_RootOrder: 7
---- !u!1 &1096229146
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 224: {fileID: 1096229147}
-  - 222: {fileID: 1096229149}
-  - 114: {fileID: 1096229148}
-  m_Layer: 5
-  m_Name: WindowBack
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1096229147
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1096229146}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children: []
-  m_Father: {fileID: 1155194525}
-  m_RootOrder: 0
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 113.8, y: 3.000018}
-  m_SizeDelta: {x: 167, y: 47}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1096229148
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1096229146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 522acfe89593f9d458ba31302330edaf, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
---- !u!222 &1096229149
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1096229146}
 --- !u!1 &1122668099
 GameObject:
   m_ObjectHideFlags: 0
@@ -3038,11 +3049,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &1155194525 stripped
-RectTransform:
-  m_PrefabParentObject: {fileID: 224000010603585472, guid: f729b490846df5d4d96cb8641dade98a,
+--- !u!1 &1192066749 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000011565194376, guid: 435ef0b7bac512942a731f586a5d0fa7,
     type: 2}
-  m_PrefabInternal: {fileID: 304993541}
+  m_PrefabInternal: {fileID: 1718185394}
+--- !u!114 &1192066750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1192066749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2509723bd5b0c6148866f54e9ae8225f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vertical: 0
+  horizontal: 0
+  characterManager: {fileID: 0}
 --- !u!1001 &1275355240
 Prefab:
   m_ObjectHideFlags: 0
@@ -3171,7 +3196,7 @@ MonoBehaviour:
   player: []
   animator: {fileID: 0}
   targetPlayer: {fileID: 0}
-  mode: 0
+  normalMode: 0
   gateArrayNumber: 0
   monsterArrayNumber: 0
   currentLife: 0
@@ -3179,14 +3204,19 @@ MonoBehaviour:
   RunRange: 0
   attackRange: 0
   attackCycle: 0
+  isAlive: 0
   isAttack: 0
   playerToMonsterDamage: []
   aggroRank: []
   changeTargetTime: 0
   currentDisTanceArray: []
-  attackCollider: {fileID: 0}
   stateDirecion: 0
+  attackCollider: {fileID: 0}
   currentDisTance: 0
+  middleboss: {fileID: 0}
+  monsterState: 0
+  pointVector: []
+  transitionVector: {x: 0, y: 0, z: 0}
 --- !u!4 &1275355246
 Transform:
   m_ObjectHideFlags: 0
@@ -3949,7 +3979,7 @@ GameObject:
   m_PrefabParentObject: {fileID: 1000012208004432, guid: d7e06b340bc70db47bfaed018e15ced1,
     type: 2}
   m_PrefabInternal: {fileID: 857411420}
---- !u!114 &1584306065
+--- !u!114 &1584306061
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -3957,77 +3987,47 @@ MonoBehaviour:
   m_GameObject: {fileID: 1584306060}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 681911709c74d9d4bac494224936b42c, type: 3}
+  m_Script: {fileID: 11500000, guid: 49494eaf77bde6e4a96a0fded9f18500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rend: {fileID: 0}
   charstate:
-    characterName: Warrior
-    characterNum: 1
-    characterLevel: 1
-    maxHealthPoint: 1000
-    maxManaPoint: 1000
-    demendExp: 1
-    needExp: 1
-    healthPoint: 1000
-    magicPoint: 1000
-    defense: 10
-    critical: 10
-    charSpeed: 7
+    charClass: 0
+    characterName: 
+    characterNum: 0
+    characterLevel: 0
+    maxHealthPoint: 0
+    maxManaPoint: 0
+    demendExp: 0
+    needExp: 0
+    healthPoint: 0
+    magicPoint: 0
+    defense: 0
+    critical: 0
+    charSpeed: 0
     dreamStone: 0
-    skillCoolTime: []
-    activeSkillSet:
-    - skillId: 0
-      skillName: 0
-      skillCost: 0
-      skillLevel: 0
-      skillDamage: 0
-      skillCoolTime: 0
-      skillIcon: {fileID: 0}
-    - skillId: 0
-      skillName: 
-      skillCost: 0
-      skillLevel: 0
-      skillDamage: 0
-      skillCoolTime: 0
-      skillIcon: {fileID: 0}
-    - skillId: 0
-      skillName: 
-      skillCost: 0
-      skillLevel: 0
-      skillDamage: 0
-      skillCoolTime: 0
-      skillIcon: {fileID: 0}
-    - skillId: 0
-      skillName: 
-      skillCost: 0
-      skillLevel: 0
-      skillDamage: 0
-      skillCoolTime: 0
-      skillIcon: {fileID: 0}
-    passiveSkillSet: []
-    onSkill: 000000000000
   skillTime: 0
-  mealstromState: 0
-  charVer: 0
+  skillCoolTime: []
+  charDir: 0
   JumpMove: 0
   rigdbody: {fileID: 0}
   charWeapon: {fileID: 35965299}
   normalAttackState: 0
   skillAttackState: 0
-  basicDamage: 10
+  basicDamage: 0
   inputmanager: {fileID: 0}
-  enemy: []
+  enermy: []
   wall: {fileID: 0}
-  jumpPower: 7
+  jumpPower: 0
   charAlive: 1
+  state: 0
+  uiManager: {fileID: 0}
   GiganticSword: {fileID: 0}
-  giganticSwordSpeed: 1
-  giganticSwordMatarial: 1
+  giganticSwordSpeed: 0
+  giganticSwordMatarial: 0
   giganticSwordRendTime: 0
   giganticSwordTemp: {fileID: 0}
   giganticSwordCastSword: {fileID: 0}
-  state: 0
 --- !u!1 &1614353847
 GameObject:
   m_ObjectHideFlags: 0
@@ -4372,6 +4372,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   warriorMonster: []
+  middleBoss: {fileID: 0}
+  boomMonsterPosition: []
+  pointVector: []
   monsterCount: 0
   gateNumber: 0
 --- !u!4 &1699044388
@@ -4469,7 +4472,8 @@ Prefab:
       propertyPath: m_RootOrder
       value: 13
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114000011390068770, guid: 435ef0b7bac512942a731f586a5d0fa7, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 435ef0b7bac512942a731f586a5d0fa7, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1731800881
@@ -4708,7 +4712,7 @@ MonoBehaviour:
   player: []
   animator: {fileID: 0}
   targetPlayer: {fileID: 0}
-  mode: 0
+  normalMode: 0
   gateArrayNumber: 0
   monsterArrayNumber: 0
   currentLife: 20
@@ -4716,14 +4720,19 @@ MonoBehaviour:
   RunRange: 0
   attackRange: 0
   attackCycle: 0
+  isAlive: 0
   isAttack: 0
   playerToMonsterDamage: []
   aggroRank: []
   changeTargetTime: 0
   currentDisTanceArray: []
-  attackCollider: {fileID: 0}
   stateDirecion: 0
+  attackCollider: {fileID: 0}
   currentDisTance: 0
+  middleboss: {fileID: 0}
+  monsterState: 0
+  pointVector: []
+  transitionVector: {x: 0, y: 0, z: 0}
 --- !u!64 &1786780987
 MeshCollider:
   m_ObjectHideFlags: 0
