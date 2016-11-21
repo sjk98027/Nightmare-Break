@@ -1,6 +1,6 @@
-﻿public class AccountDataPacket : Packet<AccountData>
+﻿public class AccountPacket : Packet<AccountData>
 {
-    public class AccountDataSerializer : Serializer
+    public class AccountSerializer : Serializer
     {
         public bool Serialize(AccountData data)
         {
@@ -34,32 +34,25 @@
             return ret;
         }
     }
-
-    AccountData m_data;
-
-    public AccountDataPacket(AccountData data) // 데이터로 초기화(송신용)
+    
+    public AccountPacket(AccountData data) // 데이터로 초기화(송신용)
     {
         m_data = data;
     }
 
-    public AccountDataPacket(byte[] data) // 패킷을 데이터로 변환(수신용)
+    public AccountPacket(byte[] data) // 패킷을 데이터로 변환(수신용)
     {
         m_data = new AccountData();
-        AccountDataSerializer serializer = new AccountDataSerializer();
+        AccountSerializer serializer = new AccountSerializer();
         serializer.SetDeserializedData(data);
         serializer.Deserialize(ref m_data);
     }
 
     public override byte[] GetPacketData() // 바이트형 패킷(송신용)
     {
-        AccountDataSerializer serializer = new AccountDataSerializer();
+        AccountSerializer serializer = new AccountSerializer();
         serializer.Serialize(m_data);
         return serializer.GetSerializedData();
-    }
-
-    public override AccountData GetData()
-    {
-        return m_data;
     }
 }
 

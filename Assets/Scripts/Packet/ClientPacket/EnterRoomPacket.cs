@@ -28,9 +28,7 @@
             return ret;
         }
     }
-
-    EnterRoomData m_data;
-
+    
     public EnterRoomPacket(EnterRoomData data) // 데이터로 초기화(송신용)
     {
         m_data = data;
@@ -49,11 +47,6 @@
         EnterRoomSerializer serializer = new EnterRoomSerializer();
         serializer.Serialize(m_data);
         return serializer.GetSerializedData();
-    }
-
-    public override EnterRoomData GetData() // 데이터 얻기(수신용)
-    {
-        return m_data;
     }
 }
 

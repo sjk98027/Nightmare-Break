@@ -26,9 +26,6 @@
             return ret;
         }
     }
-
-    ResultData m_data;
-
     public ResultDataPacket(ResultData data) // 데이터로 초기화(송신용)
     {
         m_data = data;
@@ -47,11 +44,6 @@
         ResultDataSerializer serializer = new ResultDataSerializer();
         serializer.Serialize(m_data);
         return serializer.GetSerializedData();
-    }
-
-    public override ResultData GetData()
-    {
-        return m_data;
     }
 }
 

@@ -37,8 +37,6 @@
         }
     }
 
-    CreateRoomData m_data;
-
     public CreateRoomPacket(CreateRoomData data) // 데이터로 초기화(송신용)
     {
         m_data = data;
@@ -57,11 +55,6 @@
         CreateRoomSerializer serializer = new CreateRoomSerializer();
         serializer.Serialize(m_data);
         return serializer.GetSerializedData();
-    }
-
-    public override CreateRoomData GetData() // 데이터 얻기(수신용)
-    {
-        return m_data;
     }
 }
 

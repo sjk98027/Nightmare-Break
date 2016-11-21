@@ -60,7 +60,7 @@ public class DataSender : MonoBehaviour
         Debug.Log("가입 요청");
 
         AccountData accountData = new AccountData(id, pw);
-        AccountDataPacket accountDataPacket = new AccountDataPacket(accountData);
+        AccountPacket accountDataPacket = new AccountPacket(accountData);
         accountDataPacket.SetPacketId((int)ClientPacketId.CreateAccount);
         
         byte[] packet = CreatePacket(accountDataPacket);
