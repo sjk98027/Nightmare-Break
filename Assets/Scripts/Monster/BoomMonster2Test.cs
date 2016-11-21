@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-public class BoomMonster : Monster {
+public class BoomMonster2Test : Monster {
 	private float searchRange = 6.0f;
 	private float moveSpeed = 0.5f;
 
@@ -11,6 +11,7 @@ public class BoomMonster : Monster {
 	private float middleBossToMonsterMinDistance = 1.5f;
 	public AnimationState stateInfo;
 
+	public AnimatorStateInfo runState;
 	[SerializeField]GameObject middleboss;
 	private Vector3 boomObjectPosition;
 
@@ -81,7 +82,7 @@ public class BoomMonster : Monster {
 		StartCoroutine (pointVectorchange ());
 	}
 
-		public IEnumerator pointVectorchange()
+	public IEnumerator pointVectorchange()
 	{
 		while (true)
 		{
@@ -106,49 +107,49 @@ public class BoomMonster : Monster {
 	}
 
 
-    //animation Set; move;
-    public void Pattern(StatePosition state)
-    {
-        switch (state)
-        {
-            case StatePosition.Idle:
-                {
-                    this.transform.Translate(idlePoint * Time.deltaTime, 0);
-                    animator.SetInteger("State", 0);
-                    break;
-                }
-            case StatePosition.Boom:
-                {
-                    idlePoint = this.gameObject.transform.position;
-                    StartCoroutine("BoomCoroutine"); break;
-                } // animator boom -> setintter 4
-            case StatePosition.Attack:
-                {
+	//animation Set; move;
+	public void Pattern(StatePosition state)
+	{
+		switch (state)
+		{
+		case StatePosition.Idle:
+			{
+				this.transform.Translate(idlePoint * Time.deltaTime, 0);
+				animator.SetInteger("State", 0);
+				break;
+			}
+		case StatePosition.Boom:
+			{
+				idlePoint = this.gameObject.transform.position;
+				StartCoroutine("BoomCoroutine"); break;
+			} // animator boom -> setintter 4
+		case StatePosition.Attack:
+			{
 				//	StartCoroutine (AttackProcess ());
 				AttackProcess1(isAttack);
-				    break;
-                }
-            case StatePosition.Run:
-                {
-                    AnimatorReset();
-                    this.transform.Translate(movePoint * moveSpeed * Time.deltaTime, 0);
-                    animator.SetInteger("State", 2);
-					//searchRange = 10;
-                    break;
-                }
-            case StatePosition.TakeDamage:
-                {
+				break;
+			}
+		case StatePosition.Run:
+			{
+				AnimatorReset();
+
+				animator.SetInteger("State", 2);
+				//searchRange = 10;
+				break;
+			}
+		case StatePosition.TakeDamage:
+			{
 				StartCoroutine(TakeDamageCorutine());
-//				TakeDamageMethod();
-                    break;
-                }
-            case StatePosition.Death:
-                {
-                    MonsterArrayEraser(this.gameObject);
-                    break;
-                }
-        }
-    }
+				//				TakeDamageMethod();
+				break;
+			}
+		case StatePosition.Death:
+			{
+				MonsterArrayEraser(this.gameObject);
+				break;
+			}
+		}
+	}
 
 	IEnumerator TakeDamageCorutine(){
 		animator.SetTrigger ("TakeDamage");
@@ -167,7 +168,7 @@ public class BoomMonster : Monster {
 			moveAble = false;
 		} else
 			AnimatorReset ();
-		
+
 
 	}
 
@@ -175,7 +176,7 @@ public class BoomMonster : Monster {
 	IEnumerator BoomCoroutine() {
 		AnimatorReset ();
 		transform.position = idlePoint;
-//		animator.SetInteger ("State", 4);
+		//		animator.SetInteger ("State", 4);
 		yield return new WaitForSeconds (3f);
 		animator.SetTrigger("Death");
 		yield return new WaitForSeconds (3f);
@@ -186,6 +187,7 @@ public class BoomMonster : Monster {
 
 	public void AttackProcess1(bool isAttack){
 		if (isAttack) {
+
 			if(animator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Walk")){
 				animator.SetInteger ("State", 0);
 			}
@@ -198,6 +200,7 @@ public class BoomMonster : Monster {
 
 
 		}
+
 	}
 
 	IEnumerator AttackProcess(){
@@ -217,54 +220,56 @@ public class BoomMonster : Monster {
 
 
 	public void UpdateNormalMode()
-    {
-        if (IsAlive)
-        {
-            ChasePlayer();// playerchase;
-            if (targetPlayer != null)
-            {
-                currentDisTance = Vector3.Distance(targetPlayer.transform.position, this.gameObject.transform.position);
-                checkDirection = targetPlayer.transform.position - this.gameObject.transform.position;
+	{
+		if (IsAlive)
+		{
+			ChasePlayer();// playerchase;
+			if (targetPlayer != null)
+			{
+				currentDisTance = Vector3.Distance(targetPlayer.transform.position, this.gameObject.transform.position);
+				checkDirection = targetPlayer.transform.position - this.gameObject.transform.position;
 
 				if (currentDisTance > searchRange) {
 					monsterState = StatePosition.Idle;
 					Pattern (monsterState);
 				}
-					//if this object get Attackmotion pattern(stateposition.boom -> attack), and this monsterlife is 20%, boomPattern start;
-                else if (currentDisTance <= searchRange)
-                {
-                    movePoint = new Vector3(checkDirection.x, 0, checkDirection.z);
-                    if (currentDisTance > searchRange * 0.2f)
-                    {
-						if (moveAble) {
+				//if this object get Attackmotion pattern(stateposition.boom -> attack), and this monsterlife is 20%, boomPattern start;
+				else if (currentDisTance <= searchRange)
+				{
+					movePoint = new Vector3(checkDirection.x, 0, checkDirection.z);
+					if (currentDisTance > searchRange * 0.2f)
+					{
+//						if (moveAble) {
+						moveAble=true;
+						isAttack = false;
 							monsterState = StatePosition.Run;
 							Pattern (monsterState);
-						}
-                    }
-                    if (currentDisTance <= searchRange * 0.2f)
-                    {
-						if (!isAttack) {
+//						}
+					}
+					if (currentDisTance <= searchRange * 0.2f)
+					{
+//						if (!isAttack) {
 							isAttack = true;
 							moveAble = false;
-						}
+//						}
 						monsterState = StatePosition.Attack;
 						Pattern (monsterState);
-                    }
-                    if (currentLife / maxLife < 0.2)
-                    {
+					}
+					if (currentLife / maxLife < 0.2)
+					{
 						monsterState = StatePosition.Boom;
 						Pattern(monsterState);
-                    }
-                }
+					}
+				}
 			}
 		}
-        if (!IsAlive)
-        {
+		if (!IsAlive)
+		{
 			monsterState = StatePosition.Death;
-            Pattern(StatePosition.Death);
-        }
+			Pattern(StatePosition.Death);
+		}
 
-    }
+	}
 	public void UpdateDefenceMode(){
 		if (!IsHited) {
 			transform.Translate (transitionVector * moveSpeed * 0.5f * Time.deltaTime);
@@ -321,5 +326,75 @@ public class BoomMonster : Monster {
 
 
 
+	public void Start(){
+		PlayerSearch();
+		MonsterSet();
+		NormalMode = true;
+		monsterState = StatePosition.Idle;
+		StartCoroutine (PatternChange());
+
+	}
+	public void Update()
+	{
+		runState = this.animator.GetCurrentAnimatorStateInfo (0);
+
+		if (runState.IsName ("Walk")) 
+		{
+			if (moveAble) 
+			{
+				this.transform.Translate (movePoint * moveSpeed * Time.deltaTime, 0);
+			}
+		}
+		ChasePlayer ();
+	}
+
+	public IEnumerator PatternChange(){
+		while(true){
+			
+			if (!IsAlive) {
+				StopCoroutine (PatternChange ());
+			}
+			if (IsAlive) {
+				if (targetPlayer != null) {	
+					currentDisTance = Vector3.Distance (targetPlayer.transform.position, this.gameObject.transform.position);
+					checkDirection = targetPlayer.transform.position - this.gameObject.transform.position;
+				
+					if (currentDisTance > searchRange) {
+						monsterState = StatePosition.Idle;
+						Pattern (monsterState);
+					}
+				//if this object get Attackmotion pattern(stateposition.boom -> attack), and this monsterlife is 20%, boomPattern start;
+				else if (currentDisTance <= searchRange) {
+						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
+						if (currentDisTance > searchRange * 0.2f) {
+								moveAble = true;
+								isAttack = false;
+								monsterState = StatePosition.Run;
+								Pattern (monsterState);
+						}
+						if (currentDisTance <= searchRange * 0.2f) {
+							if (!isAttack) {
+								isAttack = true;
+								moveAble = false;
+							}
+							monsterState = StatePosition.Attack;
+							Pattern (monsterState);
+						}
+						if (currentLife / maxLife < 0.2) {
+							monsterState = StatePosition.Boom;
+							Pattern (monsterState);
+						}
+						if (currentLife < 0) {
+							monsterState = StatePosition.Death;
+							Pattern (monsterState);
+						}
+					}
+				}
+			}
+			yield return new WaitForSeconds(0.2f);
+		
+		//StatePosition statePosition
+		}
+	}
 
 }

@@ -2,13 +2,15 @@
 using System.Collections;
 
 public class MiddleBoss : MonoBehaviour {
-	public BoomMonster[] boomObject;
+	private BoomMonster[] boomObject;
+	public BoomMonster[] BoomObject{
+		get { return boomObject;}
+	}
 	public GameObject middleBoss;
 
 	Vector3[] pointVector = new Vector3[7];
 
-	[SerializeField]
-	Vector3[] boomObjectPosition;
+	[SerializeField]Vector3[] boomObjectPosition;
 	[SerializeField]Vector3 addedVector = new Vector3(0,0,1f);
 
 
@@ -19,18 +21,13 @@ public class MiddleBoss : MonoBehaviour {
 	[SerializeField]float[] currentDistanceMonsterToCenter;
 
 	public void DefenceMiddleBossSet(){
-		boomObjectPosition = new Vector3[boomObject.Length];
-		currentDistanceMonsterToCenter = new float[boomObject.Length];
+		
 	}
 
 	public void UpdateConductDefenceMode(){
 		middleBoss.transform.Translate(addedVector *moveSpeed* Time.deltaTime);
 		centerpoint += new Vector3(0,0,1)* moveSpeed * Time.deltaTime;
-		for (int i = 0; i < boomObject.Length; i++) {
-			boomObjectPosition[i] += addedVector * moveSpeed * Time.deltaTime;
 
-//			currentDistanceMonsterToCenter[i] = Vector3.Distance (boomObject [i].transform.position, middleBoss.transform.position);
-		}
 	}
 
 
