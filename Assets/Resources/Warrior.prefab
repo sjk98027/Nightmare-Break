@@ -538,7 +538,7 @@ GameObject:
   - 95: {fileID: 95000012600969674}
   - 54: {fileID: 54000011434209758}
   - 65: {fileID: 65000013312372848}
-  - 114: {fileID: 114000010473297528}
+  - 114: {fileID: 114000012150574898}
   m_Layer: 9
   m_Name: Warrior
   m_TagString: Untagged
@@ -1912,7 +1912,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114000010473297528
+--- !u!114 &114000012150574898
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1925,9 +1925,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rend: {fileID: 0}
   charstate:
-    characterName: 
+    characterName: default
     characterNum: 0
-    characherLevel: 0
+    characterLevel: 0
     maxHealthPoint: 0
     maxManaPoint: 0
     demendExp: 0
@@ -1936,11 +1936,15 @@ MonoBehaviour:
     magicPoint: 0
     defense: 0
     critical: 0
+    charSpeed: 10
     dreamStone: 0
     skillCoolTime: []
+    activeSkillSet: []
+    passiveSkillSet: []
+    onSkill: 
   skillTime: 0
   mealstromState: 0
-  charVer: 0
+  charDir: 0
   JumpMove: 0
   rigdbody: {fileID: 0}
   charWeapon: {fileID: 0}
@@ -1948,9 +1952,8 @@ MonoBehaviour:
   skillAttackState: 0
   basicDamage: 0
   inputmanager: {fileID: 0}
-  enemy: []
+  enermy: []
   wall: {fileID: 0}
-  charSpeed: 0
   jumpPower: 0
   charAlive: 1
   GiganticSword: {fileID: 0}
