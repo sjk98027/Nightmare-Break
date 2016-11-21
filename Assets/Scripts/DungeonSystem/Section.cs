@@ -8,6 +8,7 @@ public class Section : MonoBehaviour {
 	public MiddleBoss middleBoss;
 
 	public Vector3[] boomMonsterPosition;
+
 	public Vector3[] pointVector;
 
 	[SerializeField] int monsterCount;
@@ -40,13 +41,13 @@ public class Section : MonoBehaviour {
 		//monsterCount = (boomMonster.Length + warriorMonster.Length+1);
 		middleBoss = gameObject.transform.GetComponentInChildren<MiddleBoss>();
 
-//		for (int i = 0; i < boomMonster.Length; i++) {
+		for (int i = 0; i < boomMonster.Length; i++) {
 //			boomMonster [i].PlayerSearch ();
 //			boomMonster [i].MonsterSet ();
 //			boomMonster [i].Mode = modeForm;
 //			boomMonster [i].GateArrayNumber = gateNumber;
 //			boomMonster [i].MonsterArrayNumber = i;
-//		}
+		}
 
 		boomMonster = transform.GetComponentsInChildren<BoomMonster> ();
 		boomMonsterPosition = new Vector3[boomMonster.Length];
@@ -55,7 +56,7 @@ public class Section : MonoBehaviour {
 			Debug.LogError ("중간보스 없음!!" + gameObject.name);
 		}
 
-		middleBoss.DefenceMiddleBossSet ();
+
 		for (int i = 0; i < boomMonster.Length; i++)
 		{
 			boomMonsterPosition[i] = boomMonster[i].transform.position;
@@ -73,8 +74,7 @@ public class Section : MonoBehaviour {
 
 	public void UpdateConduct(){
 		for (int i = 0; i < boomMonster.Length; i++) {
-			//boomMonster [i].UpdateConduct ();
-			boomMonster [i].UpdateConductDefenceMode ();
+			boomMonster [i].UpdateDefenceMode ();
 		}
 		middleBoss.UpdateConductDefenceMode();
 

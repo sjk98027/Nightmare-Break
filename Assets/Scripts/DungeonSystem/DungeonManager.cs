@@ -23,33 +23,67 @@ public class DungeonManager : MonoBehaviour
     DataSender dataSender;
     GameObject m_camera;
 
-    public void InitializeManager()
+    protected bool normalMode; //false  -> normalBattle, true -> Defence; 
+	public bool NormalMode
     {
-    }
-
-    protected bool modeForm; //false  -> normalBattle, true -> Defence; 
-    public bool ModeForm
-    {
-        get { return modeForm; }
-        set { modeForm = value; }
+		get { return normalMode; }
+		set { normalMode = value; }
     }
 
     public Section[] section;
 
-    [SerializeField]
-    int mapNumber;
+    [SerializeField]int mapNumber;
+
+	void Start()
+	{
+		DungeonConstruct();//mapNumber - > inspector define
+		//        modeForm = false;
+		//        ModeChange(modeForm);//client get modeform and ingame play ;
+		//section = transform.GetComponentsInChildren<Section> ();
+		normalMode = true;
+		section = transform.GetComponentsInChildren<Section> ();
+		if(section.Length != 0){
+			SectionSet ();
+		}
+
+	}
+
+	void Update()
+	{
+		if (normalMode)
+		{
+			for (int i = 0; i < boomMonster.Length; i++)
+			{
+				boomMonster[i].UpdateNormalMode();
+				//			warriorMonster [i].UpdateConduct ();
+			}
+
+			//            for (int i = 0; i < section.Length; i++)
+			//            {
+			//                section[i].UpdateConduct(); //this.method change //section [mapNumber].UpdateConduct ();
+			//            }
+		}
+
+		if (!normalMode)
+		{
+			for (int i = 0; i < section.Length; i++) {
+				section [i].UpdateConduct ();
+			}
+		}
+	}
+
 
     //defence mode, normal mode
     public void ModeChange(bool modeForm)
     {
-        if (!modeForm)
+		if (normalMode)
         {
-            modeForm = true;
+			modeForm = false;
             //player1,player2 ->  nextScene; 
             //respwanstart;
         }
 
-        if (modeForm)
+        if (!modeForm)
         {
             //(close socket) send to otherclient socket;
         }
@@ -104,7 +138,7 @@ public class DungeonManager : MonoBehaviour
         {
             boomMonster[i].PlayerSearch();
             boomMonster[i].MonsterSet();
-            boomMonster[i].Mode = modeForm;
+			boomMonster[i].NormalMode = normalMode;
             boomMonster[i].GateArrayNumber = mapNumber;
             boomMonster[i].MonsterArrayNumber = i;
         }
@@ -129,53 +163,7 @@ public class DungeonManager : MonoBehaviour
 
     }
 
-    void Start()
-    {
-        DungeonConstruct();//mapNumber - > inspector define
-//        modeForm = false;
-//        ModeChange(modeForm);//client get modeform and ingame play ;
-		//section = transform.GetComponentsInChildren<Section> ();
-		modeForm = true;
-		section = transform.GetComponentsInChildren<Section> ();
-		if(section.Length != 0){
-			SectionSet ();
-		}
-
-    }
-
-//	void Awake(){
-//		if (!modeForm) {
-//			for (int i = 0; i < section.Length; i++) {
-//				section [i].UpdateConduct ();
-//			}
-//		}
-//	}
-
-
-    void Update()
-    {
-        if (!modeForm)
-        {
-            for (int i = 0; i < boomMonster.Length; i++)
-            {
-				boomMonster[i].UpdateConductNormalMode();
-                //			warriorMonster [i].UpdateConduct ();
-            }
-
-            //            for (int i = 0; i < section.Length; i++)
-            //            {
-            //                section[i].UpdateConduct(); //this.method change //section [mapNumber].UpdateConduct ();
-            //            }
-        }
-
-        if (modeForm)
-        {
-			for (int i = 0; i < section.Length; i++) {
-				section [i].UpdateConduct ();
-			}
-        }
-    }
-
+   
 
 
     public GameObject CreatePlayer(int CharacterId)
