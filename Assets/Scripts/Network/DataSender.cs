@@ -66,6 +66,12 @@ public class DataSender : MonoBehaviour
         byte[] packet = CreatePacket(accountDataPacket);
     }
 
+    //계정 탈퇴 - Tcp
+    public void DeleteAccount(string id, string pw)
+    {
+
+    }
+
     //게임 종료 - Tcp
     public void GameClose()
     {
