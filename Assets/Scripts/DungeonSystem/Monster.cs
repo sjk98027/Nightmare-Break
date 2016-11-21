@@ -12,8 +12,6 @@ public class Monster : MonoBehaviour {
 //	public AnimationState aniState;
 
 	public GameObject targetPlayer;
-	//public BattleCarculationManager BCM;
-    
 	private Vector3 leftVector3 = new Vector3(0,180,0);
 	private Vector3 rightVector3 = new Vector3(0,0,0);
 
@@ -212,7 +210,6 @@ public class Monster : MonoBehaviour {
 	}
 	public void AnimatorReset(){
 		animator.SetInteger ("State", 0);
-		isAttack = false;
 	}
 	public void AttackBlitz()
 	{
