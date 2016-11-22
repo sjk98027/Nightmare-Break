@@ -15,6 +15,8 @@ public class Monster : MonoBehaviour {
 	private Vector3 leftVector3 = new Vector3(0,180,0);
 	private Vector3 rightVector3 = new Vector3(0,0,0);
 
+	public BoxCollider HittedBox;
+
 
 	//mode,gateArraynumber,monsterArraynumber
 	protected bool moveAble;
@@ -86,6 +88,7 @@ public class Monster : MonoBehaviour {
 		
 		player= GameObject.FindGameObjectsWithTag("Player");
 		currentDisTanceArray = new float[player.Length];
+		aggroRank = new float[player.Length];
 		playerToMonsterDamage = new float[player.Length];
 	}
 
@@ -99,6 +102,7 @@ public class Monster : MonoBehaviour {
 		StartCoroutine(LookatChange ());
 		maxLife = 100;
 		currentLife = 100;
+		HittedBox = this.gameObject.GetComponent<BoxCollider> ();
 //		attackCollider = GameObject.FindGameObjectWithTag("Finish");
 //		attackCollider.SetActive (false);
 	}
@@ -187,8 +191,8 @@ public class Monster : MonoBehaviour {
 	public void MonsterArrayEraser(GameObject thisGameObject)
 	{
 		//gameObject = null;
-		isAlive=false;
-		thisGameObject.SetActive (false);
+		this.gameObject.SetActive (false);
+		Debug.Log (this.gameObject);
 		//		section.RemoveMonsterArray ();
 	}
 
