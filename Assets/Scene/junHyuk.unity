@@ -109,6 +109,7 @@ MonoBehaviour:
   player: []
   animator: {fileID: 0}
   targetPlayer: {fileID: 0}
+  HittedBox: {fileID: 0}
   normalMode: 0
   gateArrayNumber: 0
   monsterArrayNumber: 0
@@ -192,18 +193,6 @@ Transform:
   - {fileID: 2075134421}
   m_Father: {fileID: 1502545476}
   m_RootOrder: 2
---- !u!114 &75007373 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114000011773574892, guid: f729b490846df5d4d96cb8641dade98a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1966395548}
-  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
---- !u!114 &88874660 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114000011966562474, guid: f729b490846df5d4d96cb8641dade98a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1966395548}
-  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
 --- !u!1 &99800307
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,12 +266,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cea5daf75ca22b64ab4afddce30b4468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &256542846 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114000010662352756, guid: f729b490846df5d4d96cb8641dade98a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1966395548}
-  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
 --- !u!1 &289901747
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,12 +498,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1580931945}
   m_RootOrder: 0
---- !u!114 &758651226 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114000012555831820, guid: f729b490846df5d4d96cb8641dade98a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1966395548}
-  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
 --- !u!1 &823529160
 GameObject:
   m_ObjectHideFlags: 0
@@ -670,15 +647,14 @@ Prefab:
       propertyPath: m_RootOrder
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 114000013422170302, guid: d7e06b340bc70db47bfaed018e15ced1,
+        type: 2}
+      propertyPath: charstate.skillLevel.Array.data[4]
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d7e06b340bc70db47bfaed018e15ced1, type: 2}
   m_IsPrefabParent: 0
---- !u!114 &912091724 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114000013903895840, guid: f729b490846df5d4d96cb8641dade98a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1966395548}
-  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
 --- !u!1001 &914824444
 Prefab:
   m_ObjectHideFlags: 0
@@ -757,12 +733,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d73b03dfd52c89b42b759687b7d135d0, type: 2}
   m_IsPrefabParent: 0
---- !u!114 &920729105 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114000011943322890, guid: f729b490846df5d4d96cb8641dade98a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1966395548}
-  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
 --- !u!1 &939458755
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,7 +834,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1064200842}
-  - 114: {fileID: 1452172323}
+  - 114: {fileID: 1064200843}
+  - 114: {fileID: 1064200844}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: UI
@@ -886,6 +857,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 11
+--- !u!114 &1064200843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1064200841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01f0438d7a5368841af257a179194145, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1064200844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1064200841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f84141493fd23884e89cc9d4b1ebf9a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpBar: {fileID: 0}
+  mpBar: {fileID: 0}
+  potionUI: {fileID: 0}
+  skillUI: []
 --- !u!1 &1071868467
 GameObject:
   m_ObjectHideFlags: 0
@@ -1022,12 +1019,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1236408426 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114000013109695738, guid: f729b490846df5d4d96cb8641dade98a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1966395548}
-  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
 --- !u!1001 &1275355240
 Prefab:
   m_ObjectHideFlags: 0
@@ -1156,6 +1147,7 @@ MonoBehaviour:
   player: []
   animator: {fileID: 0}
   targetPlayer: {fileID: 0}
+  HittedBox: {fileID: 0}
   normalMode: 0
   gateArrayNumber: 0
   monsterArrayNumber: 0
@@ -1295,35 +1287,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7841723e9d751154b8a277e4295b9cce, type: 2}
   m_IsPrefabParent: 0
---- !u!114 &1426659877 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114000013682579974, guid: f729b490846df5d4d96cb8641dade98a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1966395548}
-  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
---- !u!114 &1452172323
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114000014291288266, guid: 92c9d5cdbf09a754786d38e01b118b41,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1064200841}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93e809650c07d7a4aa6c092a2c3d2d58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hpUI: {fileID: 256542846}
-  mpUI: {fileID: 758651226}
-  potionUI: {fileID: 912091724}
-  skillUI:
-  - {fileID: 88874660}
-  - {fileID: 1796852477}
-  - {fileID: 1236408426}
-  - {fileID: 1426659877}
-  - {fileID: 920729105}
-  - {fileID: 75007373}
-  bossHp: {fileID: 0}
 --- !u!1 &1502545475
 GameObject:
   m_ObjectHideFlags: 0
@@ -2028,6 +1991,7 @@ MonoBehaviour:
   player: []
   animator: {fileID: 0}
   targetPlayer: {fileID: 0}
+  HittedBox: {fileID: 0}
   normalMode: 0
   gateArrayNumber: 0
   monsterArrayNumber: 0
@@ -2096,12 +2060,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &1796852477 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114000010279222860, guid: f729b490846df5d4d96cb8641dade98a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1966395548}
-  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
 --- !u!1 &1797509689
 GameObject:
   m_ObjectHideFlags: 0

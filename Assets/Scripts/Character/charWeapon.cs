@@ -5,11 +5,14 @@ public class charWeapon : MonoBehaviour {
 
 	public GameObject character;
 	public CharacterManager charManager;
-//	public CharacterStatus charStatus
 
+	public WarriorManager warriorManager;
+
+	public CharacterStatus charstate;
 	public int damage= 0;
 	bool normalAttack;
 	bool skillAttack;
+	public bool checkHit;
 
 	public bool NormalAttack {get {return this.normalAttack;}}
 
@@ -18,6 +21,7 @@ public class charWeapon : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
+		checkHit = false;
 		character = GameObject.FindWithTag ("Player");
 		charManager = character.GetComponent<CharacterManager> ();
 	}
@@ -31,28 +35,28 @@ public class charWeapon : MonoBehaviour {
 
 	void OnTriggerEnter(Collider coll)
 	{
-		
 		if (coll.gameObject.layer == LayerMask.NameToLayer ("Enermy"))
 		{
 
-
+			checkHit = true;	
 			Monster monsterDamage = coll.gameObject.GetComponent<Monster> ();
 
 			if (monsterDamage != null)
-			{
-				
+			{	
 				if (normalAttack)
 				{
 					damage = charManager.BasicDamage;
+				
+
 				}
 				else if (skillAttack)
 				{
 					damage = charManager.BasicDamage;
 				}
-				if(damage !=0)
+				if (damage != 0)
 				{
 					
-					monsterDamage.HitDamage(damage,this.gameObject.GetComponentInParent<CharacterManager>().gameObject);
+					monsterDamage.HitDamage (damage, this.gameObject.GetComponentInParent<CharacterManager> ().gameObject);
 					damage = 0;
 				}
 			}
