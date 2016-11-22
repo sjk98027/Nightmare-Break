@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000012889354120}
-  - 114: {fileID: 114000011390068770}
+  - 114: {fileID: 114000012848005792}
   m_Layer: 0
   m_Name: TestInputManager
   m_TagString: Untagged
@@ -40,7 +40,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &114000011390068770
+--- !u!114 &114000012848005792
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000011565194376}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f27d2b68ec852d843a369519c1c49b6c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2509723bd5b0c6148866f54e9ae8225f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   vertical: 0
