@@ -67,7 +67,7 @@ public class CharacterManager : MonoBehaviour
 
 	public UIManager uiManager;
 
-	void Start ()
+	void Awake ()
 	{
 		charstate = new CharacterStatus(0);
 		basicDamage = Charstate.Attack;

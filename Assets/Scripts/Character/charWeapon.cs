@@ -23,14 +23,15 @@ public class charWeapon : MonoBehaviour {
 	{
 		checkHit = false;
 		character = GameObject.FindWithTag ("Player");
-		charManager = character.GetComponent<CharacterManager> ();
+		warriorManager = character.GetComponent<WarriorManager> ();
+		charstate = warriorManager.charstate;
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		normalAttack = charManager.NormalAttackState;
-		skillAttack = charManager.SkillAttackState;
+		normalAttack = warriorManager.NormalAttackState;
+		skillAttack = warriorManager.SkillAttackState;
 	}
 
 	void OnTriggerEnter(Collider coll)
@@ -41,17 +42,31 @@ public class charWeapon : MonoBehaviour {
 			checkHit = true;	
 			Monster monsterDamage = coll.gameObject.GetComponent<Monster> ();
 
+
+
 			if (monsterDamage != null)
 			{	
 				if (normalAttack)
 				{
-					damage = charManager.BasicDamage;
+					damage = warriorManager.BasicDamage;
 				
+					int testPassiveHP;
+					charstate.skillLevel [4] = 3;
+					Debug.Log ("in passive");
+					testPassiveHP = (int)(damage * charstate.skillLevel [4] * 30f);
 
+					charstate.healthPoint += testPassiveHP;
+
+					Debug.Log (damage);
+					Debug.Log (charstate.healthPoint);
+					Debug.Log (testPassiveHP);
 				}
 				else if (skillAttack)
 				{
-					damage = charManager.BasicDamage;
+					damage = warriorManager.BasicDamage;
+
+
+
 				}
 				if (damage != 0)
 				{

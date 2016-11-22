@@ -28,32 +28,32 @@ public class WarriorManager : CharacterManager
 
 		bool checkHit = charWeapon.GetComponent<charWeapon> ().checkHit;
 
+//
+//		if (checkHit)
+//		{
+//			charstate.skillLevel [4] = 3;
+//			Debug.Log ("in passive");
+//			float attackHeal = (charstate.skillLevel [4] * 0.1f);
+//			testPassiveHP = (int)(basicDamage * attackHeal);
+//
+//			charstate.healthPoint += testPassiveHP;
+//
+//			Debug.Log (testPassiveHP);
 
-		if (checkHit)
-		{
-			charstate.skillLevel [4] = 3;
-			Debug.Log ("in passive");
-			float attackHeal = (charstate.skillLevel [4] * 0.1f);
-			testPassiveHP = (int)(basicDamage * attackHeal);
-
-			charstate.healthPoint += testPassiveHP;
-
-			Debug.Log (testPassiveHP);
-
-
-			if (charstate.skillLevel [4] == 4)
-			{
-
-				//mealstrom heal
-				//			if (charstate.healthPoint <= 0)
-				//			{
-				//				Debug.Log ("in Special");
-				//				charstate.healthPoint = charstate.maxHealthPoint;
-				//			}
-			}
-			charWeapon.GetComponent<charWeapon> ().checkHit = false;
-		}
-		
+//
+//			if (charstate.skillLevel [4] == 4)
+//			{
+//
+//				//mealstrom heal
+//				//			if (charstate.healthPoint <= 0)
+//				//			{
+//				//				Debug.Log ("in Special");
+//				//				charstate.healthPoint = charstate.maxHealthPoint;
+//				//			}
+//			}
+//			charWeapon.GetComponent<charWeapon> ().checkHit = false;
+//		}
+//		
 		base.NormalAttack();
 
 	}
