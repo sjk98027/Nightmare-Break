@@ -170,7 +170,6 @@ public class TestMonster : Monster
 
 		if (monsterAlive)
 		{
-			Debug.Log ("in damage");
 			maxLife -= _Damage;
 
 //			uiManager.bossHp.fillAmount = maxLife / currentLife;

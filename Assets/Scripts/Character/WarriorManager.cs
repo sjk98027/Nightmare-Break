@@ -14,6 +14,7 @@ public class WarriorManager : CharacterManager
 	public GameObject giganticSwordCastSword;
     public GameObject SwordDance;
 
+	public charWeapon bloodingWeapon;
 
 
 
@@ -22,34 +23,40 @@ public class WarriorManager : CharacterManager
 
 	public override void NormalAttack()
 	{
-		base.NormalAttack();
 
 		int testPassiveHP;
 
-		if (charstate.skillLevel [4] < 4)
-		{
-			Debug.Log ("in passive");
-			float attackHeal = (charstate.skillLevel [4]*0.1f);
-			testPassiveHP = (int)(basicDamage * attackHeal);
+		bool checkHit = charWeapon.GetComponent<charWeapon> ().checkHit;
 
-			charstate.healthPoint += testPassiveHP;
+//
+//		if (checkHit)
+//		{
+//			charstate.skillLevel [4] = 3;
+//			Debug.Log ("in passive");
+//			float attackHeal = (charstate.skillLevel [4] * 0.1f);
+//			testPassiveHP = (int)(basicDamage * attackHeal);
+//
+//			charstate.healthPoint += testPassiveHP;
+//
+//			Debug.Log (testPassiveHP);
 
-		}
-		else if (charstate.skillLevel [4] == 4)
-		{
-			
-			//mealstrom heal
-//			if (charstate.healthPoint <= 0)
+//
+//			if (charstate.skillLevel [4] == 4)
 //			{
-//				Debug.Log ("in Special");
-//				charstate.healthPoint = charstate.maxHealthPoint;
+//
+//				//mealstrom heal
+//				//			if (charstate.healthPoint <= 0)
+//				//			{
+//				//				Debug.Log ("in Special");
+//				//				charstate.healthPoint = charstate.maxHealthPoint;
+//				//			}
 //			}
-		}
+//			charWeapon.GetComponent<charWeapon> ().checkHit = false;
+//		}
+//		
+		base.NormalAttack();
+
 	}
-
-
-
-
 	//warrior mealstrom
 	public override void ProcessSkill1 ()
 	{
@@ -80,7 +87,6 @@ public class WarriorManager : CharacterManager
 	{
 		skillTime += Time.deltaTime;
 
-
 		if (skillTime >= 2)
 		{
 			Animator.speed = 1;
@@ -105,11 +111,11 @@ public class WarriorManager : CharacterManager
 
 	public override void ProcessSkill4 ()
 	{
-
 		giganticSwordCastSword = GameObject.Find("GiganticSwordSwordCast");
+
 		if (giganticSwordRendTime && giganticSwordTemp != null)
 		{
-			//				rend = GiganticSword.gameObject.GetComponent<Renderer> ();
+			//rend = GiganticSword.gameObject.GetComponent<Renderer> ();
 			giganticSwordMatarial += Time.deltaTime;
 
 			if (giganticSwordTemp.transform.position.y > 0.1)
@@ -126,7 +132,6 @@ public class WarriorManager : CharacterManager
 			}
 		}	
 	}
-
 
 	public void CutOffMove ()
 	{
@@ -169,7 +174,5 @@ public class WarriorManager : CharacterManager
 		giganticSwordRendTime = true;
 	}
 
-
-
-
 }
+
