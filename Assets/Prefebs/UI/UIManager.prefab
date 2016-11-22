@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000012324474866}
   - 114: {fileID: 114000014291288266}
+  - 114: {fileID: 114000011866540520}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: UI
@@ -40,6 +41,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &114000011866540520
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000014059943478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f84141493fd23884e89cc9d4b1ebf9a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpBar: {fileID: 0}
+  mpBar: {fileID: 0}
+  potionUI: {fileID: 0}
+  skillUI: []
 --- !u!114 &114000014291288266
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -48,11 +64,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000014059943478}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93e809650c07d7a4aa6c092a2c3d2d58, type: 3}
+  m_Script: {fileID: 11500000, guid: 01f0438d7a5368841af257a179194145, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpUI: {fileID: 0}
-  mpUI: {fileID: 0}
-  potionUI: {fileID: 0}
-  skillUI: []
-  bossHp: {fileID: 0}
+  loginUIManager: {fileID: 0}
+  waitUIManager: {fileID: 0}
+  battleUIManager: {fileID: 114000011866540520}

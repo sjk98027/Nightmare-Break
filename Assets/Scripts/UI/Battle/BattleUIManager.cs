@@ -5,9 +5,9 @@ using UnityEngine.UI;
 public class BattleUIManager : MonoBehaviour {
 
     [SerializeField]
-    public Image hpUI;
+    public Image hpBar;
     [SerializeField]
-    public Image mpUI;
+    public Image mpBar;
     [SerializeField]
     private Image potionUI;
     private const float checkTime = 0.1f;
@@ -22,9 +22,10 @@ public class BattleUIManager : MonoBehaviour {
         }
     }
 
-
-    public Image bossHp;
-
+    void Start()
+    {
+        SetUIObject();
+    }
 
     public IEnumerator SkillCoolTimeUI(int skillNum, float coolTime)
     {
@@ -62,13 +63,29 @@ public class BattleUIManager : MonoBehaviour {
         yield break;
     }
 
-    void HpUI(int maxHp, int currentHP)
+    void hpBarCalculation(int maxHp, int currentHP)
     {
-        hpUI.fillAmount = maxHp / currentHP;
+        hpBar.fillAmount = maxHp / currentHP;
     }
 
-    void MpUI(int maxMp, int currentMP)
+    void mpBarCalculation(int maxMp, int currentMP)
     {
-        mpUI.fillAmount = maxMp / currentMP;
+        mpBar.fillAmount = maxMp / currentMP;
     }
+
+    void SetUIObject()
+    {
+        hpBar = GameObject.Find("HPBar").GetComponent<Image>();
+        mpBar = GameObject.Find("MPBar").GetComponent<Image>();
+        skillUI = new Image[4];
+        for (int i = 0; i < skillUI.Length; i++)
+        {
+            skillUI[i] = GameObject.Find("Skill" +(i+1)+ "_CoolTime").GetComponent<Image>();
+        }
+        //  Debug.Log(skillUI[i]);
+       
+
+    }
+    
+
 }
