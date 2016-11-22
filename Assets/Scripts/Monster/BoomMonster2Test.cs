@@ -9,9 +9,8 @@ public class BoomMonster2Test : Monster {
 	public float currentDisTance;
 	float middleBossToMonsterLimitDistanceMonsterToCenter = 6.0f;
 	private float middleBossToMonsterMinDistance = 1.5f;
-	public AnimationState stateInfo;
+	public AnimatorStateInfo aniState;
 
-	public AnimatorStateInfo runState;
 	[SerializeField]GameObject middleboss;
 	private Vector3 boomObjectPosition;
 
@@ -160,17 +159,17 @@ public class BoomMonster2Test : Monster {
 
 	}
 
-	public void TakeDamageMethod(){
-		animator.SetTrigger ("TakeDamage");
-		IsHited = true;
-		if (stateInfo.name == "TakeDamage") {
-			isAttack = false;
-			moveAble = false;
-		} else
-			AnimatorReset ();
-
-
-	}
+//	public void TakeDamageMethod(){
+//		animator.SetTrigger ("TakeDamage");
+//		IsHited = true;
+//		if (stateInfo.name == "TakeDamage") {
+//			isAttack = false;
+//			moveAble = false;
+//		} else
+//			AnimatorReset ();
+//
+//
+//	}
 
 
 	IEnumerator BoomCoroutine() {
@@ -336,9 +335,9 @@ public class BoomMonster2Test : Monster {
 	}
 	public void Update()
 	{
-		runState = this.animator.GetCurrentAnimatorStateInfo (0);
+		aniState = this.animator.GetCurrentAnimatorStateInfo (0);
 
-		if (runState.IsName ("Walk")) 
+		if (aniState.IsName ("Walk")) 
 		{
 			if (moveAble) 
 			{
