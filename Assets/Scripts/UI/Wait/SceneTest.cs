@@ -5,6 +5,6 @@ public class SceneTest : MonoBehaviour {
 
 	public void SceneEvent()
 	{
-		SceneChanger.Instance.SceneChange (SceneChanger.SceneName.inGameScene);
+		SceneChanger.Instance.SceneChange (SceneChanger.SceneName.InGameScene);
 	}
 }
