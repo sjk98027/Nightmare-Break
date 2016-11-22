@@ -141,6 +141,7 @@ public class DungeonManager : MonoBehaviour
 			boomMonster[i].NormalMode = normalMode;
             boomMonster[i].GateArrayNumber = mapNumber;
             boomMonster[i].MonsterArrayNumber = i;
+			boomMonster [i].MonSterPatternUpdateConduct ();
         }
 
     }
