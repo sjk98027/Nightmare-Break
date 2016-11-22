@@ -32,7 +32,6 @@ public class charWeapon : MonoBehaviour {
 	void OnTriggerEnter(Collider coll)
 	{
 		
-
 		if (coll.gameObject.layer == LayerMask.NameToLayer ("Enermy"))
 		{
 
@@ -44,10 +43,7 @@ public class charWeapon : MonoBehaviour {
 				
 				if (normalAttack)
 				{
-					
 					damage = charManager.BasicDamage;
-
-				
 				}
 				else if (skillAttack)
 				{

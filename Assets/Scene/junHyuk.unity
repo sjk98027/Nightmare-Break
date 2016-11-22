@@ -1022,25 +1022,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1192066749 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1000011565194376, guid: 435ef0b7bac512942a731f586a5d0fa7,
-    type: 2}
-  m_PrefabInternal: {fileID: 1718185394}
---- !u!114 &1192066750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1192066749}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2509723bd5b0c6148866f54e9ae8225f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  vertical: 0
-  horizontal: 0
-  characterManager: {fileID: 0}
 --- !u!114 &1236408426 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114000013109695738, guid: f729b490846df5d4d96cb8641dade98a,

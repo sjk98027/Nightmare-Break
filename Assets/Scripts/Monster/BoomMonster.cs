@@ -16,7 +16,6 @@ public class BoomMonster : Monster {
 
 
 	public override void HitDamage(int _Damage,GameObject attacker)
-
 	{
 		if (IsAlive)
 		{

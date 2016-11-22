@@ -11,6 +11,16 @@ public class CharacterStatus
 		ShildWarrior,
 		Gunner	
 	}
+	//user name
+	string name;
+
+	// 0 = male, 1 = female
+	int gender;
+
+	//0 = warrior , 1 = mage , 2 = shildwarrior, 3 = guner
+	int hClass;
+
+	int level;
 
 	public CharClass charClass;
 	//char status
@@ -18,60 +28,87 @@ public class CharacterStatus
 	public string characterName;
 	public int characterNum;
 
-	//Level
-	public int characterLevel;
-    public int maxHealthPoint;
-    public int maxManaPoint;
-
 	//exp
 	public int demendExp;
-	public int needExp;
+	public int exp;
 
 	//Point
+	public int maxHealthPoint;
+	public int maxManaPoint;
+
 	public int healthPoint;
 	public int magicPoint;
 
+	//Regeneration
+	int hpRegeneration;
+	int mpRegeneration;
+
+
 	//char AttackPoint and defensepoint
+	public int attack;
 	public int defense;
 
 	//critical point
-	public float critical;
 	public float charSpeed;
 
 	public int dreamStone;
 
+	public int[] skillLevel;
+	public int[] equipLevel;
+
+	//skillNum
+	public Skill[] skillSet;
+	public const int skillNum = 6;
+	public const int equipNum = 4;
+	public const int maxLevel = 20;
+
+
 	public string CharacterName {get {return this.characterName;}}
 
-	public int CharacterLevel {	get {return this.characterLevel;}}
+	public int CharacterLevel {	get {return this.Level;}}
 
 	public int DemendExp { get {return this.demendExp;}	}
 
-	public int NeedExp {get {return this.needExp;}}
+	public int NeedExp {get {return this.exp;}}
 
 	public int HealthPoint {get {return this.healthPoint;}
 		set {healthPoint = value;}}
 	
 	public int ManaPoint {get {return this.magicPoint;}}
-
     public int MaxHealthPoint
     {
         get { return this.maxHealthPoint; }
         set { maxHealthPoint = value; }
     }
-
     public int MaxManaPoint
     {
         get { return this.maxManaPoint; }
         set { maxManaPoint = value; }
     }
 
+	public Skill[] SkillSet {
+		get {
+			return this.skillSet;
+		}
+		set {
+			skillSet = value;
+		}
+	}
+
     public int Defense {get {return this.defense;}}
-
-	public float Critical {get {return this.critical;}}
-
 	public int DreamStone {	get {return this.dreamStone;}}
-
 	public float CharSpeed {get {return this.charSpeed;}}
+	public string Name { get { return name; } }
+	public int Gender { get { return gender; } }
+	public int Level { get { return level; } }
+	public int HClass { get { return hClass; } }
+	public int Exp { get { return exp; } }
+	public int MagicPoint { get { return magicPoint; } }
+	public int HpRegeneration { get { return hpRegeneration; } }
+	public int MpRegeneration { get { return mpRegeneration; } }
+	public int Attack { get { return attack; } }
+	public int[] SkillLevel { get { return skillLevel; } }
+	public int[] EquipLevel { get { return equipLevel; } }
 
 	public CharacterStatus(CharClass name)
 	{
@@ -79,13 +116,55 @@ public class CharacterStatus
 		{
 			
 			Debug.Log ("charsta");
-			needExp = 1000;
+			exp = 1000;
 			MaxHealthPoint = 1000;
 			healthPoint = maxHealthPoint;
-
+			attack = 10;
 			maxManaPoint = 1000;
 			magicPoint = maxManaPoint;
 			charSpeed = 7;
+			skillLevel = new int[skillNum];
+			equipLevel = new int[equipNum];
 		}
 	}
+
+
+
+		public CharacterStatus()
+		{
+			name = "Hero";
+			level = 0;
+			hClass = 0;
+			exp = 0;
+			healthPoint = 0;
+			magicPoint = 0;
+			hpRegeneration = 0;
+			mpRegeneration = 0;
+			attack = 0;
+			defense = 0;
+			dreamStone = 0;
+			skillLevel = new int[skillNum];
+			equipLevel = new int[equipNum];
+		}
+
+		public CharacterStatus(string newName, int newGender, int newClass)
+		{   //차후 데이터 베이스 만들때 그 데이터를 가져와서 초기화 하도록 변경
+			name = newName;
+			level = 1;
+			gender = newGender;
+			hClass = newClass;
+			exp = 0;
+			healthPoint = 100;
+			magicPoint = 20;
+			hpRegeneration = 0;
+			mpRegeneration = 0;
+			attack = 0;
+			defense = 0;
+			dreamStone = 0;
+			skillLevel = new int[skillNum];
+			equipLevel = new int[equipNum];
+
+			for (int i = 0; i < skillNum; i++) { skillLevel[i] = 1; }
+			for (int i = 0; i < equipNum; i++) { equipLevel[i] = 1; }
+		}
 }
