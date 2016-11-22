@@ -2,8 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
-{
+public class BattleUIManager : MonoBehaviour {
 
     [SerializeField]
     public Image hpUI;
@@ -13,15 +12,17 @@ public class UIManager : MonoBehaviour
     private Image potionUI;
     private const float checkTime = 0.1f;
     [SerializeField]
-	private Image[] skillUI; // 0 - SKill1 // 1 - SKill2 // 2 - Skill3 // 3 - Skill4 //
+    private Image[] skillUI; // 0 - SKill1 // 1 - SKill2 // 2 - Skill3 // 3 - Skill4 //
 
-	public Image[] SkillUI {
-		get {
-			return this.skillUI;
-		}
-	}
+    public Image[] SkillUI
+    {
+        get
+        {
+            return this.skillUI;
+        }
+    }
 
-	
+
     public Image bossHp;
 
 
@@ -35,12 +36,12 @@ public class UIManager : MonoBehaviour
         {
             skillUI[skillNum].fillAmount -= 1 * time / coolTime;
             yield return null;
-           
+
         }
         skillUI[skillNum].fillAmount = 1;
         skillUI[skillNum].color -= new Color(0, 0, 0, 1);
         time = 0;
-        
+
         yield break;
     }
 
@@ -70,7 +71,4 @@ public class UIManager : MonoBehaviour
     {
         mpUI.fillAmount = maxMp / currentMP;
     }
-		
-
-
 }

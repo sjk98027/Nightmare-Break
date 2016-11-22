@@ -199,7 +199,7 @@ public class DataSender : MonoBehaviour
         HeaderSerializer headerSerializer = new HeaderSerializer();
 
         headerData.length = (short)msg.Length;
-        headerData.source = (byte)NetworkManager.Source.ServerSource;
+        headerData.source = (byte)NetworkManager.Source.ClientSource;
         headerData.id = (byte)data.GetPacketId();
 
         headerSerializer.Serialize(headerData);
