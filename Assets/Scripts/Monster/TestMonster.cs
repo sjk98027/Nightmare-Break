@@ -162,8 +162,9 @@ public class TestMonster : Monster
 	}
 
 
-	public void HitDamage(int _Damage)
+	public override void HitDamage(int _Damage,GameObject attacker)
 	{
+		
 		stateInfo = this.animator.GetCurrentAnimatorStateInfo (0);
 
 

@@ -36,8 +36,6 @@ public class CharacterManager : MonoBehaviour
 	public BoxCollider charWeapon;
 	public bool normalAttackState = false;
 	public bool skillAttackState = false;
-	public int basicDamage;
-
 	public InputManager inputmanager;
 
 	public GameObject[] enermy;
@@ -49,10 +47,9 @@ public class CharacterManager : MonoBehaviour
 
 	public float jumpPower;
 	public bool charAlive = true;
-
+	public int basicDamage;
 
 	public GameObject[] Enermy {get {return this.enermy;}}
-	public int BasicDamage {get {return this.basicDamage;}}
 
 	public Animator Animator { get { return animator; } }
 
@@ -66,12 +63,15 @@ public class CharacterManager : MonoBehaviour
 
 	public bool SkillAttackState{get {return this.skillAttackState;}}
 
+	public int BasicDamage{ get { return this.basicDamage; } }
+
 	public UIManager uiManager;
 
 	void Start ()
 	{
-		uiManager = GameObject.FindWithTag ("UI").GetComponent<UIManager> ();
 		charstate = new CharacterStatus(0);
+		basicDamage = Charstate.Attack;
+		uiManager = GameObject.FindWithTag ("UI").GetComponent<UIManager> ();
 		animator = GetComponent<Animator> ();
 		state = CharacterState.Idle;
 		enermy = null;
@@ -87,6 +87,7 @@ public class CharacterManager : MonoBehaviour
 
 	void Update ()
 	{
+
 		//Debug.Log(uiManager.skillUI [2].fillAmount);
 		if (charAlive)
 		{
@@ -139,7 +140,6 @@ public class CharacterManager : MonoBehaviour
 		Debug.Log ("anima End");
 		normalAttackState = false;
 		skillAttackState = false;
-		basicDamage = 0;
 
 	}
 
@@ -196,28 +196,7 @@ public class CharacterManager : MonoBehaviour
 		}
 
 	}
-
-	public void NormalAttack ()
-	{
-		//if ( state != characterState.Skill2 && state != CharacterState.Attack  && state != characterState.Skill1 && state != characterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
-		if ( state != CharacterState.Skill2  && state != CharacterState.Skill1 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
-		{
-			normalAttackState = true;
-			CharState ((int)CharacterState.Attack);
-
-			if (JumpMove)
-			{
-				rigdbody.mass = 100;
-			}
-			else
-			{
-				rigdbody.mass = 1;
-			}
-
-
-		}
-	}
-
+		
 	public void CheckGrounded ()
 	{
 		if (state == CharacterState.Jump)
@@ -247,10 +226,31 @@ public class CharacterManager : MonoBehaviour
 			JumpMove = true;
 	}
 
+	public virtual void NormalAttack ()
+	{
+		//if ( state != characterState.Skill2 && state != CharacterState.Attack  && state != characterState.Skill1 && state != characterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
+		if ( state != CharacterState.Skill2  && state != CharacterState.Skill1 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
+		{
+			normalAttackState = true;
+			CharState ((int)CharacterState.Attack);
+
+			if (JumpMove)
+			{
+				rigdbody.mass = 100;
+			}
+			else
+			{
+				rigdbody.mass = 1;
+			}
+
+
+		}
+	}
+
 
 	public virtual void Skill1 ()
 	{
-		if (state == CharacterState.Run || state == CharacterState.Idle)
+		if (state == CharacterState.Run || state == CharacterState.Idle || state == CharacterState.Skill1)
 		{
 			state = CharacterState.Skill1;
 			CharState ((int)CharacterState.Skill1);
@@ -356,7 +356,6 @@ public class CharacterManager : MonoBehaviour
 			case 2:
 				state = CharacterState.Attack;
 				animator.SetTrigger ("Attack");
-				basicDamage = 10;
 				break;
 
 			case 3:
@@ -371,6 +370,7 @@ public class CharacterManager : MonoBehaviour
 					state = CharacterState.Skill1;
 					animator.SetTrigger ("Skill1");
 					skillAttackState = true;
+
 					//basicDamage = charstate.activeSkillSet [0].skillDamage;
 				}
 					break;
@@ -426,11 +426,10 @@ public class CharacterManager : MonoBehaviour
 
 
 	public void CharCoolTime(int _name)
-	{
-		
+	{		
 		if (_name == 0)
 		{
-			skillCoolTime [0] = 10;
+			skillCoolTime [0] = 5;
 			skillCoolTime [1] = 3;
 			skillCoolTime [2] = 30;
 			skillCoolTime [3] = 40;

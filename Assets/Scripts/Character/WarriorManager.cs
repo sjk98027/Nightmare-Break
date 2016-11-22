@@ -15,8 +15,39 @@ public class WarriorManager : CharacterManager
     public GameObject SwordDance;
 
 
+
+
 	//giganticSwordCastSword.SetActive(false);
 	//giganticSword = Resources.Load<GameObject> ("GiganticSword");
+
+	public override void NormalAttack()
+	{
+		base.NormalAttack();
+
+		int testPassiveHP;
+
+		if (charstate.skillLevel [4] < 4)
+		{
+			Debug.Log ("in passive");
+			float attackHeal = (charstate.skillLevel [4]*0.1f);
+			testPassiveHP = (int)(basicDamage * attackHeal);
+
+			charstate.healthPoint += testPassiveHP;
+
+		}
+		else if (charstate.skillLevel [4] == 4)
+		{
+			
+			//mealstrom heal
+//			if (charstate.healthPoint <= 0)
+//			{
+//				Debug.Log ("in Special");
+//				charstate.healthPoint = charstate.maxHealthPoint;
+//			}
+		}
+	}
+
+
 
 
 	//warrior mealstrom
