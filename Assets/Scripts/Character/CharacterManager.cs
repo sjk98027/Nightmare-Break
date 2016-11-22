@@ -364,9 +364,9 @@ public class CharacterManager : MonoBehaviour
 				break;
 
 			case 4:
-				if (uiManager.SkillUI [0].fillAmount == 1)
+				if (uiManager.BattleUIManager.SkillUI [0].fillAmount == 1)
 				{
-					StartCoroutine (uiManager.SkillCoolTimeUI (0, skillCoolTime [0]));
+					StartCoroutine (uiManager.BattleUIManager.SkillCoolTimeUI (0, skillCoolTime [0]));
 					state = CharacterState.Skill1;
 					animator.SetTrigger ("Skill1");
 					skillAttackState = true;
@@ -376,9 +376,9 @@ public class CharacterManager : MonoBehaviour
 					break;
 
 			case 5:
-				if (uiManager.SkillUI [1].fillAmount == 1)
+				if (uiManager.BattleUIManager.SkillUI [1].fillAmount == 1)
 				{
-					StartCoroutine (uiManager.SkillCoolTimeUI (1,skillCoolTime [1]));
+					StartCoroutine (uiManager.BattleUIManager.SkillCoolTimeUI (1,skillCoolTime [1]));
 					state = CharacterState.Skill2;
 					animator.SetTrigger ("Skill2");
 					skillAttackState = true;
@@ -387,9 +387,9 @@ public class CharacterManager : MonoBehaviour
 				break;
 
 			case 6:
-				if (uiManager.SkillUI [2].fillAmount == 1)
+				if (uiManager.BattleUIManager.SkillUI [2].fillAmount == 1)
 				{
-					StartCoroutine (uiManager.SkillCoolTimeUI (2, skillCoolTime [2]));
+					StartCoroutine (uiManager.BattleUIManager.SkillCoolTimeUI (2, skillCoolTime [2]));
 					state = CharacterState.Skill3;
 					animator.SetTrigger ("Skill3");
 					skillAttackState = true;
@@ -399,9 +399,9 @@ public class CharacterManager : MonoBehaviour
 
 			case 7:
 
-				if (uiManager.SkillUI [3].fillAmount == 1)
+				if (uiManager.BattleUIManager.SkillUI [3].fillAmount == 1)
 				{
-					StartCoroutine (uiManager.SkillCoolTimeUI (3, skillCoolTime [3]));
+					StartCoroutine (uiManager.BattleUIManager.SkillCoolTimeUI (3, skillCoolTime [3]));
 					state = CharacterState.Skill4;
 					animator.SetTrigger ("Skill4");
 					skillAttackState = true;
