@@ -12,6 +12,7 @@ public class WarriorManager : CharacterManager
 	public bool giganticSwordRendTime;
 	public GameObject giganticSwordTemp;
 	public GameObject giganticSwordCastSword;
+    public GameObject SwordDance;
 
 
 	//giganticSwordCastSword.SetActive(false);
@@ -58,8 +59,18 @@ public class WarriorManager : CharacterManager
 
 	public override void ProcessSkill3 ()
 	{
-		
-	}
+        if (!SwordDance)
+        {
+            if (transform.rotation.y == 0)
+            {
+              SwordDance = Instantiate(Resources.Load<GameObject>("Effect/SwordDance"), new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z + 0.5f), Quaternion.Euler(-90, 0, 0)) as GameObject;
+            }
+            else
+            {
+                SwordDance =  Instantiate(Resources.Load<GameObject>("Effect/SwordDance"), new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z - 0.5f), Quaternion.Euler(90, 0, 0)) as GameObject;
+            }
+        }
+    }
 
 	public override void ProcessSkill4 ()
 	{

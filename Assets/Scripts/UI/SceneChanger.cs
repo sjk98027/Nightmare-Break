@@ -8,6 +8,7 @@ public class SceneChanger : MonoBehaviour {
 	[SerializeField]private float fadeTime;
 	[SerializeField]private int sceneIndex;
 	[SerializeField]private Image fadePanel;
+	[SerializeField]private LoadingSceneUI loadingScene;
 
 		public enum SceneName{
 		titleScene,
@@ -76,7 +77,16 @@ public class SceneChanger : MonoBehaviour {
 		Destroy (fadeCanvas);
 		fadeTime = 0;
 		if (SceneManager.GetActiveScene ().name == "LoadingScene") {
-			SceneManager.LoadScene (sceneIndex);
+			if (!loadingScene) {
+				loadingScene = GameObject.Find ("LoadingSceneManager").GetComponent<LoadingSceneUI> ();
+			}
+			AsyncOperation asyncScene = SceneManager.LoadSceneAsync (sceneIndex);
+		
+				while(!asyncScene.isDone)
+				{
+					loadingScene.LoadingProcess (asyncScene.progress);
+					yield return null;
+				}
 		}
 	}
 }

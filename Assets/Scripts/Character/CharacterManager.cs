@@ -91,7 +91,7 @@ public class CharacterManager : MonoBehaviour
 		if (charAlive)
 		{
 			// check skill state
-			if (skillAttackState)
+			if (skillAttackState )
 			{
 				// skill index
 				// skill process ProcessSkill1()
@@ -365,7 +365,7 @@ public class CharacterManager : MonoBehaviour
 				break;
 
 			case 4:
-				if (uiManager.skillUI [0].fillAmount == 1)
+				if (uiManager.SkillUI [0].fillAmount == 1)
 				{
 					StartCoroutine (uiManager.SkillCoolTimeUI (0, skillCoolTime [0]));
 					state = CharacterState.Skill1;
@@ -376,7 +376,7 @@ public class CharacterManager : MonoBehaviour
 					break;
 
 			case 5:
-				if (uiManager.skillUI [1].fillAmount == 1)
+				if (uiManager.SkillUI [1].fillAmount == 1)
 				{
 					StartCoroutine (uiManager.SkillCoolTimeUI (1,skillCoolTime [1]));
 					state = CharacterState.Skill2;
@@ -387,7 +387,7 @@ public class CharacterManager : MonoBehaviour
 				break;
 
 			case 6:
-				if (uiManager.skillUI [2].fillAmount == 1)
+				if (uiManager.SkillUI [2].fillAmount == 1)
 				{
 					StartCoroutine (uiManager.SkillCoolTimeUI (2, skillCoolTime [2]));
 					state = CharacterState.Skill3;
@@ -399,7 +399,7 @@ public class CharacterManager : MonoBehaviour
 
 			case 7:
 
-				if (uiManager.skillUI [3].fillAmount == 1)
+				if (uiManager.SkillUI [3].fillAmount == 1)
 				{
 					StartCoroutine (uiManager.SkillCoolTimeUI (3, skillCoolTime [3]));
 					state = CharacterState.Skill4;
