@@ -32,13 +32,15 @@ public class DungeonManager : MonoBehaviour
 
     public Section[] section;
 
+
+
     [SerializeField]int mapNumber;
 
 	void Start()
 	{
 		DungeonConstruct();//mapNumber - > inspector define
 		//        modeForm = false;
-		//        ModeChange(modeForm);//client get modeform and ingame play ;
+//		        ModeChange(n);//client get modeform and ingame play ;
 		//section = transform.GetComponentsInChildren<Section> ();
 		normalMode = true;
 		section = transform.GetComponentsInChildren<Section> ();
@@ -55,13 +57,8 @@ public class DungeonManager : MonoBehaviour
 			for (int i = 0; i < boomMonster.Length; i++)
 			{
 				boomMonster[i].UpdateNormalMode();
-				//			warriorMonster [i].UpdateConduct ();
+//				warriorMonster [i].UpdateNormalMode ();
 			}
-
-			//            for (int i = 0; i < section.Length; i++)
-			//            {
-			//                section[i].UpdateConduct(); //this.method change //section [mapNumber].UpdateConduct ();
-			//            }
 		}
 
 		if (!normalMode)
@@ -112,7 +109,7 @@ public class DungeonManager : MonoBehaviour
     void DungeonConstruct()
     {
      
-
+		normalMode = true;
         MonsterSet();
 
         //if (mapNumber == 0) {
@@ -125,6 +122,7 @@ public class DungeonManager : MonoBehaviour
         //else if (mapNumber == 4) {
         //	beforeScneObject.SceneChangeObjectSet (mapNumber - 1);
         //}
+
     }
 
     public void MonsterSet()
@@ -141,7 +139,7 @@ public class DungeonManager : MonoBehaviour
 			boomMonster[i].NormalMode = normalMode;
             boomMonster[i].GateArrayNumber = mapNumber;
             boomMonster[i].MonsterArrayNumber = i;
-			boomMonster [i].MonSterPatternUpdateConduct ();
+			boomMonster [i].MonSterPatternUpdateConduct (normalMode);
         }
 
     }
