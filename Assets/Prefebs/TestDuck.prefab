@@ -23,7 +23,7 @@ GameObject:
   - 65: {fileID: 65000013507125784}
   - 114: {fileID: 114000012884538716}
   m_Layer: 9
-  m_Name: monster_duck_attack (1)
+  m_Name: TestDuck
   m_TagString: Enermy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

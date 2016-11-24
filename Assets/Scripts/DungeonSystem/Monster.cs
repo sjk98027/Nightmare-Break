@@ -199,18 +199,15 @@ public class Monster : MonoBehaviour {
 	public void AttackEnd(){
 		
 		StartCoroutine (LookatChange ());
-		Debug.Log ("animator.SetInteger (State, 0)");
 		moveAble=true;
 		isAttack = false;
 		animator.SetInteger ("State", 0);
 		attackCollider.SetActive (false);
-		Debug.Log ("AttackEnd");
 	}
 	public void AttackStart(){
 		moveAble = false;
 		isAttack = true;
 		StopCoroutine (LookatChange ());
-		Debug.Log ("AttackStart");
 	}
 	public void AnimatorReset(){
 		animator.SetInteger ("State", 0);
@@ -226,4 +223,6 @@ public class Monster : MonoBehaviour {
 	{
 
 	}
+
+
 }

@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     public LoginUIManager LoginUIManager { get { return loginUIManager; } }
     public WaitUIManager WaitUIManager { get { return waitUIManager; } }
     public BattleUIManager BattleUIManager { get { return battleUIManager; } }
+<<<<<<< HEAD
 
     public GameObject dialogPanel;
     public Text dialog;
@@ -44,3 +45,23 @@ public class UIManager : MonoBehaviour
         dialogPanel.SetActive(false);
     }
 }
+=======
+
+    void Start()
+    {
+        battleUIManager = new BattleUIManager();
+        battleUIManager.SetUIObject();
+    }
+
+    void OnMouseOver()
+    {
+      
+
+    }
+
+    void OnMouseExit()
+    {
+
+    }
+}
+>>>>>>> 98dbc542fd4715da2799ac0dc5787834361477fa

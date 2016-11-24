@@ -9,14 +9,17 @@ public class SceneChanger : MonoBehaviour {
 	[SerializeField]private int sceneIndex;
 	[SerializeField]private Image fadePanel;
 	[SerializeField]private LoadingSceneUI loadingScene;
-
+   
 		public enum SceneName{
 		TitleScene,
 	//	waitingScene,
 		InGameScene,
 		LoadingScene
 	}
-		
+    private SceneName currentScene;
+    public SceneName CurrentScene { get { return currentScene; } }
+
+
 	private static SceneChanger instance = null;
 	public static SceneChanger Instance {
 		get{
@@ -24,6 +27,7 @@ public class SceneChanger : MonoBehaviour {
 		}
 	}
 		
+
 	void Awake()
 	{
 		if (instance) {
@@ -38,6 +42,7 @@ public class SceneChanger : MonoBehaviour {
 	void OnLevelWasLoaded()
 	{
 		StartCoroutine (FadeIn ());
+    
 	}
 		
 	public void SceneChange(SceneName sceneName)
@@ -48,13 +53,12 @@ public class SceneChanger : MonoBehaviour {
 
 	IEnumerator FadeOut(){
 		{
-			
 			GameObject fadeCanvas =  Instantiate (Resources.Load<GameObject> ("UI/FadeCanvas"));
 			fadePanel = fadeCanvas.transform.GetChild (0).GetComponent<Image>();
 			fadeTime = Time.deltaTime; 
 			while(fadePanel.color.a < 1)
 			{
-					fadePanel.color += new Color(0, 0, 0, (float)fadeValue * fadeTime);
+				fadePanel.color += new Color(0, 0, 0, (float)fadeValue * fadeTime);
 				yield return null;
 			}
 			fadeTime = 0;
