@@ -11,10 +11,10 @@ public class SceneChanger : MonoBehaviour {
 	[SerializeField]private LoadingSceneUI loadingScene;
 
 		public enum SceneName{
-		titleScene,
+		TitleScene,
 	//	waitingScene,
-		inGameScene,
-		loadingScene
+		InGameScene,
+		LoadingScene
 	}
 		
 	private static SceneChanger instance = null;
@@ -59,7 +59,7 @@ public class SceneChanger : MonoBehaviour {
 			}
 			fadeTime = 0;
 			fadePanel = null;
-			SceneManager.LoadScene ((int)SceneName.loadingScene);
+			SceneManager.LoadScene ((int)SceneName.LoadingScene);
 		}
 	}
 

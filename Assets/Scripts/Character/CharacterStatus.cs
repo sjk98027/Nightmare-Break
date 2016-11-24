@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [System.Serializable]
-public class CharacterStatus
+public class CharacterStatus : MonoBehaviour
 {
 	public enum CharClass
 	{
@@ -123,11 +123,25 @@ public class CharacterStatus
 			maxManaPoint = 1000;
 			magicPoint = maxManaPoint;
 			charSpeed = 7;
+			defense = 1;
 			skillLevel = new int[skillNum];
 			equipLevel = new int[equipNum];
 		}
 	}
 
+	public void SetCharacterStatus()
+	{
+			exp = 1000;
+			MaxHealthPoint = 1000;
+			healthPoint = maxHealthPoint;
+			attack = 10;
+			maxManaPoint = 1000;
+			magicPoint = maxManaPoint;
+			defense = 1;
+			charSpeed = 7;
+			skillLevel = new int[skillNum];
+			equipLevel = new int[equipNum];
+	}
 
 
 		public CharacterStatus()
