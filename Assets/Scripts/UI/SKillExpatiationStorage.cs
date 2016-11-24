@@ -9,11 +9,11 @@ public class SKillExpatiationStorage  {
         Gunner
     }
    
-    Dictionary<string, SkillInfo> skillDic = new Dictionary<string, Skill>();
+    Dictionary<string, SkillInfo> skillDic = new Dictionary<string, SkillInfo>();
     
     void SetDictionary()
     {
-        skillDic.Add("전사스킬1", new SkillInfo(SkillInfo.SkillType.Active, 섬단, );
+        skillDic.Add("전사스킬1", new SkillInfo(SkillInfo.SkillType.Active, "섬단", 5, "캐릭터가 빠른속도로 전방의 적들을 베어버린다."));
        
     }
 }
