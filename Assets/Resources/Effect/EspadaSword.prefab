@@ -41,7 +41,7 @@ GameObject:
   - 23: {fileID: 23000012696871284}
   - 54: {fileID: 54000011825610840}
   - 65: {fileID: 65000010153199934}
-  - 114: {fileID: 114000011621600432}
+  - 114: {fileID: 114000013021141906}
   m_Layer: 0
   m_Name: EspadaSword
   m_TagString: Untagged
@@ -139,7 +139,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5.532179, y: 10, z: 0.8761753}
   m_Center: {x: 0.00000011920929, y: 5, z: -0.00000011920929}
---- !u!114 &114000011621600432
+--- !u!114 &114000013021141906
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000012396006902}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35b93e5104bac5e4b9918db5f83ceaaa, type: 3}
+  m_Script: {fileID: 11500000, guid: 2bebcc55c5446a94b9785ad06a673bdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114000013833711046
