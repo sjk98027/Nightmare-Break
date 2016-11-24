@@ -9,8 +9,10 @@
     CreateCharacter,
     DeleteCharacter,
     SelectCharacter,
-    RequestCharacterStatus;
+    RequestCharacterStatus,
     RequestRoomList,
+    SkillUp,
+    EquipUpgrade,
     CreateRoom,
     EnterRoom,
     ExitRoom,

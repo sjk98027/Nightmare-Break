@@ -206,11 +206,34 @@ public class DataSender : MonoBehaviour
         sendMsgs.Enqueue(packet);
     }
 
-    //스킬 투자
-    public void SkillUp()
+    //스킬 투자 - Tcp
+    public void SkillUp(int index)
     {
+        Debug.Log("스킬 투자");
+        SkillUpData skillUpData = new SkillUpData(index);
+        SkillUpPacket skillUpPacket = new SkillUpPacket(skillUpData);
+        skillUpPacket.SetPacketId((int)ClientPacketId.RequestRoomList);
 
+        DataPacket packet = new DataPacket(CreatePacket(skillUpPacket), null);
+
+        sendMsgs.Enqueue(packet);
     }
+
+    //장비 강화 - Tcp
+    public void EquipUpgrade(int index)
+    {
+        Debug.Log("장비 강화");
+        EquipUpgradeData equipUpgradeData = new EquipUpgradeData(index);
+        EquipUpgradePacket equipUpgradePacket = new EquipUpgradePacket(equipUpgradeData);
+        equipUpgradePacket.SetPacketId((int)ClientPacketId.EquipUpgrade);
+
+        DataPacket packet = new DataPacket(CreatePacket(equipUpgradePacket), null);
+
+        sendMsgs.Enqueue(packet);
+    }
+
+    //
+
 
     //연결 확인 - Udp
     public void ConnectionCheck(List<EndPoint> newEndPoint)
