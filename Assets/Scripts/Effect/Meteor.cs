@@ -3,15 +3,9 @@ using System.Collections;
 
 public class Meteor : MonoBehaviour {
 
-    
-    void Start()
-    {
-     
-    }
-
     void Update()
     {
-        transform.Translate(0, 0, 15 * Time.smoothDeltaTime, Space.Self);    
+        transform.Translate(0, 0, 30 * Time.smoothDeltaTime, Space.Self);    
     }
 
     void OnCollisionEnter(Collision coll)
