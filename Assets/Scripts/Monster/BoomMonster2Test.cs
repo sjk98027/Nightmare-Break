@@ -19,16 +19,17 @@ public class BoomMonster2Test : Monster {
 	{
 		IsHited = true;
 		currentLife -= _Damage;
-		if (currentLife > 0) {
-			for (int i = 0; i < player.Length; i++) {
-				if (player [i] == attacker) {
-					playerToMonsterDamage[i] += _Damage;
-					targetPlayer = player [i];
+		if(monsterState != StatePosition.Boom){
+			if (currentLife > 0) {
+				for (int i = 0; i < player.Length; i++) {
+					if (player [i] == attacker) {
+						playerToMonsterDamage [i] += _Damage;
+						targetPlayer = player [i];
+					}
 				}
+				Pattern (StatePosition.TakeDamage);
 			}
-			Pattern (StatePosition.TakeDamage);
 		}
-
 		if (currentLife <= 0) {
 			IsAlive = false;
 			HittedBox.enabled = false;
@@ -107,11 +108,12 @@ public class BoomMonster2Test : Monster {
 		case StatePosition.Boom:
 			{
 				idlePoint = this.gameObject.transform.position;
+				IsAlive = false;
 				StartCoroutine("BoomCoroutine"); break;
 			} // animator boom -> setintter 4
 		case StatePosition.Attack:
 			{
-				AttackProcess1(isAttack);
+				AttackProcess(isAttack);
 				break;
 			}
 		case StatePosition.Run:
@@ -139,13 +141,13 @@ public class BoomMonster2Test : Monster {
 		AnimatorReset ();
 		transform.position = idlePoint;
 		yield return new WaitForSeconds (3f);
+		IsAlive = false;
 		animator.SetTrigger("Death");
-		yield return new WaitForSeconds (3f);
-		transform.position = boomPoint;
+
 		StopCoroutine (BoomCoroutine());
 	}
 
-	public void AttackProcess1(bool isAttack){
+	public void AttackProcess(bool isAttack){
 		if (isAttack) {
 
 			if(animator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Walk")){
@@ -158,21 +160,6 @@ public class BoomMonster2Test : Monster {
 				moveAble = false;
 			}
 		}
-	}
-
-	IEnumerator AttackProcess(){
-		AnimatorReset ();
-		moveAble = false;
-		yield return new WaitForSeconds (1.8f);
-		animator.SetInteger ("State", 3);
-
-		Debug.Log ("Attack");//attackaniamtion start;
-		yield return new WaitForSeconds (2f);
-		animator.SetInteger ("State", 0);
-		isAttack= false;
-		moveAble = true;
-		Debug.Log ("AttackEnd");//attackanimation end;
-		StopCoroutine (AttackProcess ());
 	}
 
 	public void middleBossPositionGetting(Vector3 _Position){
@@ -207,7 +194,6 @@ public class BoomMonster2Test : Monster {
 				if (targetPlayer != null) {	
 					currentDisTance = Vector3.Distance (targetPlayer.transform.position, this.gameObject.transform.position);
 					checkDirection = targetPlayer.transform.position - this.gameObject.transform.position;
-				
 					if (currentDisTance > searchRange) {
 						monsterState = StatePosition.Idle;
 						Pattern (monsterState);
@@ -221,26 +207,33 @@ public class BoomMonster2Test : Monster {
 								monsterState = StatePosition.Run;
 								Pattern (monsterState);
 						}
-						if (currentDisTance <= searchRange * 0.2f) {
+						if (currentDisTance <= searchRange * 0.3f) {
 							if (!isAttack) {
 								isAttack = true;
 								moveAble = false;
 							}
-							monsterState = StatePosition.Attack;
-							Pattern (monsterState);
+							if (currentLife > maxLife * 0.3f) {
+								monsterState = StatePosition.Attack;
+								Pattern (monsterState);
+								yield return new WaitForSeconds (0.5f);
+							} else if (currentLife < maxLife * 0.3) {
+								if (Random.Range (0, 4) <= 2) {
+									monsterState = StatePosition.Attack;
+									Pattern (monsterState);
+									yield return new WaitForSeconds (0.5f);
+								} else if(Random.Range (0, 4) > 2)
+									monsterState = StatePosition.Boom;
+									Pattern (monsterState);
+								yield return new WaitForSeconds (4f);
+							}
 						}
-//						if (currentLife / maxLife < 0.2) {
-//							monsterState = StatePosition.Boom;
-//							Pattern (monsterState);
-//						}
-
 					}
 				}
 				yield return new WaitForSeconds(0.2f);
 			}
 		}
 
-		}
 	}
+}
 	
 

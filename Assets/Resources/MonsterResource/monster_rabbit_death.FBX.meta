@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 1e2eeb518d6274445839691a60ece36d
-timeCreated: 1479121424
+guid: 64a0ebc0421fb7244b57976d1d95611a
+timeCreated: 1479951586
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -11,70 +11,66 @@ ModelImporter:
     100006: Bip01 HeadNub
     100008: Bip01 L Calf
     100010: Bip01 L Clavicle
-    100012: Bip01 L Finger0
-    100014: Bip01 L Finger0Nub
-    100016: Bip01 L Foot
-    100018: Bip01 L Forearm
-    100020: Bip01 L Hand
-    100022: Bip01 L Thigh
-    100024: Bip01 L Toe0
-    100026: Bip01 L Toe0Nub
-    100028: Bip01 L UpperArm
-    100030: Bip01 Neck
-    100032: Bip01 Pelvis
-    100034: Bip01 R Calf
-    100036: Bip01 R Clavicle
-    100038: Bip01 R Finger0
-    100040: Bip01 R Finger0Nub
-    100042: Bip01 R Foot
-    100044: Bip01 R Forearm
-    100046: Bip01 R Hand
-    100048: Bip01 R Thigh
-    100050: Bip01 R Toe0
-    100052: Bip01 R Toe0Nub
-    100054: Bip01 R UpperArm
-    100056: Bip01 Spine
-    100058: Bone01
-    100060: Bone03
-    100062: duck
-    100064: //RootNode
+    100012: Bip01 L Foot
+    100014: Bip01 L Forearm
+    100016: Bip01 L Hand
+    100018: Bip01 L Thigh
+    100020: Bip01 L Toe0
+    100022: Bip01 L Toe0Nub
+    100024: Bip01 L UpperArm
+    100026: Bip01 Neck
+    100028: Bip01 Pelvis
+    100030: Bip01 R Calf
+    100032: Bip01 R Clavicle
+    100034: Bip01 R Foot
+    100036: Bip01 R Forearm
+    100038: Bip01 R Hand
+    100040: Bip01 R Thigh
+    100042: Bip01 R Toe0
+    100044: Bip01 R Toe0Nub
+    100046: Bip01 R UpperArm
+    100048: Bip01 Spine
+    100050: Bone01
+    100052: Bone01(mirrored)
+    100054: Bone02
+    100056: Bone02(mirrored)
+    100058: //RootNode
+    100060: Object001
     400000: Bip01
     400002: Bip01 Footsteps
     400004: Bip01 Head
     400006: Bip01 HeadNub
     400008: Bip01 L Calf
     400010: Bip01 L Clavicle
-    400012: Bip01 L Finger0
-    400014: Bip01 L Finger0Nub
-    400016: Bip01 L Foot
-    400018: Bip01 L Forearm
-    400020: Bip01 L Hand
-    400022: Bip01 L Thigh
-    400024: Bip01 L Toe0
-    400026: Bip01 L Toe0Nub
-    400028: Bip01 L UpperArm
-    400030: Bip01 Neck
-    400032: Bip01 Pelvis
-    400034: Bip01 R Calf
-    400036: Bip01 R Clavicle
-    400038: Bip01 R Finger0
-    400040: Bip01 R Finger0Nub
-    400042: Bip01 R Foot
-    400044: Bip01 R Forearm
-    400046: Bip01 R Hand
-    400048: Bip01 R Thigh
-    400050: Bip01 R Toe0
-    400052: Bip01 R Toe0Nub
-    400054: Bip01 R UpperArm
-    400056: Bip01 Spine
-    400058: Bone01
-    400060: Bone03
-    400062: duck
-    400064: //RootNode
-    4300000: duck
-    7400000: Run
+    400012: Bip01 L Foot
+    400014: Bip01 L Forearm
+    400016: Bip01 L Hand
+    400018: Bip01 L Thigh
+    400020: Bip01 L Toe0
+    400022: Bip01 L Toe0Nub
+    400024: Bip01 L UpperArm
+    400026: Bip01 Neck
+    400028: Bip01 Pelvis
+    400030: Bip01 R Calf
+    400032: Bip01 R Clavicle
+    400034: Bip01 R Foot
+    400036: Bip01 R Forearm
+    400038: Bip01 R Hand
+    400040: Bip01 R Thigh
+    400042: Bip01 R Toe0
+    400044: Bip01 R Toe0Nub
+    400046: Bip01 R UpperArm
+    400048: Bip01 Spine
+    400050: Bone01
+    400052: Bone01(mirrored)
+    400054: Bone02
+    400056: Bone02(mirrored)
+    400058: //RootNode
+    400060: Object001
+    4300000: Object001
+    7400000: Death
     9500000: //RootNode
-    13700000: duck
+    13700000: Object001
   materials:
     importMaterials: 1
     materialName: 0
@@ -97,17 +93,17 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: Run
+      name: Death
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 40
+      lastFrame: 32
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -151,7 +147,11 @@ ModelImporter:
         weight: 1
       - path: Bip01/Bip01 Pelvis/Bip01 Spine/Bip01 Neck/Bip01 Head/Bone01
         weight: 1
-      - path: Bip01/Bip01 Pelvis/Bip01 Spine/Bip01 Neck/Bip01 Head/Bone03
+      - path: Bip01/Bip01 Pelvis/Bip01 Spine/Bip01 Neck/Bip01 Head/Bone01/Bone02
+        weight: 1
+      - path: Bip01/Bip01 Pelvis/Bip01 Spine/Bip01 Neck/Bip01 Head/Bone01(mirrored)
+        weight: 1
+      - path: Bip01/Bip01 Pelvis/Bip01 Spine/Bip01 Neck/Bip01 Head/Bone01(mirrored)/Bone02(mirrored)
         weight: 1
       - path: Bip01/Bip01 Pelvis/Bip01 Spine/Bip01 Neck/Bip01 L Clavicle
         weight: 1
@@ -163,12 +163,6 @@ ModelImporter:
       - path: Bip01/Bip01 Pelvis/Bip01 Spine/Bip01 Neck/Bip01 L Clavicle/Bip01 L UpperArm/Bip01
           L Forearm/Bip01 L Hand
         weight: 1
-      - path: Bip01/Bip01 Pelvis/Bip01 Spine/Bip01 Neck/Bip01 L Clavicle/Bip01 L UpperArm/Bip01
-          L Forearm/Bip01 L Hand/Bip01 L Finger0
-        weight: 1
-      - path: Bip01/Bip01 Pelvis/Bip01 Spine/Bip01 Neck/Bip01 L Clavicle/Bip01 L UpperArm/Bip01
-          L Forearm/Bip01 L Hand/Bip01 L Finger0/Bip01 L Finger0Nub
-        weight: 1
       - path: Bip01/Bip01 Pelvis/Bip01 Spine/Bip01 Neck/Bip01 R Clavicle
         weight: 1
       - path: Bip01/Bip01 Pelvis/Bip01 Spine/Bip01 Neck/Bip01 R Clavicle/Bip01 R UpperArm
@@ -178,12 +172,6 @@ ModelImporter:
         weight: 1
       - path: Bip01/Bip01 Pelvis/Bip01 Spine/Bip01 Neck/Bip01 R Clavicle/Bip01 R UpperArm/Bip01
           R Forearm/Bip01 R Hand
-        weight: 1
-      - path: Bip01/Bip01 Pelvis/Bip01 Spine/Bip01 Neck/Bip01 R Clavicle/Bip01 R UpperArm/Bip01
-          R Forearm/Bip01 R Hand/Bip01 R Finger0
-        weight: 1
-      - path: Bip01/Bip01 Pelvis/Bip01 Spine/Bip01 Neck/Bip01 R Clavicle/Bip01 R UpperArm/Bip01
-          R Forearm/Bip01 R Hand/Bip01 R Finger0/Bip01 R Finger0Nub
         weight: 1
       - path: Bip01/Bip01 Pelvis/Bip01 Spine/Bip01 R Thigh
         weight: 1
@@ -197,7 +185,7 @@ ModelImporter:
       - path: Bip01/Bip01 Pelvis/Bip01 Spine/Bip01 R Thigh/Bip01 R Calf/Bip01 R Foot/Bip01
           R Toe0/Bip01 R Toe0Nub
         weight: 1
-      - path: duck
+      - path: Object001
         weight: 1
       maskType: 0
       maskSource: {instanceID: 0}
