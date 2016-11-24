@@ -5,7 +5,7 @@ public class MonsterWeapon : MonoBehaviour {
 
 	// Use this for initialization
 	public GameObject monster;
-	public int damage = 0;
+	public int damage = 10;
 
 	void Start () 
 	{
@@ -21,6 +21,8 @@ public class MonsterWeapon : MonoBehaviour {
 	{
 		if (coll.gameObject.layer == LayerMask.NameToLayer ("Player"))
 		{
+
+
 			CharacterManager CharObject = coll.gameObject.GetComponent<CharacterManager> ();
 
 			if (damage != 0)
