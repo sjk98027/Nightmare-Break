@@ -35,6 +35,8 @@ public class TestMonster : Monster
 
 	void Start()
 	{
+		RunRange = 10;
+		attackRange = 8;
 		MonsterSet ();
 		PlayerSearch ();
 
@@ -148,7 +150,7 @@ public class TestMonster : Monster
 
 	public void earthQuakeEffect()
 	{//애니메이션 이벤트를 사용하여 지진 효과를 추가 한다.
-		GameObject.FindGameObjectWithTag ("Floor").GetComponent<EarthQuake> ().Running = true;
+//		GameObject.FindGameObjectWithTag ("Floor").GetComponent<EarthQuake> ().Running = true;
 
 	}
 
