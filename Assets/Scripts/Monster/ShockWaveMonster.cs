@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
-public class BoomMonster : Monster {
+public class ShockWaveMonster : Monster {
+	public PoolManager poolManager;
 	private float searchRange = 6.0f;
 	private float moveSpeed = 0.5f;
 
@@ -131,7 +131,7 @@ public class BoomMonster : Monster {
 			{
 				animator.SetTrigger ("Death");
 
-//				MonsterArrayEraser(this.gameObject);
+				//				MonsterArrayEraser(this.gameObject);
 				break;
 			}
 		}
@@ -166,7 +166,7 @@ public class BoomMonster : Monster {
 	}
 
 
-public void MonSterPatternUpdateConduct(bool NormalMode){
+	public void MonSterPatternUpdateConduct(bool NormalMode){
 		if (NormalMode) {
 			StartCoroutine (PatternNormalChange ());
 		} else if (!NormalMode) {
@@ -279,7 +279,7 @@ public void MonSterPatternUpdateConduct(bool NormalMode){
 			}
 		}
 		ChasePlayer ();
-    }
+	}
 	public void UpdateDefenceMode(){
 
 		aniState = this.animator.GetCurrentAnimatorStateInfo (0);
@@ -334,8 +334,6 @@ public void MonSterPatternUpdateConduct(bool NormalMode){
 			}
 		}
 	}
-
-
 
 
 
