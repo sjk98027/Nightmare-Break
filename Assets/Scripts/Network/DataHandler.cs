@@ -2,15 +2,23 @@
 using System;
 using UnityEngine;
 
+public enum Result
+{
+    Success = 0,
+    Fail,
+}
+
 public class DataHandler : MonoBehaviour
 {
     NetworkManager networkManager;
     DungeonManager dungeonManager;
+    UIManager uiManager;
+    CharacterStatus characterStatus;
 
     public Queue<DataPacket> receiveMsgs;
 
-    public delegate P2PPacketId P2PRecvNotifier(byte[] data);
-    public delegate ServerPacketId ServerRecvNotifier(byte[] data);
+    public delegate void P2PRecvNotifier(byte[] data);
+    public delegate void ServerRecvNotifier(byte[] data);
     P2PRecvNotifier p2pRecvNotifier;
     ServerRecvNotifier serverRecvNotifier;
     private Dictionary<int, P2PRecvNotifier> p2p_notifier = new Dictionary<int, P2PRecvNotifier>();
@@ -23,6 +31,8 @@ public class DataHandler : MonoBehaviour
         receiveMsgs = receiveQueue;
 
         networkManager = GetComponent<NetworkManager>();
+        uiManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
+        characterStatus = GameObject.FindGameObjectWithTag("CharacterStatus").GetComponent<CharacterStatus>();
 
         SetServerNotifier();
         SetUdpNotifier();
@@ -30,6 +40,14 @@ public class DataHandler : MonoBehaviour
 
     public void SetServerNotifier()
     {
+        server_notifier.Add((int)ServerPacketId.CreateAccountResult, CreateAccountResult);
+        server_notifier.Add((int)ServerPacketId.DeleteAccountResult, DeleteAccountResult);
+        server_notifier.Add((int)ServerPacketId.LoginResult, LoginResult);
+        server_notifier.Add((int)ServerPacketId.CreateCharacterResult, CreateCharacterResult);
+        server_notifier.Add((int)ServerPacketId.DeleteChracterResult, DeleteCharacterResult);
+        server_notifier.Add((int)ServerPacketId.SelectCharacterResult, SelectCharacterResult);
+        server_notifier.Add((int)ServerPacketId.RoomList, RoomList);
+        server_notifier.Add((int)ServerPacketId.LoginResult, LoginResult);
         server_notifier.Add((int)ServerPacketId.Match, Match);
     }
 
@@ -88,45 +106,199 @@ public class DataHandler : MonoBehaviour
             }
         }
     }
+    
+    //Server - 가입 결과
+    public void CreateAccountResult(byte[] data)
+    {
+        Debug.Log("가입 결과 수신");
+        ResultPacket resultPacket = new ResultPacket(data);
+        ResultData resultData = resultPacket.GetData();
+        
+        if(resultData.Result == (byte)Result.Success)
+        {
+            StartCoroutine(uiManager.Dialog(1.0f, "가입 성공"));
+        }
+        else if (resultData.Result == (byte)Result.Fail)
+        {
+            StartCoroutine(uiManager.Dialog(1.0f, "가입 실패"));
+        }
+    }
+
+    //Server - 탈퇴 결과
+    public void DeleteAccountResult(byte[] data)
+    {
+        Debug.Log("탈퇴 결과 수신");
+        ResultPacket resultPacket = new ResultPacket(data);
+        ResultData resultData = resultPacket.GetData();
+
+        if (resultData.Result == (byte)Result.Success)
+        {
+            StartCoroutine(uiManager.Dialog(1.0f, "탈퇴 성공"));
+        }
+        else if (resultData.Result == (byte)Result.Fail)
+        {
+            StartCoroutine(uiManager.Dialog(1.0f, "탈퇴 실패"));
+        }
+    }
+
+    //Server - 로그인 결과
+    public void LoginResult(byte[] data)
+    {
+        Debug.Log("로그인 결과 수신");
+
+        ResultPacket resultPacket = new ResultPacket(data);
+        ResultData resultData = resultPacket.GetData();
+
+        if (resultData.Result == (byte)Result.Success)
+        {
+            StartCoroutine(uiManager.Dialog(1.0f, "로그인 성공"));
+        }
+        else if (resultData.Result == (byte)Result.Fail)
+        {
+            StartCoroutine(uiManager.Dialog(1.0f, "로그인 실패"));
+        }
+    }
+
+    //Server - 캐릭터 생성 결과
+    public void CreateCharacterResult(byte[] data)
+    {
+        Debug.Log("캐릭터 생성 결과 수신");
+        
+        ResultPacket resultPacket = new ResultPacket(data);
+        ResultData resultData = resultPacket.GetData();
+
+        if (resultData.Result == (byte)Result.Success)
+        {
+            StartCoroutine(uiManager.Dialog(1.0f, "캐릭터 생성 성공"));
+        }
+        else if (resultData.Result == (byte)Result.Fail)
+        {
+            StartCoroutine(uiManager.Dialog(1.0f, "캐릭터 생성 실패"));
+        }
+    }
+
+    //Server - 캐릭터 삭제 결과
+    public void DeleteCharacterResult(byte[] data)
+    {
+        Debug.Log("캐릭터 삭제 결과 수신");
+
+        ResultPacket resultPacket = new ResultPacket(data);
+        ResultData resultData = resultPacket.GetData();
+
+        if (resultData.Result == (byte)Result.Success)
+        {
+            StartCoroutine(uiManager.Dialog(1.0f, "캐릭터 삭제 성공"));
+        }
+        else if (resultData.Result == (byte)Result.Fail)
+        {
+            StartCoroutine(uiManager.Dialog(1.0f, "캐릭터 삭제 실패"));
+        }
+    }
+
+    //Server - 캐릭터 선택 결과
+    public void SelectCharacterResult(byte[] data)
+    {
+        Debug.Log("캐릭터 선택 결과 수신");
+
+        ResultPacket resultPacket = new ResultPacket(data);
+        ResultData resultData = resultPacket.GetData();
+
+        if (resultData.Result == (byte)Result.Success)
+        {
+            StartCoroutine(uiManager.Dialog(1.0f, "캐릭터 선택 성공"));
+        }
+        else if (resultData.Result == (byte)Result.Fail)
+        {
+            StartCoroutine(uiManager.Dialog(1.0f, "캐릭터 선택 실패"));
+        }
+    }
+
+    //Server - 방목록 수신
+    public void RoomList(byte[] data)
+    {
+        Debug.Log("방목록 수신");
+        RoomListPacket roomListPacket = new RoomListPacket(data);
+        RoomListData roomListData = roomListPacket.GetData();
+
+        uiManager.WaitUIManager.SetRoom(roomListData);
+    }
+
+    //Server - 캐릭터 정보 수신
+    public void CharacterData(byte[] data)
+    {
+        Debug.Log("캐릭터 정보 수신");
+        CharacterStatusPacket characterStatusPacket = new CharacterStatusPacket(data);
+        CharacterStatusData characterStatusData = characterStatusPacket.GetData();
+
+        characterStatus.SetCharacterStatus(characterStatusData);
+    }
+
+    //Server - 방 생성 결과 수신
+    public void CreateRoomResult(byte[] data)
+    {
+        Debug.Log("방 생성 결과 수신");
+        ResultPacket resultPacket = new ResultPacket(data);
+        ResultData resultData = resultPacket.GetData();
+
+        if (resultData.Result == (byte)Result.Success)
+        {
+            StartCoroutine(uiManager.Dialog(1.0f, "방 생성 성공"));
+        }
+        else if (resultData.Result == (byte)Result.Fail)
+        {
+            StartCoroutine(uiManager.Dialog(1.0f, "방 생성 실패"));
+        }
+    }
+
+    //Server - 방 입장 결과 수신
+    public void EnterRoomResult(byte[] data)
+    {
+        Debug.Log("방 입장 결과 수신");
+        ResultPacket resultPacket = new ResultPacket(data);
+        ResultData resultData = resultPacket.GetData();
+
+        if (resultData.Result == (byte)Result.Success)
+        {
+            StartCoroutine(uiManager.Dialog(1.0f, "방 입장 성공"));
+        }
+        else if (resultData.Result == (byte)Result.Fail)
+        {
+            StartCoroutine(uiManager.Dialog(1.0f, "방 입장 실패"));
+        }
+    }
 
     //Server
-    public ServerPacketId Match(byte[] data)
+    public void Match(byte[] data)
     {
         Debug.Log("매치 완료");
         MatchDataPacket matchDataPacket = new MatchDataPacket(data);
         MatchData matchData = matchDataPacket.GetData();
 
         networkManager.ConnectP2P(matchData.ip);
-
-        return ServerPacketId.None;
     }
 
     //Client
-    public P2PPacketId ConnectionAnswer(byte[] data)
+    public void ConnectionAnswer(byte[] data)
     {
         Debug.Log("연결 확인 답장");
         dungeonManager = GameObject.FindGameObjectWithTag("DungeonManager").GetComponent<DungeonManager>();
         dungeonManager.CreatePlayer(0);
         dTime = DateTime.Now;
         Debug.Log("시간 지정 : " + dTime.ToString("hh:mm:ss"));
-
-        return P2PPacketId.ConnectionAnswer;
     }
 
     //Client
-    public P2PPacketId CreateUnit(byte[] data)
+    public void CreateUnit(byte[] data)
     {
         Debug.Log("유닛 생성");
         CreateUnitPacket createUnitPacket = new CreateUnitPacket(data);
         CreateUnitData createUnitData = createUnitPacket.GetData();
 
         dungeonManager.CreateUnit(createUnitData.ID, new Vector3(createUnitData.PosX, createUnitData.PosY, createUnitData.PosZ));
-
-        return P2PPacketId.None;
     }
 
     //Client
-    public P2PPacketId CharacterPosition(byte[] data)
+    public void CharacterPosition(byte[] data)
     {
         Debug.Log("캐릭터 상태 수신");
 
@@ -145,12 +317,10 @@ public class DataHandler : MonoBehaviour
 
         CharacterManager characterManager = dungeonManager.Players[1].GetComponent<CharacterManager>();
         characterManager.SetPosition(characterPositionData);
-
-        return P2PPacketId.None;
     }
 
     //Client
-    public P2PPacketId CharacterAction(byte[] data)
+    public void CharacterAction(byte[] data)
     {
         Debug.Log("캐릭터 행동 수신");
 
@@ -161,7 +331,5 @@ public class DataHandler : MonoBehaviour
 
         CharacterManager characterManager = dungeonManager.Players[1].GetComponent<CharacterManager>();
         characterManager.CharState(characterActionData.action);
-
-        return P2PPacketId.None;
     }
 }

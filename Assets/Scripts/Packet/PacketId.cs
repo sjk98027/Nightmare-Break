@@ -9,6 +9,8 @@
     CreateCharacter,
     DeleteCharacter,
     SelectCharacter,
+    RequestCharacterStatus;
+    RequestRoomList,
     CreateRoom,
     EnterRoom,
     ExitRoom,
@@ -23,6 +25,7 @@ public enum ServerPacketId
     CreateCharacterResult,
     DeleteChracterResult,
     SelectCharacterResult,
+    RoomList,
     Match,
     CreateRoomResult,
     EnterRoomResult,
