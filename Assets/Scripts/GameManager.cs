@@ -5,11 +5,10 @@ public class GameManager : MonoBehaviour
     DungeonManager dungeonManager;
     NetworkManager networkManager;
     InputManager inputManager;
+    UIManager uiManager;
 
     [SerializeField]
     string ip;
-    [SerializeField]
-    string port;
 
     void Start()
     {
@@ -27,20 +26,18 @@ public class GameManager : MonoBehaviour
         networkManager = (Instantiate(Resources.Load("Manager/NetworkManager")) as GameObject).GetComponent<NetworkManager>();
         networkManager.name = "NetworkManager";
         networkManager.tag = "NetworkManager";
+
+        uiManager = (Instantiate(Resources.Load("Manager/UIManager")) as GameObject).GetComponent<UIManager>();
+        uiManager.name = "UIManager";
+        uiManager.tag = "UIManager";
+
         networkManager.InitializeManager(ip);
-
-        dungeonManager = (Instantiate(Resources.Load("Manager/DungeonManager")) as GameObject).GetComponent<DungeonManager>();
-        dungeonManager.name = "DungeonManager";
-        dungeonManager.tag = "DungeonManager";
-
-        inputManager = (Instantiate(Resources.Load("Manager/InputManager")) as GameObject).GetComponent<InputManager>();
-        inputManager.name = "InputManager";
-        inputManager.tag = "InputManager";
+        uiManager.InitializeManager();
     }
 
     public void OnApplicationQuit()
     {
-        Debug.Log("Game Exit");
+        Debug.Log("게임 종료");
         networkManager.DataSender.GameClose();
     }
 }

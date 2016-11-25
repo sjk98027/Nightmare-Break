@@ -7,7 +7,7 @@
             bool ret = true;
             ret &= Serialize(data.Id);
             ret &= Serialize(".");
-            ret &= Serialize(data.Pw);
+            ret &= Serialize(data.Password);
             return ret;
         }
 
@@ -24,7 +24,7 @@
             ret &= Deserialize(out total, (int)GetDataSize());
 
             string[] str = total.Split('.');
-            if (str.Length < AccountData.accountDataLength)
+            if (str.Length < 2)
             {
                 return false;
             }
@@ -58,22 +58,21 @@
 
 public class AccountData
 {
-    public const int accountDataLength = 2;
     string id;
-    string pw;
+    string password;
 
     public string Id { get { return id; } }
-    public string Pw { get { return pw; } }
+    public string Password { get { return password; } }
 
     public AccountData()
     {
         id = "";
-        pw = "";
+        password = "";
     }
 
-    public AccountData(string newId, string newPw)
+    public AccountData(string newId, string newPassword)
     {
         id = newId;
-        pw = newPw;
+        password = newPassword;
     }
 }

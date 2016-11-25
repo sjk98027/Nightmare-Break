@@ -3,92 +3,319 @@ using System.Collections;
 using UnityEngine.EventSystems;
 
 public class WarriroMonster : Monster {
-	Animator a;
+	private float searchRange = 6.0f;
+	private float moveSpeed = 0.5f;
 
-	private float perceive = 6.0f;
-	private float moveSpeed = 2f;
+	public float currentDisTance;
+	float middleBossToMonsterLimitDistanceMonsterToCenter = 6.0f;
+	private float middleBossToMonsterMinDistance = 1.5f;
+	public AnimatorStateInfo aniState;
 
-	private float currentDisTance;
+	[SerializeField]GameObject middleboss;
 
+
+	public override void HitDamage(int _Damage,GameObject attacker)
+	{
+		IsHited = true;
+		currentLife -= _Damage;
+		if (currentLife > 0) {
+			for (int i = 0; i < player.Length; i++) {
+				if (player [i] == attacker) {
+					playerToMonsterDamage [i] += _Damage;
+					targetPlayer = player [i];
+				}
+			}
+			Pattern (StatePosition.TakeDamage);
+		}
+		if (currentLife <= 0) {
+			IsAlive = false;
+			HittedBox.enabled = false;
+			monsterState = StatePosition.Death;
+			Pattern (monsterState);
+		}
+	}
 	private Vector3 movePoint;
-	private Vector3 idlePoint = Vector3.forward;
+	private Vector3 idlePoint = new Vector3(0,0,0);
 
-
-
-	private Vector3 attackPoint = new Vector3 (1, 0, 0);
+	private Vector3 boomPoint = new Vector3(100,100,100);
 
 	public enum StatePosition
 	{
 		Idle=1,
 		Run,
 		Attack,
+		TakeDamage,
 		Death
 	};
 
+	public StatePosition monsterState;
+
+	[SerializeField]public Vector3[] pointVector;
+	[SerializeField]public Vector3 transitionVector;	
+	public Vector3[] PointVector{
+		get {return pointVector; }
+		set{pointVector = value; }
+	}
+
+	public void pointVectorArrayGetting(Vector3[] _v3){
+		pointVector = new Vector3[_v3.Length];
+		for (int i=0; i < _v3.Length; i++) {
+			pointVector [i] = _v3 [i];
+		}
+		StartCoroutine (pointVectorchange ());
+	}
+
+	public IEnumerator pointVectorchange()
+	{
+		while (true)
+		{
+			for (int i = 0; i < pointVector.Length; i++)
+			{
+				if (i > 0 && i < pointVector.Length - 1)
+				{
+					transitionVector = pointVector[i];
+					pointVector[i] = pointVector[i + 1];
+					pointVector[i + 1] = transitionVector;
+				}
+
+				if (i == pointVector.Length - 1)
+				{
+					transitionVector = pointVector[i];
+					pointVector[i] = pointVector[0];
+					pointVector[0] = transitionVector;
+				}
+			}
+			yield return new WaitForSeconds(0.5f);
+		}
+	}
+
 
 	//animation Set; move;
-	public void Pattern(StatePosition state){
-		switch(state){
-		case StatePosition.Idle: 
-			{this.transform.Translate (idlePoint, 0);break;}
+	public void Pattern(StatePosition state)
+	{
+		switch (state)
+		{
+		case StatePosition.Idle:
+			{
+				this.transform.Translate(idlePoint * Time.deltaTime, 0);
+				animator.SetInteger("State", 0);
+				break;
+			}
+		
 		case StatePosition.Attack:
-			{this.transform.Translate (attackPoint, 0);break;}
+			{
+				AttackProcess(isAttack);
+				break;
+			}
 		case StatePosition.Run:
 			{
-				this.transform.Translate (movePoint*moveSpeed*Time.deltaTime, 0);
+				AnimatorReset();
+
+				animator.SetInteger("State", 2);
+				//searchRange = 10;
+				break;
+			}
+		case StatePosition.TakeDamage:
+			{
+				animator.SetTrigger ("TakeDamage");
 				break;
 			}
 		case StatePosition.Death:
-			{this.gameObject.SetActive (false);break;}
+			{
+				animator.SetTrigger ("Death");
+				//MonsterArrayEraser(this.gameObject);
+				break;
+			}
 		}
-
 	}
 
 
+	public void AttackProcess(bool isAttack){
+		if (isAttack) {
 
-	void Start(){
-		//StartCoroutine(CoChasePlayer());
+			if(animator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Walk")){
+				animator.SetInteger ("State", 0);
+			}
+			if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Base Layer.Idle")) {
+				animator.SetInteger ("State", 3);
+			}
+			if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Base Layer.Attak2")) {
+				moveAble = false;
+			}
+		}
 	}
-	//chaseplayer= method; cochaseplayer = coroutine;
+
+	public void middleBossPositionGetting(Vector3 _Position){
+		//boomObjectPosition = _Position;
+	}
 
 
-	public void UpdateConduct(){
-		if (IsAlive) {
-			currentDisTance = Vector3.Distance (targetPlayer.transform.position, this.gameObject.transform.position);
-			checkDirection = targetPlayer.transform.position - this.gameObject.transform.position;
+	public void MonSterPatternUpdateConduct(bool NormalMode){
+		if (NormalMode) {
+			StartCoroutine (PatternNormalChange ());
+		} else if (!NormalMode) {
+			StartCoroutine (PatternDefenceChange ());
+		}
+	}
 
-			//if this object get Attackmotion pattern(stateposition.boom -> attack), and this monsterlife is 20%, boomPattern start;
-			if (currentDisTance <= perceive) {
-				movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
-
-				if (currentDisTance >= perceive * 0.2f) {
-					Pattern (StatePosition.Run);
+	public IEnumerator PatternNormalChange(){
+		while(IsAlive){
+			if (targetPlayer != null) {	
+				currentDisTance = Vector3.Distance (targetPlayer.transform.position, this.gameObject.transform.position);
+				checkDirection = targetPlayer.transform.position - this.gameObject.transform.position;
+				if (currentDisTance > searchRange) {
+					monsterState = StatePosition.Idle;
+					Pattern (monsterState);
 				}
-				if (currentDisTance < perceive * 0.2f) {
-					{Pattern (StatePosition.Attack);}	
+				//if this object get Attackmotion pattern(stateposition.boom -> attack), and this monsterlife is 20%, boomPattern start;
+				else if (currentDisTance <= searchRange) {
+					movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
+					if (currentDisTance > searchRange * 0.2f) {
+						moveAble = true;
+						isAttack = false;
+						monsterState = StatePosition.Run;
+						Pattern (monsterState);
+					}
+					if (currentDisTance <= searchRange * 0.3f) {
+						if (!isAttack) {
+							isAttack = true;
+							moveAble = false;
+						}
+						if (currentLife > maxLife * 0.3f) {
+							monsterState = StatePosition.Attack;
+							Pattern (monsterState);
+							yield return new WaitForSeconds (0.5f);
+						} else if (currentLife < maxLife * 0.3) {
+							if (Random.Range (0, 4) <= 2) {
+								monsterState = StatePosition.Attack;
+								Pattern (monsterState);
+								yield return new WaitForSeconds (0.5f);
+							} else if(Random.Range (0, 4) > 2)
+								//
+							yield return new WaitForSeconds (4f);
+						}
+					}
 				}
 			}
-
-
+			yield return new WaitForSeconds(0.2f);
 		}
-		if (!IsAlive) {
-			Pattern (StatePosition.Death);
+	}
+	public IEnumerator PatternDefenceChange(){
+		while(IsAlive){
+			if (!IsHited) {
+				transform.Translate (transitionVector * moveSpeed * 0.5f * Time.deltaTime);
+			}
+			if (IsHited) {
+
+				if (checkDirection.z > 0) {
+					LookAtPattern (StateDirecion.right);
+				}
+				if (checkDirection.z <= 0) {
+					LookAtPattern (StateDirecion.left);
+				}
+
+				currentDisTance = Vector3.Distance(targetPlayer.transform.position, this.gameObject.transform.position);
+				checkDirection = targetPlayer.transform.position - this.gameObject.transform.position;
+
+
+
+				if (currentDisTance < middleBossToMonsterLimitDistanceMonsterToCenter*1.5f) {
+					movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
+					transform.Translate(movePoint.normalized * moveSpeed * Time.deltaTime, 0);
+					if (currentDisTance >= searchRange * 0.2f)
+					{
+						if (moveAble) {
+							Pattern (StatePosition.Run);
+							Debug.Log ("Run");
+						}
+					}
+					if (currentDisTance < searchRange * 0.2f)
+					{
+						attackCycle += Time.deltaTime;
+						if (attackCycle > 5) {
+							attackCycle = 0;
+							if (!isAttack) {
+								isAttack = true;
+								Pattern (StatePosition.Attack);
+							}
+						}
+					}
+				}
+				if (currentDisTance >= middleBossToMonsterLimitDistanceMonsterToCenter*1.5f) {
+					LookAtPattern (StateDirecion.right);
+					IsHited = false;
+					targetPlayer = null;
+					//transform.Translate (boomObjectPosition*Time.deltaTime);
+				}
+			}
+		}
+		yield return new WaitForSeconds (0.2f);
+	}
+
+
+	public void UpdateNormalMode()
+	{
+		aniState = this.animator.GetCurrentAnimatorStateInfo (0);
+
+		if (aniState.IsName ("Walk")) 
+		{
+			if (moveAble) 
+			{
+				this.transform.Translate (movePoint * moveSpeed * Time.deltaTime, 0);
+			}
+		}
+		ChasePlayer ();
+	}
+	public void UpdateDefenceMode(){
+		if (!IsHited) {
+			transform.Translate (transitionVector * moveSpeed * 0.5f * Time.deltaTime);
+		}
+		if (IsHited) {
+
+			if (checkDirection.z > 0) {
+				LookAtPattern (StateDirecion.right);
+			}
+			if (checkDirection.z <= 0) {
+				LookAtPattern (StateDirecion.left);
+			}
+
+			currentDisTance = Vector3.Distance(targetPlayer.transform.position, this.gameObject.transform.position);
+			checkDirection = targetPlayer.transform.position - this.gameObject.transform.position;
+
+
+
+			if (currentDisTance < middleBossToMonsterLimitDistanceMonsterToCenter*1.5f) {
+				movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
+				transform.Translate(movePoint.normalized * moveSpeed * Time.deltaTime, 0);
+				if (currentDisTance >= searchRange * 0.2f)
+				{
+					if (moveAble) {
+						Pattern (StatePosition.Run);
+						Debug.Log ("Run");
+					}
+				}
+				if (currentDisTance < searchRange * 0.2f)
+				{
+					attackCycle += Time.deltaTime;
+					if (attackCycle > 5) {
+						attackCycle = 0;
+						if (!isAttack) {
+							isAttack = true;
+							Pattern (StatePosition.Attack);
+						}
+						//					}
+					}
+				}
+			}
+			if (currentDisTance >= middleBossToMonsterLimitDistanceMonsterToCenter*1.5f) {
+				LookAtPattern (StateDirecion.right);
+				IsHited = false;
+				targetPlayer = null;
+				//transform.Translate (boomObjectPosition*Time.deltaTime);
+			}
 		}
 	}
 
-	void HitedChasePlayer(){
-//		if (IsHited) {
-//			changeTargetTime += Time.deltaTime;
-//			if (changeTargetTime < 5) {
-//
-//			}
-//			if (changeTargetTime >= 5) {
-//				changeTargetTime = 0;
-//
-//				StartCoroutine(CoChasePlayer());
-//			}
-//		}
-	}
 
 
 

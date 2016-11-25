@@ -62,14 +62,48 @@ public class DataSender : MonoBehaviour
         AccountData accountData = new AccountData(id, pw);
         AccountPacket accountDataPacket = new AccountPacket(accountData);
         accountDataPacket.SetPacketId((int)ClientPacketId.CreateAccount);
-        
-        byte[] packet = CreatePacket(accountDataPacket);
+
+        DataPacket packet = new DataPacket(CreatePacket(accountDataPacket), null);
+        sendMsgs.Enqueue(packet);
     }
 
     //계정 탈퇴 - Tcp
     public void DeleteAccount(string id, string pw)
     {
+        Debug.Log("탈퇴 요청");
 
+        AccountData accountData = new AccountData(id, pw);
+        AccountPacket accountDataPacket = new AccountPacket(accountData);
+        accountDataPacket.SetPacketId((int)ClientPacketId.DeleteAccount);
+        
+        DataPacket packet = new DataPacket(CreatePacket(accountDataPacket), null);
+        sendMsgs.Enqueue(packet);
+    }
+
+    //로그인 - Tcp
+    public void Login(string id, string pw)
+    {
+        Debug.Log("로그인");
+
+        AccountData accountData = new AccountData(id, pw);
+        AccountPacket accountDataPacket = new AccountPacket(accountData);
+        accountDataPacket.SetPacketId((int)ClientPacketId.Login);
+
+        DataPacket packet = new DataPacket(CreatePacket(accountDataPacket), null);
+        sendMsgs.Enqueue(packet);
+    }
+
+    //로그아웃 - Tcp
+    public void Logout()
+    {
+        Debug.Log("로그아웃");
+
+        ResultData resultData = new ResultData();
+        ResultPacket resultPacket = new ResultPacket(resultData);
+        resultPacket.SetPacketId((int)ClientPacketId.Logout);
+
+        DataPacket packet = new DataPacket(CreatePacket(resultPacket), null);
+        sendMsgs.Enqueue(packet);
     }
 
     //게임 종료 - Tcp
@@ -78,7 +112,7 @@ public class DataSender : MonoBehaviour
         Debug.Log("게임 종료");
 
         ResultData resultData = new ResultData();
-        ResultDataPacket resultDataPacket = new ResultDataPacket(resultData);
+        ResultPacket resultDataPacket = new ResultPacket(resultData);
         resultDataPacket.SetPacketId((int)ClientPacketId.GameClose);
 
         byte[] msg = CreatePacket(resultDataPacket);
@@ -87,7 +121,14 @@ public class DataSender : MonoBehaviour
         Debug.Log("메시지 보냄 (출처) : " + msg[2]);
         Debug.Log("메시지 보냄 (타입) : " + msg[3]);
 
-        tcpSock.Send(msg, 0, msg.Length, SocketFlags.None);
+        try
+        {
+            tcpSock.Send(msg, 0, msg.Length, SocketFlags.None);
+        }
+        catch
+        {
+            Debug.Log("GameClose.Send 에러");
+        }        
 
         try
         {
@@ -100,12 +141,106 @@ public class DataSender : MonoBehaviour
         }        
     }
 
+    //캐릭터 생성 - Tcp
+    public void CreateCharacter(int gender, int hClass, string name)
+    {
+        Debug.Log("캐릭터 생성");
+        CreateCharacterData createCharacterData = new CreateCharacterData((byte)gender, (byte)hClass, name);
+        CreateCharacterPacket createCharacterPacket = new CreateCharacterPacket(createCharacterData);
+        createCharacterPacket.SetPacketId((int)ClientPacketId.CreateCharacter);
+
+        DataPacket packet = new DataPacket(CreatePacket(createCharacterPacket), null);
+
+        sendMsgs.Enqueue(packet);
+    }
+
+    //캐릭터 삭제 - Tcp
+    public void DeleteCharacter(int index)
+    {
+        Debug.Log("캐릭터 삭제");
+        DeleteCharacterData deleteCharacterData = new DeleteCharacterData((byte)index);
+        DeleteCharacterPacket deleteCharacterPacket = new DeleteCharacterPacket(deleteCharacterData);
+        deleteCharacterPacket.SetPacketId((int)ClientPacketId.DeleteCharacter);
+
+        DataPacket packet = new DataPacket(CreatePacket(deleteCharacterPacket), null);
+
+        sendMsgs.Enqueue(packet);
+    }
+
+    //캐릭터 선택 - Tcp
+    public void SelectCharacter(int index)
+    {
+        Debug.Log("캐릭터 선택");
+        SelectCharacterData selectCharacterData = new SelectCharacterData((byte)index);
+        SelectCharacterPacket selectCharacterPacket = new SelectCharacterPacket(selectCharacterData);
+        selectCharacterPacket.SetPacketId((int)ClientPacketId.SelectCharacter);
+
+        DataPacket packet = new DataPacket(CreatePacket(selectCharacterPacket), null);
+
+        sendMsgs.Enqueue(packet);
+    }
+
+    //캐릭터 정보 요청 - Tcp
+    public void RequestCharacterStatus()
+    {
+        Debug.Log("캐릭터 정보 요청");
+        ResultData resultData = new ResultData();
+        ResultPacket resultPacket = new ResultPacket(resultData);
+        resultPacket.SetPacketId((int)ClientPacketId.RequestCharacterStatus);
+
+        DataPacket packet = new DataPacket(CreatePacket(resultPacket), null);
+
+        sendMsgs.Enqueue(packet);
+    }
+
+    //방 목록 요청 - Tcp
+    public void RequestRoomList()
+    {
+        Debug.Log("방 목록 요청");
+        ResultData resultData = new ResultData();
+        ResultPacket resultPacket = new ResultPacket(resultData);
+        resultPacket.SetPacketId((int)ClientPacketId.RequestRoomList);
+
+        DataPacket packet = new DataPacket(CreatePacket(resultPacket), null);
+
+        sendMsgs.Enqueue(packet);
+    }
+
+    //스킬 투자 - Tcp
+    public void SkillUp(int index)
+    {
+        Debug.Log("스킬 투자");
+        SkillUpData skillUpData = new SkillUpData(index);
+        SkillUpPacket skillUpPacket = new SkillUpPacket(skillUpData);
+        skillUpPacket.SetPacketId((int)ClientPacketId.RequestRoomList);
+
+        DataPacket packet = new DataPacket(CreatePacket(skillUpPacket), null);
+
+        sendMsgs.Enqueue(packet);
+    }
+
+    //장비 강화 - Tcp
+    public void EquipUpgrade(int index)
+    {
+        Debug.Log("장비 강화");
+        EquipUpgradeData equipUpgradeData = new EquipUpgradeData(index);
+        EquipUpgradePacket equipUpgradePacket = new EquipUpgradePacket(equipUpgradeData);
+        equipUpgradePacket.SetPacketId((int)ClientPacketId.EquipUpgrade);
+
+        DataPacket packet = new DataPacket(CreatePacket(equipUpgradePacket), null);
+
+        sendMsgs.Enqueue(packet);
+    }
+
+    //
+
+
     //연결 확인 - Udp
     public void ConnectionCheck(List<EndPoint> newEndPoint)
     {
         Debug.Log("연결 체크");
         ResultData resultData = new ResultData(new byte());
-        ResultDataPacket resultDataPacket = new ResultDataPacket(resultData);
+        ResultPacket resultDataPacket = new ResultPacket(resultData);
         resultDataPacket.SetPacketId((int)P2PPacketId.ConnectionCheck);
 
         DataPacket packet = new DataPacket(CreatePacket(resultDataPacket), null);

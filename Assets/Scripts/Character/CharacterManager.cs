@@ -5,8 +5,13 @@ using System;
 
 public class CharacterManager : MonoBehaviour
 {
-		
-	public enum CharacterState
+    public enum Gender
+    {
+        Male = 0,
+        FeMale = 1,
+    }
+
+    public enum CharacterState
 	{
 		Idle = 0,
 		Run,

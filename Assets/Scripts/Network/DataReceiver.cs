@@ -52,9 +52,7 @@ public class DataReceiver : MonoBehaviour
             tcpSock.Close();
             return;
         }
-
-        Debug.Log("받은 메시지 길이 : " + asyncData.msgSize);
-
+        
         if (asyncData.msgSize >= NetworkManager.packetLength)
         {
             try

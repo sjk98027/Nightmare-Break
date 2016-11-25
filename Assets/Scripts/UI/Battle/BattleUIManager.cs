@@ -2,31 +2,16 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class BattleUIManager : MonoBehaviour {
+public class BattleUIManager {
 
-    [SerializeField]
     public Image hpBar;
-    [SerializeField]
     public Image mpBar;
-    [SerializeField]
     private Image potionUI;
     private const float checkTime = 0.1f;
-    [SerializeField]
     private Image[] skillUI; // 0 - SKill1 // 1 - SKill2 // 2 - Skill3 // 3 - Skill4 //
+    public Image[] SkillUI{ get{ return skillUI; }}
 
-    public Image[] SkillUI
-    {
-        get
-        {
-            return this.skillUI;
-        }
-    }
-
-    void Start()
-    {
-        SetUIObject();
-    }
-
+    #region 스킬쿨타임 제어 코루틴
     public IEnumerator SkillCoolTimeUI(int skillNum, float coolTime)
     {
         skillUI[skillNum].color += new Color(0, 0, 0, 1);
@@ -45,7 +30,9 @@ public class BattleUIManager : MonoBehaviour {
 
         yield break;
     }
+    #endregion
 
+    #region 물약쿨타임제어
     public IEnumerator PotionCoolTimeUI()
     {
         potionUI.color += new Color(0, 0, 0, 1);
@@ -62,6 +49,7 @@ public class BattleUIManager : MonoBehaviour {
         potionUI.color -= new Color(0, 0, 0, 0);
         yield break;
     }
+    #endregion
 
     void hpBarCalculation(int maxHp, int currentHP)
     {
@@ -73,7 +61,7 @@ public class BattleUIManager : MonoBehaviour {
         mpBar.fillAmount = maxMp / currentMP;
     }
 
-    void SetUIObject()
+    public void SetUIObject()
     {
         hpBar = GameObject.Find("HPBar").GetComponent<Image>();
         mpBar = GameObject.Find("MPBar").GetComponent<Image>();
@@ -83,7 +71,6 @@ public class BattleUIManager : MonoBehaviour {
             skillUI[i] = GameObject.Find("Skill" +(i+1)+ "_CoolTime").GetComponent<Image>();
         }
         //  Debug.Log(skillUI[i]);
-       
 
     }
     

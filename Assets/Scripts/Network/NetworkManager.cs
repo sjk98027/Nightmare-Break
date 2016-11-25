@@ -24,11 +24,9 @@ public class NetworkManager : MonoBehaviour
 
     //테스트 중에서는 하나의 컴퓨터에서 진행하므로 다른 ip 대신에 다른 port를 이용한다
     public const int mainServerPortNumber = 8800;
-    public const int client1PortNumber = 9003;
-    public const int client2PortNumber = 9001;
+    public const int clientPortNumber = 9000;
     public IPEndPoint mainServer;
-    public IPEndPoint client1;
-    public IPEndPoint client2;
+    public IPEndPoint client;
 
     //udp Socket이 연결할 SocketList
     List<EndPoint> clients;
@@ -51,15 +49,14 @@ public class NetworkManager : MonoBehaviour
     public void InitializeManager(string ip)
     {
         mainServer = new IPEndPoint(IPAddress.Parse(ip), mainServerPortNumber);
-        client1 = new IPEndPoint(IPAddress.Parse(ip), client1PortNumber);
-        client2 = new IPEndPoint(IPAddress.Parse("192.168.94.60"), client2PortNumber);
+        client = new IPEndPoint(IPAddress.Parse(ip), clientPortNumber);
 
         receiveMsgs = new Queue<DataPacket>();
         sendMsgs = new Queue<DataPacket>();
 
         serverSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         clientSock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-        clientSock.Bind(client1);
+        clientSock.Bind(client);
 
         ConnectServer();
 
@@ -101,7 +98,7 @@ public class NetworkManager : MonoBehaviour
 
                 Debug.Log(n_ip + "추가");
 
-                clients.Add(new IPEndPoint(IPAddress.Parse(n_ip), client2PortNumber));
+                clients.Add(new IPEndPoint(IPAddress.Parse(n_ip), clientPortNumber));
             }
         }
 
