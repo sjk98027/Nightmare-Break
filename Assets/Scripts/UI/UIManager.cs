@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class UIManager : MonoBehaviour
+public class UIManager : MonoBehaviour, IPointerEnterHandler
 {
     LoginUIManager loginUIManager;
     WaitUIManager waitUIManager;
@@ -51,16 +52,15 @@ public class UIManager : MonoBehaviour
         dialogPanel.SetActive(false);
     }
 
-    void OnMouseOver()
-    {
+	public void OnPointerEnter (PointerEventData eventData)
+	{
+		
+	}
 
-
-    }
-
-    void OnMouseExit()
-    {
-
-    }
+	public void MouseOverEnter()
+	{
+		print ("OverIn");
+	}
 }
 
     
