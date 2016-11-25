@@ -227,7 +227,7 @@ public class CharacterManager : MonoBehaviour
     {
         if (uiManager.BattleUIManager.SkillUI[0].fillAmount == 1)
         {
-            StartCoroutine(uiManager.BattleUIManager.SkillCoolTimeUI(0, charStatus.SkillSet.SkillCoolTime[0]));
+           StartCoroutine(uiManager.BattleUIManager.SkillCoolTimeUI(0, SkillStorage.instance.SetSkill.GetSkill("WarriorA1_L1").SkillCoolTime));
             if (state == CharacterState.Run || state == CharacterState.Idle || state == CharacterState.Skill1)
             {
                 state = CharacterState.Skill1;
@@ -241,7 +241,7 @@ public class CharacterManager : MonoBehaviour
     {
         if (uiManager.BattleUIManager.SkillUI[1].fillAmount == 1)
         {
-            StartCoroutine(uiManager.BattleUIManager.SkillCoolTimeUI(1, charStatus.SkillSet.SkillCoolTime[1]));
+           StartCoroutine(uiManager.BattleUIManager.SkillCoolTimeUI(1, SkillStorage.instance.SetSkill.GetSkill("WarriorA2_L1").SkillCoolTime));
             if (state != CharacterState.Jump && state != CharacterState.Skill2 && state != CharacterState.Skill1 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
             {
                 CharState((int)CharacterState.Skill2);
@@ -253,7 +253,7 @@ public class CharacterManager : MonoBehaviour
     {
         if (uiManager.BattleUIManager.SkillUI[2].fillAmount == 1)
         {
-            StartCoroutine(uiManager.BattleUIManager.SkillCoolTimeUI(2, charStatus.SkillSet.SkillCoolTime[2]));
+            StartCoroutine(uiManager.BattleUIManager.SkillCoolTimeUI(2, SkillStorage.instance.SetSkill.GetSkill("WarriorA3_L1").SkillCoolTime));
             if (state != CharacterState.Jump && state != CharacterState.Skill3 && state != CharacterState.Skill2 && state != CharacterState.Skill1 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
             {
                 CharState((int)CharacterState.Skill3);
@@ -265,7 +265,7 @@ public class CharacterManager : MonoBehaviour
     {
         if (uiManager.BattleUIManager.SkillUI[3].fillAmount == 1)
         {
-            StartCoroutine(uiManager.BattleUIManager.SkillCoolTimeUI(3, charStatus.SkillSet.SkillCoolTime[3]));
+           StartCoroutine(uiManager.BattleUIManager.SkillCoolTimeUI(3, SkillStorage.instance.SetSkill.GetSkill("WarriorA3_L1").SkillCoolTime));
             if (state != CharacterState.Jump && state != CharacterState.Skill1 && state != CharacterState.Skill2 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
             {
                 //giganticSwordCastSword.SetActive(true);
