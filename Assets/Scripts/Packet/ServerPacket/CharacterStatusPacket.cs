@@ -20,6 +20,7 @@ public class CharacterStatusPacket : Packet<CharacterStatusData>
             ret &= Serialize(data.MpRegeneration);
             ret &= Serialize(data.Attack);
             ret &= Serialize(data.Defense);
+            ret &= Serialize(data.SkillPoint);
             ret &= Serialize(data.DreamStone);
 
             for (int i = 0; i < CharacterStatus.skillNum; i++)
@@ -56,6 +57,7 @@ public class CharacterStatusPacket : Packet<CharacterStatusData>
             byte mpRegeneration = 0;
             byte attack = 0;
             byte defense = 0;
+            byte skillPoint = 0;
             byte dreamStone = 0;
             byte[] skillLevel = new byte[CharacterStatus.skillNum];
             byte[] equipLevel = new byte[CharacterStatus.equipNum];
@@ -72,6 +74,7 @@ public class CharacterStatusPacket : Packet<CharacterStatusData>
             ret &= Deserialize(ref mpRegeneration);
             ret &= Deserialize(ref attack);
             ret &= Deserialize(ref defense);
+            ret &= Deserialize(ref skillPoint);
             ret &= Deserialize(ref dreamStone);
 
             for (int i = 0; i < CharacterStatus.skillNum; i++)
@@ -84,7 +87,8 @@ public class CharacterStatusPacket : Packet<CharacterStatusData>
                 ret &= Deserialize(ref equipLevel[i]);
             }
 
-            element = new CharacterStatusData(name, level, gender, hClass, exp, healthPoint, magicPoint, hpRegeneration, mpRegeneration, attack, defense, dreamStone, skillLevel, equipLevel);
+            element = new CharacterStatusData(name, level, gender, hClass, exp, healthPoint, magicPoint, hpRegeneration,
+                mpRegeneration, attack, defense, skillPoint, dreamStone, skillLevel, equipLevel);
 
             return ret;
         }
@@ -125,6 +129,7 @@ public class CharacterStatusData
     byte mpRegeneration;
     byte attack;
     byte defense;
+    byte skillPoint;
     byte dreamStone;
     byte[] skillLevel;
     byte[] equipLevel;
@@ -141,6 +146,7 @@ public class CharacterStatusData
     public byte MpRegeneration { get { return mpRegeneration; } }
     public byte Attack { get { return attack; } }
     public byte Defense { get { return defense; } }
+    public byte SkillPoint { get { return skillPoint; } }
     public byte DreamStone { get { return dreamStone; } }
     public byte[] SkillLevel { get { return skillLevel; } }
     public byte[] EquipLevel { get { return equipLevel; } }
@@ -157,13 +163,14 @@ public class CharacterStatusData
         mpRegeneration = 0;
         attack = 0;
         defense = 0;
+        skillPoint = 0;
         dreamStone = 0;
         skillLevel = new byte[CharacterStatus.skillNum];
         equipLevel = new byte[CharacterStatus.equipNum];
     }
 
     public CharacterStatusData(string newName, byte newLevel, byte newGender, byte newClass, byte newExp, byte newHealthPoint, byte newMagicPoint,
-        byte newHpRegeneration, byte newMpRegeneration, byte newAttack, byte newDefense, byte newDreamStone, byte[] newSkillLevel, byte[] newEquipLevel)
+        byte newHpRegeneration, byte newMpRegeneration, byte newAttack, byte newDefense, byte newSkillPoint, byte newDreamStone, byte[] newSkillLevel, byte[] newEquipLevel)
     {
         name = newName;
         level = newLevel;
@@ -176,6 +183,7 @@ public class CharacterStatusData
         mpRegeneration = newMpRegeneration;
         attack = newAttack;
         defense = newDefense;
+        skillPoint = newSkillPoint;
         dreamStone = newDreamStone;
         skillLevel = newSkillLevel;
         equipLevel = newEquipLevel;

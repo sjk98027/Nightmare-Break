@@ -7,6 +7,23 @@ using System.Net.Sockets;
 
 public class DataSender : MonoBehaviour
 {
+    private static DataSender instance;
+
+    public static DataSender Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                return new DataSender();
+            }
+            else
+            {
+                return instance;
+            }
+        }
+    }
+
     NetworkManager networkManager;
     CharacterManager characterManager;
 
@@ -232,8 +249,71 @@ public class DataSender : MonoBehaviour
         sendMsgs.Enqueue(packet);
     }
 
-    //
+    //방 생성 - Tcp
+    public void CreateRoom(string roomName, int dungeonId, int dungeonLevel)
+    {
+        Debug.Log("방 생성");
+        CreateRoomData createRoomData = new CreateRoomData(roomName, dungeonId, dungeonLevel);
+        CreateRoomPacket createRoomPacket = new CreateRoomPacket(createRoomData);
+        createRoomPacket.SetPacketId((int)ClientPacketId.CreateRoom);
 
+        DataPacket packet = new DataPacket(CreatePacket(createRoomPacket), null);
+
+        sendMsgs.Enqueue(packet);
+    }
+
+    //방 입장 - Tcp
+    public void EnterRoom(int roomNum)
+    {
+        Debug.Log("방 입장");
+        EnterRoomData enterRoomData = new EnterRoomData(roomNum);
+        EnterRoomPacket enterRoomPacket = new EnterRoomPacket(enterRoomData);
+        enterRoomPacket.SetPacketId((int)ClientPacketId.EnterRoom);
+
+        DataPacket packet = new DataPacket(CreatePacket(enterRoomPacket), null);
+
+        sendMsgs.Enqueue(packet);
+    }
+
+    //방 퇴장 - Tcp
+    public void ExitRoom(int roomNum)
+    {
+        Debug.Log("방 퇴장");
+        ExitRoomData exitRoomData = new ExitRoomData(roomNum);
+        ExitRoomPacket exitRoomPacket = new ExitRoomPacket(exitRoomData);
+        exitRoomPacket.SetPacketId((int)ClientPacketId.ExitRoom);
+
+        DataPacket packet = new DataPacket(CreatePacket(exitRoomPacket), null);
+
+        sendMsgs.Enqueue(packet);
+    }
+
+    //게임 시작 - Tcp
+    public void StartGame()
+    {
+        Debug.Log("게임 시작");
+        ResultData resultData = new ResultData();
+        ResultPacket resultPacket = new ResultPacket(resultData);
+        resultPacket.SetPacketId((int)ClientPacketId.StartGame);
+
+        DataPacket packet = new DataPacket(CreatePacket(resultPacket), null);
+
+        sendMsgs.Enqueue(packet);
+    }
+
+    //연결 요청 - Tcp
+    public void RequestConnection()
+    {
+        Debug.Log("UDP 연결 요청");
+        ResultData resultData = new ResultData();
+        ResultPacket resultPacket = new ResultPacket(resultData);
+        resultPacket.SetPacketId((int)ClientPacketId.RequestUDPConnection);
+
+        DataPacket packet = new DataPacket(CreatePacket(resultPacket), null);
+
+        sendMsgs.Enqueue(packet);
+
+    }
 
     //연결 확인 - Udp
     public void ConnectionCheck(List<EndPoint> newEndPoint)

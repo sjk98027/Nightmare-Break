@@ -5,12 +5,6 @@ using System;
 
 public class CharacterManager : MonoBehaviour
 {
-    public enum Gender
-    {
-        Male = 0,
-        FeMale = 1,
-    }
-
     public enum CharacterState
 	{
 		Idle = 0,
@@ -25,11 +19,11 @@ public class CharacterManager : MonoBehaviour
 		HitDamage,
 		Death
 	}
+
 	public Animator animator;
 	public Renderer rend;
 	public AnimatorStateInfo runState;
 	public CharacterStatus charstate;
-	public float skillTime;
 
 	public float[] skillCoolTime;
 
@@ -41,15 +35,12 @@ public class CharacterManager : MonoBehaviour
 	public bool skillAttackState = false;
 	public InputManager inputmanager;
 
-	public GameObject[] enermy;
 	public GameObject wall;
 
 	private int potionCount = 3;
 	public float jumpPower;
 	public bool charAlive = true;
 	public int basicDamage;
-
-	public GameObject[] Enermy {get {return this.enermy;}}
 
 	public Animator Animator { get { return animator; } }
 
@@ -70,20 +61,18 @@ public class CharacterManager : MonoBehaviour
 	void Awake ()
 	{
 		charstate = GameObject.FindGameObjectWithTag ("CharStatus").GetComponent<CharacterStatus>();
-		charstate.SetCharacterStatus ();
+		//charstate.SetCharacterStatus ();
 		basicDamage = Charstate.Attack;
 		uiManager = GameObject.FindWithTag ("UI").GetComponent<UIManager> ();
 		animator = GetComponent<Animator> ();
 		state = CharacterState.Idle;
-		enermy = null;
 		rigdbody = this.GetComponent<Rigidbody>();
 		charDir = true;
 		wall = GameObject.FindGameObjectWithTag ("Wall");
 		JumpMove = false;
-		enermy = GameObject.FindGameObjectsWithTag("Enermy");
 		skillCoolTime = new float[4];
-		CharCoolTime (0);
-	}
+        SetSkillCoolTime(0);
+    }
 
 	void Update ()
 	{
@@ -171,12 +160,12 @@ public class CharacterManager : MonoBehaviour
 					{
 						if (hor == -1.0f || hor == 1.0f)
 						{
-							transform.Translate ((Vector3.forward * ver - Vector3.right * hor) * Time.deltaTime * (charstate.CharSpeed - 3.0f), Space.World);
+							transform.Translate ((Vector3.forward * ver - Vector3.right * hor) * Time.deltaTime * (charstate.MoveSpeed - 3.0f), Space.World);
 
 						}
 						else
 						{
-							transform.Translate ((Vector3.forward * ver - Vector3.right * hor) * Time.deltaTime * (charstate.CharSpeed), Space.World);
+							transform.Translate ((Vector3.forward * ver - Vector3.right * hor) * Time.deltaTime * (charstate.MoveSpeed), Space.World);
 						}
 					}
 				}
@@ -189,7 +178,7 @@ public class CharacterManager : MonoBehaviour
 		}
 		else if (state == CharacterState.Jump && JumpMove)
 		{
-			transform.Translate ((Vector3.forward * ver - Vector3.right * hor) * Time.deltaTime * charstate.CharSpeed, Space.World);
+			transform.Translate ((Vector3.forward * ver - Vector3.right * hor) * Time.deltaTime * charstate.MoveSpeed, Space.World);
 		}
 
 	}
@@ -334,7 +323,7 @@ public class CharacterManager : MonoBehaviour
 	{
 		for (int i = 0; i < potionCount; i++)
 		{
-			charstate.healthPoint += (int)(charstate.healthPoint * 0.3);
+			charstate.DecreaseHealthPoint((int)(charstate.HealthPoint * -0.3));
 			yield return new WaitForSeconds (1f);
 		}
 	}
@@ -411,7 +400,8 @@ public class CharacterManager : MonoBehaviour
 			}
 		}
 	}
-	public void CharCoolTime(int _name)
+
+	public void SetSkillCoolTime(int _name)
 	{		
 		if (_name == 0)
 		{
@@ -420,18 +410,15 @@ public class CharacterManager : MonoBehaviour
 			skillCoolTime [2] = 30;
 			skillCoolTime [3] = 40;
 		}
-
-
 	}
 
-
-	public virtual void HitDamage(int _damage)
+	public virtual void HitDamage(int damage)
 	{
 		if(charAlive)
 		{
 			if (charstate.HealthPoint > 0)
 			{
-				this.charstate.HealthPoint -= _damage;
+				charstate.DecreaseHealthPoint(damage);
 				CharState ((int)CharacterState.HitDamage);
 			}
 			if (charstate.HealthPoint <= 0)
@@ -440,24 +427,6 @@ public class CharacterManager : MonoBehaviour
 				CharState ((int)CharacterState.Death);
 				charAlive= false;
 			}
-		}
-	}
-	//NetWork
-	public CharacterState GetCharacterState (int state)
-	{
-		switch (state)
-		{
-		case 0:
-			return CharacterState.Idle;
-
-		case 1:
-			return CharacterState.Run;
-
-		case 2:
-			return CharacterState.Attack;
-
-		default:
-			return CharacterState.Idle;
 		}
 	}
 

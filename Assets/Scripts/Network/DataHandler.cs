@@ -213,10 +213,10 @@ public class DataHandler : MonoBehaviour
         }
     }
 
-    //Server - 방목록 수신
+    //Server - 방 목록 수신
     public void RoomList(byte[] data)
     {
-        Debug.Log("방목록 수신");
+        Debug.Log("방 목록 수신");
         RoomListPacket roomListPacket = new RoomListPacket(data);
         RoomListData roomListData = roomListPacket.GetData();
 

@@ -1,10 +1,15 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.UI;
 
-public class WaitUIManager : MonoBehaviour {
-
+public class WaitUIManager : MonoBehaviour
+{
     public const int maxRoomNum = 20;
     public const int maxPlayerNum = 4;
+
+    Button createRoomButton;
+    Button enterRoomButton;
+    Button exitRoomButton;
+    Button startGameButton;
 
     Room[] rooms;
 
@@ -14,6 +19,11 @@ public class WaitUIManager : MonoBehaviour {
     {
         rooms = roomListData.Rooms;
     }
+
+    public void OnclickCreateRoomButton(string roomName, int dungeonId, int dungeonLevel)
+    {
+        DataSender.Instance.CreateRoom(roomName, dungeonId, dungeonLevel);
+    }
 }
 public class Room
 {
@@ -21,7 +31,7 @@ public class Room
     int dungeonId;
     int dungeonLevel;
     int[] userClass;
-    CharacterManager.Gender[] userGender;
+    CharacterStatus.Gender[] userGender;
     string[] userName;
     int[] userLevel;
 
@@ -29,7 +39,7 @@ public class Room
     public int DungeonId { get { return dungeonId; } }
     public int DungeonLevel { get { return dungeonLevel; } }
     public string[] UserName { get { return userName; } }
-    public CharacterManager.Gender[] UserGender { get { return userGender; } }
+    public CharacterStatus.Gender[] UserGender { get { return userGender; } }
     public int[] UserClass { get { return userClass; } }
     public int[] UserLevel { get { return userLevel; } }
 
@@ -39,7 +49,7 @@ public class Room
         dungeonId = 0;
         dungeonLevel = 0;
         userName = new string[WaitUIManager.maxPlayerNum];
-        userGender = new CharacterManager.Gender[WaitUIManager.maxPlayerNum];
+        userGender = new CharacterStatus.Gender[WaitUIManager.maxPlayerNum];
         userClass = new int[WaitUIManager.maxPlayerNum];
         userLevel = new int[WaitUIManager.maxPlayerNum];
     }
@@ -54,7 +64,7 @@ public class Room
         for(int i = 0; i< WaitUIManager.maxPlayerNum; i++)
         {
             userName[i] = newUserName[i];
-            userGender[i] = (CharacterManager.Gender)newUserGender[i];
+            userGender[i] = (CharacterStatus.Gender)newUserGender[i];
             userClass[i] = newUserClass[i];
             userLevel[i] = newUserLevel[i];
         }        

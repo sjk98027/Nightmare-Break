@@ -63,6 +63,7 @@ public class NetworkManager : MonoBehaviour
         dataReceiver = GetComponent<DataReceiver>();
         dataHandler = GetComponent<DataHandler>();
         dataSender = GetComponent<DataSender>();
+        dataSender = DataSender.Instance;
 
         dataReceiver.Initialize(receiveMsgs, serverSock);
         dataHandler.Initialize(receiveMsgs, sendMsgs);
