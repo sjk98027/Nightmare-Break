@@ -28,8 +28,6 @@ public class TestMonster : Monster
 	public BigBearBossPatternName BigBearBossState;
 	AnimatorStateInfo stateInfo;
 	bool monsterAttack;
-	bool roarStartBool = false;
-	//public float searchRange;
 	[SerializeField] Image skillInsertImage;
 	public float imageSpeed = 1.0f;
 	public float imageLerpTime;
@@ -43,8 +41,6 @@ public class TestMonster : Monster
 	}
 
 	public insertImageState imageState = insertImageState.Stop;
-//초기값은 stop
-
 
 	void Start ()
 	{
@@ -74,39 +70,22 @@ public class TestMonster : Monster
 
 			if (AttackTime >= 1)
 			{
-				if (secondAttack)
-				{
-					secondAttack = false;
-				}
-				else
-				{
-					secondAttack = true;	
-				}
-
-
 				AttackTime = 0;
 			}
-
-
-
 			if (searchRange < attackRange)
 			{
-
-				if (true)
+				if (!secondAttack)
 				{
-
 					//BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossAttack);
-
 					BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossRoar);
-
 					//애니메이션 이벤트로 효과를 넣었음
-
+					secondAttack = true;
 				}
 				else if (!secondAttack)
 				{
 					BigBearBossPattern ((int)BigBearBossPatternName.BigBearJumpAttack);
 					//애니메이션 이벤트로 효과를 넣었음
-
+					secondAttack = true;
 				}
 			}
 			else if (searchRange > RunRange)
@@ -245,10 +224,7 @@ public class TestMonster : Monster
 		//GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<RedRenderImage> ().enabled = true;
 		imageState = insertImageState.Left; //이미지 상태 값 저장 왼쪽
 		StartCoroutine (LMoveImage ()); //코루틴 실행
-		if (imageState == insertImageState.Stop)
-		{
-			StopCoroutine (LMoveImage ());
-		}
+
 	}
 
 	public void roarEnd ()
@@ -256,53 +232,65 @@ public class TestMonster : Monster
 		//GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<RedRenderImage> ().enabled = false;
 		////이미지를 오른쪽이동하는 코루틴을 실행 시키는 함수 애니메이션 이벤트로 실행
 //		imageState = insertImageState.Right;//이미지 상태 값 저장 오른쪽
-//		StartCoroutine (RMoveImage ());  //코루틴 실행
-//		if (imageState == insertImageState.Stop)
-//		{
-//			StopCoroutine (RMoveImage ());
-//		}
 	}
 		
 	IEnumerator LMoveImage ()
 	{  //이미지를 왼쪽이동시키는 함수
 		while (imageState == insertImageState.Left)
 		{		
-			
+
 			yield return new WaitForSeconds (0.01f);	
-			Debug.Log ("in deb");
+
 
 			float x = skillInsertImage.GetComponent<RectTransform> ().localPosition.x;//현재 x값의 위치를 받아온다.
 			if (x > 103)
 			{
-				skillInsertImage.GetComponent<RectTransform> ().Translate (10 * -imageSpeed, 0, 0);//10씩 왼쪽으로 이동
+				skillInsertImage.GetComponent<RectTransform> ().Translate (15 * -imageSpeed, 0, 0);//10씩 왼쪽으로 이동
 
 			}
 			else
 			{
-				imageLerpTime += 0.1f;
-				Debug.Log (imageLerpTime);
-				imageState = insertImageState.Stop;//x값이 0보다 작을 경우 멈춤
-				skillInsertImage.material.color= new Color(0, 0, 0,1);
+				//	skillInsertImage.enabled = true;
+				imageLerpTime += 0.01f;
+
+				if (imageLerpTime >3)
+				{
+					float ImageAlpha = (4 - imageLerpTime);
+					skillInsertImage.color = new Color (255,255,255, ImageAlpha);
+
+						
+					if (ImageAlpha < 0.3)
+					{
+						skillInsertImage.enabled = false;
+						imageState = insertImageState.Stop;//x값이 0보다 작을 경우 멈춤
+						ImageBackPos ();
+					}
+
+				}
 			}
 		}
 	}
 
-	IEnumerator RMoveImage ()
-	{//위와 반대
-		while (imageState == insertImageState.Right)
-		{		
-			yield return new WaitForSeconds (0.01f);
-			float x = skillInsertImage.GetComponent<RectTransform> ().localPosition.x;
-			if (x < 600)
-			{
-				skillInsertImage.GetComponent<RectTransform> ().Translate (10* imageSpeed, 0, 0);
-			}
-			else
-			{
-				imageState = insertImageState.Stop;
-			}
-		}
+	public void ResetBossImage()
+	{
+		skillInsertImage.GetComponent<RectTransform> ().localPosition = new Vector3 (613, -152 , 0);
+		skillInsertImage.color = new Color (255,255,255, 255);
+		imageState = insertImageState.Stop;
+	}
 
+	public void ImageBackPos()
+	{
+		StopCoroutine (LMoveImage ());
+
+		imageState = insertImageState.Right;
+
+		ResetBossImage ();
+
+
+		if (imageState == insertImageState.Stop)
+		{
+			skillInsertImage.enabled = true;
+		}
 	}
 
 
