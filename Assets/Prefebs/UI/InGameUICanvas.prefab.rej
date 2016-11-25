@@ -1,0 +1,25 @@
+diff a/Assets/Prefebs/UI/InGameUICanvas.prefab b/Assets/Prefebs/UI/InGameUICanvas.prefab	(rejected hunks)
+@@ -489,6 +489,23 @@
+   m_NavMeshLayer: 0
+   m_StaticEditorFlags: 0
+   m_IsActive: 1
++--- !u!1 &1000011887976852
++GameObject:
++  m_ObjectHideFlags: 1
++  m_PrefabParentObject: {fileID: 0}
++  m_PrefabInternal: {fileID: 100100000}
++  serializedVersion: 4
++  m_Component:
++  - 224: {fileID: 224000011665918726}
++  - 222: {fileID: 222000013517668230}
++  - 114: {fileID: 114000011441760072}
++  m_Layer: 5
++  m_Name: shose
++  m_TagString: Untagged
++  m_Icon: {fileID: 0}
++  m_NavMeshLayer: 0
++  m_StaticEditorFlags: 0
++  m_IsActive: 1
+ --- !u!1 &1000011890484840
+ GameObject:
+   m_ObjectHideFlags: 1
