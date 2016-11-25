@@ -153,7 +153,6 @@ public class WarriorManager : CharacterManager
 				{
 					int deFendDamage;
 					deFendDamage =_damage - (charstate.skillLevel [5] * 1);
-					Debug.Log (deFendDamage);
 
 					if (deFendDamage < 0)
 					{
