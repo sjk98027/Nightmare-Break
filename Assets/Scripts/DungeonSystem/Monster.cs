@@ -16,8 +16,6 @@ public class Monster : MonoBehaviour {
 	private Vector3 rightVector3 = new Vector3(0,0,0);
 
 	public BoxCollider HittedBox;
-
-
 	//mode,gateArraynumber,monsterArraynumber
 	protected bool moveAble;
 	public bool MoveAble{
@@ -51,6 +49,12 @@ public class Monster : MonoBehaviour {
 	public float attackRange;
 	public float attackCycle;
 	protected float IdleRandomTime=0;
+
+	[SerializeField]private int baseDamage;
+	public int BaseDamage{
+		get{ return baseDamage;}
+		set{ baseDamage = value;}
+	}
 	//monster Speed variable;
 
 	[SerializeField]private bool isAlive;
@@ -61,7 +65,7 @@ public class Monster : MonoBehaviour {
 	public float[] aggroRank; //playertoMonsterdamage/currentdistancePlayer;
 	public float changeTargetTime=0;
 	 
-
+	public MonsterWeapon attackCollider;
 	[SerializeField]private float[]currentDisTanceArray;
 	protected Vector3 checkDirection; // monster chaseplayer and move variable;
 //	public bool IsAttack{
@@ -92,7 +96,7 @@ public class Monster : MonoBehaviour {
 		playerToMonsterDamage = new float[player.Length];
 	}
 
-	public GameObject attackCollider;
+
 	public void MonsterSet()
 	{
 		isAlive = true;
@@ -103,8 +107,10 @@ public class Monster : MonoBehaviour {
 		maxLife = 100;
 		currentLife = 100;
 		HittedBox = this.gameObject.GetComponent<BoxCollider> ();
-//		attackCollider = GameObject.FindGameObjectWithTag("Finish");
-//		attackCollider.SetActive (false);
+		baseDamage = 10;
+		if (this.name != "Duck") {
+			attackCollider = this.transform.GetComponentInChildren<MonsterWeapon> ();
+		}
 	}
 
 	public void LookAtPattern(StateDirecion state)
@@ -193,28 +199,34 @@ public class Monster : MonoBehaviour {
 		//gameObject = null;
 		this.gameObject.SetActive (false);
 		Debug.Log (this.gameObject);
-		//		section.RemoveMonsterArray ();
+//				section.RemoveMonsterArray ();
 	}
 
-	public void AttackEnd(){
+	public virtual void AttackEnd(){
 		
 		StartCoroutine (LookatChange ());
 		moveAble=true;
 		isAttack = false;
 		animator.SetInteger ("State", 0);
-		attackCollider.SetActive (false);
+		attackCollider.AttackColliderOff ();
 	}
-	public void AttackStart(){
+	public virtual void AttackStart(){
 		moveAble = false;
 		isAttack = true;
 		StopCoroutine (LookatChange ());
 	}
-	public void AnimatorReset(){
+	public virtual void AnimatorReset(){
 		animator.SetInteger ("State", 0);
 	}
-	public void AttackBlitz()
+	public virtual void AttackBlitz()
 	{
-		attackCollider.SetActive (true);
+		if (this.name != "Duck") {
+			attackCollider.AttackColliderOn();
+		}
+		else if (this.name == "Duck") {
+			//Instantiate ();	
+		}
+
 	}
 
 

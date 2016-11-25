@@ -2,29 +2,32 @@
 using System.Collections;
 
 public class MonsterWeapon : MonoBehaviour {
-
-	// Use this for initialization
-	public GameObject monster;
-	public int damage = 10;
+	
+	public Monster monster;
+	public BoxCollider AttackCollider;
+	public int damage;
 
 	void Start () 
 	{
-		monster = this.GetComponent<GameObject> ();
+		monster = this.GetComponentInParent<Monster> ();
+		damage = monster.BaseDamage;
+		AttackCollider = this.GetComponent<BoxCollider> ();
+		AttackColliderOff ();
 	}
 	
-	// Update is called once per frame
-	void Update () 
-	{
 
+	public void AttackColliderOff(){
+		AttackCollider.enabled=false;
 	}
+	public  void AttackColliderOn(){
+		AttackCollider.enabled = true;
+	}
+
 	void OnTriggerEnter(Collider coll)
 	{
 		if (coll.gameObject.layer == LayerMask.NameToLayer ("Player"))
 		{
-
-
 			CharacterManager CharObject = coll.gameObject.GetComponent<CharacterManager> ();
-
 			if (damage != 0)
 			{
 				CharObject.HitDamage (damage);
