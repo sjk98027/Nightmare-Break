@@ -3434,7 +3434,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1000014272446564, guid: 8f98cb3e36980bd40b21966c3a7736e3, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8f98cb3e36980bd40b21966c3a7736e3, type: 2}
@@ -4375,10 +4375,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 1064200842}
   - 114: {fileID: 1064200843}
-  - 114: {fileID: 1064200844}
   m_Layer: 0
   m_Name: UIManager
-  m_TagString: UI
+  m_TagString: UIManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4410,17 +4409,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogPanel: {fileID: 0}
   dialog: {fileID: 0}
---- !u!114 &1064200844
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1064200841}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f84141493fd23884e89cc9d4b1ebf9a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1071868467
 GameObject:
   m_ObjectHideFlags: 0
@@ -5229,22 +5217,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffbc2bf7882c81c49a8dc7ff9890bf0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  charClass: 0
-  characterName: 
-  characterNum: 0
-  demendExp: 0
-  exp: 0
-  maxHealthPoint: 0
-  maxManaPoint: 0
-  healthPoint: 0
-  magicPoint: 0
-  attack: 0
-  defense: 0
-  charSpeed: 0
-  dreamStone: 0
-  skillLevel: 000000000000000000000000000000000000000000000000
-  equipLevel: 00000000000000000000000000000000
-  skillSet: []
 --- !u!4 &1334999812
 Transform:
   m_ObjectHideFlags: 0
@@ -10338,7 +10310,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1915054395
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10423,21 +10395,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   rend: {fileID: 0}
-  charstate: {fileID: 0}
-  skillTime: 0
-  skillCoolTime: []
-  charDir: 0
-  JumpMove: 0
   rigdbody: {fileID: 0}
   charWeapon: {fileID: 0}
+  inputmanager: {fileID: 0}
+  charStatus: {fileID: 0}
+  enermy: []
+  jumpPower: 0
+  charDir: 0
+  JumpMove: 0
   normalAttackState: 0
   skillAttackState: 0
-  inputmanager: {fileID: 0}
-  enermy: []
-  wall: {fileID: 0}
-  jumpPower: 0
   charAlive: 1
-  basicDamage: 0
+  skillTime: 0
   state: 0
   uiManager: {fileID: 0}
 --- !u!1 &1918793663

@@ -12,6 +12,7 @@ public class WaitUIManager : MonoBehaviour
     Button startGameButton;
 
     Room[] rooms;
+    int currentRoomNum;
 
     public Room[] Rooms { get { return rooms; } }
 
@@ -20,9 +21,24 @@ public class WaitUIManager : MonoBehaviour
         rooms = roomListData.Rooms;
     }
 
-    public void OnclickCreateRoomButton(string roomName, int dungeonId, int dungeonLevel)
+    public void OnClickCreateRoomButton(string roomName, int dungeonId, int dungeonLevel)
     {
         DataSender.Instance.CreateRoom(roomName, dungeonId, dungeonLevel);
+    }
+
+    public void OnClickEnterRoomButton(int roomNum)
+    {
+        DataSender.Instance.EnterRoom(roomNum);
+    }
+
+    public void OnClickExitRoomButton()
+    {
+        DataSender.Instance.ExitRoom(currentRoomNum);
+    }
+
+    public void OnClickStartGameButton()
+    {
+        DataSender.Instance.StartGame();
     }
 }
 public class Room

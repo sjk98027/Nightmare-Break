@@ -42,7 +42,7 @@ public class CharacterStatus : MonoBehaviour
     int dreamStone;
     int[] skillLevel;
     int[] equipLevel;
-    public Skill[] skillSet;
+    public Skill skillSet;
 
     public string HName { get { return hName; } }
     public Gender HGender { get { return hGender; } }
@@ -65,11 +65,11 @@ public class CharacterStatus : MonoBehaviour
     public int DreamStone { get { return dreamStone; } }
     public int[] SkillLevel { get { return skillLevel; } }
     public int[] EquipLevel { get { return equipLevel; } }
-    public Skill[] SkillSet { get { return skillSet; } }
+    public Skill SkillSet { get { return skillSet; } }
 
     public CharacterStatus()
     {
-        name = "Hero";
+        hName = "Hero";
         level = 0;
         charClass = 0;
         exp = 0;
@@ -86,7 +86,7 @@ public class CharacterStatus : MonoBehaviour
 
     public void SetCharacterStatus(CharacterStatusData characterStatusData)
     {
-        name = characterStatusData.Name;
+        hName = characterStatusData.Name;
         level = characterStatusData.Level;
         hGender = (Gender)characterStatusData.Gender;
         charClass = (CharClass)characterStatusData.HClass;

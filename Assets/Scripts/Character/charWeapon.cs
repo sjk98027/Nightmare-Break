@@ -5,7 +5,7 @@ public class charWeapon : MonoBehaviour {
 
 	public GameObject character;
 	public CharacterManager charManager;
-	public CharacterStatus charstate;
+	public CharacterStatus charStatus;
 	public int damage= 0;
 	bool normalAttack;
 	bool skillAttack;
@@ -20,7 +20,7 @@ public class charWeapon : MonoBehaviour {
 	{
 		character = GameObject.FindWithTag ("Player");
 		charManager = character.GetComponent<CharacterManager> ();
-		charstate = charManager.charstate;
+        charStatus = charManager.charStatus;
 	}
 	// Update is called once per frame
 	void Update () 
@@ -39,36 +39,35 @@ public class charWeapon : MonoBehaviour {
 			{	
 				if (normalAttack)
 				{
-					damage = charManager.BasicDamage;
+					damage = charStatus.Attack;
 				}
 				else if (skillAttack)
 				{
-					damage = charManager.BasicDamage;
+					damage = charStatus.Attack;
 				}
 
 				if (damage != 0)
 				{
-					if (charstate.charClass == CharacterStatus.CharClass.Warrior)
+					if (charStatus.HClass == CharacterStatus.CharClass.Warrior)
 					{
-						if (charstate.skillLevel [4] < 4)
+						if (charStatus.SkillLevel [4] < 4)
 						{
 							if (normalAttack)
 							{
 								int testPassiveHP;
 
-								testPassiveHP = (int)(damage * charstate.skillLevel [4] * 0.1f);
-								charstate.healthPoint += testPassiveHP;
-							}
-														
+								testPassiveHP = (int)(damage * charStatus.SkillLevel [4] * 0.1f);
+                                charStatus.DecreaseHealthPoint(-testPassiveHP);
+							}														
 						}
-						else if(charstate.skillLevel [4] == 4)
+						else if(charStatus.SkillLevel [4] == 4)
 						{
 							Debug.Log ("in Warrior");
 							int testPassiveHP;
 
-							testPassiveHP = (int)(damage * charstate.skillLevel [4] * 0.1f);
-							charstate.healthPoint += testPassiveHP;
-						}
+							testPassiveHP = (int)(damage * charStatus.SkillLevel [4] * 0.1f);
+                            charStatus.DecreaseHealthPoint(-testPassiveHP);
+                        }
 
 					}
 					monsterDamage.HitDamage (damage, this.gameObject.GetComponentInParent<CharacterManager> ().gameObject);

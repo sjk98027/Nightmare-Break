@@ -66,6 +66,7 @@ public class LoginUIManager
     {
         loginButton.onClick.AddListener(() => OnClickLoginButton());
         createAccountButton.onClick.AddListener(() => OnClickCreateAccountButton());
+
     }
 
     public void OnClickCreateAccountButton()
@@ -109,6 +110,4 @@ public class LoginUIManager
             Debug.Log("아이디 4글자 이상, 비밀번호 6글자 이상 입력하세요");
         }
     }
-
-
 }

@@ -37,15 +37,16 @@ public class SceneChanger : MonoBehaviour {
 		}
 		instance = this;
 		DontDestroyOnLoad (gameObject);
-	}
 
-	void OnLevelWasLoaded()
-	{
-		StartCoroutine (FadeIn ());
-    
-	}
-		
-	public void SceneChange(SceneName sceneName)
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        StartCoroutine(FadeIn());
+    }
+
+    public void SceneChange(SceneName sceneName)
 	{
 		sceneIndex = (int)sceneName;
 		StartCoroutine (FadeOut ());

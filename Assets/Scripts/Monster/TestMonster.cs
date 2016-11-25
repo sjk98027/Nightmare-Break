@@ -48,7 +48,7 @@ public class TestMonster : Monster
 		attackRange = 8;
 		MonsterSet ();
 		PlayerSearch ();
-		uiManager = GameObject.FindWithTag ("UI").GetComponent<UIManager> ();
+		uiManager = GameObject.FindWithTag ("UIManager").GetComponent<UIManager> ();
 		secondAttack = false;
 		BoxCollider[] MonsterWeapon = new BoxCollider[2];
 		skillInsertImage = GameObject.Find ("InGameUICanvas").transform.Find ("BossDeadlyPatternImage").Find("BossDeadlyPattern").GetComponent<Image>();
