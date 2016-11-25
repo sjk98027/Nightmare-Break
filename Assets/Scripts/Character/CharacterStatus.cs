@@ -42,7 +42,6 @@ public class CharacterStatus : MonoBehaviour
     int dreamStone;
     int[] skillLevel;
     int[] equipLevel;
-    public Skill skillSet;
 
     public string HName { get { return hName; } }
     public Gender HGender { get { return hGender; } }
@@ -65,7 +64,7 @@ public class CharacterStatus : MonoBehaviour
     public int DreamStone { get { return dreamStone; } }
     public int[] SkillLevel { get { return skillLevel; } }
     public int[] EquipLevel { get { return equipLevel; } }
-    public Skill SkillSet { get { return skillSet; } }
+
 
     public CharacterStatus()
     {
