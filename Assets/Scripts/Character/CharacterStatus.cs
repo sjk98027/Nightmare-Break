@@ -76,6 +76,7 @@ public class CharacterStatus : MonoBehaviour
         magicPoint = 0;
         hpRegeneration = 0;
         mpRegeneration = 0;
+		moveSpeed = 7;
         attack = 0;
         defense = 0;
         dreamStone = 0;
