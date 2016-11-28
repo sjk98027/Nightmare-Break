@@ -16,6 +16,8 @@
     CreateRoom,
     EnterRoom,
     ExitRoom,
+    StartGame,
+    RequestUDPConnection,
 }
 
 public enum ServerPacketId
@@ -24,14 +26,18 @@ public enum ServerPacketId
     CreateAccountResult,
     DeleteAccountResult,
     LoginResult,
+    LogoutResult,
     CreateCharacterResult,
     DeleteChracterResult,
     SelectCharacterResult,
     RoomList,
-    Match,
+    CharacterStatus,
+    SkillUpResult,
+    EquipUpgradeResult,
     CreateRoomResult,
     EnterRoomResult,
     ExitRoomResult,
+    Match,
 }
 
 public enum P2PPacketId

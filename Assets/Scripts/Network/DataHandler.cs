@@ -32,10 +32,14 @@ public class DataHandler : MonoBehaviour
 
         networkManager = GetComponent<NetworkManager>();
         uiManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
-        characterStatus = GameObject.FindGameObjectWithTag("CharacterStatus").GetComponent<CharacterStatus>();
 
         SetServerNotifier();
         SetUdpNotifier();
+    }
+
+    public void SetCharacter(GameObject character)
+    {
+        characterStatus = character.GetComponent<CharacterStatus>();
     }
 
     public void SetServerNotifier()
@@ -47,7 +51,7 @@ public class DataHandler : MonoBehaviour
         server_notifier.Add((int)ServerPacketId.DeleteChracterResult, DeleteCharacterResult);
         server_notifier.Add((int)ServerPacketId.SelectCharacterResult, SelectCharacterResult);
         server_notifier.Add((int)ServerPacketId.RoomList, RoomList);
-        server_notifier.Add((int)ServerPacketId.LoginResult, LoginResult);
+        server_notifier.Add((int)ServerPacketId.CreateRoomResult, CreateRoomResult);
         server_notifier.Add((int)ServerPacketId.Match, Match);
     }
 
@@ -213,10 +217,10 @@ public class DataHandler : MonoBehaviour
         }
     }
 
-    //Server - 방목록 수신
+    //Server - 방 목록 수신
     public void RoomList(byte[] data)
     {
-        Debug.Log("방목록 수신");
+        Debug.Log("방 목록 수신");
         RoomListPacket roomListPacket = new RoomListPacket(data);
         RoomListData roomListData = roomListPacket.GetData();
 
@@ -237,16 +241,17 @@ public class DataHandler : MonoBehaviour
     public void CreateRoomResult(byte[] data)
     {
         Debug.Log("방 생성 결과 수신");
-        ResultPacket resultPacket = new ResultPacket(data);
-        ResultData resultData = resultPacket.GetData();
+        CreateRoomResultPacket resultPacket = new CreateRoomResultPacket(data);
+        CreateRoomResultData resultData = resultPacket.GetData();
 
-        if (resultData.Result == (byte)Result.Success)
-        {
-            StartCoroutine(uiManager.Dialog(1.0f, "방 생성 성공"));
-        }
-        else if (resultData.Result == (byte)Result.Fail)
+        if (resultData.RoomNum == 0)
         {
             StartCoroutine(uiManager.Dialog(1.0f, "방 생성 실패"));
+        }
+        else if (resultData.RoomNum <= WaitUIManager.maxRoomNum)
+        {
+            StartCoroutine(uiManager.Dialog(1.0f, "방 생성 성공"));
+            uiManager.WaitUIManager.CreateRoom(resultData.RoomNum);
         }
     }
 

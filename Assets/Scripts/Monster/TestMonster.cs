@@ -1,19 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 
-public class TestMonster : Monster 
+public class TestMonster : Monster
 {
 	public enum BigBearBossPatternName
 	{
-		BigBearBossIdle =0,
+		BigBearBossIdle = 0,
 		BigBearBossRun,
 		BigBearBossAttack,
 		BigBearBossOneHandAttack,
 		BigBearJumpAttack,
 		BigBearBossRoar,
-		BigBearBossDeath
-	};
+		BigBearBossDeath}
+
+	;
 
 	public float searchRange;
 	public float moveSpeed;
@@ -26,30 +28,38 @@ public class TestMonster : Monster
 	public BigBearBossPatternName BigBearBossState;
 	AnimatorStateInfo stateInfo;
 	bool monsterAttack;
-	bool roarStartBool = false;
-	//public float searchRange;
+	[SerializeField] Image skillInsertImage;
+	public float imageSpeed = 1.0f;
+	public float imageLerpTime;
 
 
+	public enum insertImageState
+	{
+		Stop = 0,
+		Left,
+		Right
+	}
 
+	public insertImageState imageState = insertImageState.Stop;
 
-
-	void Start()
+	void Start ()
 	{
 		RunRange = 10;
 		attackRange = 8;
 		MonsterSet ();
 		PlayerSearch ();
-
+		uiManager = GameObject.FindWithTag ("UIManager").GetComponent<UIManager> ();
 		secondAttack = false;
 		BoxCollider[] MonsterWeapon = new BoxCollider[2];
-
+		skillInsertImage = GameObject.Find ("InGameUICanvas").transform.Find ("BossDeadlyPatternImage").Find("BossDeadlyPattern").GetComponent<Image>();
+		//skillInsertImage = transform.Find("InGameUICanvas").gameObject;
 	}
 
 
 
 	//animation Set; move;
 
-	void Update()
+	void Update ()
 	{
 
 		if (monsterAlive)
@@ -58,43 +68,27 @@ public class TestMonster : Monster
 			searchRange = Vector3.Distance (player [0].transform.position, transform.position);
 			AttackTime += Time.deltaTime;
 
-			if(AttackTime >= 1)
+			if (AttackTime >= 1)
 			{
-				if(secondAttack)
-				{
-					secondAttack = false;
-				}
-				else
-				{
-					secondAttack = true;	
-				}
-
-
 				AttackTime = 0;
 			}
-
-
-
 			if (searchRange < attackRange)
 			{
-
-				if (secondAttack)
+				if (!secondAttack)
 				{
-
 					//BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossAttack);
-
 					BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossRoar);
 					//애니메이션 이벤트로 효과를 넣었음
-
+					secondAttack = true;
 				}
-				else if(!secondAttack)
+				else if (!secondAttack)
 				{
 					BigBearBossPattern ((int)BigBearBossPatternName.BigBearJumpAttack);
 					//애니메이션 이벤트로 효과를 넣었음
-
+					secondAttack = true;
 				}
 			}
-			else if(searchRange > RunRange)
+			else if (searchRange > RunRange)
 			{
 				BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossIdle);
 				changeDirection ();
@@ -105,11 +99,11 @@ public class TestMonster : Monster
 
 				BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossRun);
 				changeDirection ();
-				if(stateInfo.IsName("BigBearBossRun"))
+				if (stateInfo.IsName ("BigBearBossRun"))
 				{
 
 					//transform.LookAt(player[0].transform.position);
-					transform.Translate ((player [0].transform.position-transform.position)*moveSpeed * Time.deltaTime,0);//반대로 걸어 가서 수정
+					transform.Translate ((player [0].transform.position - transform.position) * moveSpeed * Time.deltaTime, 0);//반대로 걸어 가서 수정
 					//transform.position = Vector3.Lerp (transform.position, player [0].transform.position, Time.deltaTime * moveSpeed);
 				}
 			}
@@ -119,14 +113,14 @@ public class TestMonster : Monster
 				for (int i = 0; i < MonsterWeapon.Length; i++)
 				{
 					//				MonsterWeapon [i].size = new Vector3 (3.6f, 1f, 1.1f);
-					MonsterWeapon[i].size = new Vector3(0, 0, 0);
+					MonsterWeapon [i].size = new Vector3 (0, 0, 0);
 				}
 			}
 			else if (!monsterAttack)
 			{
 				for (int i = 0; i < MonsterWeapon.Length; i++)
 				{
-					MonsterWeapon [i].size = new Vector3 (0,0,0);
+					MonsterWeapon [i].size = new Vector3 (0, 0, 0);
 				}
 			}
 
@@ -138,23 +132,14 @@ public class TestMonster : Monster
 		}
 
 	}
-
-	public void roarStart()
-	{//애니메이션 이벤트를 사용하여 포효시 붉은 이펙트를 켠다.
-		GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<RedRenderImage> ().enabled = true;
-	}
-	public void roarEnd()
-	{//애니메이션 이벤트를 사용하여 포효시 붉은 이펙트를 끈다.
-		GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<RedRenderImage> ().enabled = false;
-	}
-
-	public void earthQuakeEffect()
+	public void earthQuakeEffect ()
 	{//애니메이션 이벤트를 사용하여 지진 효과를 추가 한다.
 //		GameObject.FindGameObjectWithTag ("Floor").GetComponent<EarthQuake> ().Running = true;
 
 	}
 
-	public void changeDirection(){//캐릭터 이동시 보스가 보는 방향을 정한다.
+	public void changeDirection ()
+	{//캐릭터 이동시 보스가 보는 방향을 정한다.
 		Vector3 vecLookPos = player [0].transform.position;
 		vecLookPos.y = transform.position.y;
 		vecLookPos.x = transform.position.x;
@@ -164,7 +149,7 @@ public class TestMonster : Monster
 	}
 
 
-	public override void HitDamage(int _Damage,GameObject attacker)
+	public override void HitDamage (int _Damage, GameObject attacker)
 	{
 		
 		stateInfo = this.animator.GetCurrentAnimatorStateInfo (0);
@@ -191,7 +176,7 @@ public class TestMonster : Monster
 		}
 	}
 
-	public void BigBearBossPattern(int bossState)
+	public void BigBearBossPattern (int bossState)
 	{
 		monsterAttack = false;
 		switch (bossState)
@@ -231,6 +216,80 @@ public class TestMonster : Monster
 			BigBearBossState = BigBearBossPatternName.BigBearBossDeath;
 			animator.SetTrigger ("BigBearBossDeath");
 			break;
+		}
+	}
+
+	public void roarStart ()
+	{//애니메이션 이벤트를 사용하여 포효시 붉은 이펙트를 켠다.
+		//GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<RedRenderImage> ().enabled = true;
+		imageState = insertImageState.Left; //이미지 상태 값 저장 왼쪽
+		StartCoroutine (LMoveImage ()); //코루틴 실행
+
+	}
+
+	public void roarEnd ()
+	{//애니메이션 이벤트를 사용하여 포효시 붉은 이펙트를 끈다.
+		//GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<RedRenderImage> ().enabled = false;
+		////이미지를 오른쪽이동하는 코루틴을 실행 시키는 함수 애니메이션 이벤트로 실행
+//		imageState = insertImageState.Right;//이미지 상태 값 저장 오른쪽
+	}
+		
+	IEnumerator LMoveImage ()
+	{  //이미지를 왼쪽이동시키는 함수
+		while (imageState == insertImageState.Left)
+		{		
+
+			yield return new WaitForSeconds (0.01f);	
+
+
+			float x = skillInsertImage.GetComponent<RectTransform> ().localPosition.x;//현재 x값의 위치를 받아온다.
+			if (x > 103)
+			{
+				skillInsertImage.GetComponent<RectTransform> ().Translate (15 * -imageSpeed, 0, 0);//10씩 왼쪽으로 이동
+
+			}
+			else
+			{
+				//	skillInsertImage.enabled = true;
+				imageLerpTime += 0.01f;
+
+				if (imageLerpTime >3)
+				{
+					float ImageAlpha = (4 - imageLerpTime);
+					skillInsertImage.color = new Color (255,255,255, ImageAlpha);
+
+						
+					if (ImageAlpha < 0.3)
+					{
+						skillInsertImage.enabled = false;
+						imageState = insertImageState.Stop;//x값이 0보다 작을 경우 멈춤
+						ImageBackPos ();
+					}
+
+				}
+			}
+		}
+	}
+
+	public void ResetBossImage()
+	{
+		skillInsertImage.GetComponent<RectTransform> ().localPosition = new Vector3 (613, -152 , 0);
+		skillInsertImage.color = new Color (255,255,255, 255);
+		imageState = insertImageState.Stop;
+	}
+
+	public void ImageBackPos()
+	{
+		StopCoroutine (LMoveImage ());
+
+		imageState = insertImageState.Right;
+
+		ResetBossImage ();
+
+
+		if (imageState == insertImageState.Stop)
+		{
+			skillInsertImage.enabled = true;
 		}
 	}
 

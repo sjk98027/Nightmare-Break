@@ -606,7 +606,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 1089310646}
   - 114: {fileID: 1089310645}
-  - 114: {fileID: 1089310647}
   m_Layer: 0
   m_Name: SceneChanger
   m_TagString: Untagged
@@ -622,12 +621,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1089310644}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bf7990c8a3321d4eaadbf27d65d05c7, type: 3}
+  m_Script: {fileID: 11500000, guid: 36fe337d1106a244aa3c0a3a42ea5ee7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fadeTime: 0
   sceneIndex: 0
   fadePanel: {fileID: 0}
+  loadingScene: {fileID: 0}
 --- !u!4 &1089310646
 Transform:
   m_ObjectHideFlags: 0
@@ -641,17 +641,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 9
---- !u!114 &1089310647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1089310644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d59e168f7f07504aaea075316745b77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1284028997
 GameObject:
   m_ObjectHideFlags: 0
@@ -664,7 +653,6 @@ GameObject:
   - 92: {fileID: 1284029000}
   - 124: {fileID: 1284028999}
   - 81: {fileID: 1284028998}
-  - 114: {fileID: 1284029003}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -740,17 +728,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &1284029003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1284028997}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a94b781cad112c75d0008dfa8d76c639, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1322214999
 GameObject:
   m_ObjectHideFlags: 0
@@ -1251,7 +1228,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1089310647}
+      - m_Target: {fileID: 0}
         m_MethodName: SceneEvent
         m_Mode: 1
         m_Arguments:

@@ -8,6 +8,7 @@ TagManager:
   - NetworkManager
   - DungeonManager
   - CharacterManager
+  - UIManager
   - Wall
   - Floor
   - BossBody

@@ -8,7 +8,7 @@ public class EspadaSwordEffect : MonoBehaviour
 	GameObject giganticSword;
 	Renderer rend;
 	public bool count;
-	public CharacterStatus charstate;
+	public CharacterStatus charStatus;
 	public CharacterManager charManager;
 	float giganticSwordAliveTime;
 	public GameObject character;
@@ -21,7 +21,7 @@ public class EspadaSwordEffect : MonoBehaviour
 		character = GameObject.FindWithTag ("Player");
 
 		charManager = character.GetComponent<CharacterManager> ();
-		charstate = charManager.charstate;
+        charStatus = charManager.CharStatus;
 		giganticSword = this.gameObject;
 
 		rend = this.gameObject.GetComponent<Renderer> ();
@@ -29,8 +29,8 @@ public class EspadaSwordEffect : MonoBehaviour
 	}
 	void Update()
 	{
-		charstate.skillLevel [5] = 3;
-		swordDamage = charstate.skillLevel [5] * charManager.BasicDamage;
+        charStatus.SkillLevel [5] = 3;
+		swordDamage = charStatus.SkillLevel [5] * charStatus.Attack;
 		if (!count)
 		{
 			giganticSwordAliveTime += Time.deltaTime;

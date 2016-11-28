@@ -1,9 +1,14 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 [System.Serializable]
 public class CharacterStatus : MonoBehaviour
 {
+    public enum Gender
+    {
+        Male = 0,
+        FeMale = 1,
+    }
+
     public enum CharClass
     {
         Warrior = 0,
@@ -11,155 +16,67 @@ public class CharacterStatus : MonoBehaviour
         ShildWarrior,
         Gunner
     }
-    //user name
-    string name;
 
-    // 0 = male, 1 = female
-    int gender;
-
-    //0 = warrior , 1 = mage , 2 = shildwarrior, 3 = guner
-    int hClass;
-
-    int level;
-
-    public CharClass charClass;
-    //char status
-    //name
-    public string characterName;
-    public int characterNum;
-
-    //exp
-    public int demendExp;
-    public int exp;
-
-    //Point
-    public int maxHealthPoint;
-    public int maxManaPoint;
-
-    public int healthPoint;
-    public int magicPoint;
-
-    //Regeneration
-    int hpRegeneration;
-    int mpRegeneration;
-
-
-    //char AttackPoint and defensepoint
-    public int attack;
-    public int defense;
-
-    //critical point
-    public float charSpeed;
-
-    public int dreamStone;
-
-    public int[] skillLevel;
-    public int[] equipLevel;
-
-    //skillNum
-    public Skill[] skillSet;
     public const int skillNum = 6;
     public const int equipNum = 4;
     public const int maxLevel = 20;
 
+    string hName;
+    Gender hGender;
+    int level;
+    CharClass charClass;
+    int maxExp;
+    int exp;
 
-    public string CharacterName { get { return this.characterName; } }
+    int maxHealthPoint;
+    int healthPoint;
+    int maxMagicPoint;
+    int magicPoint;
+    int hpRegeneration;
+    int mpRegeneration;
+    int attack;
+    int defense;
 
-    public int CharacterLevel { get { return this.Level; } }
+    float moveSpeed;
+    int skillPoint;
+    int dreamStone;
+    int[] skillLevel;
+    int[] equipLevel;
 
-    public int DemendExp { get { return this.demendExp; } }
-
-    public int NeedExp { get { return this.exp; } }
-
-    public int HealthPoint
-    {
-        get { return this.healthPoint; }
-        set { healthPoint = value; }
-    }
-
-    public int ManaPoint { get { return this.magicPoint; } }
-    public int MaxHealthPoint
-    {
-        get { return this.maxHealthPoint; }
-        set { maxHealthPoint = value; }
-    }
-    public int MaxManaPoint
-    {
-        get { return this.maxManaPoint; }
-        set { maxManaPoint = value; }
-    }
-
-    public Skill[] SkillSet
-    {
-        get
-        {
-            return this.skillSet;
-        }
-        set
-        {
-            skillSet = value;
-        }
-    }
-
-    public int Defense { get { return this.defense; } }
-    public int DreamStone { get { return this.dreamStone; } }
-    public float CharSpeed { get { return this.charSpeed; } }
-    public string Name { get { return name; } }
-    public int Gender { get { return gender; } }
+    public string HName { get { return hName; } }
+    public Gender HGender { get { return hGender; } }
     public int Level { get { return level; } }
-    public int HClass { get { return hClass; } }
+    public CharClass HClass { get { return charClass; } }
+    public int MaxExp { get { return maxExp; } }
     public int Exp { get { return exp; } }
+
+    public int MaxHealthPoint { get { return maxHealthPoint; } }
+    public int HealthPoint { get { return healthPoint; } }
+    public int MaxMagicPoint { get { return maxMagicPoint; } }
     public int MagicPoint { get { return magicPoint; } }
     public int HpRegeneration { get { return hpRegeneration; } }
     public int MpRegeneration { get { return mpRegeneration; } }
     public int Attack { get { return attack; } }
+    public int Defense { get { return defense; } }
+
+    public float MoveSpeed { get { return moveSpeed; } }
+    public int SkillPoint { get { return skillPoint; } }
+    public int DreamStone { get { return dreamStone; } }
     public int[] SkillLevel { get { return skillLevel; } }
     public int[] EquipLevel { get { return equipLevel; } }
-
-    public CharacterStatus(CharClass name)
-    {
-        if (name == CharClass.Warrior)
-        {
-
-            Debug.Log("charsta");
-            exp = 1000;
-            MaxHealthPoint = 1000;
-            healthPoint = maxHealthPoint;
-            attack = 10;
-            maxManaPoint = 1000;
-            magicPoint = maxManaPoint;
-            charSpeed = 7;
-            defense = 1;
-            skillLevel = new int[skillNum];
-            equipLevel = new int[equipNum];
-        }
-    }
-
-    public void SetCharacterStatus()
-    {
-        exp = 1000;
-        MaxHealthPoint = 1000;
-        healthPoint = maxHealthPoint;
-        attack = 10;
-        maxManaPoint = 1000;
-        magicPoint = maxManaPoint;
-        defense = 1;
-        charSpeed = 7;
-        skillLevel = new int[skillNum];
-        equipLevel = new int[equipNum];
-    }
 
 
     public CharacterStatus()
     {
-        name = "Hero";
+        hName = "Hero";
         level = 0;
-        hClass = 0;
+        charClass = 0;
         exp = 0;
         healthPoint = 0;
         magicPoint = 0;
         hpRegeneration = 0;
         mpRegeneration = 0;
+		moveSpeed = 7;
         attack = 0;
         defense = 0;
         dreamStone = 0;
@@ -169,10 +86,10 @@ public class CharacterStatus : MonoBehaviour
 
     public void SetCharacterStatus(CharacterStatusData characterStatusData)
     {
-        name = characterStatusData.Name;
+        hName = characterStatusData.Name;
         level = characterStatusData.Level;
-        gender = characterStatusData.Gender;
-        hClass = characterStatusData.HClass;
+        hGender = (Gender)characterStatusData.Gender;
+        charClass = (CharClass)characterStatusData.HClass;
         exp = characterStatusData.Exp;
         healthPoint = characterStatusData.HealthPoint;
         magicPoint = characterStatusData.MagicPoint;
@@ -193,5 +110,15 @@ public class CharacterStatus : MonoBehaviour
         {
             equipLevel[i] = characterStatusData.EquipLevel[i];
         }
+    }
+
+    public void DecreaseHealthPoint(int amount)
+    {
+        healthPoint -= amount;
+    }
+
+    public void DecreaseMagicPoint(int amount)
+    {
+        magicPoint -= amount;
     }
 }
