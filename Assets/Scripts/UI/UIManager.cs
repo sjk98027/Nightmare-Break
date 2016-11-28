@@ -15,19 +15,20 @@ public class UIManager : MonoBehaviour
     public GameObject dialogPanel;
     public Text dialog;
 
-    void Start()
-    {
-        battleUIManager = new BattleUIManager();
-        battleUIManager.SetUIObject();
-    }
+    //void Start()
+    //{
+    //    battleUIManager = new BattleUIManager();
+    //    battleUIManager.SetUIObject();
+    //}
 
     public void InitializeManager()
     {
-        loginUIManager = new LoginUIManager();
+        loginUIManager = gameObject.AddComponent<LoginUIManager>();
         loginUIManager.ManagerInitialize();
-        waitUIManager = new WaitUIManager();
-        battleUIManager = new BattleUIManager();
-        battleUIManager.SetUIObject();
+        waitUIManager = gameObject.AddComponent<WaitUIManager>();
+
+        //battleUIManager = new BattleUIManager();
+        //battleUIManager.SetUIObject();
         SetDialog();
     }
 

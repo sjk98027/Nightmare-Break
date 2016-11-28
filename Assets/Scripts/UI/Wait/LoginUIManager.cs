@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class LoginUIManager
+public class LoginUIManager : MonoBehaviour
 {
     DataSender dataSender;
 
@@ -56,10 +56,10 @@ public class LoginUIManager
 
         loginId = GameObject.Find("LoginId").GetComponent<Text>();
         loginPw = GameObject.Find("LoginPw").GetComponent<Text>();
-        createId = GameObject.Find("CreateId").GetComponent<Text>();
-        createPw = GameObject.Find("CreatePw").GetComponent<Text>();
-        deleteId = GameObject.Find("DeleteId").GetComponent<Text>();
-        deletePw = GameObject.Find("DeletePw").GetComponent<Text>();
+        createId = GameObject.Find("LoginId").GetComponent<Text>();
+        createPw = GameObject.Find("LoginPw").GetComponent<Text>();
+        deleteId = GameObject.Find("LoginId").GetComponent<Text>();
+        deletePw = GameObject.Find("LoginPw").GetComponent<Text>();
     }
 
     public void SetAddListener()

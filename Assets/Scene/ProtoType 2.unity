@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44692492, g: 0.4967869, b: 0.57508546, a: 1}
+  m_IndirectSpecularColor: {r: 0.44692558, g: 0.49678743, b: 0.57508624, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1325,7 +1325,7 @@ GameObject:
   - 222: {fileID: 775480991}
   - 114: {fileID: 775480990}
   m_Layer: 5
-  m_Name: Pw
+  m_Name: LoginPw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1978,7 +1978,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f768b7ba6c3150344a0ca3a5cec97ea7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ip: 192.168.94.88
+  ip: 192.168.0.5
 --- !u!1 &1156855806
 GameObject:
   m_ObjectHideFlags: 0
@@ -2352,7 +2352,7 @@ GameObject:
   - 222: {fileID: 1414517974}
   - 114: {fileID: 1414517973}
   m_Layer: 5
-  m_Name: Id
+  m_Name: LoginId
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

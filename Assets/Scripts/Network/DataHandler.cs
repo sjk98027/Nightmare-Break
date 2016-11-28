@@ -32,10 +32,14 @@ public class DataHandler : MonoBehaviour
 
         networkManager = GetComponent<NetworkManager>();
         uiManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
-        characterStatus = GameObject.FindGameObjectWithTag("CharacterStatus").GetComponent<CharacterStatus>();
 
         SetServerNotifier();
         SetUdpNotifier();
+    }
+
+    public void SetCharacter(GameObject character)
+    {
+        characterStatus = character.GetComponent<CharacterStatus>();
     }
 
     public void SetServerNotifier()
@@ -47,7 +51,6 @@ public class DataHandler : MonoBehaviour
         server_notifier.Add((int)ServerPacketId.DeleteChracterResult, DeleteCharacterResult);
         server_notifier.Add((int)ServerPacketId.SelectCharacterResult, SelectCharacterResult);
         server_notifier.Add((int)ServerPacketId.RoomList, RoomList);
-        server_notifier.Add((int)ServerPacketId.LoginResult, LoginResult);
         server_notifier.Add((int)ServerPacketId.Match, Match);
     }
 

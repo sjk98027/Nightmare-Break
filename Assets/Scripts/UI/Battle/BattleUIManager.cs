@@ -2,7 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class BattleUIManager {
+public class BattleUIManager
+{
 
     public Image hpBar;
     public Image mpBar;

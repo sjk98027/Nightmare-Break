@@ -13,14 +13,18 @@ public class DataSender : MonoBehaviour
     {
         get
         {
-            if (instance == null)
+            if (!instance)
             {
-                return new DataSender();
+                instance = FindObjectOfType(typeof(DataSender)) as DataSender;
+                if (!instance)
+                {
+                    GameObject container = new GameObject();
+                    container.name = "DataSender";
+                    instance = container.AddComponent(typeof(DataSender)) as DataSender;
+                }
             }
-            else
-            {
-                return instance;
-            }
+
+            return instance;
         }
     }
 
@@ -36,7 +40,7 @@ public class DataSender : MonoBehaviour
 
     public void Initialize(Queue<DataPacket> newSendMsgs, Socket newTcpSock, Socket newUdpSock)
     {
-        networkManager = GetComponent<NetworkManager>();
+        networkManager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManager>();
 
         sendMsgs = newSendMsgs;
         tcpSock = newTcpSock;
