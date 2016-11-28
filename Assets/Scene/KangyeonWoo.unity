@@ -1127,6 +1127,7 @@ GameObject:
   - 33: {fileID: 1071868470}
   - 23: {fileID: 1071868468}
   - 65: {fileID: 1071868469}
+  - 114: {fileID: 1071868472}
   m_Layer: 12
   m_Name: Plane
   m_TagString: Untagged
@@ -1195,6 +1196,42 @@ Transform:
   m_Children: []
   m_Father: {fileID: 588376595}
   m_RootOrder: 7
+--- !u!114 &1071868472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1071868467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 917e92ac463b61b48831b80034a30f55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  magnitude: 44
+  shakingSpeed: 68
+  randomAmount: 0.5
+  duration: 1
+  forceByAxis: {x: 1, y: 0, z: 1}
+  forceOverTime:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 10
+    - time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 10
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  forceRecenter: 1
+  loop: 0
+  currentState: 
+  currentMagnitude: 0
 --- !u!1 &1116347311 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100058, guid: 56dac291e81ed4d46ad9891b1154bcc3, type: 3}
@@ -2428,7 +2465,7 @@ Prefab:
     - target: {fileID: 224000010234852354, guid: f729b490846df5d4d96cb8641dade98a,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0.33646646
+      value: 0.3487794
       objectReference: {fileID: 0}
     - target: {fileID: 224000010234852354, guid: f729b490846df5d4d96cb8641dade98a,
         type: 2}
@@ -2443,7 +2480,7 @@ Prefab:
     - target: {fileID: 224000012740852962, guid: f729b490846df5d4d96cb8641dade98a,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 418.9691
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224000013526216092, guid: f729b490846df5d4d96cb8641dade98a,
         type: 2}
