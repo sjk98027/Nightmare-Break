@@ -3,8 +3,9 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class UIManager : MonoBehaviour, IPointerEnterHandler
+public class UIManager : MonoBehaviour
 {
+	public CharacterManager charManager;
     LoginUIManager loginUIManager;
     WaitUIManager waitUIManager;
     BattleUIManager battleUIManager;
@@ -16,11 +17,11 @@ public class UIManager : MonoBehaviour, IPointerEnterHandler
     public GameObject dialogPanel;
     public Text dialog;
 
-    //void Start()
-    //{
-    //    battleUIManager = new BattleUIManager();
-    //    battleUIManager.SetUIObject();
-    //}
+    void Awake()
+    {
+		battleUIManager = new BattleUIManager();
+		battleUIManager.SetUIObject();
+    }
 
     public void InitializeManager()
     {
@@ -28,9 +29,6 @@ public class UIManager : MonoBehaviour, IPointerEnterHandler
         loginUIManager.ManagerInitialize();
         waitUIManager = gameObject.AddComponent<WaitUIManager>();
         waitUIManager.ManagerInitialize();
-
-        //battleUIManager = new BattleUIManager();
-        //battleUIManager.SetUIObject();
         SetDialog();
     }
 
@@ -53,15 +51,15 @@ public class UIManager : MonoBehaviour, IPointerEnterHandler
 
         dialogPanel.SetActive(false);
     }
-
-	public void OnPointerEnter (PointerEventData eventData)
+		 
+	public void OnPointEnter(int skillIndex)
 	{
-		
+		battleUIManager.SetPointEnterUI (skillIndex, 2, (int)charManager.CharStatus.HClass);
 	}
-
-	public void MouseOverEnter()
+	 
+	public void OnPointExit()
 	{
-		print ("OverIn");
+		battleUIManager.MouseOverUI.gameObject.transform.parent.gameObject.SetActive (false);
 	}
 }
 

@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
         uiManager.tag = "UIManager";
 
         networkManager.InitializeManager(ip);
-        uiManager.InitializeManager();
+      //  uiManager.InitializeManager();
     }
 
     public void OnApplicationQuit()

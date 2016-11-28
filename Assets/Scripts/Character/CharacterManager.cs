@@ -54,6 +54,7 @@ public class CharacterManager : MonoBehaviour
 
     public UIManager uiManager;
 
+
     void Awake()
     {
         charStatus = GameObject.FindGameObjectWithTag("CharStatus").GetComponent<CharacterStatus>();
@@ -64,6 +65,7 @@ public class CharacterManager : MonoBehaviour
         rigdbody = GetComponent<Rigidbody>();
         charDir = true;
         JumpMove = false;
+		SetCharacterType ();
     }
 
     void Update()
@@ -225,9 +227,9 @@ public class CharacterManager : MonoBehaviour
 
     public virtual void Skill1()
     {
-        if (uiManager.BattleUIManager.SkillUI[0].fillAmount == 1)
+		if (uiManager.BattleUIManager.SkillCoolTimeUI[0].fillAmount == 1)
         {
-			StartCoroutine(uiManager.BattleUIManager.SkillCoolTimeUI(0, SkillManager.instance.SkillStorage.GetSkill("WarriorA1_L1").SkillCoolTime));
+			StartCoroutine(uiManager.BattleUIManager.SetSkillCoolTimeUI(0, SkillManager.instance.SkillData.GetSkill("WarriorA1_L1").SkillCoolTime));
             if (state == CharacterState.Run || state == CharacterState.Idle || state == CharacterState.Skill1)
             {
                 state = CharacterState.Skill1;
@@ -239,9 +241,9 @@ public class CharacterManager : MonoBehaviour
 
     public void skill2()
     {
-        if (uiManager.BattleUIManager.SkillUI[1].fillAmount == 1)
+		if (uiManager.BattleUIManager.SkillCoolTimeUI[1].fillAmount == 1)
         {
-			StartCoroutine(uiManager.BattleUIManager.SkillCoolTimeUI(1, SkillManager.instance.SkillStorage.GetSkill("WarriorA2_L1").SkillCoolTime));
+			StartCoroutine(uiManager.BattleUIManager.SetSkillCoolTimeUI(1, SkillManager.instance.SkillData.GetSkill("WarriorA2_L1").SkillCoolTime));
             if (state != CharacterState.Jump && state != CharacterState.Skill2 && state != CharacterState.Skill1 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
             {
                 CharState((int)CharacterState.Skill2);
@@ -251,9 +253,9 @@ public class CharacterManager : MonoBehaviour
 
     public void skill3()
     {
-        if (uiManager.BattleUIManager.SkillUI[2].fillAmount == 1)
+		if (uiManager.BattleUIManager.SkillCoolTimeUI[2].fillAmount == 1)
         {
-			StartCoroutine(uiManager.BattleUIManager.SkillCoolTimeUI(2, SkillManager.instance.SkillStorage.GetSkill("WarriorA3_L1").SkillCoolTime));
+			StartCoroutine(uiManager.BattleUIManager.SetSkillCoolTimeUI(2, SkillManager.instance.SkillData.GetSkill("WarriorA3_L1").SkillCoolTime));
             if (state != CharacterState.Jump && state != CharacterState.Skill3 && state != CharacterState.Skill2 && state != CharacterState.Skill1 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
             {
                 CharState((int)CharacterState.Skill3);
@@ -263,9 +265,9 @@ public class CharacterManager : MonoBehaviour
 
     public void Skill4()
     {
-        if (uiManager.BattleUIManager.SkillUI[3].fillAmount == 1)
+		if (uiManager.BattleUIManager.SkillCoolTimeUI[3].fillAmount == 1)
         {
-			StartCoroutine(uiManager.BattleUIManager.SkillCoolTimeUI(3, SkillManager.instance.SkillStorage.GetSkill("WarriorA4_L1").SkillCoolTime));
+			StartCoroutine(uiManager.BattleUIManager.SetSkillCoolTimeUI(3, SkillManager.instance.SkillData.GetSkill("WarriorA4_L1").SkillCoolTime));
             if (state != CharacterState.Jump && state != CharacterState.Skill1 && state != CharacterState.Skill2 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
             {
                 //giganticSwordCastSword.SetActive(true);
@@ -418,5 +420,7 @@ public class CharacterManager : MonoBehaviour
         }
         transform.position = new Vector3(newPositionData.posX, newPositionData.posY, newPositionData.posZ);
     }
+
+	public virtual void SetCharacterType() { }
 }
 
