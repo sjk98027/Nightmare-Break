@@ -37,6 +37,7 @@ public class CharacterManager : MonoBehaviour
 	public bool JumpMove;
 	public Rigidbody rigdbody;
 	public BoxCollider charWeapon;
+	public BoxCollider charBox;
 	public bool normalAttackState = false;
 	public bool skillAttackState = false;
 	public InputManager inputmanager;
@@ -53,7 +54,7 @@ public class CharacterManager : MonoBehaviour
 
 	public Animator Animator { get { return animator; } }
 
-	[SerializeField]CharacterState state;
+	public CharacterState state;
 
 	public CharacterStatus Charstate {get {return this.charstate;}}
 
@@ -74,6 +75,7 @@ public class CharacterManager : MonoBehaviour
 		basicDamage = Charstate.Attack;
 		uiManager = GameObject.FindWithTag ("UI").GetComponent<UIManager> ();
 		animator = GetComponent<Animator> ();
+		charBox = this.gameObject.GetComponent<BoxCollider> ();
 		state = CharacterState.Idle;
 		enermy = null;
 		rigdbody = this.GetComponent<Rigidbody>();
@@ -118,14 +120,13 @@ public class CharacterManager : MonoBehaviour
 
 
 
-			if (normalAttackState || skillAttackState)
+			if (normalAttackState)
 			{
-				charWeapon.size = new Vector3 (0.11f,0.11f,1.28f);
+				charWeapon.enabled = true;
 			}
 			else
 			{
-				
-				charWeapon.size = new Vector3 (0,0,0);
+				charWeapon.enabled = false;
 			}
 		}
 
@@ -247,11 +248,12 @@ public class CharacterManager : MonoBehaviour
 
 	public virtual void Skill1 ()
 	{
-		if (uiManager.BattleUIManager.SkillUI [0].fillAmount == 1)
+		if (state == CharacterState.Run || state == CharacterState.Idle || state == CharacterState.Skill1)
 		{
-			StartCoroutine (uiManager.BattleUIManager.SkillCoolTimeUI (0, skillCoolTime [0]));
-			if (state == CharacterState.Run || state == CharacterState.Idle || state == CharacterState.Skill1)
+			if (uiManager.BattleUIManager.SkillUI [0].fillAmount == 1)
 			{
+				StartCoroutine (uiManager.BattleUIManager.SkillCoolTimeUI (0, skillCoolTime [0]));
+
 				state = CharacterState.Skill1;
 				CharState ((int)CharacterState.Skill1);
 
@@ -262,11 +264,12 @@ public class CharacterManager : MonoBehaviour
 
 	public void skill2 ()
 	{
-		if (uiManager.BattleUIManager.SkillUI [1].fillAmount == 1)
+		if (state != CharacterState.Jump && state != CharacterState.Skill2 && state != CharacterState.Skill1 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
 		{
-			StartCoroutine (uiManager.BattleUIManager.SkillCoolTimeUI (1, skillCoolTime [1]));
-			if (state != CharacterState.Jump && state != CharacterState.Skill2 && state != CharacterState.Skill1 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
+			if (uiManager.BattleUIManager.SkillUI [1].fillAmount == 1)
 			{
+				StartCoroutine (uiManager.BattleUIManager.SkillCoolTimeUI (1, skillCoolTime [1]));
+
 				CharState ((int)CharacterState.Skill2);
 			}
 		}
@@ -275,11 +278,12 @@ public class CharacterManager : MonoBehaviour
 
 	public void skill3()
 	{
-		if (uiManager.BattleUIManager.SkillUI [2].fillAmount == 1)
+		if (state != CharacterState.Jump && state != CharacterState.HitDamage && state != CharacterState.Skill3 && state != CharacterState.Skill2 && state != CharacterState.Skill1 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
 		{
-			StartCoroutine (uiManager.BattleUIManager.SkillCoolTimeUI (2, skillCoolTime [2]));
-			if (state != CharacterState.Jump && state != CharacterState.Skill3 && state != CharacterState.Skill2 && state != CharacterState.Skill1 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
+			if (uiManager.BattleUIManager.SkillUI [2].fillAmount == 1)
 			{
+			StartCoroutine (uiManager.BattleUIManager.SkillCoolTimeUI (2, skillCoolTime [2]));
+
 				CharState ((int)CharacterState.Skill3);
 			}
 		}
@@ -287,15 +291,17 @@ public class CharacterManager : MonoBehaviour
 
 	public void Skill4 ()
 	{
-		if (uiManager.BattleUIManager.SkillUI [3].fillAmount == 1)
+		if (state != CharacterState.Jump && state != CharacterState.Skill1 && state != CharacterState.Skill2 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
 		{
-			StartCoroutine (uiManager.BattleUIManager.SkillCoolTimeUI (3, skillCoolTime [3]));
-			if (state != CharacterState.Jump && state != CharacterState.Skill1 && state != CharacterState.Skill2 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
+			if (uiManager.BattleUIManager.SkillUI [3].fillAmount == 1)
 			{
+				StartCoroutine (uiManager.BattleUIManager.SkillCoolTimeUI (3, skillCoolTime [3]));
+
 				//giganticSwordCastSword.SetActive(true);
 				CharState ((int)CharacterState.Skill4);
 			}
 		}
+
 	}
 
 
@@ -417,8 +423,8 @@ public class CharacterManager : MonoBehaviour
 		{
 			skillCoolTime [0] = 5;
 			skillCoolTime [1] = 3;
-			skillCoolTime [2] = 30;
-			skillCoolTime [3] = 40;
+			skillCoolTime [2] = 3;
+			skillCoolTime [3] = 4;
 		}
 
 
@@ -431,6 +437,7 @@ public class CharacterManager : MonoBehaviour
 		{
 			if (charstate.HealthPoint > 0)
 			{
+				
 				this.charstate.HealthPoint -= _damage;
 				CharState ((int)CharacterState.HitDamage);
 			}

@@ -3436,6 +3436,26 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 65000012269444806, guid: 8f98cb3e36980bd40b21966c3a7736e3,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 0.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 65000012269444806, guid: 8f98cb3e36980bd40b21966c3a7736e3,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 0.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 65000012269444806, guid: 8f98cb3e36980bd40b21966c3a7736e3,
+        type: 2}
+      propertyPath: m_Size.z
+      value: 1.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 54000012750978952, guid: 8f98cb3e36980bd40b21966c3a7736e3,
+        type: 2}
+      propertyPath: m_Constraints
+      value: 122
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8f98cb3e36980bd40b21966c3a7736e3, type: 2}
   m_IsPrefabParent: 0
@@ -4750,7 +4770,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
 --- !u!114 &1122668101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5173,7 +5193,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!1 &1309567082
 GameObject:
   m_ObjectHideFlags: 0
@@ -5242,7 +5262,7 @@ MonoBehaviour:
   defense: 0
   charSpeed: 0
   dreamStone: 0
-  skillLevel: 000000000000000000000000000000000000000000000000
+  skillLevel: 030000000300000003000000030000000300000003000000
   equipLevel: 00000000000000000000000000000000
   skillSet: []
 --- !u!4 &1334999812
@@ -5585,7 +5605,7 @@ ParticleSystem:
   moveWithTransform: 1
   autoRandomSeed: 1
   scalingMode: 1
-  randomSeed: -1610655166
+  randomSeed: 1676124657
   InitialModule:
     serializedVersion: 2
     enabled: 1
@@ -7538,7 +7558,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000013358514814, guid: 7841723e9d751154b8a277e4295b9cce, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7841723e9d751154b8a277e4295b9cce, type: 2}
@@ -9156,7 +9176,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000012889354120, guid: 435ef0b7bac512942a731f586a5d0fa7, type: 2}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114000011390068770, guid: 435ef0b7bac512942a731f586a5d0fa7, type: 2}
@@ -10429,7 +10449,8 @@ MonoBehaviour:
   charDir: 0
   JumpMove: 0
   rigdbody: {fileID: 0}
-  charWeapon: {fileID: 0}
+  charWeapon: {fileID: 2051945108}
+  charBox: {fileID: 0}
   normalAttackState: 0
   skillAttackState: 0
   inputmanager: {fileID: 0}
@@ -10440,6 +10461,7 @@ MonoBehaviour:
   basicDamage: 0
   state: 0
   uiManager: {fileID: 0}
+  frameDestroy: {fileID: 0}
 --- !u!1 &1918793663
 GameObject:
   m_ObjectHideFlags: 0
@@ -11358,6 +11380,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 2051945107}
+  - 65: {fileID: 2051945108}
   m_Layer: 0
   m_Name: Bip01 Prop2
   m_TagString: Untagged
@@ -11378,6 +11401,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1926128357}
   m_RootOrder: 2
+--- !u!65 &2051945108
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2051945106}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2055573010
 GameObject:
   m_ObjectHideFlags: 0

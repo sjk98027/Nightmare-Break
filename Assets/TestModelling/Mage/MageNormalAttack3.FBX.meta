@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: d2ddb72da003e2b4eb41d0f155412af8
-timeCreated: 1480061132
+guid: 4be0303c44e527849b23669bdc356331
+timeCreated: 1480310637
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -133,7 +133,7 @@ ModelImporter:
     4300010: Object01
     4300012: Object09
     4300014: Object13
-    7400000: MageNormalAttack
+    7400000: MageNormalAttack3
     9500000: //RootNode
     13700000: Loft01
     13700002: objBox03
@@ -165,9 +165,9 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: MageNormalAttack
+      name: MageNormalAttack3
       takeName: Take 001
-      firstFrame: 0
+      firstFrame: 26
       lastFrame: 75
       wrapMode: 0
       orientationOffsetY: 0
@@ -187,7 +187,15 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.9658674
+        functionName: AnimationEnd
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 3e68f10eba9c99b4493f5859a0165efc,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1

@@ -50,6 +50,7 @@ public class WarriorManager : CharacterManager
 	{
 		skillTime += Time.deltaTime;
 
+
 		if (skillTime >= 2)
 		{
 			Animator.speed = 1;
@@ -116,56 +117,63 @@ public class WarriorManager : CharacterManager
 
 	public override void HitDamage(int _damage)
 	{
-
 		charstate.skillLevel [5] = 4;
 
 		if (charstate.skillLevel [5] > 4)
-		{
-			if(charAlive)
-			{
-				if (charstate.HealthPoint > 0)
-				{
-					int deFendDamage;
-					deFendDamage =_damage - (charstate.skillLevel [5] * 1);
-					Debug.Log (deFendDamage);
-					if (deFendDamage < 0)
-					{
-						deFendDamage = 0;
-					}
-					this.charstate.HealthPoint -= deFendDamage;
-					CharState ((int)CharacterState.HitDamage);
-				}
-				if (charstate.HealthPoint <= 0)
-				{
-					CharState ((int)CharacterState.Death);
-					charAlive= false;
-				}
-			}
-
-		}
-
-
-		else if (charstate.skillLevel [5] == 4)
 		{
 			if (charAlive)
 			{
 				if (charstate.HealthPoint > 0)
 				{
 					int deFendDamage;
-					deFendDamage =_damage - (charstate.skillLevel [5] * 1);
+					deFendDamage = _damage - (charstate.skillLevel [5] * 1);
+					Debug.Log (deFendDamage);
+					if (deFendDamage < 0)
+					{
+						deFendDamage = 0;
+					}
+					this.charstate.HealthPoint -= deFendDamage;
+					if (State != CharacterState.Skill3)
+					{
+						CharState ((int)CharacterState.HitDamage);
+					}
+					else if (State == CharacterState.Skill3)
+					{
+						Debug.Log ("Not trigger");
+					}
+				}
+				if (charstate.HealthPoint <= 0)
+				{
+					CharState ((int)CharacterState.Death);
+					charAlive = false;
+				}
+			}
+
+		}
+		else if (charstate.skillLevel [5] == 4)
+		{
+			
+			if (charAlive)
+			{
+				if (charstate.HealthPoint > 0)
+				{
+					int deFendDamage;
+					deFendDamage = _damage - (charstate.skillLevel [5] * 1);
 
 					if (deFendDamage < 0)
 					{
 						deFendDamage = 0;
 					}
 					this.charstate.HealthPoint -= deFendDamage;
-					CharState ((int)CharacterState.HitDamage);
+					if (state != CharacterState.Skill1 &&state != CharacterState.Skill2 &&state != CharacterState.Skill3 && state != CharacterState.Skill4)
+					{
+						CharState ((int)CharacterState.HitDamage);
+					}
 				}
-
 				else if (charstate.HealthPoint <= 0)
 				{
 					CharState ((int)CharacterState.Death);
-				
+			
 
 					if (!rise)
 					{
@@ -175,18 +183,19 @@ public class WarriorManager : CharacterManager
 						charAlive = true;
 						animator.SetBool ("Rise", false);
 					}
-					else if(rise)
+					else if (rise)
 					{
 						charAlive = false;
 						animator.SetBool ("Rise", true);
 					}
 				}
-			
-					
+		
+				
 
 			}
 		}
 	}
+	
 
 	public IEnumerator colltimeCheck()
 	{
