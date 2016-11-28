@@ -11,24 +11,62 @@ public class WaitUIManager : MonoBehaviour
     Button exitRoomButton;
     Button startGameButton;
 
+    Text createRoomName;
+    int dungeonId;
+    int dungeonLevel;
+
     Room[] rooms;
     int currentRoomNum;
 
     public Room[] Rooms { get { return rooms; } }
+
+    public void ManagerInitialize()
+    {
+        dungeonId = 0;
+        dungeonLevel = 1;
+        currentRoomNum = 0;
+
+        SetUIObject();
+        InitializeAddListener();
+    }
+
+    public void SetUIObject()
+    {
+        createRoomButton = GameObject.Find("CreateRoomButton").GetComponent<Button>();
+        enterRoomButton = GameObject.Find("EnterRoomButton").GetComponent<Button>();
+        exitRoomButton = GameObject.Find("ExitRoomButton").GetComponent<Button>();
+        startGameButton = GameObject.Find("StartGameButton").GetComponent<Button>();
+
+        createRoomName = GameObject.Find("CreateRoomName").GetComponent<Text>();
+    }
+
+    public void InitializeAddListener()
+    {
+        createRoomButton.onClick.AddListener(() => OnClickCreateRoomButton());
+        enterRoomButton.onClick.AddListener(() => OnClickEnterRoomButton());
+        exitRoomButton.onClick.AddListener(() => OnClickExitRoomButton());
+        startGameButton.onClick.AddListener(() => OnClickStartGameButton());
+    }
 
     public void SetRoom(RoomListData roomListData)
     {
         rooms = roomListData.Rooms;
     }
 
-    public void OnClickCreateRoomButton(string roomName, int dungeonId, int dungeonLevel)
+    public void CreateRoom(int roomNum)
     {
-        DataSender.Instance.CreateRoom(roomName, dungeonId, dungeonLevel);
+        currentRoomNum = roomNum;
+        DataSender.Instance.EnterRoom(roomNum);
     }
 
-    public void OnClickEnterRoomButton(int roomNum)
+    public void OnClickCreateRoomButton()
     {
-        DataSender.Instance.EnterRoom(roomNum);
+        DataSender.Instance.CreateRoom(createRoomName.text, dungeonId, dungeonLevel);
+    }
+
+    public void OnClickEnterRoomButton()
+    {
+        DataSender.Instance.EnterRoom(currentRoomNum);
     }
 
     public void OnClickExitRoomButton()

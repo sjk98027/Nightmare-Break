@@ -51,6 +51,7 @@ public class DataHandler : MonoBehaviour
         server_notifier.Add((int)ServerPacketId.DeleteChracterResult, DeleteCharacterResult);
         server_notifier.Add((int)ServerPacketId.SelectCharacterResult, SelectCharacterResult);
         server_notifier.Add((int)ServerPacketId.RoomList, RoomList);
+        server_notifier.Add((int)ServerPacketId.CreateRoomResult, CreateRoomResult);
         server_notifier.Add((int)ServerPacketId.Match, Match);
     }
 
@@ -240,16 +241,17 @@ public class DataHandler : MonoBehaviour
     public void CreateRoomResult(byte[] data)
     {
         Debug.Log("방 생성 결과 수신");
-        ResultPacket resultPacket = new ResultPacket(data);
-        ResultData resultData = resultPacket.GetData();
+        CreateRoomResultPacket resultPacket = new CreateRoomResultPacket(data);
+        CreateRoomResultData resultData = resultPacket.GetData();
 
-        if (resultData.Result == (byte)Result.Success)
-        {
-            StartCoroutine(uiManager.Dialog(1.0f, "방 생성 성공"));
-        }
-        else if (resultData.Result == (byte)Result.Fail)
+        if (resultData.RoomNum == 0)
         {
             StartCoroutine(uiManager.Dialog(1.0f, "방 생성 실패"));
+        }
+        else if (resultData.RoomNum <= WaitUIManager.maxRoomNum)
+        {
+            StartCoroutine(uiManager.Dialog(1.0f, "방 생성 성공"));
+            uiManager.WaitUIManager.CreateRoom(resultData.RoomNum);
         }
     }
 

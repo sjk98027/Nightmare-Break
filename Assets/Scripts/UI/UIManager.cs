@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour, IPointerEnterHandler
         loginUIManager = gameObject.AddComponent<LoginUIManager>();
         loginUIManager.ManagerInitialize();
         waitUIManager = gameObject.AddComponent<WaitUIManager>();
+        waitUIManager.ManagerInitialize();
 
         //battleUIManager = new BattleUIManager();
         //battleUIManager.SetUIObject();
