@@ -10,7 +10,7 @@ public class WarriorManager : CharacterManager
 
     public GameObject SwordDance;
     public bool rise = false;
-    public charWeapon bloodingWeapon;
+    public CharWeapon bloodingWeapon;
     public float riseCooltime;
 
     public override void NormalAttack()

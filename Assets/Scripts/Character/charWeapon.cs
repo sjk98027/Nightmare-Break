@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class charWeapon : MonoBehaviour {
+public class CharWeapon : MonoBehaviour {
 
 	public GameObject character;
 	public CharacterManager charManager;
