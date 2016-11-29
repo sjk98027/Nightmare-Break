@@ -37,7 +37,7 @@ public class WarriorManager : CharacterManager
 
 					if (maelstromDistance < 10)
 					{
-						//enermy [i].transform.Translate ((this.transform.position - enermy [i].transform.position) * maelstromSpeed * Time.deltaTime, Space.World);
+						enermy [i].transform.Translate ((this.transform.position - enermy [i].transform.position) * maelstromSpeed * Time.deltaTime, Space.World);
 					}
 				}
 			}
