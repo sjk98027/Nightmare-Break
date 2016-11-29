@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class LoginUIManager : MonoBehaviour
+public class LoginUIManager
 {
     GameObject createAccountPanel;
     GameObject deleteAccountPanel;
@@ -46,6 +46,7 @@ public class LoginUIManager : MonoBehaviour
     {
         SetUIObject();
         InitializeAddListener();
+        currentCharacter = 0;
     }
 
     public void SetUIObject()

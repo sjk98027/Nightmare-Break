@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class BattleUIManager
 {
-
 	private const float checkTime = 0.1f;
 	private const float mouseOverUI_xPos = 120f;
 	private const float mouseOverUI_yPos = 105f;

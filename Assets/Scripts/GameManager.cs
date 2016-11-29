@@ -30,9 +30,10 @@ public class GameManager : MonoBehaviour
         uiManager = (Instantiate(Resources.Load("Manager/UIManager")) as GameObject).GetComponent<UIManager>();
         uiManager.name = "UIManager";
         uiManager.tag = "UIManager";
+        uiManager.SetDialog();
 
         networkManager.InitializeManager(ip);
-      //  uiManager.InitializeManager();
+        uiManager.SetLoginUIManager();
     }
 
     public void OnApplicationQuit()

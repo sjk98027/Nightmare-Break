@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class WaitUIManager : MonoBehaviour
+public class WaitUIManager
 {
     public const int maxRoomNum = 20;
     public const int maxPlayerNum = 4;
