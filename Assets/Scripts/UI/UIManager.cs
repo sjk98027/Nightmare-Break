@@ -46,7 +46,7 @@ public class UIManager : MonoBehaviour
         catch
         {
             Debug.Log("Dialog Error");
-        }        
+        }
     }
 
     public IEnumerator Dialog(float delay, string text)

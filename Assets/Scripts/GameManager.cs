@@ -27,8 +27,16 @@ public class GameManager : MonoBehaviour
         uiManager.SetDialog();
 
         networkManager.InitializeManager(ip);
-        uiManager.SetLoginUIManager();
-        uiManager.SetWaitUIManager();
+        try
+        {
+            uiManager.SetLoginUIManager();
+            uiManager.SetWaitUIManager();
+        }
+        catch
+        {
+
+        }
+        uiManager.SetBattleUIManager();
     }
 
     public void SetManagerInDungeon()
@@ -41,7 +49,6 @@ public class GameManager : MonoBehaviour
         inputManager.name = "InputManager";
         inputManager.tag = "InputManager";
 
-        uiManager.SetBattleUIManager();
     }
 
     public void OnApplicationQuit()
