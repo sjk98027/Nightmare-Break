@@ -151,6 +151,7 @@ public class WarriroMonster : Monster {
 
 
 	public void MonSterPatternUpdateConduct(bool NormalMode){
+		attackCollider = transform.GetComponentInChildren<MonsterWeapon> ();
 		if (NormalMode) {
 			StartCoroutine (PatternNormalChange ());
 		} else if (!NormalMode) {

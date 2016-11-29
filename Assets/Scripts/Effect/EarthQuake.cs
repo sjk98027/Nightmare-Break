@@ -37,10 +37,11 @@ public class EarthQuake : MonoBehaviour
 		startPosition = transform.position;//처음 위치 설정
 		startRotation = transform.rotation;//처음 회전값 설정
 		try { gameObject.AddComponent<Rigidbody>(); } catch {};
-		//rigidbody.isKinematic = true;
+
 		GetComponent<Rigidbody>().freezeRotation = true;//회전 값 고정
 		GetComponent<Rigidbody>().mass = float.MaxValue; //mass 설정
 		GetComponent<Rigidbody>().useGravity = false; //중력 사용 안함
+		GetComponent<Rigidbody>().isKinematic = true;
 		Running = false;
 
 	}
@@ -76,7 +77,7 @@ public class EarthQuake : MonoBehaviour
 		delta += new Vector3(Time.deltaTime * shakingSpeed * my_rand(),//각 축 마다 흔들리는 값 랜덤으로 가져온다.
 			                 Time.deltaTime * shakingSpeed * my_rand(),//각 축 마다 흔들리는 값 랜덤으로 가져온다.
 		                     Time.deltaTime * shakingSpeed * my_rand());//각 축 마다 흔들리는 값 랜덤으로 가져온다.
-		GetComponent<Rigidbody>().velocity = new Vector3(Mathf.Cos(delta.x) * Time.deltaTime * currentMagnitude * forceByAxis.x, //진도와 각축의 값을 가져와서 속도를 준다.
+		GetComponent<Rigidbody>().position = new Vector3(Mathf.Cos(delta.x) * Time.deltaTime * currentMagnitude * forceByAxis.x, //진도와 각축의 값을 가져와서 속도를 준다.
 			                                             Mathf.Cos(delta.y) * Time.deltaTime * currentMagnitude * forceByAxis.y,//진도와 각축의 값을 가져와서 속도를 준다.
 			                                             Mathf.Cos(delta.z) * Time.deltaTime * currentMagnitude * forceByAxis.z);//진도와 각축의 값을 가져와서 속도를 준다.
 		currentMagnitude /= 15;

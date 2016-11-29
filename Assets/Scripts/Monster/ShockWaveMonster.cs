@@ -2,7 +2,6 @@
 using System.Collections;
 
 public class ShockWaveMonster : Monster {
-	public PoolManager poolManager;
 	private float searchRange = 6.0f;
 	private float moveSpeed = 0.5f;
 
