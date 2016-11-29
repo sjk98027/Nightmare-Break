@@ -54,7 +54,7 @@ public class DataHandler : MonoBehaviour
         server_notifier.Add((int)ServerPacketId.CreateRoomResult, CreateRoomResult);
         server_notifier.Add((int)ServerPacketId.EnterRoomResult, EnterRoomResult);
         server_notifier.Add((int)ServerPacketId.ExitRoomResult, ExitRoomResult);
-        server_notifier.Add((int)ServerPacketId.UDPConnection, UDPConnection);
+        server_notifier.Add((int)ServerPacketId.StartGame, StartGame);
     }
 
     public void SetUdpNotifier()

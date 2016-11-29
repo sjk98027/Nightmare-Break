@@ -331,6 +331,7 @@ public class DataSender : MonoBehaviour
 
         foreach (EndPoint client in networkManager.Clients)
         {
+            Debug.Log(client.ToString());
             packet.endPoint = client;
             sendMsgs.Enqueue(packet);
         }

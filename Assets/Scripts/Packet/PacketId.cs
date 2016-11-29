@@ -37,6 +37,7 @@ public enum ServerPacketId
     CreateRoomResult,
     EnterRoomResult,
     ExitRoomResult,
+    StartGame,
     UDPConnection,
 }
 
