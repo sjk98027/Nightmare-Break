@@ -52,6 +52,8 @@ public class DataHandler : MonoBehaviour
         server_notifier.Add((int)ServerPacketId.SelectCharacterResult, SelectCharacterResult);
         server_notifier.Add((int)ServerPacketId.RoomList, RoomList);
         server_notifier.Add((int)ServerPacketId.CreateRoomResult, CreateRoomResult);
+        server_notifier.Add((int)ServerPacketId.EnterRoomResult, EnterRoomResult);
+        server_notifier.Add((int)ServerPacketId.ExitRoomResult, ExitRoomResult);
         server_notifier.Add((int)ServerPacketId.UDPConnection, UDPConnection);
     }
 
@@ -270,6 +272,12 @@ public class DataHandler : MonoBehaviour
         {
             StartCoroutine(uiManager.Dialog(1.0f, "방 입장 실패"));
         }
+    }
+
+    //Server - 방 퇴장 결과 수신
+    public void ExitRoomResult(byte[] data)
+    {
+
     }
 
     public void StartGame(byte[] data)
