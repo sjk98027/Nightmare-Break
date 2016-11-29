@@ -2,14 +2,20 @@
 using System.Collections;
 
 public class ShockWave : MonoBehaviour {
+    ShockWaveMonster AttackMonster;
+    int damage;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public void GetDamage(int _damage, ShockWaveMonster _AttackMonster) {
+        AttackMonster = _AttackMonster;
+        damage = _damage;
+    }
+
+    void OnParticleCollision(GameObject gameObject)
+    {
+        if(gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            Debug.Log("Hit");
+            gameObject.GetComponent<CharacterManager>().HitDamage(damage);
+        }
+    }
 }
