@@ -57,6 +57,7 @@ public class WaitUIManager
     public void CreateRoom(int roomNum)
     {
         currentRoomNum = roomNum;
+        DataSender.Instance.EnterRoom(roomNum);
     }
 
     public void SetUserNum(int newUserNum)

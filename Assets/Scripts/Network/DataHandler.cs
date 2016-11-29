@@ -265,8 +265,7 @@ public class DataHandler : MonoBehaviour
         else if (resultData.RoomNum <= WaitUIManager.maxRoomNum)
         {
             StartCoroutine(uiManager.Dialog(1.0f, "방 생성 성공"));
-            DataSender.Instance.EnterRoom(resultData.RoomNum);
-            uiManager.WaitUIManager.CreateRoom(resultData.RoomNum);
+            uiManager.WaitUIManager.CreateRoom(resultData.RoomNum - 1);
         }
     }
 
