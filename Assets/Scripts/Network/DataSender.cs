@@ -173,6 +173,7 @@ public class DataSender : MonoBehaviour
     public void CreateCharacter(int gender, int hClass, string name)
     {
         Debug.Log("캐릭터 생성");
+
         CreateCharacterData createCharacterData = new CreateCharacterData((byte)gender, (byte)hClass, name);
         CreateCharacterPacket createCharacterPacket = new CreateCharacterPacket(createCharacterData);
         createCharacterPacket.SetPacketId((int)ClientPacketId.CreateCharacter);
@@ -186,6 +187,7 @@ public class DataSender : MonoBehaviour
     public void DeleteCharacter(int index)
     {
         Debug.Log("캐릭터 삭제");
+
         DeleteCharacterData deleteCharacterData = new DeleteCharacterData((byte)index);
         DeleteCharacterPacket deleteCharacterPacket = new DeleteCharacterPacket(deleteCharacterData);
         deleteCharacterPacket.SetPacketId((int)ClientPacketId.DeleteCharacter);
@@ -199,6 +201,7 @@ public class DataSender : MonoBehaviour
     public void SelectCharacter(int index)
     {
         Debug.Log("캐릭터 선택");
+
         SelectCharacterData selectCharacterData = new SelectCharacterData((byte)index);
         SelectCharacterPacket selectCharacterPacket = new SelectCharacterPacket(selectCharacterData);
         selectCharacterPacket.SetPacketId((int)ClientPacketId.SelectCharacter);
@@ -212,6 +215,7 @@ public class DataSender : MonoBehaviour
     public void RequestCharacterStatus()
     {
         Debug.Log("캐릭터 정보 요청");
+
         ResultData resultData = new ResultData();
         ResultPacket resultPacket = new ResultPacket(resultData);
         resultPacket.SetPacketId((int)ClientPacketId.RequestCharacterStatus);
@@ -225,6 +229,7 @@ public class DataSender : MonoBehaviour
     public void RequestRoomList()
     {
         Debug.Log("방 목록 요청");
+
         ResultData resultData = new ResultData();
         ResultPacket resultPacket = new ResultPacket(resultData);
         resultPacket.SetPacketId((int)ClientPacketId.RequestRoomList);
@@ -238,6 +243,7 @@ public class DataSender : MonoBehaviour
     public void SkillUp(int index)
     {
         Debug.Log("스킬 투자");
+
         SkillUpData skillUpData = new SkillUpData(index);
         SkillUpPacket skillUpPacket = new SkillUpPacket(skillUpData);
         skillUpPacket.SetPacketId((int)ClientPacketId.RequestRoomList);
@@ -251,6 +257,7 @@ public class DataSender : MonoBehaviour
     public void EquipUpgrade(int index)
     {
         Debug.Log("장비 강화");
+
         EquipUpgradeData equipUpgradeData = new EquipUpgradeData(index);
         EquipUpgradePacket equipUpgradePacket = new EquipUpgradePacket(equipUpgradeData);
         equipUpgradePacket.SetPacketId((int)ClientPacketId.EquipUpgrade);
@@ -264,6 +271,7 @@ public class DataSender : MonoBehaviour
     public void CreateRoom(string roomName, int dungeonId, int dungeonLevel)
     {
         Debug.Log("방 생성");
+
         CreateRoomData createRoomData = new CreateRoomData(roomName, dungeonId, dungeonLevel);
         CreateRoomPacket createRoomPacket = new CreateRoomPacket(createRoomData);
         createRoomPacket.SetPacketId((int)ClientPacketId.CreateRoom);
@@ -276,7 +284,8 @@ public class DataSender : MonoBehaviour
     //방 입장 - Tcp
     public void EnterRoom(int roomNum)
     {
-        Debug.Log("방 입장");
+        Debug.Log("방 입장 : " + roomNum);
+
         EnterRoomData enterRoomData = new EnterRoomData(roomNum);
         EnterRoomPacket enterRoomPacket = new EnterRoomPacket(enterRoomData);
         enterRoomPacket.SetPacketId((int)ClientPacketId.EnterRoom);
@@ -290,6 +299,7 @@ public class DataSender : MonoBehaviour
     public void ExitRoom(int roomNum)
     {
         Debug.Log("방 퇴장");
+
         ExitRoomData exitRoomData = new ExitRoomData(roomNum);
         ExitRoomPacket exitRoomPacket = new ExitRoomPacket(exitRoomData);
         exitRoomPacket.SetPacketId((int)ClientPacketId.ExitRoom);
@@ -303,6 +313,7 @@ public class DataSender : MonoBehaviour
     public void StartGame()
     {
         Debug.Log("게임 시작");
+
         ResultData resultData = new ResultData();
         ResultPacket resultPacket = new ResultPacket(resultData);
         resultPacket.SetPacketId((int)ClientPacketId.StartGame);
@@ -313,9 +324,10 @@ public class DataSender : MonoBehaviour
     }
 
     //연결 요청 - Tcp
-    public void RequestConnection()
+    public void RequestUDPConnection()
     {
         Debug.Log("UDP 연결 요청");
+
         ResultData resultData = new ResultData();
         ResultPacket resultPacket = new ResultPacket(resultData);
         resultPacket.SetPacketId((int)ClientPacketId.RequestUDPConnection);
@@ -323,25 +335,35 @@ public class DataSender : MonoBehaviour
         DataPacket packet = new DataPacket(CreatePacket(resultPacket), null);
 
         sendMsgs.Enqueue(packet);
+    }
 
+    //연결 완료 - Tcp
+    public void UDPConnectComplete()
+    {
+        Debug.Log("UDP 연결 완료");
+
+        ResultData resultData = new ResultData();
+        ResultPacket resultPacket = new ResultPacket(resultData);
+        resultPacket.SetPacketId((int)ClientPacketId.UDPConnectComplete);
+
+        DataPacket packet = new DataPacket(CreatePacket(resultPacket), null);
+
+        sendMsgs.Enqueue(packet);
     }
 
     //연결 확인 - Udp
-    public void ConnectionCheck(List<EndPoint> newEndPoint)
+    public void ConnectionCheck(EndPoint newEndPoint)
     {
-        Debug.Log("연결 체크");
+        Debug.Log(newEndPoint.ToString() + " 연결 체크");
+
         ResultData resultData = new ResultData(new byte());
         ResultPacket resultDataPacket = new ResultPacket(resultData);
         resultDataPacket.SetPacketId((int)P2PPacketId.ConnectionCheck);
 
         DataPacket packet = new DataPacket(CreatePacket(resultDataPacket), null);
 
-        foreach (EndPoint client in networkManager.Clients)
-        {
-            Debug.Log(client.ToString());
-            packet.endPoint = client;
-            sendMsgs.Enqueue(packet);
-        }
+        packet.endPoint = newEndPoint;
+        sendMsgs.Enqueue(packet);
     }
 
     //캐릭터의 생성 - Udp

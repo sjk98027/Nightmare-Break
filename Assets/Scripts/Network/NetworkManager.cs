@@ -90,28 +90,11 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
-    public void ConnectP2P(string[] newIp)
+    public void ConnectP2P(string newIp)
     {
-        //아이피 목록 생성
-        clients = new List<EndPoint>();
-
-        for (int i = 0; i < newIp.Length; i++)
-        {
-            Debug.Log(newIp[i]);
-            Debug.Log(serverSock.LocalEndPoint.ToString());
-
-            if (newIp[i] != serverSock.LocalEndPoint.ToString())
-            {
-                string n_ip = newIp[i].Substring(0, newIp[i].IndexOf(":"));
-
-                Debug.Log(n_ip + "추가");
-
-                clients.Add(new IPEndPoint(IPAddress.Parse(n_ip), clientPortNumber));
-            }
-        }
-
-        dataReceiver.StartUdpReceive(clientSock, clients);
-        dataSender.ConnectionCheck(clients);
+        IPEndPoint client = new IPEndPoint(IPAddress.Parse(newIp), clientPortNumber);
+        dataReceiver.StartUdpReceive(clientSock, client);
+        dataSender.ConnectionCheck(client);
     }
 
     public void SocketClose()

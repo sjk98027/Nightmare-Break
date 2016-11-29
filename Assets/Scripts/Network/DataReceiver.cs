@@ -125,17 +125,15 @@ public class DataReceiver : MonoBehaviour
     }
 
     //Udp (클라이언트) 수신 시작
-    public void StartUdpReceive(Socket newSock, List<EndPoint> clients)
+    public void StartUdpReceive(Socket newSock, EndPoint client)
     {
         udpSock = newSock;
 
-        //매개변수로 받은 리스트의 IPEndPoint에서 비동기 수신을 대기한다
-        foreach (EndPoint newEndPoint in clients)
-        {
-            AsyncData asyncData = new AsyncData(udpSock, newEndPoint);
-            udpSock.BeginReceiveFrom(asyncData.msg, 0, AsyncData.msgMaxSize, SocketFlags.None, ref asyncData.EP, new AsyncCallback(UdpReceiveDataCallback), asyncData);
-            Debug.Log("수신시작 : " + newEndPoint);
-        }
+        //매개변수로 받은 리스트의 EndPoint에서 비동기 수신을 대기한다
+        AsyncData asyncData = new AsyncData(udpSock, client);
+        udpSock.BeginReceiveFrom(asyncData.msg, 0, AsyncData.msgMaxSize, SocketFlags.None, ref asyncData.EP, new AsyncCallback(UdpReceiveDataCallback), asyncData);
+
+        Debug.Log("수신시작 : " + client);
     }
 
     //Udp 데이터 수신

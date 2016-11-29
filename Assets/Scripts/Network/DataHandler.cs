@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using UnityEngine;
 
 public enum Result
@@ -19,14 +20,14 @@ public class DataHandler : MonoBehaviour
 
     public Queue<DataPacket> receiveMsgs;
 
-    public delegate void P2PRecvNotifier(byte[] data);
-    public delegate void ServerRecvNotifier(byte[] data);
+    public delegate void P2PRecvNotifier(DataPacket packet);
+    public delegate void ServerRecvNotifier(DataPacket packet);
     P2PRecvNotifier p2pRecvNotifier;
     ServerRecvNotifier serverRecvNotifier;
     private Dictionary<int, P2PRecvNotifier> p2p_notifier = new Dictionary<int, P2PRecvNotifier>();
     private Dictionary<int, ServerRecvNotifier> server_notifier = new Dictionary<int, ServerRecvNotifier>();
 
-    bool[] connectionCheck;
+    Dictionary<string, bool> connectionCheck;
     public DateTime dTime;
 
     public void Initialize(Queue<DataPacket> receiveQueue, Queue<DataPacket> sendQueue)
@@ -62,11 +63,12 @@ public class DataHandler : MonoBehaviour
         server_notifier.Add((int)ServerPacketId.ExitRoomResult, ExitRoomResult);
         server_notifier.Add((int)ServerPacketId.StartGame, StartGame);
         server_notifier.Add((int)ServerPacketId.UDPConnection, UDPConnection);
+        server_notifier.Add((int)ServerPacketId.StartDungeon, StartDungeon);
     }
 
     public void SetUdpNotifier()
     {
-        p2p_notifier.Add((int)P2PPacketId.ConnectionCheck, ConnectionAnswer);
+        p2p_notifier.Add((int)P2PPacketId.ConnectionCheck, ConnectionCheck);
         p2p_notifier.Add((int)P2PPacketId.CreateUnit, CreateUnit);
         p2p_notifier.Add((int)P2PPacketId.CharacterPosition, CharacterPosition);
         p2p_notifier.Add((int)P2PPacketId.CharacterAction, CharacterAction);
@@ -86,24 +88,22 @@ public class DataHandler : MonoBehaviour
 
                 packet = receiveMsgs.Dequeue();
 
-                byte[] msg = packet.msg;
-
                 HeaderData headerData = new HeaderData();
                 HeaderSerializer headerSerializer = new HeaderSerializer();
-                headerSerializer.SetDeserializedData(msg);
+                headerSerializer.SetDeserializedData(packet.msg);
                 headerSerializer.Deserialize(ref headerData);
 
                 //Debug.Log("패킷 길이 : " + msg.Length);
                 //Debug.Log("패킷 아이디 : " + headerData.id);
                 //Debug.Log("패킷 출처 : " + headerData.source);
 
-                DataReceiver.ResizeByteArray(0, NetworkManager.packetSource + NetworkManager.packetId, ref msg);
+                DataReceiver.ResizeByteArray(0, NetworkManager.packetSource + NetworkManager.packetId, ref packet.msg);
 
                 if (packet.endPoint == null)
                 {
                     if (server_notifier.TryGetValue(headerData.id, out serverRecvNotifier))
                     {
-                        serverRecvNotifier(msg);
+                        serverRecvNotifier(packet);
                     }
                     else
                     {
@@ -114,7 +114,7 @@ public class DataHandler : MonoBehaviour
                 {
                     if (p2p_notifier.TryGetValue(headerData.id, out p2pRecvNotifier))
                     {
-                        p2pRecvNotifier(msg);
+                        p2pRecvNotifier(packet);
                     }
                     else
                     {
@@ -126,10 +126,10 @@ public class DataHandler : MonoBehaviour
     }
     
     //Server - 가입 결과
-    public void CreateAccountResult(byte[] data)
+    public void CreateAccountResult(DataPacket packet)
     {
         Debug.Log("가입 결과 수신");
-        ResultPacket resultPacket = new ResultPacket(data);
+        ResultPacket resultPacket = new ResultPacket(packet.msg);
         ResultData resultData = resultPacket.GetData();
         
         if(resultData.Result == (byte)Result.Success)
@@ -143,10 +143,10 @@ public class DataHandler : MonoBehaviour
     }
 
     //Server - 탈퇴 결과
-    public void DeleteAccountResult(byte[] data)
+    public void DeleteAccountResult(DataPacket packet)
     {
         Debug.Log("탈퇴 결과 수신");
-        ResultPacket resultPacket = new ResultPacket(data);
+        ResultPacket resultPacket = new ResultPacket(packet.msg);
         ResultData resultData = resultPacket.GetData();
 
         if (resultData.Result == (byte)Result.Success)
@@ -160,11 +160,11 @@ public class DataHandler : MonoBehaviour
     }
 
     //Server - 로그인 결과
-    public void LoginResult(byte[] data)
+    public void LoginResult(DataPacket packet)
     {
         Debug.Log("로그인 결과 수신");
 
-        ResultPacket resultPacket = new ResultPacket(data);
+        ResultPacket resultPacket = new ResultPacket(packet.msg);
         ResultData resultData = resultPacket.GetData();
 
         if (resultData.Result == (byte)Result.Success)
@@ -178,11 +178,11 @@ public class DataHandler : MonoBehaviour
     }
 
     //Server - 캐릭터 생성 결과
-    public void CreateCharacterResult(byte[] data)
+    public void CreateCharacterResult(DataPacket packet)
     {
         Debug.Log("캐릭터 생성 결과 수신");
         
-        ResultPacket resultPacket = new ResultPacket(data);
+        ResultPacket resultPacket = new ResultPacket(packet.msg);
         ResultData resultData = resultPacket.GetData();
 
         if (resultData.Result == (byte)Result.Success)
@@ -196,11 +196,11 @@ public class DataHandler : MonoBehaviour
     }
 
     //Server - 캐릭터 삭제 결과
-    public void DeleteCharacterResult(byte[] data)
+    public void DeleteCharacterResult(DataPacket packet)
     {
         Debug.Log("캐릭터 삭제 결과 수신");
 
-        ResultPacket resultPacket = new ResultPacket(data);
+        ResultPacket resultPacket = new ResultPacket(packet.msg);
         ResultData resultData = resultPacket.GetData();
 
         if (resultData.Result == (byte)Result.Success)
@@ -214,11 +214,11 @@ public class DataHandler : MonoBehaviour
     }
 
     //Server - 캐릭터 선택 결과
-    public void SelectCharacterResult(byte[] data)
+    public void SelectCharacterResult(DataPacket packet)
     {
         Debug.Log("캐릭터 선택 결과 수신");
 
-        ResultPacket resultPacket = new ResultPacket(data);
+        ResultPacket resultPacket = new ResultPacket(packet.msg);
         ResultData resultData = resultPacket.GetData();
 
         if (resultData.Result == (byte)Result.Success)
@@ -232,31 +232,31 @@ public class DataHandler : MonoBehaviour
     }
 
     //Server - 방 목록 수신
-    public void RoomList(byte[] data)
+    public void RoomList(DataPacket packet)
     {
         Debug.Log("방 목록 수신");
-        RoomListPacket roomListPacket = new RoomListPacket(data);
+        RoomListPacket roomListPacket = new RoomListPacket(packet.msg);
         RoomListData roomListData = roomListPacket.GetData();
 
         uiManager.WaitUIManager.SetRoom(roomListData);
     }
 
     //Server - 캐릭터 정보 수신
-    public void CharacterData(byte[] data)
+    public void CharacterData(DataPacket packet)
     {
         Debug.Log("캐릭터 정보 수신");
-        CharacterStatusPacket characterStatusPacket = new CharacterStatusPacket(data);
+        CharacterStatusPacket characterStatusPacket = new CharacterStatusPacket(packet.msg);
         CharacterStatusData characterStatusData = characterStatusPacket.GetData();
 
         characterStatus.SetCharacterStatus(characterStatusData);
     }
 
     //Server - 방 생성 결과 수신
-    public void CreateRoomResult(byte[] data)
+    public void CreateRoomResult(DataPacket packet)
     {
         Debug.Log("방 생성 결과 수신");
-        CreateRoomResultPacket resultPacket = new CreateRoomResultPacket(data);
-        CreateRoomResultData resultData = resultPacket.GetData();
+        RoomResultPacket resultPacket = new RoomResultPacket(packet.msg);
+        RoomResultData resultData = resultPacket.GetData();
 
         if (resultData.RoomNum < 0)
         {
@@ -265,45 +265,47 @@ public class DataHandler : MonoBehaviour
         else if (resultData.RoomNum <= WaitUIManager.maxRoomNum)
         {
             StartCoroutine(uiManager.Dialog(1.0f, "방 생성 성공"));
+            DataSender.Instance.EnterRoom(resultData.RoomNum);
             uiManager.WaitUIManager.CreateRoom(resultData.RoomNum);
         }
     }
 
     //Server - 방 입장 결과 수신
-    public void EnterRoomResult(byte[] data)
+    public void EnterRoomResult(DataPacket packet)
     {
         Debug.Log("방 입장 결과 수신");
-        ResultPacket resultPacket = new ResultPacket(data);
-        ResultData resultData = resultPacket.GetData();
+        RoomResultPacket resultPacket = new RoomResultPacket(packet.msg);
+        RoomResultData resultData = resultPacket.GetData();
 
-        if (resultData.Result == (byte)Result.Success)
-        {
-            StartCoroutine(uiManager.Dialog(1.0f, "방 입장 성공"));
-        }
-        else if (resultData.Result == (byte)Result.Fail)
+        if (resultData.RoomNum < 0)
         {
             StartCoroutine(uiManager.Dialog(1.0f, "방 입장 실패"));
+        }
+        else if (resultData.RoomNum <= WaitUIManager.maxPlayerNum)
+        {
+            StartCoroutine(uiManager.Dialog(1.0f, "방 입장 성공"));
+            uiManager.WaitUIManager.SetUserNum(resultData.RoomNum);
         }
     }
 
     //Server - 방 퇴장 결과 수신
-    public void ExitRoomResult(byte[] data)
+    public void ExitRoomResult(DataPacket packet)
     {
 
     }
 
     //Server - 게임 시작
-    public void StartGame(byte[] data)
+    public void StartGame(DataPacket packet)
     {
         Debug.Log("게임 시작");
 
-        ResultPacket resultPacket = new ResultPacket(data);
+        ResultPacket resultPacket = new ResultPacket(packet.msg);
         ResultData resultData = resultPacket.GetData();
 
         if (resultData.Result == (byte)Result.Success)
         {
             Debug.Log("게임 시작");
-            DataSender.Instance.RequestConnection();
+            DataSender.Instance.RequestUDPConnection();
         }
         else if (resultData.Result == (byte)Result.Fail)
         {
@@ -312,20 +314,56 @@ public class DataHandler : MonoBehaviour
     }
 
     //Server - 매치 완료
-    public void UDPConnection(byte[] data)
+    public void UDPConnection(DataPacket packet)
     {
         Debug.Log("매치 완료");
-        MatchDataPacket matchDataPacket = new MatchDataPacket(data);
+        MatchDataPacket matchDataPacket = new MatchDataPacket(packet.msg);
         MatchData matchData = matchDataPacket.GetData();
-        connectionCheck = new bool[matchData.ip.Length];
 
-        networkManager.ConnectP2P(matchData.ip);
+        connectionCheck = new Dictionary<string, bool>();
+
+        for (int i = 0; i < matchData.ip.Length; i++)
+        {
+            string ip = matchData.ip[i];
+            ip = ip.Substring(0, ip.IndexOf(":"));
+
+            connectionCheck.Add(ip, false);
+            networkManager.ConnectP2P(ip);
+        }
     }
 
-    //Client
-    public void ConnectionAnswer(byte[] data)
+    //Client - 연결 확인
+    public void ConnectionCheck(DataPacket packet)
     {
-        Debug.Log("연결 확인 답장");
+        Debug.Log("연결 확인");
+
+        string ip = packet.endPoint.ToString();
+        ip = ip.Substring(0, ip.IndexOf(":"));
+
+        try
+        {
+            connectionCheck[ip] = true;
+        }
+        catch
+        {
+            Debug.Log("DataHandler.ConnectionCheck::KeyValue 에러");
+        }
+
+        foreach (KeyValuePair<string, bool> coCheck in connectionCheck)
+        {
+            if (!coCheck.Value)
+            {
+                return;
+            }
+        }
+
+        DataSender.Instance.UDPConnectComplete();
+    }
+
+    //Server - 던전 시작
+    public void StartDungeon(DataPacket packet)
+    {
+        Debug.Log("던전 시작");
 
         gameManager.SetManagerInDungeon();
         dungeonManager = GameObject.FindGameObjectWithTag("DungeonManager").GetComponent<DungeonManager>();
@@ -335,21 +373,21 @@ public class DataHandler : MonoBehaviour
     }
 
     //Client
-    public void CreateUnit(byte[] data)
+    public void CreateUnit(DataPacket packet)
     {
         Debug.Log("유닛 생성");
-        CreateUnitPacket createUnitPacket = new CreateUnitPacket(data);
+        CreateUnitPacket createUnitPacket = new CreateUnitPacket(packet.msg);
         CreateUnitData createUnitData = createUnitPacket.GetData();
 
         dungeonManager.CreateUnit(createUnitData.ID, new Vector3(createUnitData.PosX, createUnitData.PosY, createUnitData.PosZ));
     }
 
     //Client
-    public void CharacterPosition(byte[] data)
+    public void CharacterPosition(DataPacket packet)
     {
         Debug.Log("캐릭터 상태 수신");
 
-        CharacterPositionPacket characterPositionPacket = new CharacterPositionPacket(data);
+        CharacterPositionPacket characterPositionPacket = new CharacterPositionPacket(packet.msg);
         CharacterPositionData characterPositionData = characterPositionPacket.GetData();
 
         Debug.Log("현재시간 : " + (DateTime.Now - dTime).TotalSeconds);
@@ -367,11 +405,11 @@ public class DataHandler : MonoBehaviour
     }
 
     //Client
-    public void CharacterAction(byte[] data)
+    public void CharacterAction(DataPacket packet)
     {
         Debug.Log("캐릭터 행동 수신");
 
-        CharacterActionPacket characterActionPacket = new CharacterActionPacket(data);
+        CharacterActionPacket characterActionPacket = new CharacterActionPacket(packet.msg);
         CharacterActionData characterActionData = characterActionPacket.GetData();
 
         Debug.Log("캐릭터 행동" + characterActionData.action);

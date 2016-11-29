@@ -18,6 +18,7 @@
     ExitRoom,
     StartGame,
     RequestUDPConnection,
+    UDPConnectComplete,
 }
 
 public enum ServerPacketId
@@ -36,9 +37,11 @@ public enum ServerPacketId
     EquipUpgradeResult,
     CreateRoomResult,
     EnterRoomResult,
+    RoomUserData,
     ExitRoomResult,
     StartGame,
     UDPConnection,
+    StartDungeon,
 }
 
 public enum P2PPacketId
