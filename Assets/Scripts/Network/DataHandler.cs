@@ -52,7 +52,7 @@ public class DataHandler : MonoBehaviour
         server_notifier.Add((int)ServerPacketId.SelectCharacterResult, SelectCharacterResult);
         server_notifier.Add((int)ServerPacketId.RoomList, RoomList);
         server_notifier.Add((int)ServerPacketId.CreateRoomResult, CreateRoomResult);
-        server_notifier.Add((int)ServerPacketId.Match, Match);
+        server_notifier.Add((int)ServerPacketId.UDPConnection, UDPConnection);
     }
 
     public void SetUdpNotifier()
@@ -272,8 +272,26 @@ public class DataHandler : MonoBehaviour
         }
     }
 
+    public void StartGame(byte[] data)
+    {
+        Debug.Log("게임 시작");
+
+        ResultPacket resultPacket = new ResultPacket(data);
+        ResultData resultData = resultPacket.GetData();
+
+        if (resultData.Result == (byte)Result.Success)
+        {
+            Debug.Log("게임 시작");
+            DataSender.Instance.RequestConnection();
+        }
+        else if (resultData.Result == (byte)Result.Fail)
+        {
+            Debug.Log("게임 시작 실패");
+        }
+    }
+
     //Server
-    public void Match(byte[] data)
+    public void UDPConnection(byte[] data)
     {
         Debug.Log("매치 완료");
         MatchDataPacket matchDataPacket = new MatchDataPacket(data);

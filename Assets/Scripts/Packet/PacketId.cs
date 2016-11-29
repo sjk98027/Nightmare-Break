@@ -37,7 +37,7 @@ public enum ServerPacketId
     CreateRoomResult,
     EnterRoomResult,
     ExitRoomResult,
-    Match,
+    UDPConnection,
 }
 
 public enum P2PPacketId
