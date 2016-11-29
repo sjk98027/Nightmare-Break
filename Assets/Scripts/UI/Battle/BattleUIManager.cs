@@ -78,6 +78,7 @@ public class BattleUIManager
 		for (int i = 0; i < skillUI.Length; i++)
         {
 			skillUI [i] = GameObject.Find ("Skill"+(i+1)).GetComponent<Image> ();
+           
 			if (i < skillCoolTimeUI.Length) {
 				skillCoolTimeUI [i] = GameObject.Find ("Skill" + (i + 1) + "_CoolTime").GetComponent<Image> ();
 			}
