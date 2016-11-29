@@ -306,7 +306,7 @@ GameObject:
   - 4: {fileID: 4000012137473344}
   - 95: {fileID: 95000010729959576}
   - 65: {fileID: 65000014097948880}
-  - 114: {fileID: 114000010869948710}
+  - 114: {fileID: 114000010962362116}
   m_Layer: 9
   m_Name: Duck
   m_TagString: Enermy
@@ -1001,7 +1001,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114000010869948710
+--- !u!114 &114000010962362116
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1009,13 +1009,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000012217331354}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
+  m_Script: {fileID: 11500000, guid: cd8fc76bfbdaf8f48a9a08094ad174c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: []
-  animator: {fileID: 0}
+  animator: {fileID: 95000010729959576}
   targetPlayer: {fileID: 0}
-  HittedBox: {fileID: 0}
+  HittedBox: {fileID: 65000014097948880}
   normalMode: 0
   gateArrayNumber: 0
   monsterArrayNumber: 0
@@ -1024,14 +1024,15 @@ MonoBehaviour:
   RunRange: 0
   attackRange: 0
   attackCycle: 0
+  baseDamage: 0
   isAlive: 0
   isAttack: 0
   playerToMonsterDamage: []
   aggroRank: []
   changeTargetTime: 0
+  attackCollider: {fileID: 0}
   currentDisTanceArray: []
   stateDirecion: 0
-  attackCollider: {fileID: 0}
   currentDisTance: 0
   middleboss: {fileID: 0}
   monsterState: 0

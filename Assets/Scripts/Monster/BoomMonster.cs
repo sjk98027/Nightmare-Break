@@ -174,6 +174,8 @@ public void MonSterPatternUpdateConduct(bool NormalMode){
 		}
 	}
 
+
+
 	public IEnumerator PatternNormalChange(){
 		while(IsAlive){
 			if (targetPlayer != null) {	
@@ -335,27 +337,6 @@ public void MonSterPatternUpdateConduct(bool NormalMode){
 		}
 	}
 
-
-//	public override void AttackEnd(){
-//		
-//		moveAble=true;
-//		isAttack = false;
-//		animator.SetInteger ("State", 0);
-////		attackCollider.AttackColliderOff ();
-//	}
-//	public override void AttackStart(){
-//		moveAble = false;
-//		isAttack = true;
-//		AttackBlitz ();
-//	}
-//	public override void AnimatorReset(){
-//		animator.SetInteger ("State", 0);
-//	}
-//	public override void AttackBlitz()
-//	{
-////		attackCollider.AttackColliderOn();
-//	}
-//
 
 
 }
