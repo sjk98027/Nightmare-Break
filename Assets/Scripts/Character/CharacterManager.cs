@@ -52,14 +52,15 @@ public class CharacterManager : MonoBehaviour
 
     public bool SkillAttackState { get { return this.skillAttackState; } }
 
-    public UIManager uiManager;
+    private UIManager uiManager;
 
+    public UIManager UIManager { get { return uiManager; } set { uiManager = value; } }
 
-    void Awake()
+    void Start()
     {
         charStatus = GameObject.FindGameObjectWithTag("CharStatus").GetComponent<CharacterStatus>();
         //charstate.SetCharacterStatus ();
-        uiManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
+      //  uiManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
         animator = GetComponent<Animator>();
         state = CharacterState.Idle;
         rigdbody = GetComponent<Rigidbody>();
