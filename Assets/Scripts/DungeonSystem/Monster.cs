@@ -68,9 +68,10 @@ public class Monster : MonoBehaviour {
 	public MonsterWeapon attackCollider;
 	[SerializeField]private float[]currentDisTanceArray;
 	protected Vector3 checkDirection; // monster chaseplayer and move variable;
-//	public bool IsAttack{
-//		get{ return isAttack;}
-//	}
+	public bool IsAttack{
+		get{ return isAttack;}
+		set{ isAttack = value;}
+	}
 	public bool IsAlive{
 		get{ return isAlive;}
 		set{ isAlive = value;}
@@ -108,8 +109,9 @@ public class Monster : MonoBehaviour {
 		currentLife = 100;
 		HittedBox = this.gameObject.GetComponent<BoxCollider> ();
 		baseDamage = 10;
-		if (this.name != "Duck") {
+		if (attackCollider != null) {
 			attackCollider = this.transform.GetComponentInChildren<MonsterWeapon> ();
+			attackCollider.MonsterWeaponSet ();
 		}
 	}
 
@@ -207,8 +209,14 @@ public class Monster : MonoBehaviour {
 		StartCoroutine (LookatChange ());
 		moveAble=true;
 		isAttack = false;
+		if (attackCollider != null) {
+			attackCollider.AttackColliderOff();
+		}
+		else if (attackCollider == null) {
+			//Instantiate ();	
+		}
 		animator.SetInteger ("State", 0);
-		attackCollider.AttackColliderOff ();
+
 	}
 	public virtual void AttackStart(){
 		moveAble = false;
@@ -220,11 +228,17 @@ public class Monster : MonoBehaviour {
 	}
 	public virtual void AttackBlitz()
 	{
-		if (this.name != "Duck") {
-			attackCollider.AttackColliderOn();
-		}
-		else if (this.name == "Duck") {
-			//Instantiate ();	
+//		if (this.name != "Duck") {
+//			attackCollider.AttackColliderOn();
+//		}
+//		else if (this.name == "Duck") {
+//			Instantiate (Resources.Load ("Effect/Monster_ShockWave"),new Vector3(this.transform.position.x ,this.transform.position.y+10.0f ,this.transform.position.z),this.transform.rotation);	
+//		}
+		if (attackCollider != null) {
+			attackCollider.AttackColliderOn ();
+		} else if (attackCollider == null) {
+			Instantiate (Resources.Load ("Effect/Monster_ShockWave"),new Vector3(this.transform.position.x ,this.transform.position.y+10.0f ,this.transform.position.z),this.transform.rotation);	
+
 		}
 
 	}
