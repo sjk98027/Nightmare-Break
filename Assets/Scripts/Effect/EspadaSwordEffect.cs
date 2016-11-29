@@ -3,7 +3,6 @@ using System.Collections;
 
 public class EspadaSwordEffect : MonoBehaviour
 {
-
     ParticleSystem myParticle;
 	GameObject giganticSword;
 	Renderer rend;
@@ -67,7 +66,6 @@ public class EspadaSwordEffect : MonoBehaviour
 			Debug.Log ("in Field");
         }
     }
-
 
 	void OnTriggerEnter(Collider coll)
 	{

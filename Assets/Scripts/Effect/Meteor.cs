@@ -15,5 +15,16 @@ public class Meteor : MonoBehaviour {
             Destroy(gameObject);
             Instantiate(Resources.Load<GameObject>("Effect/MeteorExplosion"), coll.contacts[0].point, Quaternion.identity);
         }
+
     }
+
+	void OnTriggerEnter(Collider coll)
+	{
+		if (coll.gameObject.layer == LayerMask.NameToLayer ("Enermy"))
+		{
+			Destroy(gameObject);
+			Instantiate(Resources.Load<GameObject>("Effect/MeteorExplosion"), this.transform.position, Quaternion.identity);
+
+		}
+	}
 }

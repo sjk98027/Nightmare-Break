@@ -24,7 +24,7 @@ GameObject:
   - 54: {fileID: 54000012779347108}
   - 65: {fileID: 65000010200723854}
   - 114: {fileID: 114000012361368984}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: GiganticSword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   count: 0
-  charstate: {fileID: 0}
+  charStatus: {fileID: 0}
   charManager: {fileID: 0}
   character: {fileID: 0}
   swordDamage: 0
