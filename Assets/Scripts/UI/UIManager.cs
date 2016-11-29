@@ -37,9 +37,16 @@ public class UIManager : MonoBehaviour
 
     public void SetDialog()
     {
-        dialogPanel = GameObject.Find("DialogPanel");
-        dialog = dialogPanel.transform.FindChild("Dialog").GetComponent<Text>();
-        dialogPanel.SetActive(false);
+        try
+        {
+            dialogPanel = GameObject.Find("DialogPanel");
+            dialog = dialogPanel.transform.FindChild("Dialog").GetComponent<Text>();
+            dialogPanel.SetActive(false);
+        }
+        catch
+        {
+            Debug.Log("Dialog Error");
+        }        
     }
 
     public IEnumerator Dialog(float delay, string text)
