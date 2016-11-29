@@ -3,6 +3,18 @@ using System.Collections;
 
 public class Meteor : MonoBehaviour {
 
+	public CharacterStatus charStatus;
+	public CharacterManager charManager;
+	public GameObject character;
+	public int swordDamage;
+
+	void Start()
+	{
+		character = GameObject.FindWithTag ("Player");
+		charManager = character.GetComponent<CharacterManager> ();
+		charStatus = charManager.CharStatus;
+	}
+
     void Update()
     {
         transform.Translate(0, 0, 30 * Time.smoothDeltaTime, Space.Self);    
@@ -22,6 +34,17 @@ public class Meteor : MonoBehaviour {
 	{
 		if (coll.gameObject.layer == LayerMask.NameToLayer ("Enermy"))
 		{
+			Debug.Log ("in monster");
+			Monster monsterDamage = coll.gameObject.GetComponent<Monster> ();
+
+			if (monsterDamage != null)
+			{	
+				
+				monsterDamage.HitDamage (swordDamage,character );
+				swordDamage = 0;
+
+			}
+
 			Destroy(gameObject);
 			Instantiate(Resources.Load<GameObject>("Effect/MeteorExplosion"), this.transform.position, Quaternion.identity);
 

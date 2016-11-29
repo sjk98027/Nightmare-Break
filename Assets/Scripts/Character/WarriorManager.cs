@@ -28,52 +28,53 @@ public class WarriorManager : CharacterManager
         float maelstromSpeed = 0.5f;
         float maelstromDistance;
         skillTime += Time.deltaTime;
+			
+			if (enermy != null)
+			{
+				for (int i = 0; i < enermy.Length; i++)
+				{
+					maelstromDistance = Vector3.Distance (this.transform.position, enermy [i].transform.position);
 
-        if (enermy != null)
-        {
-            for (int i = 0; i < enermy.Length; i++)
-            {
-                maelstromDistance = Vector3.Distance(this.transform.position, enermy[i].transform.position);
+					if (maelstromDistance < 10)
+					{
+						//enermy [i].transform.Translate ((this.transform.position - enermy [i].transform.position) * maelstromSpeed * Time.deltaTime, Space.World);
+					}
+				}
+			}
 
-                if (maelstromDistance < 10)
-                {
-                    enermy[i].transform.Translate((this.transform.position - enermy[i].transform.position) * maelstromSpeed * Time.deltaTime, Space.World);
-                }
-            }
-        }
+			if (skillTime >= 1.5f)
+			{
+				skillTime = 0;
+			}
 
-        if (skillTime >= 1.5f)
-        {
-
-            skillTime = 0;
-        }
     }
 
     //Warrior Cutoff
     public override void ProcessSkill2()
     {
-        skillTime += Time.deltaTime;
+			skillTime += Time.deltaTime;
 
-        if (skillTime >= 2)
-        {
-            animator.speed = 1;
-            skillTime = 0;
-        }
+			if (skillTime >= 2)
+			{
+				animator.speed = 1;
+				skillTime = 0;
+			}
+
     }
 
     public override void ProcessSkill3()
     {
-        if (!SwordDance)
-        {
-            if (transform.rotation.y == 0)
-            {
-                SwordDance = Instantiate(Resources.Load<GameObject>("Effect/SwordDance"), new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z + 0.5f), Quaternion.Euler(-90, 0, 0)) as GameObject;
-            }
-            else
-            {
-                SwordDance = Instantiate(Resources.Load<GameObject>("Effect/SwordDance"), new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z - 0.5f), Quaternion.Euler(90, 0, 0)) as GameObject;
-            }
-        }
+			if (!SwordDance)
+			{
+				if (transform.rotation.y == 0)
+				{
+					SwordDance = Instantiate (Resources.Load<GameObject> ("Effect/SwordDance"), new Vector3 (transform.position.x, transform.position.y + 1.0f, transform.position.z + 0.5f), Quaternion.Euler (-90, 0, 0)) as GameObject;
+				}
+				else
+				{
+					SwordDance = Instantiate (Resources.Load<GameObject> ("Effect/SwordDance"), new Vector3 (transform.position.x, transform.position.y + 1.0f, transform.position.z - 0.5f), Quaternion.Euler (90, 0, 0)) as GameObject;
+				}
+			}
     }
 
     public override void ProcessSkill4()
@@ -155,7 +156,6 @@ public class WarriorManager : CharacterManager
                     if (CharStatus.HealthPoint <= 0)
                     {
                         CharState((int)CharacterState.Death);
-                        charAlive = false;
                         charAlive = false;
                     }
                 }

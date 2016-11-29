@@ -72,13 +72,13 @@ public class CharacterStatus : MonoBehaviour
         level = 0;
         charClass = 0;
         exp = 0;
-        healthPoint = 0;
-        magicPoint = 0;
+        healthPoint = 100;
+        magicPoint = 100;
         hpRegeneration = 0;
         mpRegeneration = 0;
 		moveSpeed = 7;
-        attack = 0;
-        defense = 0;
+        attack = 10;
+        defense = 10;
         dreamStone = 0;
         skillLevel = new int[skillNum];
         equipLevel = new int[equipNum];
