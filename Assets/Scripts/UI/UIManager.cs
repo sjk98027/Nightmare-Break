@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class UIManager : MonoBehaviour
 {
-	public CharacterManager charManager;
+	CharacterManager charManager;
     LoginUIManager loginUIManager;
     WaitUIManager waitUIManager;
     BattleUIManager battleUIManager;

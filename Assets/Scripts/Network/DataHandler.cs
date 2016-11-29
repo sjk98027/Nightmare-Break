@@ -326,8 +326,11 @@ public class DataHandler : MonoBehaviour
             string ip = matchData.ip[i];
             ip = ip.Substring(0, ip.IndexOf(":"));
 
-            connectionCheck.Add(ip, false);
-            networkManager.ConnectP2P(ip);
+            if (ip != networkManager.client.ToString().Substring(0, networkManager.client.ToString().IndexOf(":")))
+            {
+                connectionCheck.Add(ip, false);
+                networkManager.ConnectP2P(ip);
+            }
         }
     }
 
