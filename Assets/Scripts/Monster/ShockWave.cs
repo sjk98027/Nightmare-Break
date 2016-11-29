@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class ShockWave : MonoBehaviour {
-    ShockWaveMonster AttackMonster;
-    int damage;
+    public ShockWaveMonster AttackMonster;
+    public int damage;
 
     public void GetDamage(int _damage, ShockWaveMonster _AttackMonster) {
         AttackMonster = _AttackMonster;
@@ -16,6 +16,7 @@ public class ShockWave : MonoBehaviour {
         {
             Debug.Log("Hit");
             gameObject.GetComponent<CharacterManager>().HitDamage(damage);
+			Destroy (this.gameObject);
         }
     }
 }

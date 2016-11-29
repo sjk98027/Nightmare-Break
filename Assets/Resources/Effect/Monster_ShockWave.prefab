@@ -53,6 +53,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a3a7f92a38d9a44a8472520fda8d5c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AttackMonster: {fileID: 114000010962362116, guid: ca677864a6c4d7643a08f95691656141,
+    type: 2}
+  damage: 0
 --- !u!198 &198000012292314188
 ParticleSystem:
   m_ObjectHideFlags: 1

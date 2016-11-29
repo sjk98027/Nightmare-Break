@@ -4,7 +4,7 @@ using System.Collections;
 public class Section : MonoBehaviour {
 	public DungeonManager dungeonManager;
 	public BoomMonster[] boomMonster;
-	public WarriroMonster[] warriorMonster;
+	public WarriorMonster[] warriorMonster;
 	public MiddleBoss middleBoss;
 
 	public Vector3[] boomMonsterPosition;

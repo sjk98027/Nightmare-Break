@@ -18,16 +18,14 @@ public class ShockWaveMonster : Monster {
 	{
 		IsHited = true;
 		currentLife -= _Damage;
-		if(monsterState != StatePosition.Boom){
-			if (currentLife > 0) {
-				for (int i = 0; i < player.Length; i++) {
-					if (player [i] == attacker) {
-						playerToMonsterDamage [i] += _Damage;
-						targetPlayer = player [i];
-					}
+		if (currentLife > 0) {
+			for (int i = 0; i < player.Length; i++) {
+				if (player [i] == attacker) {
+					playerToMonsterDamage [i] += _Damage;
+					targetPlayer = player [i];
 				}
-				Pattern (StatePosition.TakeDamage);
 			}
+			Pattern (StatePosition.TakeDamage);
 		}
 		if (currentLife <= 0) {
 			IsAlive = false;
@@ -46,7 +44,6 @@ public class ShockWaveMonster : Monster {
 		Idle=1,
 		Run,
 		Attack,
-		Boom,
 		TakeDamage,
 		Death
 	};
@@ -104,12 +101,7 @@ public class ShockWaveMonster : Monster {
 				animator.SetInteger("State", 0);
 				break;
 			}
-		case StatePosition.Boom:
-			{
-				idlePoint = this.gameObject.transform.position;
-				IsAlive = false;
-				StartCoroutine("BoomCoroutine"); break;
-			} // animator boom -> setintter 4
+		
 		case StatePosition.Attack:
 			{
 				AttackProcess(isAttack);
@@ -134,15 +126,6 @@ public class ShockWaveMonster : Monster {
 				break;
 			}
 		}
-	}
-	IEnumerator BoomCoroutine() {
-		AnimatorReset ();
-		transform.position = idlePoint;
-		yield return new WaitForSeconds (3f);
-		IsAlive = false;
-		animator.SetTrigger("Death");
-
-		StopCoroutine (BoomCoroutine());
 	}
 
 	public void AttackProcess(bool isAttack){
@@ -201,14 +184,11 @@ public class ShockWaveMonster : Monster {
 							Pattern (monsterState);
 							yield return new WaitForSeconds (0.5f);
 						} else if (currentLife < maxLife * 0.3) {
-							if (Random.Range (0, 4) <= 2) {
+//							if (Random.Range (0, 4) <= 2) {
 								monsterState = StatePosition.Attack;
 								Pattern (monsterState);
 								yield return new WaitForSeconds (0.5f);
-							} else if(Random.Range (0, 4) > 2)
-								monsterState = StatePosition.Boom;
-							Pattern (monsterState);
-							yield return new WaitForSeconds (4f);
+;
 						}
 					}
 				}

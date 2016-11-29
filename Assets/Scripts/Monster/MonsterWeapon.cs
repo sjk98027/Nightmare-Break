@@ -7,14 +7,14 @@ public class MonsterWeapon : MonoBehaviour {
 	public BoxCollider AttackCollider;
 	public int damage;
 
-	void Start () 
-	{
+	public void MonsterWeaponSet(){
 		monster = this.GetComponentInParent<Monster> ();
 		damage = monster.BaseDamage;
 		AttackCollider = this.GetComponent<BoxCollider> ();
 		AttackColliderOff ();
 	}
-	
+
+
 
 	public void AttackColliderOff(){
 		AttackCollider.enabled=false;

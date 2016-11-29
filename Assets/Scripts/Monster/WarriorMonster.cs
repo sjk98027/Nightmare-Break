@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 
-public class WarriroMonster : Monster {
+public class WarriorMonster : Monster {
 	private float searchRange = 6.0f;
 	private float moveSpeed = 0.5f;
 
@@ -187,13 +187,11 @@ public class WarriroMonster : Monster {
 							Pattern (monsterState);
 							yield return new WaitForSeconds (0.5f);
 						} else if (currentLife < maxLife * 0.3) {
-							if (Random.Range (0, 4) <= 2) {
+							
 								monsterState = StatePosition.Attack;
 								Pattern (monsterState);
 								yield return new WaitForSeconds (0.5f);
-							} else if(Random.Range (0, 4) > 2)
-								//
-							yield return new WaitForSeconds (4f);
+							 
 						}
 					}
 				}
@@ -258,7 +256,7 @@ public class WarriroMonster : Monster {
 	{
 		aniState = this.animator.GetCurrentAnimatorStateInfo (0);
 
-		if (aniState.IsName ("Walk")) 
+		if (aniState.IsName ("Run")) 
 		{
 			if (moveAble) 
 			{

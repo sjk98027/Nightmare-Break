@@ -17,7 +17,9 @@ public class DungeonManager : MonoBehaviour
 
     public int monsterCount;
     public BoomMonster[] boomMonster;
-    public WarriroMonster[] warriorMonster;
+    public WarriorMonster[] warriorMonster;
+	public ShockWaveMonster[] shockWaveMonster;
+	public BossMonsterKYW bossMonster;
 
     InputManager inputManager;
     UIManager uiManager;
@@ -55,10 +57,14 @@ public class DungeonManager : MonoBehaviour
 	{
 		if (normalMode)
 		{
-			for (int i = 0; i < boomMonster.Length; i++)
-			{
-				boomMonster[i].UpdateNormalMode();
-//				warriorMonster [i].UpdateNormalMode ();
+			for (int i = 0; i < boomMonster.Length; i++) {
+				boomMonster [i].UpdateNormalMode ();
+			}
+			for (int j = 0; j < warriorMonster.Length; j++) {
+				warriorMonster [j].UpdateNormalMode ();
+			}
+			for (int k = 0; k < shockWaveMonster.Length; k++) {
+				shockWaveMonster [k].UpdateNormalMode ();
 			}
 		}
 
@@ -67,6 +73,10 @@ public class DungeonManager : MonoBehaviour
 			for (int i = 0; i < section.Length; i++) {
 				section [i].UpdateConduct ();
 			}
+		}
+
+		if (bossMonster != null) {
+			bossMonster.BossMonsterUpdate ();
 		}
 	}
 
@@ -130,18 +140,51 @@ public class DungeonManager : MonoBehaviour
     {
 
         boomMonster = gameObject.transform.GetComponentsInChildren<BoomMonster>();
-        //		warriorMonster = gameObject.GetComponentsInChildren<WarriroMonster> ();
-        monsterCount = (boomMonster.Length + warriorMonster.Length);
+		shockWaveMonster = gameObject.transform.GetComponentsInChildren<ShockWaveMonster>();
+		warriorMonster = gameObject.GetComponentsInChildren<WarriorMonster> ();
+		monsterCount = (boomMonster.Length + warriorMonster.Length +shockWaveMonster.Length);
 
         for (int i = 0; i < boomMonster.Length; i++)
         {
-            boomMonster[i].PlayerSearch();
-            boomMonster[i].MonsterSet();
-			boomMonster[i].NormalMode = normalMode;
-            boomMonster[i].GateArrayNumber = mapNumber;
-            boomMonster[i].MonsterArrayNumber = i;
-			boomMonster [i].MonSterPatternUpdateConduct (normalMode);
-        }
+			if (boomMonster.Length != 0) {
+				boomMonster [i].PlayerSearch ();
+				boomMonster [i].MonsterSet ();
+				boomMonster [i].NormalMode = normalMode;
+				boomMonster [i].GateArrayNumber = mapNumber;
+				boomMonster [i].MonsterArrayNumber = i;
+				boomMonster [i].MonSterPatternUpdateConduct (normalMode);
+			}
+	    }
+
+		for(int j =0; j < shockWaveMonster.Length; j++){
+			if (shockWaveMonster.Length != 0) {
+				shockWaveMonster [j].PlayerSearch ();
+				shockWaveMonster [j].MonsterSet ();
+				shockWaveMonster [j].NormalMode = normalMode;
+				shockWaveMonster [j].GateArrayNumber = mapNumber;
+				shockWaveMonster [j].MonsterArrayNumber = j;
+				shockWaveMonster [j].MonSterPatternUpdateConduct (normalMode);
+			}
+		}
+
+		for (int k = 0; k < warriorMonster.Length; k++) {
+			if(warriorMonster.Length !=0){
+				warriorMonster [k].PlayerSearch ();
+				warriorMonster [k].MonsterSet ();
+				warriorMonster [k].NormalMode = normalMode;
+				warriorMonster [k].GateArrayNumber = mapNumber;
+				warriorMonster [k].MonsterArrayNumber = k;
+				warriorMonster [k].MonSterPatternUpdateConduct (normalMode);
+			}
+		}
+
+
+		if (bossMonster != null) {
+			bossMonster.PlayerSearch ();
+			bossMonster.MonsterSet ();
+			bossMonster.BossMonsterPatternUpdateConduct ();
+
+		}
 
     }
 
