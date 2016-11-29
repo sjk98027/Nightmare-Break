@@ -38,4 +38,8 @@ public class MageManager : CharacterManager
 		
 	}
 
+    public override void SetCharacterType()
+    {
+        charStatus.HClass = CharacterStatus.CharClass.Warrior;
+    }
 }

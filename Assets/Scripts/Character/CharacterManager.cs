@@ -103,12 +103,12 @@ public class CharacterManager : MonoBehaviour
 
             if (normalAttackState || skillAttackState)
             {
-                charWeapon.size = new Vector3(0.11f, 0.11f, 1.28f);
+            //    charWeapon.size = new Vector3(0.11f, 0.11f, 1.28f);
             }
             else
             {
 
-                charWeapon.size = new Vector3(0, 0, 0);
+            //    charWeapon.size = new Vector3(0, 0, 0);
             }
         }
 
@@ -229,7 +229,9 @@ public class CharacterManager : MonoBehaviour
     {
 		if (uiManager.BattleUIManager.SkillCoolTimeUI[0].fillAmount == 1)
         {
-			StartCoroutine(uiManager.BattleUIManager.SetSkillCoolTimeUI(0, SkillManager.instance.SkillData.GetSkill("WarriorA1_L1").SkillCoolTime));
+            Debug.Log((charStatus.HClass.ToString()) + "A1_L1");
+            StartCoroutine(uiManager.BattleUIManager.SetSkillCoolTimeUI(0, SkillManager.instance.SkillData.GetSkill((charStatus.HClass.ToString())+"A1_L1").SkillCoolTime));
+            
             if (state == CharacterState.Run || state == CharacterState.Idle || state == CharacterState.Skill1)
             {
                 state = CharacterState.Skill1;
