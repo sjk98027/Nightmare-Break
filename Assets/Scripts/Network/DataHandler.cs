@@ -246,7 +246,7 @@ public class DataHandler : MonoBehaviour
         CreateRoomResultPacket resultPacket = new CreateRoomResultPacket(data);
         CreateRoomResultData resultData = resultPacket.GetData();
 
-        if (resultData.RoomNum == 0)
+        if (resultData.RoomNum < 0)
         {
             StartCoroutine(uiManager.Dialog(1.0f, "방 생성 실패"));
         }
