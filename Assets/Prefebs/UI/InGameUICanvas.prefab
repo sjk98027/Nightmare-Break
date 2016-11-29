@@ -178,6 +178,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!1 &1000010287242850
 GameObject:
   m_ObjectHideFlags: 1
@@ -211,6 +212,9 @@ GameObject:
   m_StaticEditorFlags: 0
   m_IsActive: 0
 --- !u!1 &1000010380708856
+=======
+--- !u!1 &1000010390665790
+>>>>>>> dds4120-master
 GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -313,6 +317,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!1 &1000010674806688
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,6 +334,9 @@ GameObject:
   m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &1000010769289812
+=======
+--- !u!1 &1000010979822700
+>>>>>>> dds4120-master
 GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -626,7 +634,11 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!1 &1000011773122454
+=======
+--- !u!1 &1000012279080432
+>>>>>>> dds4120-master
 GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -2973,6 +2985,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
+<<<<<<< HEAD
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: eff449c9c3652d048923012272b16554, type: 3}
@@ -3011,6 +3024,11 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
 --- !u!114 &114000013066199550
+=======
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &114000013286423692
+>>>>>>> dds4120-master
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -3787,6 +3805,7 @@ CanvasRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
+<<<<<<< HEAD
   m_GameObject: {fileID: 1000011545485220}
 --- !u!222 &222000011176536310
 CanvasRenderer:
@@ -3795,6 +3814,10 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013191279560}
 --- !u!222 &222000011289953660
+=======
+  m_GameObject: {fileID: 1000012505346440}
+--- !u!222 &222000010857814768
+>>>>>>> dds4120-master
 CanvasRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -4126,10 +4149,17 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 224000012311097224}
   m_RootOrder: 0
+<<<<<<< HEAD
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 85.5, y: 18.3}
   m_SizeDelta: {x: 127.9, y: 16.5}
+=======
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 20, y: 20}
+>>>>>>> dds4120-master
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224000010152501478
 RectTransform:
@@ -4177,11 +4207,26 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
   m_Children: []
   m_Father: {fileID: 224000011301281724}
   m_RootOrder: 4
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
+=======
+  m_Children:
+  - {fileID: 224000012990150450}
+  - {fileID: 224000013690453100}
+  - {fileID: 224000014274130570}
+  - {fileID: 224000013323260486}
+  - {fileID: 224000011980768402}
+  - {fileID: 224000013082020624}
+  - {fileID: 224000011319319240}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+>>>>>>> dds4120-master
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 203.8, y: 75.9}
   m_Pivot: {x: 0, y: 1}
@@ -4911,12 +4956,21 @@ RectTransform:
   - {fileID: 224000011058157808}
   m_Father: {fileID: 224000012895431334}
   m_RootOrder: 2
+<<<<<<< HEAD
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 450, y: -20}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &224000012311560288
+=======
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 20, y: 0}
+  m_Pivot: {x: 1, y: 1}
+--- !u!224 &224000012703461322
+>>>>>>> dds4120-master
 RectTransform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -4946,8 +5000,31 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
+<<<<<<< HEAD
   m_Father: {fileID: 224000010883552772}
   m_RootOrder: 3
+=======
+  m_Father: {fileID: 224000013526216092}
+  m_RootOrder: 0
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -0.0000017971324, y: -0.000012397766}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 1}
+--- !u!224 &224000012805702560
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013185281022}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 224000013082020624}
+  m_RootOrder: 4
+>>>>>>> dds4120-master
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -15.6, y: 12.5}
@@ -4985,10 +5062,17 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 224000014021834008}
   m_RootOrder: 0
+<<<<<<< HEAD
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 85.5, y: 18.3}
   m_SizeDelta: {x: 127.9, y: 16.5}
+=======
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 20, y: 20}
+>>>>>>> dds4120-master
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224000012723763880
 RectTransform:
@@ -5065,6 +5149,7 @@ RectTransform:
   - {fileID: 224000013968327592}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+<<<<<<< HEAD
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -5090,6 +5175,14 @@ RectTransform:
   m_SizeDelta: {x: 82.5, y: 20.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224000013311753548
+=======
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 20, y: -20}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0, y: 1}
+--- !u!224 &224000013082020624
+>>>>>>> dds4120-master
 RectTransform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -5270,11 +5363,17 @@ RectTransform:
   m_Father: {fileID: 224000013311753548}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
+<<<<<<< HEAD
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224000013696457062
+=======
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 1}
+--- !u!224 &224000013561911522
+>>>>>>> dds4120-master
 RectTransform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -5393,6 +5492,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
+<<<<<<< HEAD
   - {fileID: 224000010442840982}
   - {fileID: 224000011152599052}
   - {fileID: 224000010170465178}
@@ -5404,6 +5504,17 @@ RectTransform:
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224000013968327592
+=======
+  - {fileID: 224000010993722736}
+  m_Father: {fileID: 224000013807700596}
+  m_RootOrder: 1
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 20}
+  m_Pivot: {x: 0, y: 0}
+--- !u!224 &224000014141134032
+>>>>>>> dds4120-master
 RectTransform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -5433,6 +5544,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
+<<<<<<< HEAD
   - {fileID: 224000012695912334}
   - {fileID: 224000013696457062}
   - {fileID: 224000012311560288}
@@ -5464,6 +5576,17 @@ RectTransform:
   m_SizeDelta: {x: 0, y: 422.01453}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &224000014248189280
+=======
+  - {fileID: 224000012161985460}
+  m_Father: {fileID: 224000013690453100}
+  m_RootOrder: 2
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 62.4, y: 38.6}
+  m_SizeDelta: {x: 82.5, y: 20.3}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &224000014274130570
+>>>>>>> dds4120-master
 RectTransform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
