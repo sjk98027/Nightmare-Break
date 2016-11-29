@@ -18,10 +18,10 @@ public class WarriorManager : CharacterManager
         base.NormalAttack();
     }
 
-	public override void SetCharacterType ()
-	{
-		charStatus.HClass = CharacterStatus.CharClass.Warrior;
-	}
+    public override void SetCharacterType()
+    {
+        charStatus.HClass = CharacterStatus.CharClass.Warrior;
+    }
     //warrior mealstrom
     public override void ProcessSkill1()
     {
@@ -122,57 +122,75 @@ public class WarriorManager : CharacterManager
 
     public override void HitDamage(int _damage)
     {
-        charStatus.SkillLevel[5] = 4;
 
-        if (charStatus.SkillLevel[5] > 4)
+        CharStatus.SkillLevel[5] = 4;
+
+        if (CharStatus.SkillLevel[5] > 4)
         {
             if (charAlive)
             {
-                if (charStatus.HealthPoint > 0)
+                if (charAlive)
                 {
-                    int deFendDamage;
-                    deFendDamage = _damage - (charStatus.SkillLevel[5] * 1);
-                    Debug.Log(deFendDamage);
-                    if (deFendDamage < 0)
+                    if (CharStatus.HealthPoint > 0)
                     {
-                        deFendDamage = 0;
+                        int deFendDamage;
+                        deFendDamage = _damage - (CharStatus.SkillLevel[5] * 1);
+                        deFendDamage = _damage - (CharStatus.SkillLevel[5] * 1);
+                        Debug.Log(deFendDamage);
+                        if (deFendDamage < 0)
+                        {
+                            deFendDamage = 0;
+                        }
+                        CharStatus.DecreaseHealthPoint(deFendDamage);
+                        CharState((int)CharacterState.HitDamage);
+                        if (State != CharacterState.Skill3)
+                        {
+                            CharState((int)CharacterState.HitDamage);
+                        }
+                        else if (State == CharacterState.Skill3)
+                        {
+                            Debug.Log("Not trigger");
+                        }
                     }
-                    charStatus.DecreaseHealthPoint(deFendDamage);
-                    CharState((int)CharacterState.HitDamage);
-                }
-                if (charStatus.HealthPoint <= 0)
-                {
-                    CharState((int)CharacterState.Death);
-                    charAlive = false;
+                    if (CharStatus.HealthPoint <= 0)
+                    {
+                        CharState((int)CharacterState.Death);
+                        charAlive = false;
+                        charAlive = false;
+                    }
                 }
             }
         }
 
-        else if (charStatus.SkillLevel[5] == 4)
+        else if (CharStatus.SkillLevel[5] == 4)
         {
             if (charAlive)
             {
-                if (charStatus.HealthPoint > 0)
+                if (CharStatus.HealthPoint > 0)
                 {
                     int deFendDamage;
-                    deFendDamage = _damage - (charStatus.SkillLevel[5] * 1);
+                    deFendDamage = _damage - (CharStatus.SkillLevel[5] * 1);
+                    deFendDamage = _damage - (CharStatus.SkillLevel[5] * 1);
 
                     if (deFendDamage < 0)
                     {
                         deFendDamage = 0;
                     }
-                    charStatus.DecreaseHealthPoint(deFendDamage);
+                    CharStatus.DecreaseHealthPoint(deFendDamage);
                     CharState((int)CharacterState.HitDamage);
+
+                    if (State != CharacterState.Skill1 && State != CharacterState.Skill2 && State != CharacterState.Skill3 && State != CharacterState.Skill4)
+                    {
+                        CharState((int)CharacterState.HitDamage);
+                    }
                 }
-                else if (charStatus.HealthPoint <= 0)
+
+                else if (CharStatus.HealthPoint <= 0)
                 {
                     CharState((int)CharacterState.Death);
-                    
+
                     if (!rise)
                     {
-                        rise = true;
-                        StartCoroutine(colltimeCheck());
-                        charStatus.DecreaseHealthPoint((int)(charStatus.MaxHealthPoint * 0.5f));
                         charAlive = true;
                         animator.SetBool("Rise", false);
                     }
@@ -201,4 +219,3 @@ public class WarriorManager : CharacterManager
         }
     }
 }
-
