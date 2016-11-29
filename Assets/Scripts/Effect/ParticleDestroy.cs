@@ -16,7 +16,7 @@ public class ParticleDestroy : MonoBehaviour
 		particle = GetComponent<ParticleSystem> ();
 		character = GameObject.FindWithTag ("Player");
 		charManager = character.GetComponent<CharacterManager> ();
-		charstate = charManager.charstate;
+	//	charstate = charManager.charstate;
 		StartCoroutine (ParticleCheck ());
 
 	}
@@ -34,7 +34,7 @@ public class ParticleDestroy : MonoBehaviour
 	{
 		if (coll.gameObject.layer == LayerMask.NameToLayer ("Enermy"))
 		{
-			swordDamage = charstate.skillLevel [5] * charManager.BasicDamage;
+		//	swordDamage = charstate.skillLevel [5] * charManager.BasicDamage;
 
 			Monster monsterDamage = coll.gameObject.GetComponent<Monster> ();
 

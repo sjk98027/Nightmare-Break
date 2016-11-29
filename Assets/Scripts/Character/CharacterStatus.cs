@@ -46,7 +46,7 @@ public class CharacterStatus : MonoBehaviour
     public string HName { get { return hName; } }
     public Gender HGender { get { return hGender; } }
     public int Level { get { return level; } }
-    public CharClass HClass { get { return charClass; } }
+	public CharClass HClass { get { return charClass; } set{ charClass = value; }}
     public int MaxExp { get { return maxExp; } }
     public int Exp { get { return exp; } }
 

@@ -18,6 +18,10 @@ public class WarriorManager : CharacterManager
         base.NormalAttack();
     }
 
+	public override void SetCharacterType ()
+	{
+		charStatus.HClass = CharacterStatus.CharClass.Warrior;
+	}
     //warrior mealstrom
     public override void ProcessSkill1()
     {
