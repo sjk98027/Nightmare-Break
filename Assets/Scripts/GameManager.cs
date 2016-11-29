@@ -51,8 +51,6 @@ public class GameManager : MonoBehaviour
         inputManager = (Instantiate(Resources.Load("Manager/InputManager")) as GameObject).GetComponent<InputManager>();
         inputManager.name = "InputManager";
         inputManager.tag = "InputManager";
-
-        uiManager.SetBattleUIManager();
     }
 
     public void OnApplicationQuit()

@@ -20,6 +20,7 @@ public class DungeonManager : MonoBehaviour
     public WarriroMonster[] warriorMonster;
 
     InputManager inputManager;
+    UIManager uiManager;
     DataSender dataSender;
     GameObject m_camera;
 
@@ -180,11 +181,15 @@ public class DungeonManager : MonoBehaviour
         inputManager = GameObject.FindGameObjectWithTag("InputManager").GetComponent<InputManager>();
         inputManager.InitializeManager();
         StartCoroutine(inputManager.GetKeyInput());
-        StartCoroutine(dataSender.CharacterPositionSend());
-		StartCoroutine(dataSender.EnqueueMessage());
+
+        uiManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
+        uiManager.SetBattleUIManager();
+        player.GetComponent<CharacterManager>().UIManager = uiManager;
 
         dataSender = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<DataSender>();
         dataSender.CreateUnitSend(0, player.transform.position);
+        StartCoroutine(dataSender.CharacterPositionSend());
+        StartCoroutine(dataSender.EnqueueMessage());
 
         return player;
     }
