@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class BattleUIManager
 {
@@ -57,14 +58,14 @@ public class BattleUIManager
     }
     #endregion
 
-    void hpBarCalculation(int maxHp, int currentHP)
+    public void hpBarCalculation(int maxHp, int currentHP)
     {
-        hpBar.fillAmount = maxHp / currentHP;
+        hpBar.fillAmount = (float) currentHP / maxHp;
     }
 
-    void mpBarCalculation(int maxMp, int currentMP)
+    public void mpBarCalculation(int maxMp, int currentMP)
     {
-        mpBar.fillAmount = maxMp / currentMP;
+        mpBar.fillAmount = (float) currentMP / maxMp; 
     }
 
     public void SetUIObject()
@@ -77,9 +78,10 @@ public class BattleUIManager
         skillCoolTimeUI = new Image[4];
 		for (int i = 0; i < skillUI.Length; i++)
         {
-			skillUI [i] = GameObject.Find ("Skill"+(i+1)).GetComponent<Image> ();
-           
-			if (i < skillCoolTimeUI.Length) {
+			skillUI[i] = GameObject.Find ("Skill" + (i+1)).GetComponent<Image> ();
+       
+
+            if (i < skillCoolTimeUI.Length) {
 				skillCoolTimeUI [i] = GameObject.Find ("Skill" + (i + 1) + "_CoolTime").GetComponent<Image> ();
 			}
         }
@@ -92,34 +94,10 @@ public class BattleUIManager
 		}
 		mouseOverUI.transform.parent.transform.localPosition = new Vector2 (skillUI [skillIndex].transform.localPosition.x + mouseOverUI_xPos, mouseOverUI_yPos);
 		#region 전사 스킬 UI
-		if (classIndex == 0) { 
-			if (skillIndex == 0) {
-				mouseOverUI.text = "스킬이름: " + SkillManager.instance.SkillData.GetSkill ("WarriorA1_L1").SkillName +"\n"+ "쿨타임: " + SkillManager.instance.SkillData.GetSkill ("WarriorA1_L1").SkillCoolTime.ToString () +"초"
-					+ "\n" + SkillManager.instance.SkillData.GetSkill ("WarriorA1_L1").SkillExplanation 
-					+ "\n" + SkillManager.instance.SkillData.GetSkill ("WarriorA1_L"+(skillLevel)).SkillDamegeExplanation; 
-			} else if (skillIndex == 1) {
-				mouseOverUI.text = "스킬이름: " + SkillManager.instance.SkillData.GetSkill ("WarriorA2_L1").SkillName +"\n"+ "쿨타임: " + SkillManager.instance.SkillData.GetSkill ("WarriorA2_L1").SkillCoolTime.ToString () +"초"
-					+ "\n" + SkillManager.instance.SkillData.GetSkill ("WarriorA2_L1").SkillExplanation 
-					+ "\n" + SkillManager.instance.SkillData.GetSkill ("WarriorA2_L"+(skillLevel)).SkillDamegeExplanation; 
-			} else if (skillIndex == 2) {
-				mouseOverUI.text = "스킬이름: " + SkillManager.instance.SkillData.GetSkill ("WarriorA3_L1").SkillName  +"\n"+ "쿨타임: " + SkillManager.instance.SkillData.GetSkill ("WarriorA3_L1").SkillCoolTime.ToString () +"초"
-					+ "\n" + SkillManager.instance.SkillData.GetSkill ("WarriorA3_L1").SkillExplanation 
-					+ "\n" + SkillManager.instance.SkillData.GetSkill ("WarriorA3_L"+(skillLevel)).SkillDamegeExplanation; 
-			} else if (skillIndex == 3) {
-				mouseOverUI.text = "스킬이름: " + SkillManager.instance.SkillData.GetSkill ("WarriorA4_L1").SkillName  +"\n"+ "쿨타임: "+ SkillManager.instance.SkillData.GetSkill ("WarriorA4_L1").SkillCoolTime.ToString () +"초"
-					+ "\n" + SkillManager.instance.SkillData.GetSkill ("WarriorA4_L1").SkillExplanation 
-					+ "\n" + SkillManager.instance.SkillData.GetSkill ("WarriorA4_L"+(skillLevel)).SkillDamegeExplanation; 
-			} else if (skillIndex == 4) {
-				mouseOverUI.text = "스킬이름: " + SkillManager.instance.SkillData.GetSkill ("WarriorP1_L1").SkillName  +"\n"+ "쿨타임: " + SkillManager.instance.SkillData.GetSkill ("WarriorP1_L1").SkillCoolTime.ToString () +"초"
-					+ "\n" + SkillManager.instance.SkillData.GetSkill ("WarriorP1_L1").SkillExplanation 
-					+ "\n" + SkillManager.instance.SkillData.GetSkill ("WarriorP1_L"+(skillLevel)).SkillDamegeExplanation; 
-			} else if (skillIndex == 5) {
-				mouseOverUI.text = "스킬이름: " + SkillManager.instance.SkillData.GetSkill ("WarriorP2_L1").SkillName  +"\n"+ "쿨타임: " + SkillManager.instance.SkillData.GetSkill ("WarriorP2_L1").SkillCoolTime.ToString () +"초"
-					+ "\n" + SkillManager.instance.SkillData.GetSkill ("WarriorP2_L1").SkillExplanation 
-					+ "\n" + SkillManager.instance.SkillData.GetSkill ("WarriorP2_L"+(skillLevel)).SkillDamegeExplanation; 
-			} else {
-				return;
-			}
+		if (classIndex == 0) {
+            mouseOverUI.text = "스킬이름: " + SkillManager.instance.SkillData.GetSkill(("WarriorA") + (skillIndex + 1) + ("_L1")).SkillName + "\n" + "쿨타임: " + SkillManager.instance.SkillData.GetSkill("WarriorA1_L1").SkillCoolTime.ToString() + "초"
+                    + "\n" + SkillManager.instance.SkillData.GetSkill("WarriorA1_L1").SkillExplanation
+                    + "\n" + SkillManager.instance.SkillData.GetSkill("WarriorA1_L" + (skillLevel)).SkillDamegeExplanation;
 			#endregion  
 		#region 법사 스킬 UI
 		} else if (classIndex == 1) {

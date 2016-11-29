@@ -30,7 +30,7 @@ public class CharacterStatus : MonoBehaviour
 
     int maxHealthPoint;
     int healthPoint;
-    int maxMagicPoint;
+    int maxMagicPoint = 200;
     int magicPoint;
     int hpRegeneration;
     int mpRegeneration;
@@ -66,14 +66,15 @@ public class CharacterStatus : MonoBehaviour
     public int[] EquipLevel { get { return equipLevel; } }
 
 
-    public CharacterStatus()
+    public void SetCharacterStatus()
     {
         hName = "Hero";
         level = 0;
         charClass = 0;
         exp = 0;
         healthPoint = 100;
-        magicPoint = 1000;
+        maxMagicPoint = 200;
+        magicPoint = maxMagicPoint;
         hpRegeneration = 0;
         mpRegeneration = 0;
 		moveSpeed = 7;
