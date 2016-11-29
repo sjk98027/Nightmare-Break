@@ -37,6 +37,7 @@ public class CharacterManager : MonoBehaviour
     public bool skillAttackState = false;
     public bool charAlive = true;
 
+
     private int potionCount = 3;
 
     public float skillTime;
@@ -64,6 +65,7 @@ public class CharacterManager : MonoBehaviour
         animator = GetComponent<Animator>();
         state = CharacterState.Idle;
         rigdbody = GetComponent<Rigidbody>();
+		enermy = GameObject.FindGameObjectsWithTag ("Enermy");
         charDir = true;
         JumpMove = false;
 		SetCharacterType ();
@@ -228,55 +230,75 @@ public class CharacterManager : MonoBehaviour
 
     public virtual void Skill1()
     {
-		if (uiManager.BattleUIManager.SkillCoolTimeUI[0].fillAmount == 1)
-        {
-            Debug.Log((charStatus.HClass.ToString()) + "A1_L1");
-            StartCoroutine(uiManager.BattleUIManager.SetSkillCoolTimeUI(0, SkillManager.instance.SkillData.GetSkill((charStatus.HClass.ToString())+"A1_L1").SkillCoolTime));
+		if (CharStatus.MagicPoint > 40)
+		{
+			CharStatus.DecreaseMagicPoint (40);
+
+			if (uiManager.BattleUIManager.SkillCoolTimeUI [0].fillAmount == 1)
+			{
+				Debug.Log ((charStatus.HClass.ToString ()) + "A1_L1");
+				StartCoroutine (uiManager.BattleUIManager.SetSkillCoolTimeUI (0, SkillManager.instance.SkillData.GetSkill ((charStatus.HClass.ToString ()) + "A1_L1").SkillCoolTime));
             
-            if (state == CharacterState.Run || state == CharacterState.Idle || state == CharacterState.Skill1)
-            {
-                state = CharacterState.Skill1;
-                CharState((int)CharacterState.Skill1);
-            }
-        }
+				if (state == CharacterState.Run || state == CharacterState.Idle || state == CharacterState.Skill1)
+				{
+					state = CharacterState.Skill1;
+					CharState ((int)CharacterState.Skill1);
+				}
+			}
+		}
     }
 
 
     public void skill2()
     {
-		if (uiManager.BattleUIManager.SkillCoolTimeUI[1].fillAmount == 1)
-        {
-			StartCoroutine(uiManager.BattleUIManager.SetSkillCoolTimeUI(1, SkillManager.instance.SkillData.GetSkill("WarriorA2_L1").SkillCoolTime));
-            if (state != CharacterState.Jump && state != CharacterState.Skill2 && state != CharacterState.Skill1 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
-            {
-                CharState((int)CharacterState.Skill2);
-            }
-        }
+		if (CharStatus.MagicPoint > 50)
+		{
+			CharStatus.DecreaseMagicPoint (50);
+
+			if (uiManager.BattleUIManager.SkillCoolTimeUI [1].fillAmount == 1)
+			{
+				StartCoroutine (uiManager.BattleUIManager.SetSkillCoolTimeUI (1, SkillManager.instance.SkillData.GetSkill ("WarriorA2_L1").SkillCoolTime));
+				if (state != CharacterState.Jump && state != CharacterState.Skill2 && state != CharacterState.Skill1 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
+				{
+					CharState ((int)CharacterState.Skill2);
+				}
+			}
+		}
     }
 
     public void skill3()
-    {
-		if (uiManager.BattleUIManager.SkillCoolTimeUI[2].fillAmount == 1)
-        {
-			StartCoroutine(uiManager.BattleUIManager.SetSkillCoolTimeUI(2, SkillManager.instance.SkillData.GetSkill("WarriorA3_L1").SkillCoolTime));
-            if (state != CharacterState.Jump && state != CharacterState.Skill3 && state != CharacterState.Skill2 && state != CharacterState.Skill1 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
-            {
-                CharState((int)CharacterState.Skill3);
-            }
-        }
+	{
+		if (CharStatus.MagicPoint > 100)
+		{
+			CharStatus.DecreaseMagicPoint (100);
+
+			if (uiManager.BattleUIManager.SkillCoolTimeUI [2].fillAmount == 1)
+			{
+				StartCoroutine (uiManager.BattleUIManager.SetSkillCoolTimeUI (2, SkillManager.instance.SkillData.GetSkill ("WarriorA3_L1").SkillCoolTime));
+				if (state != CharacterState.Jump && state != CharacterState.Skill3 && state != CharacterState.Skill2 && state != CharacterState.Skill1 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
+				{
+					CharState ((int)CharacterState.Skill3);
+				}
+			}
+		}
     }
 
     public void Skill4()
     {
-		if (uiManager.BattleUIManager.SkillCoolTimeUI[3].fillAmount == 1)
-        {
-			StartCoroutine(uiManager.BattleUIManager.SetSkillCoolTimeUI(3, SkillManager.instance.SkillData.GetSkill("WarriorA4_L1").SkillCoolTime));
-            if (state != CharacterState.Jump && state != CharacterState.Skill1 && state != CharacterState.Skill2 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
-            {
-                //giganticSwordCastSword.SetActive(true);
-                CharState((int)CharacterState.Skill4);
-            }
-        }
+		if (CharStatus.MagicPoint > 150)
+		{
+			CharStatus.DecreaseMagicPoint (150);
+
+			if (uiManager.BattleUIManager.SkillCoolTimeUI [3].fillAmount == 1)
+			{
+				StartCoroutine (uiManager.BattleUIManager.SetSkillCoolTimeUI (3, SkillManager.instance.SkillData.GetSkill ("WarriorA4_L1").SkillCoolTime));
+				if (state != CharacterState.Jump && state != CharacterState.Skill1 && state != CharacterState.Skill2 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
+				{
+					//giganticSwordCastSword.SetActive(true);
+					CharState ((int)CharacterState.Skill4);
+				}
+			}
+		}
     }
 
     public virtual void ProcessSkill1()

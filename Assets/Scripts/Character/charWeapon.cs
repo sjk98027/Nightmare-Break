@@ -20,7 +20,7 @@ public class CharWeapon : MonoBehaviour {
 	{
 		character = GameObject.FindWithTag ("Player");
 		charManager = character.GetComponent<CharacterManager> ();
-        charStatus = charManager.charStatus;
+		charStatus = charManager.charStatus;
 	}
 	// Update is called once per frame
 	void Update () 
