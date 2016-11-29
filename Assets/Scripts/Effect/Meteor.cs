@@ -6,7 +6,7 @@ public class Meteor : MonoBehaviour {
 	public CharacterStatus charStatus;
 	public CharacterManager charManager;
 	public GameObject character;
-	public int swordDamage;
+	public int MeteorDamage;
 
 	void Start()
 	{
@@ -40,8 +40,8 @@ public class Meteor : MonoBehaviour {
 			if (monsterDamage != null)
 			{	
 				
-				monsterDamage.HitDamage (swordDamage,character );
-				swordDamage = 0;
+				monsterDamage.HitDamage (MeteorDamage,character );
+				MeteorDamage = 0;
 
 			}
 
