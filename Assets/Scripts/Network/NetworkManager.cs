@@ -48,7 +48,7 @@ public class NetworkManager : MonoBehaviour
 
     public void InitializeManager(string ip)
     {
-        mainServer = new IPEndPoint(IPAddress.Parse(ip), mainServerPortNumber);
+        mainServer = new IPEndPoint(IPAddress.Parse("192.168.94.88"), mainServerPortNumber);
         client = new IPEndPoint(IPAddress.Parse(ip), clientPortNumber);
 
         receiveMsgs = new Queue<DataPacket>();
