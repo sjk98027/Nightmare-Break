@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
         networkManager.InitializeManager(ip);
         uiManager.SetLoginUIManager();
         uiManager.SetWaitUIManager();
+
+        uiManager.SetBattleUIManager();
     }
 
     public void SetManagerInDungeon()
