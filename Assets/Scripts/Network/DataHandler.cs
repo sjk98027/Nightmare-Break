@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum Result
@@ -10,6 +11,7 @@ public enum Result
 
 public class DataHandler : MonoBehaviour
 {
+    GameManager gameManager;
     NetworkManager networkManager;
     DungeonManager dungeonManager;
     UIManager uiManager;
@@ -24,6 +26,7 @@ public class DataHandler : MonoBehaviour
     private Dictionary<int, P2PRecvNotifier> p2p_notifier = new Dictionary<int, P2PRecvNotifier>();
     private Dictionary<int, ServerRecvNotifier> server_notifier = new Dictionary<int, ServerRecvNotifier>();
 
+    bool[] connectionCheck;
     public DateTime dTime;
 
     public void Initialize(Queue<DataPacket> receiveQueue, Queue<DataPacket> sendQueue)
@@ -32,9 +35,12 @@ public class DataHandler : MonoBehaviour
 
         networkManager = GetComponent<NetworkManager>();
         uiManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
 
         SetServerNotifier();
         SetUdpNotifier();
+
+        StartCoroutine(DataHandle());
     }
 
     public void SetCharacter(GameObject character)
@@ -66,52 +72,57 @@ public class DataHandler : MonoBehaviour
         p2p_notifier.Add((int)P2PPacketId.CharacterAction, CharacterAction);
     }
 
-    public void DataHandle()
+    public IEnumerator DataHandle()
     {
-        if (receiveMsgs.Count > 0)
+        while (true)
         {
-            //패킷을 Dequeue 한다 
-            //패킷 : 메시지 타입 + 메시지 내용
-            DataPacket packet;
+            yield return null;
 
-            packet = receiveMsgs.Dequeue();
-            
-            byte[] msg = packet.msg;
-
-            HeaderData headerData = new HeaderData();
-            HeaderSerializer headerSerializer = new HeaderSerializer();
-            headerSerializer.SetDeserializedData(msg);
-            headerSerializer.Deserialize(ref headerData);
-
-            //Debug.Log("패킷 길이 : " + msg.Length);
-            //Debug.Log("패킷 아이디 : " + headerData.id);
-            //Debug.Log("패킷 출처 : " + headerData.source);
-
-            DataReceiver.ResizeByteArray(0, NetworkManager.packetSource + NetworkManager.packetId, ref msg);
-
-            if (packet.endPoint == null)
+            if (receiveMsgs.Count > 0)
             {
-                if (server_notifier.TryGetValue(headerData.id, out serverRecvNotifier))
+                //패킷을 Dequeue 한다 
+                //패킷 : 메시지 타입 + 메시지 내용
+                DataPacket packet;
+
+                packet = receiveMsgs.Dequeue();
+
+                byte[] msg = packet.msg;
+
+                HeaderData headerData = new HeaderData();
+                HeaderSerializer headerSerializer = new HeaderSerializer();
+                headerSerializer.SetDeserializedData(msg);
+                headerSerializer.Deserialize(ref headerData);
+
+                //Debug.Log("패킷 길이 : " + msg.Length);
+                //Debug.Log("패킷 아이디 : " + headerData.id);
+                //Debug.Log("패킷 출처 : " + headerData.source);
+
+                DataReceiver.ResizeByteArray(0, NetworkManager.packetSource + NetworkManager.packetId, ref msg);
+
+                if (packet.endPoint == null)
                 {
-                    serverRecvNotifier(msg);
+                    if (server_notifier.TryGetValue(headerData.id, out serverRecvNotifier))
+                    {
+                        serverRecvNotifier(msg);
+                    }
+                    else
+                    {
+                        Debug.Log("DataHandler::Server.TryGetValue 에러 " + headerData.id);
+                    }
                 }
-                else
+                else if (packet.endPoint != null)
                 {
-                    Debug.Log("DataHandler::Server.TryGetValue 에러 " + headerData.id);
+                    if (p2p_notifier.TryGetValue(headerData.id, out p2pRecvNotifier))
+                    {
+                        p2pRecvNotifier(msg);
+                    }
+                    else
+                    {
+                        Debug.Log("DataHandler::P2P.TryGetValue 에러 " + headerData.id);
+                    }
                 }
             }
-            else if (packet.endPoint != null)
-            {
-                if (p2p_notifier.TryGetValue(headerData.id, out p2pRecvNotifier))
-                {
-                    p2pRecvNotifier(msg);
-                }
-                else
-                {
-                    Debug.Log("DataHandler::P2P.TryGetValue 에러 " + headerData.id);
-                }
-            }
-        }
+        }        
     }
     
     //Server - 가입 결과
@@ -281,6 +292,7 @@ public class DataHandler : MonoBehaviour
 
     }
 
+    //Server - 게임 시작
     public void StartGame(byte[] data)
     {
         Debug.Log("게임 시작");
@@ -299,12 +311,13 @@ public class DataHandler : MonoBehaviour
         }
     }
 
-    //Server
+    //Server - 매치 완료
     public void UDPConnection(byte[] data)
     {
         Debug.Log("매치 완료");
         MatchDataPacket matchDataPacket = new MatchDataPacket(data);
         MatchData matchData = matchDataPacket.GetData();
+        connectionCheck = new bool[matchData.ip.Length];
 
         networkManager.ConnectP2P(matchData.ip);
     }
@@ -313,6 +326,8 @@ public class DataHandler : MonoBehaviour
     public void ConnectionAnswer(byte[] data)
     {
         Debug.Log("연결 확인 답장");
+
+        gameManager.SetManagerInDungeon();
         dungeonManager = GameObject.FindGameObjectWithTag("DungeonManager").GetComponent<DungeonManager>();
         dungeonManager.CreatePlayer(0);
         dTime = DateTime.Now;

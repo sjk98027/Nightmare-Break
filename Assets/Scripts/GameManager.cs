@@ -15,12 +15,6 @@ public class GameManager : MonoBehaviour
         InitializeManager();
     }
 
-    void Update()
-    {
-        networkManager.DataHandler.DataHandle();
-        networkManager.DataSender.DataSend();
-    }
-
     void InitializeManager()
     {
         networkManager = (Instantiate(Resources.Load("Manager/NetworkManager")) as GameObject).GetComponent<NetworkManager>();
@@ -35,6 +29,17 @@ public class GameManager : MonoBehaviour
         networkManager.InitializeManager(ip);
         uiManager.SetLoginUIManager();
         uiManager.SetWaitUIManager();
+    }
+
+    public void SetManagerInDungeon()
+    {
+        dungeonManager = (Instantiate(Resources.Load("Manager/DungeonManager")) as GameObject).GetComponent<DungeonManager>();
+        dungeonManager.name = "DungeonManager";
+        dungeonManager.tag = "DungeonManager";
+
+        inputManager = (Instantiate(Resources.Load("Manager/DungeonManager")) as GameObject).GetComponent<InputManager>();
+        inputManager.name = "InputManager";
+        inputManager.tag = "InputManager";
     }
 
     public void OnApplicationQuit()

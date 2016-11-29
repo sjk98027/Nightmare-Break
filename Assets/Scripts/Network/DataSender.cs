@@ -47,24 +47,31 @@ public class DataSender : MonoBehaviour
         udpSock = newUdpSock;
 
         udpMsg = new byte[0];
+
+        StartCoroutine(DataSend());
     }
 
     //데이타를 전송하는 메소드. byte[] msg 를 newIPEndPoint로 전송한다.
-    public void DataSend()
+    public IEnumerator DataSend()
     {
-        if (sendMsgs.Count > 0)
+        while (true)
         {
-            DataPacket packet;
-            
-            packet = sendMsgs.Dequeue();
+            yield return null;
 
-            if (packet.endPoint != null)
+            if (sendMsgs.Count > 0)
             {
-                udpSock.BeginSendTo(packet.msg, 0, packet.msg.Length, SocketFlags.None, packet.endPoint, new AsyncCallback(SendData), null);
-            }
-            else if (packet.endPoint == null)
-            {
-                tcpSock.Send(packet.msg, 0, packet.msg.Length, SocketFlags.None);
+                DataPacket packet;
+
+                packet = sendMsgs.Dequeue();
+
+                if (packet.endPoint != null)
+                {
+                    udpSock.BeginSendTo(packet.msg, 0, packet.msg.Length, SocketFlags.None, packet.endPoint, new AsyncCallback(SendData), null);
+                }
+                else if (packet.endPoint == null)
+                {
+                    tcpSock.Send(packet.msg, 0, packet.msg.Length, SocketFlags.None);
+                }
             }
         }
     }

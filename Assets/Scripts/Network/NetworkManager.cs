@@ -48,26 +48,33 @@ public class NetworkManager : MonoBehaviour
 
     public void InitializeManager(string ip)
     {
-        mainServer = new IPEndPoint(IPAddress.Parse("192.168.94.88"), mainServerPortNumber);
-        client = new IPEndPoint(IPAddress.Parse(ip), clientPortNumber);
+        try
+        {
+            mainServer = new IPEndPoint(IPAddress.Parse("192.168.94.88"), mainServerPortNumber);
+            client = new IPEndPoint(IPAddress.Parse(ip), clientPortNumber);
 
-        receiveMsgs = new Queue<DataPacket>();
-        sendMsgs = new Queue<DataPacket>();
+            receiveMsgs = new Queue<DataPacket>();
+            sendMsgs = new Queue<DataPacket>();
 
-        serverSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        clientSock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-        clientSock.Bind(client);
+            serverSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            clientSock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            clientSock.Bind(client);
 
-        ConnectServer();
+            ConnectServer();
 
-        dataReceiver = GetComponent<DataReceiver>();
-        dataHandler = GetComponent<DataHandler>();
-        dataSender = GetComponent<DataSender>();
-        dataSender = DataSender.Instance;
+            dataReceiver = GetComponent<DataReceiver>();
+            dataHandler = GetComponent<DataHandler>();
+            dataSender = GetComponent<DataSender>();
+            dataSender = DataSender.Instance;
 
-        dataReceiver.Initialize(receiveMsgs, serverSock);
-        dataHandler.Initialize(receiveMsgs, sendMsgs);
-        dataSender.Initialize(sendMsgs, serverSock, clientSock);
+            dataReceiver.Initialize(receiveMsgs, serverSock);
+            dataHandler.Initialize(receiveMsgs, sendMsgs);
+            dataSender.Initialize(sendMsgs, serverSock, clientSock);
+        }
+        catch
+        {
+            Debug.Log("네트워크 설정 실패");
+        }        
     }
 
     public void ConnectServer()

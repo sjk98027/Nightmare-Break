@@ -17,6 +17,7 @@ public class WaitUIManager
 
     Room[] rooms;
     int currentRoomNum;
+    int userNum;
 
     public Room[] Rooms { get { return rooms; } }
 

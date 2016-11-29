@@ -161,10 +161,7 @@ public class DungeonManager : MonoBehaviour
         }
 
     }
-
-   
-
-
+    
     public GameObject CreatePlayer(int CharacterId)
     {
         //여기서는 플레이어 캐릭터 딕셔너리 -> 각 직업에 따른 플레이어 스탯과 능력치, 스킬, 이름을 가지고 있음
@@ -180,14 +177,14 @@ public class DungeonManager : MonoBehaviour
         m_camera = GameObject.FindGameObjectWithTag("MainCamera");
         StartCoroutine(m_camera.GetComponent<CameraController>().CameraCtrl(player.transform));
 
-        dataSender = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<DataSender>();
-        dataSender.CreateUnitSend(0, player.transform.position);
-
         inputManager = GameObject.FindGameObjectWithTag("InputManager").GetComponent<InputManager>();
         inputManager.InitializeManager();
         StartCoroutine(inputManager.GetKeyInput());
         StartCoroutine(dataSender.CharacterPositionSend());
 		StartCoroutine(dataSender.EnqueueMessage());
+
+        dataSender = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<DataSender>();
+        dataSender.CreateUnitSend(0, player.transform.position);
 
         return player;
     }
