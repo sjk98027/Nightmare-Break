@@ -162,7 +162,7 @@ public class LoginUIManager
     {
         Debug.Log("캐릭터 생성");
 
-        if (createCharacterName.text.Length >= 1)
+        if (createCharacterName.text.Length < 1)
         {
             Debug.Log("캐릭터 이름을 1글자 이상 입력하세요");
         }

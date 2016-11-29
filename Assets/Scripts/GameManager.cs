@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
 
         networkManager.InitializeManager(ip);
         uiManager.SetLoginUIManager();
+        uiManager.SetWaitUIManager();
     }
 
     public void OnApplicationQuit()
