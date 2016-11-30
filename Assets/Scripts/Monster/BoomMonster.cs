@@ -166,13 +166,14 @@ public class BoomMonster : Monster {
 	}
 
 
-public void MonSterPatternUpdateConduct(bool NormalMode){
+	public void MonSterPatternUpdateConduct(bool NormalMode){
 		if (NormalMode) {
 			StartCoroutine (PatternNormalChange ());
 		} else if (!NormalMode) {
 			StartCoroutine (PatternDefenceChange ());
 		}
 	}
+
 
 
 
@@ -184,6 +185,7 @@ public void MonSterPatternUpdateConduct(bool NormalMode){
 				if (currentDisTance > searchRange) {
 					monsterState = StatePosition.Idle;
 					Pattern (monsterState);
+					SendMonsterState (monsterState,isAttack, moveAble, movePoint, targetPlayer);
 				}
 				//if this object get Attackmotion pattern(stateposition.boom -> attack), and this monsterlife is 20%, boomPattern start;
 				else if (currentDisTance <= searchRange) {
@@ -193,6 +195,7 @@ public void MonSterPatternUpdateConduct(bool NormalMode){
 						isAttack = false;
 						monsterState = StatePosition.Run;
 						Pattern (monsterState);
+						SendMonsterState (monsterState,isAttack, moveAble, movePoint, targetPlayer);
 					}
 					if (currentDisTance <= searchRange * 0.3f) {
 						if (!isAttack) {
@@ -202,15 +205,18 @@ public void MonSterPatternUpdateConduct(bool NormalMode){
 						if (currentLife > maxLife * 0.3f) {
 							monsterState = StatePosition.Attack;
 							Pattern (monsterState);
+							SendMonsterState (monsterState,isAttack, moveAble, movePoint, targetPlayer);
 							yield return new WaitForSeconds (0.5f);
 						} else if (currentLife < maxLife * 0.3) {
 							if (Random.Range (0, 4) <= 2) {
 								monsterState = StatePosition.Attack;
 								Pattern (monsterState);
+								SendMonsterState (monsterState,isAttack, moveAble, movePoint, targetPlayer);
 								yield return new WaitForSeconds (0.5f);
 							} else if(Random.Range (0, 4) > 2)
 								monsterState = StatePosition.Boom;
 							Pattern (monsterState);
+							SendMonsterState (monsterState,isAttack, moveAble, movePoint,targetPlayer);
 							yield return new WaitForSeconds (4f);
 						}
 					}
@@ -334,6 +340,46 @@ public void MonSterPatternUpdateConduct(bool NormalMode){
 				targetPlayer = null;
 				transform.Translate (boomObjectPosition*Time.deltaTime);
 			}
+		}
+	}
+
+	// server code;
+	public void SendMonsterState(StatePosition _state, bool _isAttack, bool _moveAble, Vector3 _movePoint, GameObject _Player){
+		//send to server;
+
+	}
+
+	public void RecibeMonsterState(StatePosition _state, bool _isAttack, bool _moveAble, Vector3 _movePoint, GameObject _Player){
+		if (_state == StatePosition.Run) {
+			movePoint = _movePoint;
+		}
+		monsterState = _state;
+		isAttack = _isAttack;
+		moveAble = _moveAble;
+		Pattern (_state);
+		if (_Player != null) {
+			targetPlayer = _Player;
+		}
+	}
+
+	public void GuestMonsterUpdate(){
+		aniState = this.animator.GetCurrentAnimatorStateInfo (0);
+		if (aniState.IsName ("Run")) 
+		{
+			if (moveAble) 
+			{
+				this.transform.Translate (movePoint * moveSpeed * Time.deltaTime, 0);
+			}
+		}
+		ChasePlayer ();
+	}
+
+
+
+	public IEnumerator GuestMonsterPatternChange(){
+		while (IsAlive) {
+			Pattern (monsterState);
+			yield return new WaitForSeconds (0.2f);
 		}
 	}
 

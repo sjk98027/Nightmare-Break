@@ -6,6 +6,14 @@ using System.Collections;
 //this class manage monsterStageLevel, sumon, player sumon, player death;
 public class DungeonManager : MonoBehaviour
 {
+	public enum HostGuest
+	{
+		Host = 0,
+		SubHost,
+		Guest
+	}
+	;
+	public HostGuest hostGuest;
     //MonsterController change-> DungeonManager;
     //DungeonScene change -> DungeonManager;
     private const int MaxPlayerNum = 4;
@@ -38,7 +46,7 @@ public class DungeonManager : MonoBehaviour
     [SerializeField]int mapNumber;
 
 	void Awake(){
-		
+		//getting HostGuest infomation;
 	}
 
 	void Start()
@@ -60,13 +68,29 @@ public class DungeonManager : MonoBehaviour
 		if (normalMode)
 		{
 			for (int i = 0; i < boomMonster.Length; i++) {
-				boomMonster [i].UpdateNormalMode ();
+				if (hostGuest != HostGuest.Host) {
+					boomMonster [i].GuestMonsterUpdate ();	
+				}
+				if (hostGuest == HostGuest.Host) {
+					boomMonster [i].UpdateNormalMode ();
+				}
 			}
 			for (int j = 0; j < warriorMonster.Length; j++) {
-				warriorMonster [j].UpdateNormalMode ();
+				if (hostGuest != HostGuest.Host) {
+					warriorMonster [j].GuestMonsterUpdate ();
+				}
+				if (hostGuest == HostGuest.Host) {
+					warriorMonster [j].UpdateNormalMode ();
+				}
+				
 			}
 			for (int k = 0; k < shockWaveMonster.Length; k++) {
-				shockWaveMonster [k].UpdateNormalMode ();
+				if (hostGuest != HostGuest.Host) {
+					shockWaveMonster [k].UpdateNormalMode ();
+				}
+				if (hostGuest == HostGuest.Host) {
+					shockWaveMonster [k].GuestMonsterUpdate ();
+				}
 			}
 		}
 
@@ -78,7 +102,13 @@ public class DungeonManager : MonoBehaviour
 		}
 
 		if (bossMonster != null) {
-			bossMonster.BossMonsterUpdate ();
+			if(hostGuest == HostGuest.Host){
+				bossMonster.BossMonsterUpdate ();
+			}
+			if(hostGuest != HostGuest.Host){
+				//shockWaveMonster [k].GuestMonsterUpdate ();
+				bossMonster.BossMonsterUpdate ();
+			}
 		}
 	}
 
@@ -145,50 +175,73 @@ public class DungeonManager : MonoBehaviour
 		shockWaveMonster = gameObject.transform.GetComponentsInChildren<ShockWaveMonster>();
 		warriorMonster = gameObject.GetComponentsInChildren<WarriorMonster> ();
 		monsterCount = (boomMonster.Length + warriorMonster.Length +shockWaveMonster.Length);
-
-        for (int i = 0; i < boomMonster.Length; i++)
-        {
-			if (boomMonster.Length != 0) {
-				boomMonster [i].PlayerSearch ();
-				boomMonster [i].MonsterSet ();
-				boomMonster [i].NormalMode = normalMode;
-				boomMonster [i].GateArrayNumber = mapNumber;
-				boomMonster [i].MonsterArrayNumber = i;
-				boomMonster [i].MonSterPatternUpdateConduct (normalMode);
+	
+			for (int i = 0; i < boomMonster.Length; i++) {
+				if (boomMonster.Length != 0) {
+					boomMonster [i].PlayerSearch ();
+					boomMonster [i].MonsterSet ();
+					boomMonster [i].NormalMode = normalMode;
+					boomMonster [i].GateArrayNumber = mapNumber;
+					boomMonster [i].MonsterArrayNumber = i;
+					if (hostGuest != HostGuest.Host) {
+						boomMonster [i].GuestMonsterPatternChange ();
+					}
+					else if (hostGuest == HostGuest.Host) {
+						boomMonster [i].MonSterPatternUpdateConduct (normalMode);
+					}
+					//boomMonster [i].MonSterPatternUpdateConduct (normalMode);
+				}
 			}
-	    }
 
-		for(int j =0; j < shockWaveMonster.Length; j++){
-			if (shockWaveMonster.Length != 0) {
-				shockWaveMonster [j].PlayerSearch ();
-				shockWaveMonster [j].MonsterSet ();
-				shockWaveMonster [j].NormalMode = normalMode;
-				shockWaveMonster [j].GateArrayNumber = mapNumber;
-				shockWaveMonster [j].MonsterArrayNumber = j;
-				shockWaveMonster [j].MonSterPatternUpdateConduct (normalMode);
+
+			for (int j = 0; j < shockWaveMonster.Length; j++) {
+				if (shockWaveMonster.Length != 0) {
+					shockWaveMonster [j].PlayerSearch ();
+					shockWaveMonster [j].MonsterSet ();
+					shockWaveMonster [j].NormalMode = normalMode;
+					shockWaveMonster [j].GateArrayNumber = mapNumber;
+					shockWaveMonster [j].MonsterArrayNumber = j;
+					if (hostGuest == HostGuest.Host) {
+						shockWaveMonster [j].MonSterPatternUpdateConduct (normalMode);
+					}
+					else if (hostGuest != HostGuest.Guest) {
+						shockWaveMonster [j].GuestMonsterPatternChange ();
+					}
+				}
+			}
+
+			for (int k = 0; k < warriorMonster.Length; k++) {
+				if (warriorMonster.Length != 0) {
+					warriorMonster [k].PlayerSearch ();
+					warriorMonster [k].MonsterSet ();
+					warriorMonster [k].NormalMode = normalMode;
+					warriorMonster [k].GateArrayNumber = mapNumber;
+					warriorMonster [k].MonsterArrayNumber = k;
+					if (hostGuest == HostGuest.Host) {
+						warriorMonster [k].MonSterPatternUpdateConduct (normalMode);
+					}
+					else if (hostGuest != HostGuest.Host) {
+						warriorMonster [k].GuestMonsterPatternChange ();
+					}
+				}
+			}
+
+
+			if (bossMonster != null) {
+				bossMonster.PlayerSearch ();
+				bossMonster.MonsterSet ();
+				if (hostGuest == HostGuest.Host) {
+					bossMonster.BossMonsterPatternUpdateConduct ();
+				}
+				else if (hostGuest != HostGuest.Host) {
+					//bossMonster.
+					bossMonster.BossMonsterPatternUpdateConduct ();
+				}
+
 			}
 		}
 
-		for (int k = 0; k < warriorMonster.Length; k++) {
-			if(warriorMonster.Length !=0){
-				warriorMonster [k].PlayerSearch ();
-				warriorMonster [k].MonsterSet ();
-				warriorMonster [k].NormalMode = normalMode;
-				warriorMonster [k].GateArrayNumber = mapNumber;
-				warriorMonster [k].MonsterArrayNumber = k;
-				warriorMonster [k].MonSterPatternUpdateConduct (normalMode);
-			}
-		}
-
-
-		if (bossMonster != null) {
-			bossMonster.PlayerSearch ();
-			bossMonster.MonsterSet ();
-			bossMonster.BossMonsterPatternUpdateConduct ();
-
-		}
-
-    }
+    
 
 	public void SectionSet(){
 		
@@ -230,7 +283,7 @@ public class DungeonManager : MonoBehaviour
         uiManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
         uiManager.SetBattleUIManager();
         player.GetComponent<CharacterManager>().UIManager = uiManager;
-        player.GetComponent<CharacterManager>().SetCharacterStatus();
+//        player.GetComponent<CharacterManager>().SetCharacterStatus();
 
         dataSender = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<DataSender>();
         dataSender.CreateUnitSend(0, player.transform.position);

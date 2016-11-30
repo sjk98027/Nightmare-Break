@@ -316,7 +316,45 @@ public class WarriorMonster : Monster {
 	}
 
 
+	// server code;
+	public void SendMonsterState(StatePosition _state, bool _isAttack, bool _moveAble, Vector3 _movePoint, GameObject _Player){
+		//send to server;
 
+	}
+
+	public void RecibeMonsterState(StatePosition _state, bool _isAttack, bool _moveAble, Vector3 _movePoint, GameObject _Player){
+		if (_state == StatePosition.Run) {
+			movePoint = _movePoint;
+		}
+		monsterState = _state;
+		isAttack = _isAttack;
+		moveAble = _moveAble;
+		Pattern (_state);
+		if (_Player != null) {
+			targetPlayer = _Player;
+		}
+	}
+
+	public void GuestMonsterUpdate(){
+		aniState = this.animator.GetCurrentAnimatorStateInfo (0);
+		if (aniState.IsName ("Run")) 
+		{
+			if (moveAble) 
+			{
+				this.transform.Translate (movePoint * moveSpeed * Time.deltaTime, 0);
+			}
+		}
+		ChasePlayer ();
+	}
+
+
+
+	public IEnumerator GuestMonsterPatternChange(){
+		while (IsAlive) {
+			Pattern (monsterState);
+			yield return new WaitForSeconds (0.2f);
+		}
+	}
 
 
 
