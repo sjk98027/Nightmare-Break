@@ -83,6 +83,8 @@ public class CharacterStatus : MonoBehaviour
         dreamStone = 0;
         skillLevel = new int[skillNum];
         equipLevel = new int[equipNum];
+
+		Debug.Log (moveSpeed);
     }
 
     public void SetCharacterStatus(CharacterStatusData characterStatusData)
