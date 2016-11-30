@@ -1588,6 +1588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01f0438d7a5368841af257a179194145, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  charManager: {fileID: 0}
   dialogPanel: {fileID: 0}
   dialog: {fileID: 0}
 --- !u!1 &682635831
