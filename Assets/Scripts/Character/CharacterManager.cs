@@ -346,6 +346,11 @@ public class CharacterManager : MonoBehaviour
 
     public void CharState(int Inputstate)
     {
+        if(animator == null)
+        {
+            animator = GetComponent<Animator>();
+        }
+
         if (charAlive)
         {
             SetStateDefault();
