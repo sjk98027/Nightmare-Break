@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 [System.Serializable]
 public class CharacterStatus : MonoBehaviour
@@ -42,6 +43,7 @@ public class CharacterStatus : MonoBehaviour
     int dreamStone;
     int[] skillLevel;
     int[] equipLevel;
+    bool[] activeSkillUse;
 
     public string HName { get { return hName; } }
     public Gender HGender { get { return hGender; } }
@@ -64,7 +66,7 @@ public class CharacterStatus : MonoBehaviour
     public int DreamStone { get { return dreamStone; } }
     public int[] SkillLevel { get { return skillLevel; } }
     public int[] EquipLevel { get { return equipLevel; } }
-
+    public bool[] ActiveSkillUse { get { return activeSkillUse; } }
 
     public void SetCharacterStatus()
     {
@@ -82,9 +84,14 @@ public class CharacterStatus : MonoBehaviour
         defense = 10;
         dreamStone = 0;
         skillLevel = new int[skillNum];
+        activeSkillUse = new bool[equipNum];
         equipLevel = new int[equipNum];
 
-		Debug.Log (moveSpeed);
+        for (int i = 0; i < activeSkillUse.Length; i++)
+        {
+            activeSkillUse[i] = true;
+        }		
+       
     }
 
     public void SetCharacterStatus(CharacterStatusData characterStatusData)
@@ -123,5 +130,12 @@ public class CharacterStatus : MonoBehaviour
     public void DecreaseMagicPoint(int amount)
     {
         magicPoint -= amount;
+    }
+
+    public IEnumerator SkillCoolTimer(int activeSkillIndex, int skillCoolTime)
+    {
+        activeSkillUse[activeSkillIndex] = false;
+        yield return new WaitForSeconds(skillCoolTime);
+        activeSkillUse[activeSkillIndex] = true;
     }
 }
