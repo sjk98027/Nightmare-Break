@@ -56,7 +56,7 @@ public class DataSender : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.03f);
+            yield return new WaitForEndOfFrame();
 
             if (sendMsgs.Count > 0)
             {

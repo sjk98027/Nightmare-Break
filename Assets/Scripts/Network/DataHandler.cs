@@ -326,8 +326,8 @@ public class DataHandler : MonoBehaviour
             string ip = matchData.ip[i];
             ip = ip.Substring(0, ip.IndexOf(":"));
 
-            Debug.Log(ip);
-            Debug.Log(networkManager.client.ToString().Substring(0, networkManager.client.ToString().IndexOf(":")));
+            Debug.Log("온 아이피 : " + ip);
+            Debug.Log("내 아이피 " + networkManager.client.ToString().Substring(0, networkManager.client.ToString().IndexOf(":")));
 
             if (ip != networkManager.client.ToString().Substring(0, networkManager.client.ToString().IndexOf(":")))
             {
