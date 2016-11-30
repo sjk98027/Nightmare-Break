@@ -26,8 +26,8 @@ public class UIManager : MonoBehaviour
     public void SetBattleUIManager()
     {
         charManager = GameObject.FindWithTag("Player").GetComponent<CharacterManager>();
-        battleUIManager = new BattleUIManager();
-		battleUIManager.SetUIObject();
+        //battleUIManager = new BattleUIManager();
+		//battleUIManager.SetUIObject();
     }
 
     public void SetWaitUIManager()
