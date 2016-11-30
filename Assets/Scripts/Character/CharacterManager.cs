@@ -162,13 +162,11 @@ public class CharacterManager : MonoBehaviour
 						if (hor == -1.0f || hor == 1.0f)
 						{
 							transform.Translate ((Vector3.forward * ver - Vector3.right * hor) * Time.deltaTime * (charStatus.MoveSpeed - 3.0f), Space.World);
-							Debug.Log ("xxxxxx");
 
 						}
 						else
 						{
 							transform.Translate ((Vector3.forward * ver - Vector3.right * hor) * Time.deltaTime * (charStatus.MoveSpeed), Space.World);
-							Debug.Log (charStatus.MoveSpeed + "속도");
 						}
 					}
 				}
@@ -340,8 +338,13 @@ public class CharacterManager : MonoBehaviour
     //Animation Method
     void SetStateDefault()
     {
-        //animator.SetBool("Idle", false);
-        //animator.SetBool("Run", false);
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
+        }
+
+        animator.SetBool("Idle", false);
+        animator.SetBool("Run", false);
     }
 
     public void CharState(int Inputstate)
