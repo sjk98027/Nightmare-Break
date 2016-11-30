@@ -10,7 +10,7 @@ public class SwordDance : MonoBehaviour
 	}
 
 
-	void OnCollisionEnter(Collision coll)
+	void OnTriggerEnter(Collider coll)
 	{
 		Debug.Log ("In deb");
 	}
