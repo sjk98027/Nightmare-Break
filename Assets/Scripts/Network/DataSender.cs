@@ -56,7 +56,7 @@ public class DataSender : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(0.03f);
 
             if (sendMsgs.Count > 0)
             {
@@ -425,7 +425,7 @@ public class DataSender : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(0.1f);
 
             DataPacket packet = new DataPacket(udpMsg, null);
 
