@@ -7,7 +7,10 @@ public class GameManager : MonoBehaviour
     InputManager inputManager;
     UIManager uiManager;
     CharacterStatus characterStatus;
-    
+
+    [SerializeField]
+    string ip;
+
     void Start()
     {
         InitializeManager();
@@ -27,7 +30,7 @@ public class GameManager : MonoBehaviour
         uiManager.tag = "UIManager";
         uiManager.SetDialog();
 
-        networkManager.InitializeManager();
+        networkManager.InitializeManager(ip);
 
         SetManagerInWait();
 

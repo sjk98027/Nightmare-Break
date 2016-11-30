@@ -46,12 +46,12 @@ public class NetworkManager : MonoBehaviour
     public DataHandler DataHandler { get { return dataHandler; } }
     public DataSender DataSender { get { return dataSender; } }
 
-    public void InitializeManager()
+    public void InitializeManager(string ip)
     {
         try
         {
             mainServer = new IPEndPoint(IPAddress.Parse("192.168.94.88"), mainServerPortNumber);
-            client = new IPEndPoint(IPAddress.Any, clientPortNumber);
+            client = new IPEndPoint(IPAddress.Parse(ip), clientPortNumber);
 
             receiveMsgs = new Queue<DataPacket>();
             sendMsgs = new Queue<DataPacket>();

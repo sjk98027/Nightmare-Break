@@ -312,10 +312,10 @@ public class DataHandler : MonoBehaviour
         }
     }
 
-    //Server - 매치 완료
+    //Server - 연결 시작
     public void UDPConnection(DataPacket packet)
     {
-        Debug.Log("매치 완료");
+        Debug.Log("연결 시작");
         MatchDataPacket matchDataPacket = new MatchDataPacket(packet.msg);
         MatchData matchData = matchDataPacket.GetData();
 
@@ -325,6 +325,9 @@ public class DataHandler : MonoBehaviour
         {
             string ip = matchData.ip[i];
             ip = ip.Substring(0, ip.IndexOf(":"));
+
+            Debug.Log(ip);
+            Debug.Log(networkManager.client.ToString().Substring(0, networkManager.client.ToString().IndexOf(":")));
 
             if (ip != networkManager.client.ToString().Substring(0, networkManager.client.ToString().IndexOf(":")))
             {
