@@ -242,9 +242,9 @@ public class CharacterManager : MonoBehaviour
 			if (charStatus.MagicPoint > SkillManager.instance.SkillData.GetSkill((int)charStatus.HClass, 1).ManaCost && charStatus.ActiveSkillUse[0])
 			    {
 				charStatus.DecreaseMagicPoint(SkillManager.instance.SkillData.GetSkill((int)charStatus.HClass, 1).ManaCost);
-                uiManager.BattleUIManager.mpBarCalculation(charStatus.MaxMagicPoint, charStatus.MagicPoint);
+              //  uiManager.BattleUIManager.mpBarCalculation(charStatus.MaxMagicPoint, charStatus.MagicPoint);
                 StartCoroutine(charStatus.SkillCoolTimer(0, SkillManager.instance.SkillData.GetSkill((int)charStatus.HClass, 1).SkillCoolTime));
-                StartCoroutine (uiManager.BattleUIManager.SetSkillCoolTimeUI (0, SkillManager.instance.SkillData.GetSkill((int)charStatus.HClass, 1).SkillCoolTime));
+         //       StartCoroutine (uiManager.BattleUIManager.SetSkillCoolTimeUI (0, SkillManager.instance.SkillData.GetSkill((int)charStatus.HClass, 1).SkillCoolTime));
 				if (state == CharacterState.Run || state == CharacterState.Idle || state == CharacterState.Skill1)
 				{
 					state = CharacterState.Skill1;
@@ -259,9 +259,9 @@ public class CharacterManager : MonoBehaviour
 			if (charStatus.MagicPoint > SkillManager.instance.SkillData.GetSkill((int)charStatus.HClass, 2).ManaCost && charStatus.ActiveSkillUse[1])
 			{
                 charStatus.DecreaseMagicPoint(SkillManager.instance.SkillData.GetSkill((int)charStatus.HClass, 1).ManaCost);
-                uiManager.BattleUIManager.mpBarCalculation(charStatus.MaxMagicPoint, charStatus.MagicPoint);
+         //       uiManager.BattleUIManager.mpBarCalculation(charStatus.MaxMagicPoint, charStatus.MagicPoint);
                 StartCoroutine(charStatus.SkillCoolTimer(1, SkillManager.instance.SkillData.GetSkill((int)charStatus.HClass, 2).SkillCoolTime));
-                StartCoroutine (uiManager.BattleUIManager.SetSkillCoolTimeUI (1, SkillManager.instance.SkillData.GetSkill((int)charStatus.HClass, 1).SkillCoolTime));
+          //      StartCoroutine (uiManager.BattleUIManager.SetSkillCoolTimeUI (1, SkillManager.instance.SkillData.GetSkill((int)charStatus.HClass, 1).SkillCoolTime));
 				if (state != CharacterState.Jump && state != CharacterState.Skill2 && state != CharacterState.Skill1 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
 				{
 					CharState ((int)CharacterState.Skill2);
@@ -274,9 +274,9 @@ public class CharacterManager : MonoBehaviour
 			if (charStatus.MagicPoint > SkillManager.instance.SkillData.GetSkill((int)charStatus.HClass, 3).ManaCost && charStatus.ActiveSkillUse[2])
 			{
                 charStatus.DecreaseMagicPoint(SkillManager.instance.SkillData.GetSkill((int)charStatus.HClass, 3).ManaCost);
-                uiManager.BattleUIManager.mpBarCalculation(charStatus.MaxMagicPoint, charStatus.MagicPoint);
+          //      uiManager.BattleUIManager.mpBarCalculation(charStatus.MaxMagicPoint, charStatus.MagicPoint);
                 StartCoroutine(charStatus.SkillCoolTimer(2, SkillManager.instance.SkillData.GetSkill((int)charStatus.HClass, 3).SkillCoolTime));
-                StartCoroutine(uiManager.BattleUIManager.SetSkillCoolTimeUI(2, SkillManager.instance.SkillData.GetSkill((int)charStatus.HClass, 3).SkillCoolTime));
+             //   StartCoroutine(uiManager.BattleUIManager.SetSkillCoolTimeUI(2, SkillManager.instance.SkillData.GetSkill((int)charStatus.HClass, 3).SkillCoolTime));
                 if (state != CharacterState.Jump && state != CharacterState.Skill3 && state != CharacterState.Skill2 && state != CharacterState.Skill1 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
 				{
 					CharState ((int)CharacterState.Skill3);
@@ -289,9 +289,9 @@ public class CharacterManager : MonoBehaviour
 			if (charStatus.MagicPoint > SkillManager.instance.SkillData.GetSkill((int)charStatus.HClass, 4).ManaCost && charStatus.ActiveSkillUse[3])
 			{
             charStatus.DecreaseMagicPoint(SkillManager.instance.SkillData.GetSkill((int)charStatus.HClass, 4).ManaCost);
-            uiManager.BattleUIManager.mpBarCalculation(charStatus.MaxMagicPoint, charStatus.MagicPoint);
+      //      uiManager.BattleUIManager.mpBarCalculation(charStatus.MaxMagicPoint, charStatus.MagicPoint);
             StartCoroutine(charStatus.SkillCoolTimer(3, SkillManager.instance.SkillData.GetSkill((int)charStatus.HClass, 4).SkillCoolTime));
-            StartCoroutine(uiManager.BattleUIManager.SetSkillCoolTimeUI(3, SkillManager.instance.SkillData.GetSkill((int)charStatus.HClass, 4).SkillCoolTime));
+       //     StartCoroutine(uiManager.BattleUIManager.SetSkillCoolTimeUI(3, SkillManager.instance.SkillData.GetSkill((int)charStatus.HClass, 4).SkillCoolTime));
             if (state != CharacterState.Jump && state != CharacterState.Skill1 && state != CharacterState.Skill2 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
 				{
 					//giganticSwordCastSword.SetActive(true);

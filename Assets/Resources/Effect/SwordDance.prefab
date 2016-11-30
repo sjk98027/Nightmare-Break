@@ -21,7 +21,6 @@ GameObject:
   - 4: {fileID: 4000012874610838}
   - 198: {fileID: 198000010491540306}
   - 199: {fileID: 199000011941109768}
-  - 114: {fileID: 114000011230690460}
   m_Layer: 0
   m_Name: SwordDance
   m_TagString: Untagged
@@ -74,17 +73,6 @@ Transform:
   - {fileID: 4000012429925936}
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &114000011230690460
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010427737978}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d255a01ad49d62848a08dde24e03de7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114000013443762624
 MonoBehaviour:
   m_ObjectHideFlags: 1
