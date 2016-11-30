@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
     NetworkManager networkManager;
     InputManager inputManager;
     UIManager uiManager;
+    CharacterStatus characterStatus;
 
     [SerializeField]
     string ip;
@@ -31,6 +32,8 @@ public class GameManager : MonoBehaviour
 
         networkManager.InitializeManager(ip);
 
+        SetManagerInWait();
+
         try
         {
             uiManager.SetLoginUIManager();
@@ -40,6 +43,13 @@ public class GameManager : MonoBehaviour
         {
 
         }
+    }
+
+    public void SetManagerInWait()
+    {
+        characterStatus = (Instantiate(Resources.Load("Manager/CharacterStatus")) as GameObject).GetComponent<CharacterStatus>();
+        characterStatus.name = "CharacterStatus";
+        characterStatus.tag = "CharStatus";
     }
 
     public void SetManagerInDungeon()

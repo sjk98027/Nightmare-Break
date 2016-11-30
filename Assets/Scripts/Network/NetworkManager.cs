@@ -93,8 +93,14 @@ public class NetworkManager : MonoBehaviour
     public void ConnectP2P(string newIp)
     {
         IPEndPoint client = new IPEndPoint(IPAddress.Parse(newIp), clientPortNumber);
+        Clients.Add(client);
         dataReceiver.StartUdpReceive(clientSock, client);
         dataSender.ConnectionCheck(client);
+    }
+
+    public void DisconnectP2P()
+    {
+
     }
 
     public void SocketClose()
