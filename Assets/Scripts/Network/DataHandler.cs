@@ -400,10 +400,10 @@ public class DataHandler : MonoBehaviour
         Debug.Log("캐릭터 방향 : " + characterPositionData.dir);
         Debug.Log("캐릭터 위치 : " + characterPositionData.posX + ", " + characterPositionData.posY + ", " + characterPositionData.posZ + ", ");
 
-        if ((DateTime.Now - dTime).TotalSeconds - characterPositionData.time > 1)
-        {
-            return;
-        }
+        //if ((DateTime.Now - dTime).TotalSeconds - characterPositionData.time > 1)
+        //{
+        //    return;
+        //}
 
         CharacterManager characterManager = dungeonManager.Players[1].GetComponent<CharacterManager>();
         characterManager.SetPosition(characterPositionData);
