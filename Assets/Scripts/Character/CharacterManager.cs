@@ -340,8 +340,8 @@ public class CharacterManager : MonoBehaviour
     //Animation Method
     void SetStateDefault()
     {
-        animator.SetBool("Idle", false);
-        animator.SetBool("Run", false);
+        //animator.SetBool("Idle", false);
+        //animator.SetBool("Run", false);
     }
 
     public void CharState(int Inputstate)
