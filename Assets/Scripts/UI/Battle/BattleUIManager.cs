@@ -86,29 +86,14 @@ public class BattleUIManager
 			}
         }
     }
-    
-	public void SetPointEnterUI(int skillIndex, int skillLevel, int classIndex)
-	{
-		if (!mouseOverUI.IsActive()) {
-			mouseOverUI.gameObject.transform.parent.gameObject.SetActive (true);
-		}
-		mouseOverUI.transform.parent.transform.localPosition = new Vector2 (skillUI [skillIndex].transform.localPosition.x + mouseOverUI_xPos, mouseOverUI_yPos);
-		#region 전사 스킬 UI
-		if (classIndex == 0) {
-            mouseOverUI.text = "스킬이름: " + SkillManager.instance.SkillData.GetSkill(("WarriorA") + (skillIndex + 1) + ("_L1")).SkillName + "\n" + "쿨타임: " + SkillManager.instance.SkillData.GetSkill("WarriorA1_L1").SkillCoolTime.ToString() + "초"
-                    + "\n" + SkillManager.instance.SkillData.GetSkill("WarriorA1_L1").SkillExplanation
-                    + "\n" + SkillManager.instance.SkillData.GetSkill("WarriorA1_L" + (skillLevel)).SkillDamegeExplanation;
-			#endregion  
-		#region 법사 스킬 UI
-		} else if (classIndex == 1) {
 
-		#endregion
-		#region 거너 스킬 UI
-		} else if (classIndex == 2) {
-		#endregion
-		#region 방패병UI
-		} else if (classIndex == 3) {
-		#endregion 
-		}
-	}
+    public void SetPointEnterUI(int skillIndex, int skillLevel, int classIndex)
+    {
+        if (!mouseOverUI.IsActive())
+        {
+            mouseOverUI.gameObject.transform.parent.gameObject.SetActive(true);
+        }
+        mouseOverUI.transform.parent.transform.localPosition = new Vector2(skillUI[skillIndex].transform.localPosition.x + mouseOverUI_xPos, mouseOverUI_yPos);
+     
+    }
 }
