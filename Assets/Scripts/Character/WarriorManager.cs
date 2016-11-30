@@ -105,6 +105,12 @@ public class WarriorManager : CharacterManager
         animator.speed = 0;
     }
 
+	public void SwordDanceBoxSummon()
+	{
+		Debug.Log ("DanceSummon");
+		Instantiate(Resources.Load<GameObject>("Effect/SwordDanceBox"), new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+	}
+
     public void GiganticSwordSummon()
     {
         float giganticSwordPos;

@@ -18,8 +18,8 @@ public class SkillData{
         #region 전사 스킬리스트
         skillList.Add(new SkillBasicData(SkillBasicData.SkillTypes.Active, "소용돌이", 1, 40, 5, "회전공격을 하며 주위 적들에게 광역공격을 한다."));
         skillList.Add(new SkillBasicData(SkillBasicData.SkillTypes.Active, "섬단", 2, 50, 3, "빠른속도로 전방의 적들을 베어버린다."));
-        skillList.Add(new SkillBasicData(SkillBasicData.SkillTypes.Active, "검무", 3, 100, 30, "검으로 근접한 적들을 도륙하는 공격을한다."));
-        skillList.Add(new SkillBasicData(SkillBasicData.SkillTypes.Active, "기간틱소드", 4, 150, 40, "검으로 근접한 적들을 도륙하는 공격을한다."));
+        skillList.Add(new SkillBasicData(SkillBasicData.SkillTypes.Active, "검무", 3, 100, 3, "검으로 근접한 적들을 도륙하는 공격을한다."));
+        skillList.Add(new SkillBasicData(SkillBasicData.SkillTypes.Active, "기간틱소드", 4, 150, 4, "검으로 근접한 적들을 도륙하는 공격을한다."));
         skillList.Add(new SkillBasicData(SkillBasicData.SkillTypes.Passive, "흡혈공격", 5, "일반 공격시 준 데미지의 일정량을 체력으로 회복한다."));
         skillList.Add(new SkillBasicData(SkillBasicData.SkillTypes.Passive, "극의", 6, 100, 30, "무기 공격력의 일정량의 추가 방어력을 얻는다."));
 
