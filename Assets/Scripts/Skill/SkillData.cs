@@ -1,125 +1,141 @@
 ﻿using System.Collections.Generic;
 
-public class SkillData {
-   
-	private Dictionary<string, Skill> skillDic = new Dictionary<string, Skill>();
+public class SkillData{
 
-	public Skill GetSkill(string key)
-	{
-		Skill dicValue = null;
-		if (skillDic.ContainsKey(key))
-		{
-			dicValue = skillDic[key];
-			return dicValue;
-		} else
-		{
-			return null;
-		}
-	}
+    private const int MaxSkillIndex = 6;
+    private int searchIndex;
+    List<SkillBasicData> skillList = new List<SkillBasicData>();
 
-	public void Initialize()
-	{
-		#region 전사스킬초기화
-		skillDic.Add("WarriorA1_L1", new Skill(Skill.SkillType.Active, "소용돌이", 1, 40, 5, 1.2f, "회전공격을 하며 주위 적들에게 광역공격을 한다.", "무기 공격력의 120%의 데미지를 가진다."));
-		skillDic.Add("WarriorA1_L2", new Skill(Skill.SkillType.Active, 2, 1.4f, "무기 공격력의 140%의 데미지를 가진다."));
-		skillDic.Add("WarriorA1_L3", new Skill(Skill.SkillType.Active, 3, 1.6f, "무기 공격력의 160%의 데미지를 가진다."));
-		skillDic.Add("WarriorA1_L4", new Skill(Skill.SkillType.Active, 4, 1.8f, "무기 공격력의 180%의 데미지를 가진다."));
+    public SkillBasicData GetSkill(int _classType, int _skillindex)
+    {
+        searchIndex = _classType * MaxSkillIndex + _skillindex;
+        return skillList[searchIndex];
+    }
 
-		skillDic.Add("WarriorA2_L1", new Skill(Skill.SkillType.Active, "섬단", 1, 50, 3, 1.1f, "빠른속도로 전방의 적들을 베어버린다.", "무기 공격력의 110%를 데미지를 가진다."));
-		skillDic.Add("WarriorA2_L2", new Skill(Skill.SkillType.Active, 2, 1.2f, "무기 공격력의 120%의 데미지를 가진다."));
-		skillDic.Add("WarriorA2_L3", new Skill(Skill.SkillType.Active, 3, 1.3f, "무기 공격력의 130%의 데미지를 가진다."));
-		skillDic.Add("WarriorA2_L4", new Skill(Skill.SkillType.Active, 4, 1.4f, "무기 공격력의 140%의 데미지를 가진다."));
+    public void Initialize()
+    {
+        skillList.Add(new SkillBasicData(SkillBasicData.SkillTypes.None," ", 0, 0, 0, " ")); //
+        #region 전사 스킬리스트
+        skillList.Add(new SkillBasicData(SkillBasicData.SkillTypes.Active, "소용돌이", 1, 40, 5, "회전공격을 하며 주위 적들에게 광역공격을 한다."));
+        skillList.Add(new SkillBasicData(SkillBasicData.SkillTypes.Active, "섬단", 2, 50, 3, "빠른속도로 전방의 적들을 베어버린다."));
+        skillList.Add(new SkillBasicData(SkillBasicData.SkillTypes.Active, "검무", 3, 100, 30, "검으로 근접한 적들을 도륙하는 공격을한다."));
+        skillList.Add(new SkillBasicData(SkillBasicData.SkillTypes.Active, "기간틱소드", 4, 150, 40, "검으로 근접한 적들을 도륙하는 공격을한다."));
+        skillList.Add(new SkillBasicData(SkillBasicData.SkillTypes.Passive, "흡혈공격", 5, "일반 공격시 준 데미지의 일정량을 체력으로 회복한다."));
+        skillList.Add(new SkillBasicData(SkillBasicData.SkillTypes.Passive, "극의", 6, 100, 30, "무기 공격력의 일정량의 추가 방어력을 얻는다."));
 
-		skillDic.Add("WarriorA3_L1", new Skill(Skill.SkillType.Active, "검무", 1, 100, 30, 1.2f, "검으로 근접한 적들을 도륙하는 공격을한다.", "무기 공격력의 120%를 데미지를 가진다."));
-		skillDic.Add("WarriorA3_L2", new Skill(Skill.SkillType.Active, 2, 1.4f, "무기 공격력의 140%의 데미지를 가진다."));
-		skillDic.Add("WarriorA3_L3", new Skill(Skill.SkillType.Active, 3, 1.6f, "무기 공격력의 160%의 데미지를 가진다."));
-		skillDic.Add("WarriorA3_L4", new Skill(Skill.SkillType.Active, 4, 1.8f, "무기 공격력의 180%의 데미지를 가진다."));
+        skillList[1].AddSkillLevelData(new SkillLevelData(1, 1.2f, "무기 공격력에 120%의 공격력을 가진다."));
+        skillList[1].AddSkillLevelData(new SkillLevelData(2, 1.4f, "무기 공격력에 140%의 공격력을 가진다."));
+        skillList[1].AddSkillLevelData(new SkillLevelData(3, 1.2f, "무기 공격력에 160%의 공격력을 가진다."));
+        skillList[1].AddSkillLevelData(new SkillLevelData(4, 1.4f, "무기 공격력에 180%의 공격력을 가진다."));
 
-		skillDic.Add("WarriorA4_L1", new Skill(Skill.SkillType.Active, "기간틱소드", 1, 150, 40, 1.2f, "기간틱소드를 소환하여 적을 섬멸한다.", "무기 공격력의 120%를 데미지를 가진다."));
-		skillDic.Add("WarriorA4_L2", new Skill(Skill.SkillType.Active, 2, 2.2f, "무기 공격력의 220%의 데미지를 가진다."));
+        skillList[2].AddSkillLevelData(new SkillLevelData(1, 1.1f, "무기 공격력에 110%의 공격력을 가진다."));
+        skillList[2].AddSkillLevelData(new SkillLevelData(2, 1.2f, "무기 공격력에 120%의 공격력을 가진다."));
+        skillList[2].AddSkillLevelData(new SkillLevelData(3, 1.3f, "무기 공격력에 130%의 공격력을 가진다."));
+        skillList[2].AddSkillLevelData(new SkillLevelData(4, 1.4f, "무기 공격력에 140%의 공격력을 가진다."));
 
-		skillDic.Add("WarriorP1_L1", new Skill(Skill.SkillType.Passive, "흡혈공격",1, 0.05f, "일반 공격시 준 데미지의 일정량을 체력으로 회복한다.", "평타 데미지의 5%를 흡수한다."));
-		skillDic.Add("WarriorP1_L2", new Skill(Skill.SkillType.Passive, 2, 0.1f, "평타 데미지의 10%를 흡수한다."));
-		skillDic.Add("WarriorP1_L3", new Skill(Skill.SkillType.Passive, 3, 0.15f, "평타 데미지의 15%를 흡수한다."));
-		skillDic.Add("WarriorP1_L4", new Skill(Skill.SkillType.Passive, 4, 0.2f, "평타 데미지와 소용돌이의 데미지 20%를 흡수한다."));
+        skillList[3].AddSkillLevelData(new SkillLevelData(1, 1.2f, "무기 공격력에 120%의 공격력을 가진다."));
+        skillList[3].AddSkillLevelData(new SkillLevelData(2, 1.4f, "무기 공격력에 140%의 공격력을 가진다."));
+        skillList[3].AddSkillLevelData(new SkillLevelData(3, 1.6f, "무기 공격력에 160%의 공격력을 가진다."));
+        skillList[3].AddSkillLevelData(new SkillLevelData(4, 1.8f, "무기 공격력에 180%의 공격력을 가진다."));
 
-		skillDic.Add("WarriorP2_L1", new Skill(Skill.SkillType.Passive, "극의", 1, 0.5f, "무기강화수치의 50%를 추가 방어력으로 얻는다.", "무기 공격력의 50%의 추가 방어력을 얻는다."));
-		skillDic.Add("WarriorP2_L2", new Skill(Skill.SkillType.Passive, 2, 1.0f, "무기 공격력의 100%의 추가 방어력을 얻는다."));
-		skillDic.Add("WarriorP2_L3", new Skill(Skill.SkillType.Passive, 3, 1.5f, "무기 공격력의 150%의 추가 방어력을 얻는다."));
-		skillDic.Add("WarriorP2_L4", new Skill(Skill.SkillType.Passive, 4, 2.0f, "무기 공격력의 200%의 추가 방어력을 얻는다."));
-        #endregion
+        skillList[4].AddSkillLevelData(new SkillLevelData(1, 1.2f, "무기 공격력에 120%의 공격력을 가진다."));
+        skillList[4].AddSkillLevelData(new SkillLevelData(2, 2.2f, "무기 공격력에 220%의 공격력을 가진다."));
 
-        #region 마법사스킬 초기화
-        
+        skillList[5].AddSkillLevelData(new SkillLevelData(1, 0.05f, "평타데미지의 5%를 흡수한다."));
+        skillList[5].AddSkillLevelData(new SkillLevelData(2, 0.1f, "평타데미지의 10%를 흡수한다."));
+        skillList[5].AddSkillLevelData(new SkillLevelData(3, 0.15f, "평타데미지의 15%를 흡수한다."));
+        skillList[5].AddSkillLevelData(new SkillLevelData(4, 0.2f, "평타데미지의 20%를 흡수한다."));
+
+        skillList[6].AddSkillLevelData(new SkillLevelData(1, 0.5f, "무기 공격력의 50%의 추가 방어력을 얻는다."));
+        skillList[6].AddSkillLevelData(new SkillLevelData(2, 1.0f, "무기 공격력의 100%의 추가 방어력을 얻는다."));
+        skillList[6].AddSkillLevelData(new SkillLevelData(3, 1.5f, "무기 공격력의 150%의 추가 방어력을 얻는다."));
+        skillList[6].AddSkillLevelData(new SkillLevelData(4, 2.0f, "무기 공격력의 200%의 추가 방어력을 얻는다."));
+
         #endregion
     }
 }
 
-public class Skill
+public class SkillBasicData
 {
-	public enum SkillType
-	{
-		Active,
-		Passive
-	}
-	private string skillType;
-	private string skillName;
-	private string skillExplanation;
-	private string skillDamegeExplanation;
-    private int skillManaCost;
-	private int skillLevel;
-	private int skillCoolTime;
-	private float skillDamage;
-	private float passiveValue;
-
-	public string SkillName { get { return skillName; } }
-	public string SkillExplanation { get { return skillExplanation; } }
-    public string SkillDamegeExplanation { get { return this.skillDamegeExplanation; } }
-    public int SkillLevel { get { return skillLevel; } }
-	public int SkillCoolTime { get { return skillCoolTime; } }
-    public int SkillManaCost { get { return skillManaCost; } }
-    public float SkillDamage { get { return skillDamage; } }
-	public float PassiveValue { get { return passiveValue; } }    
-	
-
-	public Skill(SkillType _skillType, string _skillName, int _skillLevel, int _manaCost , int _skillCoolTime, float _skillDamage, string _skillExplanation, string _skillDamageExplanation) //액티브스킬 생성자
-	{ 
-		skillType = _skillType.ToString();
-		skillName = _skillName;
-		skillLevel = _skillLevel;
-        skillManaCost = _manaCost;
-		skillCoolTime = _skillCoolTime;
-		skillDamage = _skillDamage;
-		skillExplanation = _skillExplanation;
-		skillDamegeExplanation = _skillDamageExplanation;
-	}
-
-	public Skill(SkillType _skillType, string _SkillName, int _skillLevel, float _passiveValue, string _skillExplanation, string _skillDamageExplanation) //패시브스킬 생성자
-	{
-		skillType = _skillType.ToString();
-		skillName = _SkillName;
-		skillLevel = _skillLevel;
-		skillExplanation = _skillExplanation;
-		passiveValue = _passiveValue;
-		skillDamegeExplanation = _skillDamageExplanation;
-	}
-
-	public Skill(SkillType _skillType, int _skillLevel, float _skillAddValue, string _skillDamageExplanation) //스킬당 레벨업값 셋팅 생성자
-	{
-		if (_skillType == SkillType.Active)
-		{
-			skillDamage = _skillAddValue;
-		} else
-		{
-			passiveValue = _skillAddValue;
-		}
-		skillLevel = _skillLevel;
-		skillDamegeExplanation = _skillDamageExplanation;
-	}
-
-    public class SkillLevelData
+    public enum SkillTypes
     {
-
-
+        None,
+        Active,
+        Passive
     }
+
+    private string skillName;
+    private string skillTypes;
+    private string basicExplanation;
+    private int skillCoolTime;
+    private int skillIndex;
+    private int manaCost;
+    List<SkillLevelData> skillLevelData = new List<SkillLevelData>();
+
+    public string SkillName {get { return skillName; } }
+    public string SkillType {get { return skillTypes; } }
+    public string SkillBasicExplanation { get { return basicExplanation; } }
+    public int SkillCoolTime { get { return skillCoolTime; } }
+    public int SkillIndex { get { return skillIndex; } }
+    public int ManaCost { get { return manaCost; } }
+    public List<SkillLevelData> SkillData { get { return skillLevelData; } }
+
+    public SkillBasicData()
+    {
+        skillName = " ";
+        skillTypes = " ";
+        basicExplanation = " ";
+        skillCoolTime = 0;
+        skillIndex = 0;
+        manaCost = 0;
+    }
+
+    public SkillBasicData(SkillTypes _SkillTypes, string _skillName , int _skillIndex, int _manaCost, int _skillCoolTime, string _basicExplanation)
+    {
+        skillName = _skillName;
+        skillTypes = _SkillTypes.ToString();
+        skillIndex = _skillIndex;
+        skillCoolTime = _skillCoolTime;
+        manaCost = _manaCost;
+        basicExplanation = _basicExplanation;
+    }
+
+    public SkillBasicData(SkillTypes _SkillTypes, string _skillName, int _skillIndex, string _basicExplanation)
+    {
+        skillName = _skillName;
+        skillTypes = _SkillTypes.ToString();
+        skillIndex = _skillIndex;
+        basicExplanation = _basicExplanation;
+    }
+
+    public void AddSkillLevelData(SkillLevelData _data)
+    {
+        skillLevelData.Add(_data);
+    }
+
+    public SkillLevelData GetSkillData(int _level)
+    {
+        return SkillData[_level - 1];
+    }
+
+}
+
+
+public class SkillLevelData
+{
+    private int level;
+    private float skillValue;
+    private string skillExplanation;
+
+    public int Level { get { return level; } }
+    public float SkillValue { get { return skillValue; } }
+    public string SkillExplanation { get { return skillExplanation; } }
+
+    public SkillLevelData(int _level, float _skillValue, string _skillExplanation)
+    {
+        level = _level;
+        skillValue = _skillValue;
+        skillExplanation = _skillExplanation;
+    }
+
 }

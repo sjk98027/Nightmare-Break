@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SkillManager : MonoBehaviour { 
- 
-	SkillData skillData = new SkillData ();
-	public SkillData SkillData  { get { return skillData; } }
+public class SkillManager : MonoBehaviour {
+
+	private SkillData skillData = new SkillData ();
+    public SkillData SkillData  { get { return skillData; } }
+
 	public static SkillManager instance = null;
 
 	void Start()
