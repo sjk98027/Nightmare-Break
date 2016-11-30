@@ -255,7 +255,7 @@ public class Monster : MonoBehaviour {
 	}
 
 	public void SendTargetPlayer(){
-		
+		`
 	}
 
 
