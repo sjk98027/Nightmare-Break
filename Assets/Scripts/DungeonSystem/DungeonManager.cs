@@ -283,7 +283,7 @@ public class DungeonManager : MonoBehaviour
         uiManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
         uiManager.SetBattleUIManager();
         player.GetComponent<CharacterManager>().UIManager = uiManager;
-//        player.GetComponent<CharacterManager>().SetCharacterStatus();
+        //player.GetComponent<CharacterManager>().SetCharacterStatus();
 
         dataSender = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<DataSender>();
         dataSender.CreateUnitSend(0, player.transform.position);
