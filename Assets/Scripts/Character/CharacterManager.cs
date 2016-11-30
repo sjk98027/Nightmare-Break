@@ -406,7 +406,10 @@ public class CharacterManager : MonoBehaviour
                     break;
             }
 
-            DataSender.Instance.CharacterActionSend(Inputstate);
+            if (Inputstate != (int) CharacterState.Idle)
+            {
+                DataSender.Instance.CharacterActionSend(Inputstate);
+            }
         }
     }
 
