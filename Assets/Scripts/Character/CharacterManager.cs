@@ -59,7 +59,6 @@ public class CharacterManager : MonoBehaviour
 
     void Start()
     {
-        charStatus = GameObject.FindGameObjectWithTag("CharStatus").GetComponent<CharacterStatus>();
         charStatus.SetCharacterStatus();
       //  uiManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
         animator = GetComponent<Animator>();
@@ -115,6 +114,11 @@ public class CharacterManager : MonoBehaviour
             }
         }
 
+    }
+
+    public void SetCharacterStatus()
+    {
+        charStatus = GameObject.FindGameObjectWithTag("CharStatus").GetComponent<CharacterStatus>();
     }
 
     public void AnimationEnd()
