@@ -1429,11 +1429,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000010405808296, guid: 8f98cb3e36980bd40b21966c3a7736e3, type: 2}
       propertyPath: m_RootOrder
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1000014272446564, guid: 8f98cb3e36980bd40b21966c3a7736e3, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114000012181647750, guid: 8f98cb3e36980bd40b21966c3a7736e3, type: 2}
@@ -1505,7 +1505,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 424800, guid: d73b03dfd52c89b42b759687b7d135d0, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 424800, guid: d73b03dfd52c89b42b759687b7d135d0, type: 2}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -1978,7 +1978,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
 --- !u!114 &1122668101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2317,7 +2317,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!1 &1309567082
 GameObject:
   m_ObjectHideFlags: 0
@@ -2385,7 +2385,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
 --- !u!1 &1365333644
 GameObject:
   m_ObjectHideFlags: 0
@@ -5240,7 +5240,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000013036567128, guid: f3ceab519c05ff449b4b87ae92eac4bf, type: 2}
       propertyPath: m_RootOrder
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f3ceab519c05ff449b4b87ae92eac4bf, type: 2}
@@ -5367,7 +5367,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000012889354120, guid: 435ef0b7bac512942a731f586a5d0fa7, type: 2}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000011565194376, guid: 435ef0b7bac512942a731f586a5d0fa7, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114000011390068770, guid: 435ef0b7bac512942a731f586a5d0fa7, type: 2}
@@ -5835,6 +5839,8 @@ MonoBehaviour:
   monsterCount: 0
   boomMonster: []
   warriorMonster: []
+  shockWaveMonster: []
+  bossMonster: {fileID: 0}
   section:
   - {fileID: 1699044387}
   - {fileID: 289901748}
@@ -6210,7 +6216,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1915054395
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6560,7 +6566,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
 --- !u!1 &1987331432
 GameObject:
   m_ObjectHideFlags: 0

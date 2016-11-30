@@ -59,15 +59,22 @@ public class CharacterManager : MonoBehaviour
 
     void Start()
     {
+<<<<<<< HEAD
         SetCharacterStatus();
         //uiManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
+=======
+		
+		SetCharacterStatus ();
+		SetCharacterType ();
+      //  uiManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
+>>>>>>> 21fff050aecc07822dbcfb018658863cc3474e53
         animator = GetComponent<Animator>();
         state = CharacterState.Idle;
         rigdbody = GetComponent<Rigidbody>();
 		enermy = GameObject.FindGameObjectsWithTag ("Enermy");
         charDir = true;
         JumpMove = false;
-		SetCharacterType ();
+
     }
 
     void Update()
@@ -118,8 +125,9 @@ public class CharacterManager : MonoBehaviour
 
     public void SetCharacterStatus()
     {
-        charStatus = GameObject.FindGameObjectWithTag("CharStatus").GetComponent<CharacterStatus>();
-    }
+		charStatus = GameObject.FindGameObjectWithTag("CharStatus").GetComponent<CharacterStatus>();
+		charStatus.SetCharacterStatus ();
+	}
 
     public void AnimationEnd()
     {
@@ -131,58 +139,61 @@ public class CharacterManager : MonoBehaviour
     }
 
     //char state Method
-    public void Move(float ver, float hor)
-    {
-        if (state == CharacterState.Idle || state == CharacterState.Run)
-        {
+	public void Move (float ver, float hor)
+	{
+		if (state == CharacterState.Idle || state == CharacterState.Run)
+		{
 
-            runState = this.animator.GetCurrentAnimatorStateInfo(0);
+			runState = this.animator.GetCurrentAnimatorStateInfo (0);
 
-            if (!animator.GetBool("Attack"))
-            {
-                if (ver != 0 || hor != 0)
-                {
-                    animator.SetFloat("Ver", ver);
-                    animator.SetFloat("Hor", hor);
+			if (!animator.GetBool ("Attack"))
+			{
+				if (ver != 0 || hor != 0)
+				{
+					animator.SetFloat ("Ver", ver);
+					animator.SetFloat ("Hor", hor);
 
-                    if (ver < 0)
-                    {
-                        transform.rotation = Quaternion.Euler(new Vector3(0, 180.0f, 0));
-                        charDir = false;
-                    }
-                    else if (ver > 0)
-                    {
-                        transform.rotation = Quaternion.Euler(new Vector3(0, 0.0f, 0));
-                        charDir = true;
-                    }
-                    CharState((int)CharacterState.Run);
+					if (ver < 0)
+					{
+						transform.rotation = Quaternion.Euler (new Vector3 (0, 180.0f, 0));
+						charDir = false;
+					}
+					else if (ver > 0)
+					{
+						transform.rotation = Quaternion.Euler (new Vector3 (0, 0.0f, 0));
+						charDir = true;
+					}
+					CharState ((int)CharacterState.Run);
 
-                    if (runState.IsName("Run"))
-                    {
-                        if (hor == -1.0f || hor == 1.0f)
-                        {
-                            transform.Translate((Vector3.forward * ver - Vector3.right * hor) * Time.deltaTime * (charStatus.MoveSpeed - 3.0f), Space.World);
+					if (runState.IsName ("Run"))
+					{
+						if (hor == -1.0f || hor == 1.0f)
+						{
+							transform.Translate ((Vector3.forward * ver - Vector3.right * hor) * Time.deltaTime * (charStatus.MoveSpeed - 3.0f), Space.World);
+							Debug.Log ("xxxxxx");
 
-                        }
-                        else
-                        {
-                            transform.Translate((Vector3.forward * ver - Vector3.right * hor) * Time.deltaTime * (charStatus.MoveSpeed), Space.World);
-                        }
-                    }
-                }
-                else if (ver == 0 && hor == 0)
-                {
-                    animator.SetBool("Run", false);
-                    CharState((int)CharacterState.Idle);
-                }
-            }
-        }
-        else if (state == CharacterState.Jump && JumpMove)
-        {
-            transform.Translate((Vector3.forward * ver - Vector3.right * hor) * Time.deltaTime * charStatus.MoveSpeed, Space.World);
-        }
+						}
+						else
+						{
+							transform.Translate ((Vector3.forward * ver - Vector3.right * hor) * Time.deltaTime * (charStatus.MoveSpeed), Space.World);
+							Debug.Log (charStatus.MoveSpeed + "속도");
+						}
+					}
+				}
+				else if (ver == 0 && hor == 0)
+				{
+					animator.SetBool ("Run", false);
+					CharState ((int)CharacterState.Idle);
+				}
+			}
+		}
+		else if (state == CharacterState.Jump && JumpMove)
+		{
+			transform.Translate ((Vector3.forward * ver - Vector3.right * hor) * Time.deltaTime * charStatus.MoveSpeed, Space.World);
+		}
 
-    }
+	}
+
 
     public void CheckGrounded()
     {
