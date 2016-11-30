@@ -390,7 +390,7 @@ public class DataSender : MonoBehaviour
 
         while (true)
         {
-            yield return null;
+            yield return new WaitForEndOfFrame();
 
             short time = (short)((DateTime.Now - networkManager.DataHandler.dTime).TotalSeconds);
             bool dir = characterManager.charDir;
@@ -425,7 +425,7 @@ public class DataSender : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForEndOfFrame();
 
             DataPacket packet = new DataPacket(udpMsg, null);
 
