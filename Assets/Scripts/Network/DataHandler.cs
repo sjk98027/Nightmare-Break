@@ -390,7 +390,7 @@ public class DataHandler : MonoBehaviour
     //Client
     public void CharacterPosition(DataPacket packet)
     {
-        Debug.Log("캐릭터 상태 수신");
+        Debug.Log("캐릭터 위치 수신");
 
         CharacterPositionPacket characterPositionPacket = new CharacterPositionPacket(packet.msg);
         CharacterPositionData characterPositionData = characterPositionPacket.GetData();
@@ -399,11 +399,11 @@ public class DataHandler : MonoBehaviour
         Debug.Log("시간 : " + characterPositionData.time);
         Debug.Log("캐릭터 방향 : " + characterPositionData.dir);
         Debug.Log("캐릭터 위치 : " + characterPositionData.posX + ", " + characterPositionData.posY + ", " + characterPositionData.posZ + ", ");
-        
-        //if ((DateTime.Now - dTime).TotalSeconds - characterPositionData.time > 1)
-        //{
-        //    return P2PPacketId.None;
-        //}
+
+        if ((DateTime.Now - dTime).TotalSeconds - characterPositionData.time > 1)
+        {
+            return;
+        }
 
         CharacterManager characterManager = dungeonManager.Players[1].GetComponent<CharacterManager>();
         characterManager.SetPosition(characterPositionData);
