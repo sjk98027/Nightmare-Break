@@ -250,5 +250,13 @@ public class Monster : MonoBehaviour {
 
 	}
 
+	public void GetTargetPlayer(GameObject _TargerPlayer){
+		
+	}
+
+	public void SendTargetPlayer(){
+		`
+	}
+
 
 }

@@ -35,9 +35,11 @@ public class DungeonManager : MonoBehaviour
 
     public Section[] section;
 
-
-
     [SerializeField]int mapNumber;
+
+	void Awake(){
+		
+	}
 
 	void Start()
 	{
