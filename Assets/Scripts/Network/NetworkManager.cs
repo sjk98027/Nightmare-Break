@@ -46,12 +46,12 @@ public class NetworkManager : MonoBehaviour
     public DataHandler DataHandler { get { return dataHandler; } }
     public DataSender DataSender { get { return dataSender; } }
 
-    public void InitializeManager(string ip)
+    public void InitializeManager()
     {
         try
         {
             mainServer = new IPEndPoint(IPAddress.Parse("192.168.94.88"), mainServerPortNumber);
-            client = new IPEndPoint(IPAddress.Parse(ip), clientPortNumber);
+            client = new IPEndPoint(IPAddress.Any, clientPortNumber);
 
             receiveMsgs = new Queue<DataPacket>();
             sendMsgs = new Queue<DataPacket>();
@@ -61,6 +61,8 @@ public class NetworkManager : MonoBehaviour
             clientSock.Bind(client);
 
             ConnectServer();
+
+            clients = new List<EndPoint>();
 
             dataReceiver = GetComponent<DataReceiver>();
             dataHandler = GetComponent<DataHandler>();
@@ -93,7 +95,7 @@ public class NetworkManager : MonoBehaviour
     public void ConnectP2P(string newIp)
     {
         IPEndPoint client = new IPEndPoint(IPAddress.Parse(newIp), clientPortNumber);
-        Clients.Add(client);
+        clients.Add(client);
         dataReceiver.StartUdpReceive(clientSock, client);
         dataSender.ConnectionCheck(client);
     }
