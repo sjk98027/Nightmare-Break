@@ -39,10 +39,8 @@ public class Meteor : MonoBehaviour {
 
 			if (monsterDamage != null)
 			{	
-				
 				monsterDamage.HitDamage (MeteorDamage,character );
 				MeteorDamage = 0;
-
 			}
 
 			Destroy(gameObject);
