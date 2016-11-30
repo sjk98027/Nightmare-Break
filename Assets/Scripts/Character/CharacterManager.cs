@@ -408,11 +408,8 @@ public class CharacterManager : MonoBehaviour
                     animator.SetTrigger("PlayerDie");
                     break;
             }
-
-            //if (Inputstate != (int)CharacterState.Idle)
-            //{
-            //    DataSender.Instance.CharacterActionSend(Inputstate);
-            //}
+            
+            DataSender.Instance.CharacterActionSend(Inputstate);
         }
     }
 
