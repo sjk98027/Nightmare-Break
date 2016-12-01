@@ -4,30 +4,29 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class SceneChanger : MonoBehaviour {
-	private const float fadeValue = 0.4f;
+    public enum SceneName
+    {
+        TitleScene,
+        //	waitingScene,
+        InGameScene,
+        LoadingScene
+    }
+    private const float fadeValue = 0.4f;
 	[SerializeField]private float fadeTime;
 	[SerializeField]private int sceneIndex;
 	[SerializeField]private Image fadePanel;
 	[SerializeField]private LoadingSceneUI loadingScene;
-   
-		public enum SceneName{
-		TitleScene,
-	//	waitingScene,
-		InGameScene,
-		LoadingScene
-	}
     private SceneName currentScene;
+
     public SceneName CurrentScene { get { return currentScene; } }
-
-
 	private static SceneChanger instance = null;
-	public static SceneChanger Instance {
+
+    public static SceneChanger Instance {
 		get{
 			return instance;
 		}
 	}
-		
-
+	
 	void Awake()
 	{
 		if (instance) {
@@ -41,7 +40,7 @@ public class SceneChanger : MonoBehaviour {
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         StartCoroutine(FadeIn());
     }
@@ -54,7 +53,7 @@ public class SceneChanger : MonoBehaviour {
 
 	IEnumerator FadeOut(){
 		{
-			GameObject fadeCanvas =  Instantiate (Resources.Load<GameObject> ("UI/FadeCanvas"));
+			GameObject fadeCanvas = Instantiate (Resources.Load<GameObject> ("UI/FadeCanvas"));
 			fadePanel = fadeCanvas.transform.GetChild (0).GetComponent<Image>();
 			fadeTime = Time.deltaTime; 
 			while(fadePanel.color.a < 1)
