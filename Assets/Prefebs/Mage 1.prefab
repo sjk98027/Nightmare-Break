@@ -1958,6 +1958,8 @@ MonoBehaviour:
   frameDestroy: {fileID: 0}
   fireBall: {fileID: 0}
   FireBallPos: {fileID: 1000011553737372}
+  armageddon: {fileID: 0}
+  ArmageddonDamage: {fileID: 0}
 --- !u!137 &137000010203835402
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

@@ -6,6 +6,9 @@ public class MageManager : CharacterManager
 	public GameObject frameDestroy;
 	public GameObject fireBall;
 	public GameObject FireBallPos;
+	public GameObject armageddon;
+	public GameObject mageRing;
+	public Armageddon ArmageddonDamage;
 
 	public override void ProcessSkill1 ()
 	{
@@ -17,11 +20,16 @@ public class MageManager : CharacterManager
 	}
 	public override void ProcessSkill3 ()
 	{
-		
+		FireHowling ();
 	}
 	public override void ProcessSkill4 ()
 	{
 
+	}
+
+	public void StrikeBall()
+	{
+		Instantiate (Resources.Load<GameObject> ("Effect/MageNormalAttack"), FireBallPos.transform.position, Quaternion.Euler (0, 0, 0));
 	}
 
 	public void SummonFireBall()
@@ -59,30 +67,42 @@ public class MageManager : CharacterManager
 
 	public void FireHowling()
 	{
-		float HowlingSpeed = 5f;
-		float HowlingDistance;
-		skillTime += Time.deltaTime;
-
-
-		if (enermy != null)
+		if (!mageRing)
 		{
-			for (int i = 0; i < enermy.Length; i++)
-			{
-				HowlingDistance = Vector3.Distance (this.transform.position, enermy [i].transform.position);
+			mageRing = Instantiate (Resources.Load<GameObject> ("Effect/MagicionRing"), new Vector3 (transform.position.x, transform.position.y + 1.0f, transform.position.z), Quaternion.Euler (0, 0, 0))as GameObject;
 
-				if (HowlingDistance < 10)
+		}
+			float howlingSpeed = 0.5f;
+			float howlingDistance;
+			skillTime += Time.deltaTime;
+
+			if (enermy != null)
+			{
+				for (int i = 0; i < enermy.Length; i++)
 				{
-					
-					enermy [i].transform.Translate ((this.transform.position + enermy [i].transform.position) * HowlingSpeed * Time.deltaTime, Space.World);
+					howlingDistance = Vector3.Distance (this.transform.position, enermy [i].transform.position);
+
+					if (howlingDistance < 10)
+					{
+						enermy [i].transform.Translate ((this.transform.position + enermy [i].transform.position) * howlingSpeed * Time.deltaTime, Space.World);
+					}
 				}
 			}
-		}
 
-		if (skillTime >= 1.5f)
-		{
-			skillTime = 0;
-		}
+			if (skillTime >= 1.5f)
+			{
+				skillTime = 0;
+			}
 
+
+
+	}
+	public void Armageddon()
+	{
+		armageddon = Instantiate (Resources.Load<GameObject> ("Effect/Armageddon"), new Vector3 (transform.position.x, transform.position.y+3.0f, transform.position.z + 2.0f),Quaternion.Euler (0, 0, 0)) as GameObject;
+		ArmageddonDamage = armageddon.GetComponent<Armageddon> ();
+
+		ArmageddonDamage.armageddonDamage = 100;
 		
 	}
 

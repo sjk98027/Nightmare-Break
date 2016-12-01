@@ -6,7 +6,7 @@ public class Meteor : MonoBehaviour {
 	public CharacterStatus charStatus;
 	public CharacterManager charManager;
 	public GameObject character;
-	public int MeteorDamage;
+	public int MeteorDamage= 10;
 
 	void Start()
 	{
