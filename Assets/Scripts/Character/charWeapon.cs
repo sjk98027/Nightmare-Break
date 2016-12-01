@@ -33,7 +33,7 @@ public class CharWeapon : MonoBehaviour {
 
 	void OnTriggerEnter(Collider coll)
 	{
-		
+        Debug.Log("OnTrigger");
 		if (coll.gameObject.layer == LayerMask.NameToLayer ("Enermy"))
 		{
 			Monster monsterDamage = coll.gameObject.GetComponent<Monster> ();
@@ -42,11 +42,13 @@ public class CharWeapon : MonoBehaviour {
 			{	
 				if (normalAttack)
 				{
-					damage = charManager.charBasicDamage;
+                    Debug.Log("OnTrigger");
+                    damage = charManager.charStatus.Attack;
 				}
 				else if (skillAttack)
 				{
-					damage = charManager.charBasicDamage;
+                    Debug.Log("OnTrigger");
+                    damage = charManager.charStatus.Attack;
 				}
 
 				if (damage != 0)

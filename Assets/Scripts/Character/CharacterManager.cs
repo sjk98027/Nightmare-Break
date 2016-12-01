@@ -59,6 +59,7 @@ public class CharacterManager : MonoBehaviour
 
     void Start()
     {
+        SetCharacterStatus();
         //uiManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
         animator = GetComponent<Animator>();
         state = CharacterState.Idle;
@@ -66,7 +67,6 @@ public class CharacterManager : MonoBehaviour
 		enermy = GameObject.FindGameObjectsWithTag ("Enermy");
         charDir = true;
         JumpMove = false;
-		charBasicDamage = charStatus.Attack;
     }
 
     void Update()
