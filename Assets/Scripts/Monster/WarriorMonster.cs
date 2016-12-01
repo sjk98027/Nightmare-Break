@@ -133,7 +133,7 @@ public class WarriorMonster : Monster {
 	public void AttackProcess(bool isAttack){
 		if (isAttack) {
 
-			if(animator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Walk")){
+			if(animator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Run")){
 				animator.SetInteger ("State", 0);
 			}
 			if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Base Layer.Idle")) {
