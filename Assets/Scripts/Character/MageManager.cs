@@ -59,7 +59,7 @@ public class MageManager : CharacterManager
 
 	public void FireHowling()
 	{
-		float HowlingSpeed = 10f;
+		float HowlingSpeed = 5f;
 		float HowlingDistance;
 		skillTime += Time.deltaTime;
 
