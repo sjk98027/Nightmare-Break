@@ -51,7 +51,7 @@ public class DungeonManager : MonoBehaviour
 
 
 	void Awake(){
-		//monsterRespawnPoint = GameObject.Find ("MonsterRespawnPoint").GetComponent<MonsterSpawnPoint>();
+		monsterRespawnPoint = GameObject.Find ("MonsterRespawnPoint").GetComponent<MonsterSpawnPoint>();
 		//getting HostGuest infomation;
 	}
 
