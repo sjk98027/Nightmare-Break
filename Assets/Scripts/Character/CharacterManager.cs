@@ -399,23 +399,26 @@ public class CharacterManager : MonoBehaviour
                     skillAttackState = true;
                     //basicDamage = charstate.activeSkillSet [3].skillDamage;
                     break;
+
                 case 7:
                     state = CharacterState.Skill4;
                     animator.SetTrigger("Skill4");
                     skillAttackState = true;
                     //basicDamage = charstate.activeSkillSet [2].skillDamage;
                     break;
+
                 case 8:
                     state = CharacterState.HitDamage;
                     animator.SetTrigger("PlayerHitTrigger");
                     break;
+
                 case 9:
                     state = CharacterState.Death;
                     animator.SetTrigger("PlayerDie");
                     break;
             }
             
-            DataSender.Instance.CharacterActionSend(Inputstate);
+            //DataSender.Instance.CharacterActionSend(Inputstate);
         }
     }
 
