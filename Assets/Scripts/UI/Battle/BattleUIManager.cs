@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
-public class BattleUIManager
+public class BattleUIManager        
 {
 	private const float checkTime = 0.1f;
 	private const float mouseOverUI_xPos = 120f;
@@ -13,8 +13,9 @@ public class BattleUIManager
 	private Text mouseOverUI;
 	private Image[] skillUI;
 	private Image[] skillCoolTimeUI; // 0 - SKill1 // 1 - SKill2 // 2 - Skill3 // 3 - Skill4 //
-    public Image hpBar;
-    public Image mpBar;
+    private Image hpBar;
+    private Image mpBar;
+    private EventTrigger eventTrigger ;
     
 	public Image[] SkillCoolTimeUI{ get{ return skillCoolTimeUI; }}
 	public Text MouseOverUI{ get { return mouseOverUI; } set { mouseOverUI = value; } }
@@ -69,38 +70,55 @@ public class BattleUIManager
         mpBar.fillAmount = (float) currentMP / maxMp; 
     }
 
+
+
     public void SetUIObject()
     {
         uiManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
         hpBar = GameObject.Find("HPBar").GetComponent<Image>();
         mpBar = GameObject.Find("MPBar").GetComponent<Image>();
-		mouseOverUI = GameObject.Find ("MouseOverUI").GetComponent<Text> ();
-		mouseOverUI.transform.parent.gameObject.SetActive (false);
-		skillUI = new Image[6];
+        mouseOverUI = GameObject.Find("MouseOverUI").GetComponent<Text>();
+        mouseOverUI.transform.parent.gameObject.SetActive(false);
+        skillUI = new Image[6];
         skillCoolTimeUI = new Image[4];
-        EventTrigger.Entry entry = new EventTrigger.Entry();
-        entry.eventID = EventTriggerType.PointerEnter;
-        entry.callback = new EventTrigger.TriggerEvent();
-       
+        EventTrigger.Entry[] enterEvent = new EventTrigger.Entry[6];
+        EventTrigger.Entry exitEvent = new EventTrigger.Entry();
+        exitEvent.eventID = EventTriggerType.PointerExit;
+        exitEvent.callback.AddListener((data) => { uiManager.OnPointExit(); });
         for (int i = 0; i < skillUI.Length; i++)
         {
-        //    UnityAction<BaseEventData> call = new UnityAction<BaseEventData>(uiManager.OnPointEnter);
-            skillUI[i] = GameObject.Find ("Skill" + (i+1)).GetComponent<Image> ();
-       //     entry.callback.AddListener((EventData) => { uiManager.GetComponent<UIManager>().OnPointEnter(i);});
-            skillUI[i].gameObject.AddComponent<EventTrigger>().triggers.Add(entry);
-            if (i < skillCoolTimeUI.Length) {
-				skillCoolTimeUI [i] = GameObject.Find ("Skill" + (i + 1) + "_CoolTime").GetComponent<Image> ();
-			}
+            skillUI[i] = GameObject.Find("Skill" + (i + 1)).GetComponent<Image>();
+            enterEvent[i] = new EventTrigger.Entry();
+            enterEvent[i].eventID = EventTriggerType.PointerEnter;
+            skillUI[i].GetComponent<EventTrigger>().triggers.Add(enterEvent[i]);
+            skillUI[i].GetComponent<EventTrigger>().triggers.Add(exitEvent);
+            Debug.Log(enterEvent[i]);
+            if (i < skillCoolTimeUI.Length)
+            {
+                skillCoolTimeUI[i] = GameObject.Find("Skill" + (i + 1) + "_CoolTime").GetComponent<Image>();
+            }
         }
+        enterEvent[0].callback.AddListener((data) => { uiManager.PointEnter(0); });
+        enterEvent[1].callback.AddListener((data) => { uiManager.PointEnter(1); });
+        enterEvent[2].callback.AddListener((data) => { uiManager.PointEnter(2); });
+        enterEvent[3].callback.AddListener((data) => { uiManager.PointEnter(3); });
+        enterEvent[4].callback.AddListener((data) => { uiManager.PointEnter(4); });
+        enterEvent[5].callback.AddListener((data) => { uiManager.PointEnter(5); });
     }
 
     public void SetPointEnterUI(int skillIndex, int skillLevel, int classIndex)
     {
+        SkillBasicData skillData = SkillManager.instance.SkillData.GetSkill(classIndex, skillIndex + 1);
         if (!mouseOverUI.IsActive())
         {
             mouseOverUI.gameObject.transform.parent.gameObject.SetActive(true);
+        } else
+        {
+            skillData = null;
+            skillData = SkillManager.instance.SkillData.GetSkill(classIndex, skillIndex + 1);
         }
-        mouseOverUI.transform.parent.transform.localPosition = new Vector2(skillUI[skillIndex].transform.localPosition.x + mouseOverUI_xPos, mouseOverUI_yPos);
-     
+       mouseOverUI.transform.parent.transform.localPosition = new Vector2(skillUI[skillIndex].transform.localPosition.x + mouseOverUI_xPos, mouseOverUI_yPos);
+       mouseOverUI.text = "스킬이름: " + skillData.SkillName + "  " + "쿨타임: " + skillData.SkillCoolTime.ToString() + "초" + "\n" + skillData.SkillBasicExplanation +"\n"+skillData.GetSkillData(skillLevel).SkillExplanation;
+    
     }
 }

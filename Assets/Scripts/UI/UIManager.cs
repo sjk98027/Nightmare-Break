@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
 public class UIManager : MonoBehaviour
 {
@@ -16,7 +17,12 @@ public class UIManager : MonoBehaviour
 
     public GameObject dialogPanel;
     public Text dialog;
-
+    
+    void Start()
+    {
+        SetBattleUIManager();
+    }
+    
     public void SetLoginUIManager()
     {
         loginUIManager = new LoginUIManager();
@@ -26,8 +32,8 @@ public class UIManager : MonoBehaviour
     public void SetBattleUIManager()
     {
         charManager = GameObject.FindWithTag("Player").GetComponent<CharacterManager>();
-        //battleUIManager = new BattleUIManager();
-		//battleUIManager.SetUIObject();
+        battleUIManager = new BattleUIManager();
+		battleUIManager.SetUIObject();
     }
 
     public void SetWaitUIManager()
@@ -63,15 +69,18 @@ public class UIManager : MonoBehaviour
         dialogPanel.SetActive(false);
     }
 		 
-	public void OnPointEnter(BaseEventData skillIndex)
+	public void PointEnter(int skillIndex)
 	{
-	//	battleUIManager.SetPointEnterUI (, 2, (int)charManager.CharStatus.HClass);
+		battleUIManager.SetPointEnterUI (skillIndex, 2, (int)charManager.CharStatus.HClass);
 	}
 	 
 	public void OnPointExit()
 	{
 		battleUIManager.MouseOverUI.gameObject.transform.parent.gameObject.SetActive (false);
 	}
+
+    
+
 }
 
     
