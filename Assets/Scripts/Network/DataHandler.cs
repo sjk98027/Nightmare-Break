@@ -78,9 +78,9 @@ public class DataHandler : MonoBehaviour
     {
         while (true)
         {
-            yield return null;
+            yield return new WaitForFixedUpdate();
 
-            while (receiveMsgs.Count > 0)
+            if (receiveMsgs.Count > 0)
             {
                 //패킷을 Dequeue 한다 
                 //패킷 : 메시지 타입 + 메시지 내용
