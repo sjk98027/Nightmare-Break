@@ -32,7 +32,7 @@ public class BossMonster : Monster {
 		anim = GetComponent<Animator>();
 		 monsterState = MonsterState.Idle;
 		PlayerSearch ();
-		MonsterSet ();
+		//MonsterSet ();
 
 		NormalchasePlayer ();
 

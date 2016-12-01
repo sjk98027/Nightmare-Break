@@ -232,7 +232,7 @@ GameObject:
   - 4: {fileID: 4000010580390786}
   - 65: {fileID: 65000010411963388}
   - 114: {fileID: 114000013928030922}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bip01 Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}

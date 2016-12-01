@@ -98,17 +98,17 @@ public class Monster : MonoBehaviour {
 	}
 
 
-	public void MonsterSet()
+	public void MonsterSet(int _maxlife, int _baseDamage)
 	{
 		isAlive = true;
 		isHited = false;
 		moveAble = true;
 		animator = this.gameObject.GetComponent<Animator> ();
 		StartCoroutine(LookatChange ());
-		maxLife = 100;
-		currentLife = 100;
+		maxLife = _maxlife;
+		currentLife = maxLife;
 		HittedBox = this.gameObject.GetComponent<BoxCollider> ();
-		baseDamage = 10;
+		baseDamage = _baseDamage;
 		if (attackCollider != null) {
 			attackCollider = this.transform.GetComponentInChildren<MonsterWeapon> ();
 			attackCollider.MonsterWeaponSet ();
@@ -233,12 +233,6 @@ public class Monster : MonoBehaviour {
 	}
 	public virtual void AttackBlitz()
 	{
-//		if (this.name != "Duck") {
-//			attackCollider.AttackColliderOn();
-//		}
-//		else if (this.name == "Duck") {
-//			Instantiate (Resources.Load ("Effect/Monster_ShockWave"),new Vector3(this.transform.position.x ,this.transform.position.y+10.0f ,this.transform.position.z),this.transform.rotation);	
-//		}
 		if (attackCollider != null) {
 			attackCollider.AttackColliderOn ();
 		} else if (attackCollider == null) {
