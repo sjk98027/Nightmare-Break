@@ -398,16 +398,9 @@ public class DataHandler : MonoBehaviour
 
         CharacterPositionPacket characterPositionPacket = new CharacterPositionPacket(packet.msg);
         CharacterPositionData characterPositionData = characterPositionPacket.GetData();
-
-        Debug.Log("현재시간 : " + (DateTime.Now - dTime).TotalSeconds);
-        Debug.Log("시간 : " + characterPositionData.time);
+        
         Debug.Log("캐릭터 방향 : " + characterPositionData.dir);
         Debug.Log("캐릭터 위치 : " + characterPositionData.posX + ", " + characterPositionData.posY + ", " + characterPositionData.posZ + ", ");
-
-        //if ((DateTime.Now - dTime).TotalSeconds - characterPositionData.time > 1)
-        //{
-        //    return;
-        //}
 
         CharacterManager characterManager = dungeonManager.Players[1].GetComponent<CharacterManager>();
         characterManager.SetPosition(characterPositionData);

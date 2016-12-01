@@ -5,7 +5,6 @@
         public bool Serialize(CharacterPositionData data)
         {
             bool ret = true;
-            ret &= Serialize(data.time);
             ret &= Serialize(data.dir);
             ret &= Serialize(data.posX);
             ret &= Serialize(data.posY);
@@ -22,18 +21,15 @@
             }
 
             bool ret = true;
-            short time = 0;
             bool dir = true;
             float posX = 0;
             float posY = 0;
             float posZ = 0;
-
-            ret &= Deserialize(ref time);
+            
             ret &= Deserialize(ref dir);
             ret &= Deserialize(ref posX);
             ret &= Deserialize(ref posY);
             ret &= Deserialize(ref posZ);
-            element.time = time;
             element.dir = dir;
             element.posX = posX;
             element.posY = posY;
@@ -66,7 +62,6 @@
 
 public class CharacterPositionData
 {
-    public short time;   
     public bool dir;
     public float posX;
     public float posY;
@@ -74,16 +69,14 @@ public class CharacterPositionData
 
     public CharacterPositionData()
     {
-        time = 0;
         dir = true;
         posX = 0;
         posY = 0;
         posZ = 0;
     }
 
-    public CharacterPositionData(short newTime, bool newDir, float newX, float newY, float newZ)
+    public CharacterPositionData(bool newDir, float newX, float newY, float newZ)
     {
-        time = newTime;
         dir = newDir;
         posX = newX;
         posY = newY;

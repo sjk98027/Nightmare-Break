@@ -7,6 +7,24 @@ using System.Net.Sockets;
 
 public class DataSender : MonoBehaviour
 {
+    public class ReSend
+    {
+        EndPoint endPoint;
+        ReSendData reSendData;
+
+        public ReSend()
+        {
+            endPoint = null;
+            reSendData = null;
+        }
+
+        public ReSend(EndPoint newEndPoint, ReSendData newReSendData)
+        {
+            endPoint = newEndPoint;
+            reSendData = newReSendData;
+        }
+    }
+
     private static DataSender instance;
 
     public static DataSender Instance
@@ -37,6 +55,10 @@ public class DataSender : MonoBehaviour
     Queue<DataPacket> sendMsgs;
 
     byte[] udpMsg;
+    
+    public delegate void ReSendData(DataPacket packet);
+    ReSend reSendData;
+    private Dictionary<int, ReSend> reSendDatum = new Dictionary<int, ReSend>();
 
     public void Initialize(Queue<DataPacket> newSendMsgs, Socket newTcpSock, Socket newUdpSock)
     {
@@ -49,6 +71,30 @@ public class DataSender : MonoBehaviour
         udpMsg = new byte[0];
 
         StartCoroutine(DataSend());
+    }
+
+    public void AddReSendDatum(int id, EndPoint endPoint, ReSendData reSendData)
+    {
+        ReSend resend = new ReSend(endPoint, reSendData);
+        reSendDatum.Add(id, resend);
+    }
+
+    public void RemoveReSendDatum(int id)
+    {
+        reSendDatum.Remove(id);
+    }
+
+    IEnumerator StartCheckSendData()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1.0f);
+
+            foreach (KeyValuePair <int, ReSend> sendData in reSendDatum)
+            {
+
+            }
+        }
     }
 
     //데이타를 전송하는 메소드. byte[] msg 를 newIPEndPoint로 전송한다.
@@ -406,14 +452,13 @@ public class DataSender : MonoBehaviour
         while (true)
         {
             yield return new WaitForFixedUpdate();
-
-            short time = (short)((DateTime.Now - networkManager.DataHandler.dTime).TotalSeconds);
+            
             bool dir = characterManager.charDir;
             float xPos = characterManager.transform.position.x;
             float yPos = characterManager.transform.position.y;
             float zPos = characterManager.transform.position.z;
 
-            CharacterPositionData CharacterPosition = new CharacterPositionData(time, dir, xPos, yPos, zPos);
+            CharacterPositionData CharacterPosition = new CharacterPositionData(dir, xPos, yPos, zPos);
             CharacterPositionPacket characterStatePacket = new CharacterPositionPacket(CharacterPosition);
             characterStatePacket.SetPacketId((int)P2PPacketId.CharacterPosition);
 
@@ -433,6 +478,13 @@ public class DataSender : MonoBehaviour
         byte[] packet = CreatePacket(characterActionPacket);
 
         udpMsg = CombineByte(udpMsg, packet);
+
+        
+
+        foreach (EndPoint client in networkManager.Clients)
+        {
+
+        }
     }
 
     //0.1초 마다 Udp메시지를 큐에 넣는다.
@@ -496,3 +548,5 @@ public class DataSender : MonoBehaviour
         return array4;
     }
 }
+
+
