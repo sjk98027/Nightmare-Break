@@ -48,7 +48,8 @@ public enum ServerPacketId
 public enum P2PPacketId
 {
     None = 0,
-    ConnectionCheck,
+    ConnectionCheckAnswer,
+    RequestConnectionCheck,
     ConnectionAnswer,
     CreateUnit,
     CharacterPosition,

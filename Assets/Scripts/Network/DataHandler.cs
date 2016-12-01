@@ -68,7 +68,8 @@ public class DataHandler : MonoBehaviour
 
     public void SetUdpNotifier()
     {
-        p2p_notifier.Add((int)P2PPacketId.ConnectionCheck, ConnectionCheck);
+        p2p_notifier.Add((int)P2PPacketId.RequestConnectionCheck, ConnectionCheckAnswer);
+        p2p_notifier.Add((int)P2PPacketId.ConnectionCheckAnswer, ConnectionCheck);
         p2p_notifier.Add((int)P2PPacketId.CreateUnit, CreateUnit);
         p2p_notifier.Add((int)P2PPacketId.CharacterPosition, CharacterPosition);
         p2p_notifier.Add((int)P2PPacketId.CharacterAction, CharacterAction);
@@ -340,6 +341,14 @@ public class DataHandler : MonoBehaviour
         StartCoroutine(ConnectionCheck());
     }
 
+    //Client - 연결 확인 답장
+    public void ConnectionCheckAnswer(DataPacket packet)
+    {
+        Debug.Log("연결 확인 답장");
+
+        DataSender.Instance.ConnectionCheckAnswer(packet.endPoint);
+    }
+
     //Client - 연결 확인
     public void ConnectionCheck(DataPacket packet)
     {
@@ -358,19 +367,6 @@ public class DataHandler : MonoBehaviour
         {
             Debug.Log("DataHandler.ConnectionCheck::KeyValue 에러");
         }
-
-        foreach (KeyValuePair<EndPoint, bool> coCheck in connectionCheck)
-        {
-            Debug.Log(coCheck.Key);
-            Debug.Log(coCheck.Value);
-            if (!coCheck.Value)
-            {
-                return;
-            }
-        }
-
-        StopCoroutine(ConnectionCheck());
-        DataSender.Instance.UDPConnectComplete();
     }
 
     //Server - 던전 시작
@@ -433,7 +429,9 @@ public class DataHandler : MonoBehaviour
 
     public IEnumerator ConnectionCheck()
     {
-        while (true)
+        bool check = false;
+
+        while (!check)
         {
             yield return new WaitForSeconds(1.0f);
 
@@ -443,9 +441,28 @@ public class DataHandler : MonoBehaviour
                 Debug.Log(coCheck.Value);
                 if (!coCheck.Value)
                 {
-                    DataSender.Instance.ConnectionCheck(coCheck.Key);
+                    DataSender.Instance.RequestConnectionCheck(coCheck.Key);
                 }
             }
+
+            foreach(KeyValuePair<EndPoint, bool> coCheck in connectionCheck)
+            {
+                if (!coCheck.Value)
+                {
+                    check = false;
+                    break;
+                }
+                else
+                {
+                    check = true;
+                }
+            }
+
+            if (check)
+            {
+                //StopCoroutine(ConnectionCheck());
+                DataSender.Instance.UDPConnectComplete();
+            }            
         }
     }
 }

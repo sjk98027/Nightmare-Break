@@ -338,13 +338,28 @@ public class DataSender : MonoBehaviour
     }
 
     //연결 확인 - Udp
-    public void ConnectionCheck(EndPoint newEndPoint)
+    public void ConnectionCheckAnswer(EndPoint newEndPoint)
     {
         Debug.Log(newEndPoint.ToString() + " 연결 체크");
 
         ResultData resultData = new ResultData(new byte());
         ResultPacket resultDataPacket = new ResultPacket(resultData);
-        resultDataPacket.SetPacketId((int)P2PPacketId.ConnectionCheck);
+        resultDataPacket.SetPacketId((int)P2PPacketId.ConnectionCheckAnswer);
+
+        DataPacket packet = new DataPacket(CreatePacket(resultDataPacket), null);
+
+        packet.endPoint = newEndPoint;
+        sendMsgs.Enqueue(packet);
+    }
+
+    //연결 확인 요청 - Udp
+    public void RequestConnectionCheck(EndPoint newEndPoint)
+    {
+        Debug.Log(newEndPoint.ToString() + " 연결 체크 요청");
+
+        ResultData resultData = new ResultData(new byte());
+        ResultPacket resultDataPacket = new ResultPacket(resultData);
+        resultDataPacket.SetPacketId((int)P2PPacketId.RequestConnectionCheck);
 
         DataPacket packet = new DataPacket(CreatePacket(resultDataPacket), null);
 
