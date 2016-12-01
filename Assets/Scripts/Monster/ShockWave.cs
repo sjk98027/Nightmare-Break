@@ -16,7 +16,6 @@ public class ShockWave : MonoBehaviour {
         {
             Debug.Log("Hit");
             gameObject.GetComponent<CharacterManager>().HitDamage(damage);
-			Destroy (this.gameObject);
         }
     }
 }

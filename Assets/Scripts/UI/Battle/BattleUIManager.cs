@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-
+using UnityEngine.Events;
 public class BattleUIManager
 {
 	private const float checkTime = 0.1f;
@@ -80,13 +80,14 @@ public class BattleUIManager
         skillCoolTimeUI = new Image[4];
         EventTrigger.Entry entry = new EventTrigger.Entry();
         entry.eventID = EventTriggerType.PointerEnter;
-     
-		for (int i = 0; i < skillUI.Length; i++)
+        entry.callback = new EventTrigger.TriggerEvent();
+       
+        for (int i = 0; i < skillUI.Length; i++)
         {
-
+        //    UnityAction<BaseEventData> call = new UnityAction<BaseEventData>(uiManager.OnPointEnter);
             skillUI[i] = GameObject.Find ("Skill" + (i+1)).GetComponent<Image> ();
+       //     entry.callback.AddListener((EventData) => { uiManager.GetComponent<UIManager>().OnPointEnter(i);});
             skillUI[i].gameObject.AddComponent<EventTrigger>().triggers.Add(entry);
-          
             if (i < skillCoolTimeUI.Length) {
 				skillCoolTimeUI [i] = GameObject.Find ("Skill" + (i + 1) + "_CoolTime").GetComponent<Image> ();
 			}

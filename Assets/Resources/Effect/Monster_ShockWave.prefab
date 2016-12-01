@@ -22,6 +22,7 @@ GameObject:
   - 198: {fileID: 198000012292314188}
   - 199: {fileID: 199000012311535594}
   - 114: {fileID: 114000012395617532}
+  - 114: {fileID: 114000011354761984}
   m_Layer: 0
   m_Name: Monster_ShockWave
   m_TagString: Untagged
@@ -36,12 +37,23 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011191568026}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.73, y: 1.97, z: -125.39}
+  m_LocalPosition: {x: 3.52, y: 1.74, z: -126.41}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &114000011354761984
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011191568026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ece80dbf9c9f5e84ea9e08f0aac10052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114000012395617532
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -63,7 +75,7 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011191568026}
   serializedVersion: 4
-  lengthInSec: 1
+  lengthInSec: 4
   startDelay:
     scalar: 0
     maxCurve:
@@ -106,12 +118,12 @@ ParticleSystem:
   moveWithTransform: 1
   autoRandomSeed: 1
   scalingMode: 1
-  randomSeed: 287422342
+  randomSeed: 1318335382
   InitialModule:
     serializedVersion: 2
     enabled: 1
     startLifetime:
-      scalar: 2
+      scalar: 3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -511,7 +523,7 @@ ParticleSystem:
     serializedVersion: 2
     m_Type: 0
     rate:
-      scalar: 4
+      scalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -545,19 +557,19 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
       minMaxState: 0
-    cnt0: 0
-    cnt1: 30
-    cnt2: 30
-    cnt3: 30
-    cntmax0: 3
-    cntmax1: 30
-    cntmax2: 30
-    cntmax3: 30
-    time0: 0.05
-    time1: 0
-    time2: 0
-    time3: 0
-    m_BurstCount: 0
+    cnt0: 1
+    cnt1: 1
+    cnt2: 1
+    cnt3: 1
+    cntmax0: 1
+    cntmax1: 1
+    cntmax2: 1
+    cntmax3: 1
+    time0: 0.5
+    time1: 0.75
+    time2: 1
+    time3: 1
+    m_BurstCount: 3
   SizeModule:
     enabled: 1
     curve:
