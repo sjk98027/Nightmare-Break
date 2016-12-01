@@ -25,7 +25,7 @@ public class MonsterSpawnPoint : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		sumMonsterCount = WarriorMonsterSpawn.Length + ShockwaveMonsterSpawn.Length + BoomMonsterSpawn.Length;
-		dungeonManager = GameObject.Find ("DunGeonManager").GetComponent<DungeonManager>();
+		dungeonManager = GameObject.Find ("DungeonManager").GetComponent<DungeonManager>();
 		spawnVector = new Vector3[sumMonsterCount];
 		for (int i = 0; i < sumMonsterCount; i++) {
 			if (i < BoomMonsterSpawn.Length) {
@@ -37,7 +37,7 @@ public class MonsterSpawnPoint : MonoBehaviour {
 
 			}
 		}
-
+		dungeonManager.GetMonsterTransForm (spawnVector);
 
 	}
 

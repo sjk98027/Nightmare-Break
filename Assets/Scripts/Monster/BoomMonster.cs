@@ -3,8 +3,8 @@ using System.Collections;
 
 
 public class BoomMonster : Monster {
-	private float searchRange = 6.0f;
-	private float moveSpeed = 0.5f;
+	private float searchRange = 12.0f;
+	private float moveSpeed = 1f;
 
 	public float currentDisTance;
 	float middleBossToMonsterLimitDistanceMonsterToCenter = 6.0f;

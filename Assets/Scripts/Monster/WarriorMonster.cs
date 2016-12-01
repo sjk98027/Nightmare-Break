@@ -3,8 +3,8 @@ using System.Collections;
 using UnityEngine.EventSystems;
 
 public class WarriorMonster : Monster {
-	private float searchRange = 6.0f;
-	private float moveSpeed = 0.5f;
+	private float searchRange = 12.0f;
+	private float moveSpeed = 1f;
 
 	public float currentDisTance;
 	float middleBossToMonsterLimitDistanceMonsterToCenter = 6.0f;
@@ -139,7 +139,7 @@ public class WarriorMonster : Monster {
 			if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Base Layer.Idle")) {
 				animator.SetInteger ("State", 3);
 			}
-			if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Base Layer.Attak2")) {
+			if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Base Layer.Attak")) {
 				moveAble = false;
 			}
 		}
