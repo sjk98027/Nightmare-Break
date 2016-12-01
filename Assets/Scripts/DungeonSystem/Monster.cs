@@ -119,9 +119,11 @@ public class Monster : MonoBehaviour {
 	{
 		switch(state){
 		case StateDirecion.right: 
-			{transform.rotation = Quaternion.Euler(rightVector3);break;}
+			{transform.rotation = Quaternion.Euler(rightVector3);
+				stateDirecion = StateDirecion.right;break;}
 		case StateDirecion.left:
-			{transform.rotation = Quaternion.Euler(leftVector3);break;}
+			{transform.rotation = Quaternion.Euler(leftVector3);
+				stateDirecion = StateDirecion.left;break;}
 		}
 	}
 
@@ -130,9 +132,11 @@ public class Monster : MonoBehaviour {
 			if (!isAttack) {
 				if (targetPlayer != null) {
 					if ((targetPlayer.transform.position.z - transform.position.z) >= 0) {
+						
 						LookAtPattern (StateDirecion.right);
 					}
 					if ((targetPlayer.transform.position.z - transform.position.z) < 0) {
+						
 						LookAtPattern (StateDirecion.left);
 					}
 				}
@@ -209,13 +213,14 @@ public class Monster : MonoBehaviour {
 		StartCoroutine (LookatChange ());
 		moveAble=true;
 		isAttack = false;
+		animator.SetInteger ("State", 0);
 		if (attackCollider != null) {
 			attackCollider.AttackColliderOff();
 		}
 		else if (attackCollider == null) {
 			//Instantiate ();	
 		}
-		animator.SetInteger ("State", 0);
+
 
 	}
 	public virtual void AttackStart(){
@@ -237,8 +242,12 @@ public class Monster : MonoBehaviour {
 		if (attackCollider != null) {
 			attackCollider.AttackColliderOn ();
 		} else if (attackCollider == null) {
-			Instantiate (Resources.Load ("Effect/Monster_ShockWave"),new Vector3(this.transform.position.x ,this.transform.position.y+10.0f ,this.transform.position.z),this.transform.rotation);	
-
+			if (stateDirecion == StateDirecion.left) {
+				Instantiate (Resources.Load ("Effect/Monster_ShockWave"), new Vector3 (this.transform.position.x, this.transform.position.y + 0.75f, this.transform.position.z - 0.53f), this.transform.rotation);	
+			}
+			if (stateDirecion == StateDirecion.right) {
+				Instantiate (Resources.Load ("Effect/Monster_ShockWave"), new Vector3 (this.transform.position.x, this.transform.position.y + 0.75f, this.transform.position.z + 0.53f), this.transform.rotation);	
+			}
 		}
 
 	}
