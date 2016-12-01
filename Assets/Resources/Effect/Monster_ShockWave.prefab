@@ -68,6 +68,8 @@ MonoBehaviour:
   AttackMonster: {fileID: 114000010962362116, guid: ca677864a6c4d7643a08f95691656141,
     type: 2}
   damage: 0
+  checkTempData: {fileID: 0}
+  tempData: {fileID: 0}
 --- !u!198 &198000012292314188
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -566,10 +568,10 @@ ParticleSystem:
     cntmax2: 1
     cntmax3: 1
     time0: 0.5
-    time1: 0.75
+    time1: 1.25
     time2: 1
     time3: 1
-    m_BurstCount: 3
+    m_BurstCount: 1
   SizeModule:
     enabled: 1
     curve:
