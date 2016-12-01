@@ -56,7 +56,7 @@ public class DataSender : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForEndOfFrame();
+            yield return null;
 
             if (sendMsgs.Count > 0)
             {
@@ -390,7 +390,7 @@ public class DataSender : MonoBehaviour
 
         while (true)
         {
-            yield return new WaitForEndOfFrame();
+            yield return null;
 
             short time = (short)((DateTime.Now - networkManager.DataHandler.dTime).TotalSeconds);
             bool dir = characterManager.charDir;
