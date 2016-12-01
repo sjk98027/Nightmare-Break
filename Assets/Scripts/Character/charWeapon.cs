@@ -20,7 +20,7 @@ public class CharWeapon : MonoBehaviour {
 	{
 		character = GameObject.FindWithTag ("Player");
 		charManager = character.GetComponent<CharacterManager> ();
-		charStatus = charStatus = GameObject.FindGameObjectWithTag("CharStatus").GetComponent<CharacterStatus>();
+		charStatus = GameObject.FindGameObjectWithTag("CharStatus").GetComponent<CharacterStatus>();
 		charStatus.SetCharacterStatus ();
 	}
 	// Update is called once per frame
@@ -33,7 +33,6 @@ public class CharWeapon : MonoBehaviour {
 
 	void OnTriggerEnter(Collider coll)
 	{
-        Debug.Log("OnTrigger");
 		if (coll.gameObject.layer == LayerMask.NameToLayer ("Enermy"))
 		{
 			Monster monsterDamage = coll.gameObject.GetComponent<Monster> ();
@@ -42,12 +41,10 @@ public class CharWeapon : MonoBehaviour {
 			{	
 				if (normalAttack)
 				{
-                    Debug.Log("OnTrigger");
                     damage = charManager.charStatus.Attack;
 				}
 				else if (skillAttack)
 				{
-                    Debug.Log("OnTrigger");
                     damage = charManager.charStatus.Attack;
 				}
 

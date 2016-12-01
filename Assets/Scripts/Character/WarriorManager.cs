@@ -54,7 +54,7 @@ public class WarriorManager : CharacterManager
 	{
 		skillTime += Time.deltaTime;
 
-		if (skillTime >= 0.5f)
+		if (skillTime >= 0.5f || State == CharacterState.HitDamage)
 		{
 			animator.speed = 1;
 			skillTime = 0;
@@ -154,10 +154,6 @@ public class WarriorManager : CharacterManager
 						{
 							CharState ((int)CharacterState.HitDamage);
 						}
-						else if (State == CharacterState.Skill3)
-						{
-							Debug.Log ("Not trigger");
-						}
 					}
 					if (CharStatus.HealthPoint <= 0)
 					{
@@ -182,6 +178,7 @@ public class WarriorManager : CharacterManager
 						deFendDamage = 0;
 					}
 					CharStatus.DecreaseHealthPoint (deFendDamage);
+	
 					CharState ((int)CharacterState.HitDamage);
 
 					if (State != CharacterState.Skill1 && State != CharacterState.Skill2 && State != CharacterState.Skill3 && State != CharacterState.Skill4)
@@ -191,16 +188,23 @@ public class WarriorManager : CharacterManager
 				}
 				else if (CharStatus.HealthPoint <= 0)
 				{
+					
 					CharState ((int)CharacterState.Death);
+
+					charAlive = false;
 
 					if (!rise)
 					{
+						rise = true;
 						charAlive = true;
 						animator.SetBool ("Rise", false);
+						StartCoroutine (colltimeCheck());
+						CharStatus.DecreaseHealthPoint ((-100));
+						Debug.Log (charStatus.HealthPoint);
+					
 					}
 					else if (rise)
 					{
-						charAlive = false;
 						animator.SetBool ("Rise", true);
 					}
 				}

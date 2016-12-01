@@ -222,14 +222,6 @@ public class CharacterManager : MonoBehaviour
 			normalAttackState = true;
 			CharState ((int)CharacterState.Attack);
 
-			if (JumpMove)
-			{
-				rigdbody.mass = 100;
-			}
-			else
-			{
-				rigdbody.mass = 1;
-			}
 		}
 	}
 
