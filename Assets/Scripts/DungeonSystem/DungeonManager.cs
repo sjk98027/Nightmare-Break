@@ -23,7 +23,6 @@ public class DungeonManager : MonoBehaviour
     public GameObject[] Players { get { return players; } }
     public SceneChangeObject nextSceneObject;
     public SceneChangeObject beforeScneObject;
-	public MonsterSpawnPoint monsterRespawnPoint;
 
     public int monsterCount;
     public BoomMonster[] boomMonster;
@@ -43,17 +42,13 @@ public class DungeonManager : MonoBehaviour
 		set { normalMode = value; }
     }
 
+	public Vector3[] monsterTransForm;
+
     public Section[] section;
 
     [SerializeField]int mapNumber;
 
 
-
-
-	void Awake(){
-		monsterRespawnPoint = GameObject.Find ("MonsterRespawnPoint").GetComponent<MonsterSpawnPoint>();
-		//getting HostGuest infomation;
-	}
 
 	void Start()
 	{
@@ -266,6 +261,12 @@ public class DungeonManager : MonoBehaviour
         }
 
     }
+
+	//monsterspawnPoint getting
+	public void GetMonsterTransForm(Vector3[] _monsterTransForm){
+		monsterTransForm = _monsterTransForm;
+	}
+
     
     public GameObject CreatePlayer(int CharacterId)
     {
