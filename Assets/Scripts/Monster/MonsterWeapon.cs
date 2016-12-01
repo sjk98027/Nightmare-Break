@@ -34,4 +34,9 @@ public class MonsterWeapon : MonoBehaviour {
 			}
 		}
 	}
+
+	public void AttackColliderSizeChange(Vector3 _size){
+		AttackCollider.size = _size;
+	}
+
 }

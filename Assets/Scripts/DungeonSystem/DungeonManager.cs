@@ -49,7 +49,7 @@ public class DungeonManager : MonoBehaviour
     [SerializeField]int mapNumber;
 
 
-
+	//monsterSpawnPoint -> dungeonManager monsterinstantiate count send;
 	void Start()
 	{
 		DungeonConstruct();//mapNumber - > inspector define
@@ -171,16 +171,22 @@ public class DungeonManager : MonoBehaviour
 
     public void MonsterSet()
     {
+		
 
-        boomMonster = gameObject.transform.GetComponentsInChildren<BoomMonster>();
-		shockWaveMonster = gameObject.transform.GetComponentsInChildren<ShockWaveMonster>();
-		warriorMonster = gameObject.GetComponentsInChildren<WarriorMonster> ();
-		monsterCount = (boomMonster.Length + warriorMonster.Length +shockWaveMonster.Length);
-	
+
+		//Instantiate(Resources.Load("MonsterPrefebs/"+boomMonster.ToString()));
+		{
+			boomMonster = gameObject.transform.GetComponentsInChildren<BoomMonster> ();
+			shockWaveMonster = gameObject.transform.GetComponentsInChildren<ShockWaveMonster> ();
+			warriorMonster = gameObject.GetComponentsInChildren<WarriorMonster> ();
+			monsterCount = (boomMonster.Length + warriorMonster.Length + shockWaveMonster.Length);
+		}
+
+
 			for (int i = 0; i < boomMonster.Length; i++) {
 				if (boomMonster.Length != 0) {
 					boomMonster [i].PlayerSearch ();
-					boomMonster [i].MonsterSet ();
+					boomMonster [i].MonsterSet (900,2);
 					boomMonster [i].NormalMode = normalMode;
 					boomMonster [i].GateArrayNumber = mapNumber;
 					boomMonster [i].MonsterArrayNumber = i;
@@ -198,7 +204,7 @@ public class DungeonManager : MonoBehaviour
 			for (int j = 0; j < shockWaveMonster.Length; j++) {
 				if (shockWaveMonster.Length != 0) {
 					shockWaveMonster [j].PlayerSearch ();
-					shockWaveMonster [j].MonsterSet ();
+				shockWaveMonster [j].MonsterSet (900,2);
 					shockWaveMonster [j].NormalMode = normalMode;
 					shockWaveMonster [j].GateArrayNumber = mapNumber;
 					shockWaveMonster [j].MonsterArrayNumber = j;
@@ -214,7 +220,7 @@ public class DungeonManager : MonoBehaviour
 			for (int k = 0; k < warriorMonster.Length; k++) {
 				if (warriorMonster.Length != 0) {
 					warriorMonster [k].PlayerSearch ();
-					warriorMonster [k].MonsterSet ();
+					warriorMonster [k].MonsterSet (900,2);
 					warriorMonster [k].NormalMode = normalMode;
 					warriorMonster [k].GateArrayNumber = mapNumber;
 					warriorMonster [k].MonsterArrayNumber = k;
@@ -230,7 +236,7 @@ public class DungeonManager : MonoBehaviour
 
 			if (bossMonster != null) {
 				bossMonster.PlayerSearch ();
-				bossMonster.MonsterSet ();
+				bossMonster.MonsterSet (900,2);
 				if (hostGuest == HostGuest.Host) {
 					bossMonster.BossMonsterPatternUpdateConduct ();
 				}

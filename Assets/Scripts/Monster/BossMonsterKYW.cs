@@ -20,7 +20,7 @@ public class BossMonsterKYW : Monster {
 
 
 	public UIManager uiManager;
-	public BoxCollider[] MonsterWeapon;
+	public MonsterWeapon[] MonsterWeapon;
 
 	public BigBearBossPatternName BigBearBossState;
 	AnimatorStateInfo stateInfo;
@@ -38,14 +38,13 @@ public class BossMonsterKYW : Monster {
 		Right
 	}
 
-	public void BossMonsterSet(){
+	public void BossMonsterSet(int _maxlife, int _basedamage){
 		RunRange = 10;
 		attackRange = 8;
-		MonsterSet ();
+		MonsterSet (_maxlife, _basedamage);
 		PlayerSearch ();
 		uiManager = GameObject.FindWithTag ("UIManager").GetComponent<UIManager> ();
 		isAttack = false;
-		BoxCollider[] MonsterWeapon = new BoxCollider[2];
 		skillInsertImage = GameObject.Find ("InGameUICanvas").transform.Find ("BossDeadlyPatternImage").Find("BossDeadlyPattern").GetComponent<Image>();
 		//skillInsertImage = transform.Find("InGameUICanvas").gameObject;
 	}
@@ -109,7 +108,7 @@ public override void HitDamage (int _Damage, GameObject attacker)
 	{
 		maxLife -= _Damage;
 
-		//			uiManager.bossHp.fillAmount = maxLife / currentLife;
+//					uiManager.bossHp.fillAmount = maxLife / currentLife;
 		if (maxLife > 0)
 		{
 			//hitanimation
@@ -256,16 +255,15 @@ public void ImageBackPos()
 			if (targetPlayer != null) {
 
 				if (currentDisTance < attackRange) {
-					if (!isAttack) {
+					
 						//BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossAttack);
 						BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossRoar);
 						//애니메이션 이벤트로 효과를 넣었음
-						isAttack = true;
-					} else if (!isAttack) {
+						
 						BigBearBossPattern ((int)BigBearBossPatternName.BigBearJumpAttack);
 						//애니메이션 이벤트로 효과를 넣었음
-						isAttack = true;
-					}
+						
+
 				} else if (currentDisTance > RunRange) {
 					BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossIdle);
 					changeDirection ();
@@ -284,12 +282,11 @@ public void ImageBackPos()
 
 				if (IsAttack) {
 					for (int i = 0; i < MonsterWeapon.Length; i++) {
-						//				MonsterWeapon [i].size = new Vector3 (3.6f, 1f, 1.1f);
-						MonsterWeapon [i].size = new Vector3 (0, 0, 0);
+						MonsterWeapon [i].AttackColliderSizeChange(new Vector3 (3.6f, 1f, 1.1f));
 					}
 				} else if (!IsAttack) {
 					for (int i = 0; i < MonsterWeapon.Length; i++) {
-						MonsterWeapon [i].size = new Vector3 (0, 0, 0);
+						MonsterWeapon [i].AttackColliderSizeChange(new Vector3(0,0,0));
 					}
 				}
 			} else
