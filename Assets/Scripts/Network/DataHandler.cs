@@ -331,7 +331,7 @@ public class DataHandler : MonoBehaviour
 
             if (ip != networkManager.client.ToString().Substring(0, networkManager.client.ToString().IndexOf(":")))
             {
-                IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(matchData.ip[i]), NetworkManager.clientPortNumber);
+                IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(ip), NetworkManager.clientPortNumber);
                 connectionCheck.Add((EndPoint)endPoint, false);
                 networkManager.ConnectP2P(ip);
             }
