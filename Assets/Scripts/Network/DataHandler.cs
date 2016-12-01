@@ -460,7 +460,7 @@ public class DataHandler : MonoBehaviour
 
             if (check)
             {
-                //StopCoroutine(ConnectionCheck());
+                StopCoroutine(ConnectionCheck());
                 DataSender.Instance.UDPConnectComplete();
             }            
         }
