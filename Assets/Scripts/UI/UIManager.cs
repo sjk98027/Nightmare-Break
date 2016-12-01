@@ -63,9 +63,9 @@ public class UIManager : MonoBehaviour
         dialogPanel.SetActive(false);
     }
 		 
-	public void OnPointEnter(int skillIndex)
+	public void OnPointEnter(BaseEventData skillIndex)
 	{
-		battleUIManager.SetPointEnterUI (skillIndex, 2, (int)charManager.CharStatus.HClass);
+	//	battleUIManager.SetPointEnterUI (, 2, (int)charManager.CharStatus.HClass);
 	}
 	 
 	public void OnPointExit()

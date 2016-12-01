@@ -31,7 +31,6 @@ public class SceneChanger : MonoBehaviour {
 	{
 		if (instance) {
 			Destroy (gameObject);
-
 			return;
 		}
 		instance = this;
