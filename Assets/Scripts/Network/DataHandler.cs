@@ -345,6 +345,8 @@ public class DataHandler : MonoBehaviour
         string ip = packet.endPoint.ToString();
         ip = ip.Substring(0, ip.IndexOf(":"));
 
+        Debug.Log(ip);
+
         try
         {
             connectionCheck[ip] = true;
@@ -356,6 +358,8 @@ public class DataHandler : MonoBehaviour
 
         foreach (KeyValuePair<string, bool> coCheck in connectionCheck)
         {
+            Debug.Log(coCheck.Key);
+            Debug.Log(coCheck.Value);
             if (!coCheck.Value)
             {
                 return;

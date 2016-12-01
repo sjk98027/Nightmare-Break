@@ -337,20 +337,6 @@ public class DataSender : MonoBehaviour
         sendMsgs.Enqueue(packet);
     }
 
-    //연결 완료 - Tcp
-    public void UDPConnectComplete()
-    {
-        Debug.Log("UDP 연결 완료");
-
-        ResultData resultData = new ResultData();
-        ResultPacket resultPacket = new ResultPacket(resultData);
-        resultPacket.SetPacketId((int)ClientPacketId.UDPConnectComplete);
-
-        DataPacket packet = new DataPacket(CreatePacket(resultPacket), null);
-
-        sendMsgs.Enqueue(packet);
-    }
-
     //연결 확인 - Udp
     public void ConnectionCheck(EndPoint newEndPoint)
     {
@@ -363,6 +349,20 @@ public class DataSender : MonoBehaviour
         DataPacket packet = new DataPacket(CreatePacket(resultDataPacket), null);
 
         packet.endPoint = newEndPoint;
+        sendMsgs.Enqueue(packet);
+    }
+
+    //연결 완료 - Tcp
+    public void UDPConnectComplete()
+    {
+        Debug.Log("UDP 연결 완료");
+
+        ResultData resultData = new ResultData();
+        ResultPacket resultPacket = new ResultPacket(resultData);
+        resultPacket.SetPacketId((int)ClientPacketId.UDPConnectComplete);
+
+        DataPacket packet = new DataPacket(CreatePacket(resultPacket), null);
+
         sendMsgs.Enqueue(packet);
     }
 

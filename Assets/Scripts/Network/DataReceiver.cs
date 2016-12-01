@@ -32,7 +32,6 @@ public class DataReceiver : MonoBehaviour
     public void TcpReceiveLengthCallback(IAsyncResult asyncResult)
     {
         AsyncData asyncData = (AsyncData)asyncResult.AsyncState;
-        Socket tcpSock = asyncData.sock;
 
         try
         {
@@ -80,7 +79,6 @@ public class DataReceiver : MonoBehaviour
     void TcpReceiveDataCallback(IAsyncResult asyncResult)
     {
         AsyncData asyncData = (AsyncData)asyncResult.AsyncState;
-        Socket tcpSock = asyncData.sock;
 
         try
         {
@@ -130,7 +128,7 @@ public class DataReceiver : MonoBehaviour
         udpSock = newSock;
 
         //매개변수로 받은 리스트의 EndPoint에서 비동기 수신을 대기한다
-        AsyncData asyncData = new AsyncData(udpSock, client);
+        AsyncData asyncData = new AsyncData(client);
         udpSock.BeginReceiveFrom(asyncData.msg, 0, AsyncData.msgMaxSize, SocketFlags.None, ref asyncData.EP, new AsyncCallback(UdpReceiveDataCallback), asyncData);
 
         Debug.Log("수신시작 : " + client);
@@ -140,7 +138,6 @@ public class DataReceiver : MonoBehaviour
     public void UdpReceiveDataCallback(IAsyncResult asyncResult)
     {
         AsyncData asyncData = (AsyncData)asyncResult.AsyncState;
-        udpSock = asyncData.sock;
 
         try
         {
@@ -175,7 +172,7 @@ public class DataReceiver : MonoBehaviour
             }
 
             //다시 수신 준비
-            asyncData = new AsyncData(udpSock, asyncData.EP);
+            asyncData = new AsyncData(asyncData.EP);
             udpSock.BeginReceiveFrom(asyncData.msg, 0, AsyncData.msgMaxSize, SocketFlags.None, ref asyncData.EP, new AsyncCallback(UdpReceiveDataCallback), asyncData);
         }
     }
@@ -201,7 +198,6 @@ public class DataReceiver : MonoBehaviour
 //비동기 콜백을 위한 클래스
 public class AsyncData
 {
-    public Socket sock;
     public EndPoint EP;
     public byte[] msg;
     public short msgSize;
@@ -209,15 +205,13 @@ public class AsyncData
 
     public AsyncData(Socket newSock)
     {
-        sock = newSock;
         EP = null;
         msgSize = 0;
         msg = new byte[msgMaxSize];
     }
 
-    public AsyncData(Socket newSock, EndPoint newEndPoint)
+    public AsyncData(EndPoint newEndPoint)
     {
-        sock = newSock;
         EP = newEndPoint;
         msgSize = 0;
         msg = new byte[msgMaxSize];
