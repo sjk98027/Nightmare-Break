@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.Sockets;
+using System.Net;
 using UnityEngine;
 
 public enum Result
@@ -27,7 +27,7 @@ public class DataHandler : MonoBehaviour
     private Dictionary<int, P2PRecvNotifier> p2p_notifier = new Dictionary<int, P2PRecvNotifier>();
     private Dictionary<int, ServerRecvNotifier> server_notifier = new Dictionary<int, ServerRecvNotifier>();
 
-    Dictionary<string, bool> connectionCheck;
+    Dictionary<EndPoint, bool> connectionCheck;
     public DateTime dTime;
 
     public void Initialize(Queue<DataPacket> receiveQueue, Queue<DataPacket> sendQueue)
@@ -319,7 +319,7 @@ public class DataHandler : MonoBehaviour
         MatchDataPacket matchDataPacket = new MatchDataPacket(packet.msg);
         MatchData matchData = matchDataPacket.GetData();
 
-        connectionCheck = new Dictionary<string, bool>();
+        connectionCheck = new Dictionary<EndPoint, bool>();
 
         for (int i = 0; i < matchData.ip.Length; i++)
         {
@@ -331,10 +331,12 @@ public class DataHandler : MonoBehaviour
 
             if (ip != networkManager.client.ToString().Substring(0, networkManager.client.ToString().IndexOf(":")))
             {
-                connectionCheck.Add(ip, false);
+                connectionCheck.Add(packet.endPoint, false);
                 networkManager.ConnectP2P(ip);
             }
         }
+
+        StartCoroutine(ConnectionCheck());
     }
 
     //Client - 연결 확인
@@ -349,14 +351,14 @@ public class DataHandler : MonoBehaviour
 
         try
         {
-            connectionCheck[ip] = true;
+            connectionCheck[packet.endPoint] = true;
         }
         catch
         {
             Debug.Log("DataHandler.ConnectionCheck::KeyValue 에러");
         }
 
-        foreach (KeyValuePair<string, bool> coCheck in connectionCheck)
+        foreach (KeyValuePair<EndPoint, bool> coCheck in connectionCheck)
         {
             Debug.Log(coCheck.Key);
             Debug.Log(coCheck.Value);
@@ -366,6 +368,7 @@ public class DataHandler : MonoBehaviour
             }
         }
 
+        StopCoroutine(ConnectionCheck());
         DataSender.Instance.UDPConnectComplete();
     }
 
@@ -425,5 +428,23 @@ public class DataHandler : MonoBehaviour
 
         CharacterManager characterManager = dungeonManager.Players[1].GetComponent<CharacterManager>();
         characterManager.CharState(characterActionData.action);
+    }
+
+    public IEnumerator ConnectionCheck()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1.0f);
+
+            foreach (KeyValuePair<EndPoint, bool> coCheck in connectionCheck)
+            {
+                Debug.Log(coCheck.Key);
+                Debug.Log(coCheck.Value);
+                if (!coCheck.Value)
+                {
+                    DataSender.Instance.ConnectionCheck(coCheck.Key);
+                }
+            }
+        }
     }
 }
