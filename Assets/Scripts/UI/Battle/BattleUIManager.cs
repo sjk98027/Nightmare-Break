@@ -118,7 +118,7 @@ public class BattleUIManager
             skillData = SkillManager.instance.SkillData.GetSkill(classIndex, skillIndex + 1);
         }
        mouseOverUI.transform.parent.transform.localPosition = new Vector2(skillUI[skillIndex].transform.localPosition.x + mouseOverUI_xPos, mouseOverUI_yPos);
-       mouseOverUI.text = "스킬이름: " + skillData.SkillName + "  " + "쿨타임: " + skillData.SkillCoolTime.ToString() + "초" + "\n" + skillData.SkillBasicExplanation +"\n"+skillData.GetSkillData(skillLevel).SkillExplanation;
+       mouseOverUI.text = "스킬이름: " + skillData.SkillName + "  " + "쿨타임: " + skillData.SkillCoolTime.ToString() + "초" + "\n" + skillData.SkillBasicExplanation +"\n"+ skillData.GetSkillData(skillLevel).SkillExplanation;
     
     }
 }
