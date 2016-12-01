@@ -36,7 +36,7 @@ public class CharacterManager : MonoBehaviour
     public bool normalAttackState = false;
     public bool skillAttackState = false;
     public bool charAlive = true;
-
+	public int charBasicDamage;
 
     private int potionCount = 3;
 
@@ -68,7 +68,7 @@ public class CharacterManager : MonoBehaviour
 		enermy = GameObject.FindGameObjectsWithTag ("Enermy");
         charDir = true;
         JumpMove = false;
-
+		charBasicDamage = charStatus.Attack;
     }
 
     void Update()

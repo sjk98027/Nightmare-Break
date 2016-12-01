@@ -72,8 +72,7 @@ public class MageManager : CharacterManager
 
 				if (HowlingDistance < 10)
 				{
-					Debug.Log ("HOwling");
-
+					
 					enermy [i].transform.Translate ((this.transform.position + enermy [i].transform.position) * HowlingSpeed * Time.deltaTime, Space.World);
 				}
 			}
