@@ -1495,7 +1495,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1000014272446564, guid: 8f98cb3e36980bd40b21966c3a7736e3, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114000012181647750, guid: 8f98cb3e36980bd40b21966c3a7736e3, type: 2}
@@ -5891,6 +5891,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b55df912c131d44d8c71db0893ecdc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hostGuest: 0
   players:
   - {fileID: 0}
   - {fileID: 0}
@@ -6278,7 +6279,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &1915054395
 BoxCollider:
   m_ObjectHideFlags: 0
