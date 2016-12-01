@@ -425,7 +425,7 @@ public class DataSender : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForFixedUpdate();
 
             DataPacket packet = new DataPacket(udpMsg, null);
 
