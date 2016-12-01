@@ -6,6 +6,7 @@ using System.Collections;
 //this class manage monsterStageLevel, sumon, player sumon, player death;
 public class DungeonManager : MonoBehaviour
 {
+	//need revise code;
 	public enum HostGuest
 	{
 		Host = 0,
@@ -22,6 +23,7 @@ public class DungeonManager : MonoBehaviour
     public GameObject[] Players { get { return players; } }
     public SceneChangeObject nextSceneObject;
     public SceneChangeObject beforeScneObject;
+	public MonsterSpawnPoint monsterRespawnPoint;
 
     public int monsterCount;
     public BoomMonster[] boomMonster;
@@ -45,7 +47,11 @@ public class DungeonManager : MonoBehaviour
 
     [SerializeField]int mapNumber;
 
+
+
+
 	void Awake(){
+		monsterRespawnPoint = GameObject.Find ("MonsterRespawnPoint").GetComponent<MonsterSpawnPoint>();
 		//getting HostGuest infomation;
 	}
 
@@ -163,7 +169,7 @@ public class DungeonManager : MonoBehaviour
         //	beforeScneObject.SceneChangeObjectSet (mapNumber-1);
         //}
         //else if (mapNumber == 4) {
-        //	beforeScneObject.SceneChangeObjectSet (mapNumber - 1);
+        //	beforeScneObject.SceneChangeObjec  tSet (mapNumber - 1);
         //}
 
     }
