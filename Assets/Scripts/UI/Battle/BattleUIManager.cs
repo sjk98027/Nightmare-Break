@@ -8,6 +8,7 @@ public class BattleUIManager
 	private const float checkTime = 0.1f;
 	private const float mouseOverUI_xPos = 120f;
 	private const float mouseOverUI_yPos = 105f;
+    private UIManager uiManager;
 	private Image potionUI;
 	private Text mouseOverUI;
 	private Image[] skillUI;
@@ -70,17 +71,22 @@ public class BattleUIManager
 
     public void SetUIObject()
     {
+        uiManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
         hpBar = GameObject.Find("HPBar").GetComponent<Image>();
         mpBar = GameObject.Find("MPBar").GetComponent<Image>();
 		mouseOverUI = GameObject.Find ("MouseOverUI").GetComponent<Text> ();
 		mouseOverUI.transform.parent.gameObject.SetActive (false);
 		skillUI = new Image[6];
         skillCoolTimeUI = new Image[4];
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerEnter;
+     
 		for (int i = 0; i < skillUI.Length; i++)
         {
-			skillUI[i] = GameObject.Find ("Skill" + (i+1)).GetComponent<Image> ();
-       
 
+            skillUI[i] = GameObject.Find ("Skill" + (i+1)).GetComponent<Image> ();
+            skillUI[i].gameObject.AddComponent<EventTrigger>().triggers.Add(entry);
+          
             if (i < skillCoolTimeUI.Length) {
 				skillCoolTimeUI [i] = GameObject.Find ("Skill" + (i + 1) + "_CoolTime").GetComponent<Image> ();
 			}
