@@ -39,10 +39,12 @@ public class ReSendManager : MonoBehaviour
 
     public void Initialize(int userNum)
     {
+        Debug.Log(userNum);
+
         networkManager = GetComponent<NetworkManager>();
         reSendDatum = new Dictionary<int, ReSend>[userNum - 1];
 
-        for (int i =0; i< userNum - 1; i++)
+        for (int i = 0; i < userNum - 1; i++)
         {
             reSendDatum[i] = new Dictionary<int, ReSend>();
         }
@@ -104,8 +106,9 @@ public class ReSendManager : MonoBehaviour
 
             if (isConnecting)
             {
-                for (int i = 0; i < WaitUIManager.maxPlayerNum - 1; i++)
+                for (int i = 0; i < reSendDatum.Length - 1; i++)
                 {
+                    Debug.Log(reSendDatum[i].Count);
                     if (reSendDatum[i].Count != 0)
                     {
                         isConnecting = true;
@@ -115,6 +118,9 @@ public class ReSendManager : MonoBehaviour
                     {
                         isConnecting = false;
                     }
+
+                    Debug.Log(i);
+                    Debug.Log(isConnecting);
                 }
 
                 if (!isConnecting)
