@@ -117,7 +117,10 @@ public class ReSendManager : MonoBehaviour
                     }
                 }
 
-                DataSender.Instance.UdpConnectComplete();
+                if (!isConnecting)
+                {
+                    DataSender.Instance.UdpConnectComplete();
+                }                
             }
         }
     }
