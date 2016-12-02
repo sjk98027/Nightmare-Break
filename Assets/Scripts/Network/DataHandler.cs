@@ -343,6 +343,11 @@ public class DataHandler : MonoBehaviour
 
             if (ip != networkManager.client.ToString().Substring(0, networkManager.client.ToString().IndexOf(":")))
             {
+                lock (userIndexLock)
+                {
+                    userNum.Add(packet.endPoint, userIndexNum++);
+                }
+
                 IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(ip), NetworkManager.clientPortNumber);
                 connectionCheck.Add((EndPoint)endPoint, false);
                 networkManager.ConnectP2P(ip);
@@ -373,11 +378,6 @@ public class DataHandler : MonoBehaviour
 
         try
         {
-            lock (userIndexLock)
-            {
-                userNum.Add(packet.endPoint, userIndexNum++);
-            }
-            
             connectionCheck[packet.endPoint] = true;
 
             networkManager.ReSendManager.RemoveReSendData(udpId, packet.endPoint);
