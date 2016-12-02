@@ -29,7 +29,14 @@ public class MageManager : CharacterManager
 
 	public void StrikeBall()
 	{
-		Instantiate (Resources.Load<GameObject> ("Effect/MageNormalAttack"), FireBallPos.transform.position, Quaternion.Euler (0, 0, 0));
+		if (transform.rotation.y == 0)
+		{
+			Instantiate (Resources.Load<GameObject> ("Effect/MageNormalAttack"), FireBallPos.transform.position, Quaternion.Euler (0, 0, 0));
+		}
+		else
+		{
+			Instantiate (Resources.Load<GameObject> ("Effect/MageNormalAttack"), FireBallPos.transform.position, Quaternion.Euler (0, 180, 0));
+		}
 	}
 
 	public void SummonFireBall()

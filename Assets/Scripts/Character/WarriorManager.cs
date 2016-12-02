@@ -54,11 +54,10 @@ public class WarriorManager : CharacterManager
 	{
 		skillTime += Time.deltaTime;
 
-		if (skillTime >= 0.5f || State == CharacterState.HitDamage)
-		{
+
 			animator.speed = 1;
 			skillTime = 0;
-		}
+
 
 	}
 

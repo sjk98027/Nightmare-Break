@@ -7,7 +7,7 @@ public class MageNormalAttack : MonoBehaviour {
 	public CharacterManager charManager;
 	public CharacterStatus charStatus;
 
-	public int MageBallDamage= 100;
+	public int MageBallDamage;
 	public float MageBallSpeed = 50;
 	public Rigidbody MageBallRigid;
 
@@ -17,28 +17,38 @@ public class MageNormalAttack : MonoBehaviour {
 		charManager = character.GetComponent<CharacterManager> ();
 		charStatus = GameObject.FindGameObjectWithTag("CharStatus").GetComponent<CharacterStatus>();
 		charStatus.SetCharacterStatus ();
-		MageBallDamage = 100;
+
 		MageBallRigid = GetComponent<Rigidbody> ();
 		MageBallRigid.velocity = transform.forward* MageBallSpeed;
+		Destroy (this.gameObject, 1f);
 
 	}
+
 
 	void OnTriggerEnter(Collider coll)
 	{
 		if (coll.gameObject.layer == LayerMask.NameToLayer ("Enermy"))
 		{
-			Debug.Log ("in monster");
 			Monster monsterDamage = coll.gameObject.GetComponent<Monster> ();
 
 			if (monsterDamage != null)
 			{	
-				monsterDamage.HitDamage (MageBallDamage,character );
+				MageBallDamage = charManager.charStatus.Attack;
+				monsterDamage.HitDamage (MageBallDamage, character);
+				Debug.Log (MageBallDamage);
 				MageBallDamage = 0;
 			}
 
-			Destroy(gameObject);
-			Instantiate(Resources.Load<GameObject>("Effect/MeteorExplosion"), this.transform.position, Quaternion.identity);
+			Destroy (gameObject);
+			Instantiate (Resources.Load<GameObject> ("Effect/MeteorExplosion"), this.transform.position, Quaternion.identity);
 
+		}
+		else if (coll.gameObject.layer == LayerMask.NameToLayer ("Wall"))
+		{
+
+			Destroy (gameObject);
+			Instantiate (Resources.Load<GameObject> ("Effect/MeteorExplosion"), this.transform.position, Quaternion.identity);
+			
 		}
 	}
 
