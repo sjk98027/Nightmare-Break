@@ -39,6 +39,12 @@ public class ReSendManager : MonoBehaviour
     {
         networkManager = GetComponent<NetworkManager>();
         reSendDatum = new Dictionary<int, ReSend>[userNum - 1];
+
+        for (int i =0; i< userNum - 1; i++)
+        {
+            reSendDatum[i] = new Dictionary<int, ReSend>();
+        }
+
         endPoints = new EndPoint[userNum - 1];
         isConnecting = true;
     }
@@ -46,9 +52,6 @@ public class ReSendManager : MonoBehaviour
     public void AddReSendData(int id, EndPoint endPoint, ReSendData reSendData)
     {
         ReSend resend = new ReSend(endPoint, reSendData);
-        Debug.Log(networkManager.DataHandler.userNum);
-        Debug.Log(endPoint);
-        Debug.Log(networkManager.DataHandler.userNum[endPoint]);
         int index = networkManager.DataHandler.userNum[endPoint];
 
         try
@@ -84,7 +87,6 @@ public class ReSendManager : MonoBehaviour
             //모든 플레이어들의 ReSend Dictionary를 확인한다
             for (int i = 0; i < WaitUIManager.maxPlayerNum - 1; i++)
             {
-
                 //i번 플레이어의 ReSendData를 확인한다
                 foreach (KeyValuePair<int, ReSend> sendData in reSendDatum[i])
                 {
