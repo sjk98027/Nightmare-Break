@@ -26,8 +26,7 @@ public class DataHandler : MonoBehaviour
     ServerRecvNotifier serverRecvNotifier;
     private Dictionary<int, P2PRecvNotifier> p2p_notifier = new Dictionary<int, P2PRecvNotifier>();
     private Dictionary<int, ServerRecvNotifier> server_notifier = new Dictionary<int, ServerRecvNotifier>();
-
-    Dictionary<EndPoint, bool> connectionCheck;
+    
     public Dictionary<EndPoint, int> userNum;
     int userIndexNum;
     object userIndexLock;
@@ -331,7 +330,8 @@ public class DataHandler : MonoBehaviour
         MatchData matchData = matchDataPacket.GetData();
 
         userIndexNum = 0;
-        connectionCheck = new Dictionary<EndPoint, bool>();
+
+        userNum = new Dictionary<EndPoint, int>();
 
         for (int i = 0; i < matchData.ip.Length; i++)
         {
@@ -349,7 +349,6 @@ public class DataHandler : MonoBehaviour
                 }
 
                 IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(ip), NetworkManager.clientPortNumber);
-                connectionCheck.Add((EndPoint)endPoint, false);
                 networkManager.ConnectP2P(ip);
             }
         }
@@ -378,8 +377,6 @@ public class DataHandler : MonoBehaviour
 
         try
         {
-            connectionCheck[packet.endPoint] = true;
-
             networkManager.ReSendManager.RemoveReSendData(udpId, packet.endPoint);
         }
         catch
@@ -437,7 +434,5 @@ public class DataHandler : MonoBehaviour
 
         CharacterManager characterManager = dungeonManager.Players[1].GetComponent<CharacterManager>();
         characterManager.CharState(characterActionData.action);
-    }
-
-    
+    }    
 }
