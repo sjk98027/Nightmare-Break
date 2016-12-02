@@ -10,9 +10,7 @@ public class CharWeapon : MonoBehaviour {
 	bool normalAttack;
 	bool skillAttack;
 
-
 	public bool NormalAttack {get {return this.normalAttack;}}
-
 	public bool SkillAttack {get {return this.skillAttack;}}
 
 	// Use this for initialization
@@ -35,9 +33,9 @@ public class CharWeapon : MonoBehaviour {
 	{
 		if (coll.gameObject.layer == LayerMask.NameToLayer ("Enermy"))
 		{
-			Monster monsterDamage = coll.gameObject.GetComponent<Monster> ();
-
-			if (monsterDamage != null)
+			Monster monster = coll.gameObject.GetComponent<Monster> ();
+            charManager.UIManager.BattleUIManager.monsterHpBarCalculation(monster.gameObject.name, monster.MaxHP, monster.CurrentHP);
+			if (monster != null)
 			{	
 				if (normalAttack)
 				{
@@ -72,7 +70,7 @@ public class CharWeapon : MonoBehaviour {
                         }
 
 					}
-					monsterDamage.HitDamage (damage, this.gameObject.GetComponentInParent<CharacterManager> ().gameObject);
+					monster.HitDamage (damage, this.gameObject.GetComponentInParent<CharacterManager> ().gameObject);
 					damage = 0;
 				}
 			}
