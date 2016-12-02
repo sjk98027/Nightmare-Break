@@ -120,7 +120,7 @@ public class ReSendManager : MonoBehaviour
 
             if (isConnecting)
             {
-                DataSender.Instance.UDPConnectComplete();
+                DataSender.Instance.UdpConnectComplete();
             }
         }
     }

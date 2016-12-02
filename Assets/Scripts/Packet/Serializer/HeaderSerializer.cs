@@ -91,5 +91,5 @@ public class HeaderData
     public short length; // 패킷의 길이
     public byte source; //패킷 출처
     public byte id; // 패킷 ID
-    public int udpId; //UDP ID
+    public int udpId; //Udp ID
 }

@@ -325,13 +325,13 @@ public class DataSender : MonoBehaviour
     }
 
     //연결 요청 - Tcp
-    public void RequestUDPConnection()
+    public void RequestUdpConnection()
     {
-        Debug.Log("UDP 연결 요청");
+        Debug.Log("Udp 연결 요청");
 
         ResultData resultData = new ResultData();
         ResultPacket resultPacket = new ResultPacket(resultData);
-        resultPacket.SetPacketId((int)ClientPacketId.RequestUDPConnection);
+        resultPacket.SetPacketId((int)ClientPacketId.RequestUdpConnection);
 
         DataPacket packet = new DataPacket(CreatePacket(resultPacket), null);
 
@@ -356,29 +356,28 @@ public class DataSender : MonoBehaviour
         networkManager.ReSendManager.AddReSendData(udpId++, newEndPoint, RequestConnectionCheck);
     }
 
-    //연결 확인 답신 - Udp
-    public void ConnectionCheckAnswer(EndPoint newEndPoint)
+    //Udp 답신 - Udp
+    public void UdpAnswer(EndPoint newEndPoint, int udpId)
     {
-        Debug.Log(newEndPoint.ToString() + " 연결 확인 답신");
+        Debug.Log(newEndPoint.ToString() + " Udp 답신");
 
         ResultData resultData = new ResultData(new byte());
         ResultPacket resultDataPacket = new ResultPacket(resultData);
-        resultDataPacket.SetPacketId((int)P2PPacketId.ConnectionCheckAnswer);
+        resultDataPacket.SetPacketId((int)P2PPacketId.UdpAnswer);
 
-        DataPacket packet = new DataPacket(CreatePacket(resultDataPacket), null);
-
-        packet.endPoint = newEndPoint;
+        DataPacket packet = new DataPacket(CreateUdpPacket(resultDataPacket, udpId), newEndPoint);
+        
         sendMsgs.Enqueue(packet);
     }
 
     //연결 완료 - Tcp
-    public void UDPConnectComplete()
+    public void UdpConnectComplete()
     {
-        Debug.Log("UDP 연결 완료");
+        Debug.Log("Udp 연결 완료");
 
         ResultData resultData = new ResultData();
         ResultPacket resultPacket = new ResultPacket(resultData);
-        resultPacket.SetPacketId((int)ClientPacketId.UDPConnectComplete);
+        resultPacket.SetPacketId((int)ClientPacketId.UdpConnectComplete);
 
         DataPacket packet = new DataPacket(CreatePacket(resultPacket), null);
 

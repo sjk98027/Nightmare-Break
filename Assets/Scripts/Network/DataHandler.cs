@@ -64,14 +64,14 @@ public class DataHandler : MonoBehaviour
         server_notifier.Add((int)ServerPacketId.EnterRoomResult, EnterRoomResult);
         server_notifier.Add((int)ServerPacketId.ExitRoomResult, ExitRoomResult);
         server_notifier.Add((int)ServerPacketId.StartGame, StartGame);
-        server_notifier.Add((int)ServerPacketId.UDPConnection, UDPConnection);
+        server_notifier.Add((int)ServerPacketId.UdpConnection, UdpConnection);
         server_notifier.Add((int)ServerPacketId.StartDungeon, StartDungeon);
     }
 
     public void SetUdpNotifier()
     {
         p2p_notifier.Add((int)P2PPacketId.RequestConnectionCheck, ConnectionCheckAnswer);
-        p2p_notifier.Add((int)P2PPacketId.ConnectionCheckAnswer, ConnectionCheck);
+        p2p_notifier.Add((int)P2PPacketId.UdpAnswer, AnswerCheck);
         p2p_notifier.Add((int)P2PPacketId.CreateUnit, CreateUnit);
         p2p_notifier.Add((int)P2PPacketId.CharacterPosition, CharacterPosition);
         p2p_notifier.Add((int)P2PPacketId.CharacterAction, CharacterAction);
@@ -311,7 +311,7 @@ public class DataHandler : MonoBehaviour
         if (resultData.Result == (byte)Result.Success)
         {
             Debug.Log("게임 시작");
-            DataSender.Instance.RequestUDPConnection();
+            DataSender.Instance.RequestUdpConnection();
         }
         else if (resultData.Result == (byte)Result.Fail)
         {
@@ -320,7 +320,7 @@ public class DataHandler : MonoBehaviour
     }
 
     //Server - 연결 시작
-    public void UDPConnection(DataPacket packet)
+    public void UdpConnection(DataPacket packet)
     {
         Debug.Log("연결 시작");
         MatchDataPacket matchDataPacket = new MatchDataPacket(packet.msg);
@@ -358,18 +358,13 @@ public class DataHandler : MonoBehaviour
     {
         Debug.Log("연결 확인 답장");
 
-        DataSender.Instance.ConnectionCheckAnswer(packet.endPoint);
+        DataSender.Instance.UdpAnswer(packet.endPoint, udpId);
     }
 
-    //Client - 연결 확인
-    public void ConnectionCheck(DataPacket packet, int udpId)
+    //Client - 답신 확인
+    public void AnswerCheck(DataPacket packet, int udpId)
     {
-        Debug.Log("연결 확인");
-
-        string ip = packet.endPoint.ToString();
-        ip = ip.Substring(0, ip.IndexOf(":"));
-
-        Debug.Log(ip);
+        Debug.Log("답신 확인");
 
         try
         {

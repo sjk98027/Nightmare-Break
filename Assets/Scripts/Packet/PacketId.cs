@@ -18,8 +18,8 @@
     RoomUserData,
     ExitRoom,
     StartGame,
-    RequestUDPConnection,
-    UDPConnectComplete,
+    RequestUdpConnection,
+    UdpConnectComplete,
 }
 
 public enum ServerPacketId
@@ -41,7 +41,7 @@ public enum ServerPacketId
     RoomUserData,
     ExitRoomResult,
     StartGame,
-    UDPConnection,
+    UdpConnection,
     StartDungeon,
 }
 
@@ -50,6 +50,7 @@ public enum P2PPacketId
     None = 0,
     RequestConnectionCheck,
     ConnectionCheckAnswer,
+    UdpAnswer,
     CreateUnit,
     CharacterPosition,
     CharacterAction,

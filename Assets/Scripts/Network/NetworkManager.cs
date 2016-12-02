@@ -79,7 +79,7 @@ public class NetworkManager : MonoBehaviour
         catch
         {
             Debug.Log("네트워크 설정 실패");
-        }        
+        }
     }
 
     public void ConnectServer()
