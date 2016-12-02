@@ -191,7 +191,7 @@ GameObject:
   - 65: {fileID: 65000012927585434}
   - 114: {fileID: 114000012634108638}
   m_Layer: 9
-  m_Name: BigBear 1
+  m_Name: BigBear
   m_TagString: Enermy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1534,8 +1534,11 @@ MonoBehaviour:
   attackCollider: {fileID: 0}
   currentDisTanceArray: []
   stateDirecion: 0
+  patternReserveList: 
+  PatternRank: 0
   searchRange: 20
   moveSpeed: 1
+  shoutCount: 0
   currentDisTance: 0
   uiManager: {fileID: 0}
   MonsterWeapon:

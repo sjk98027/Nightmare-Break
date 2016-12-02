@@ -2,11 +2,11 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using UnityEngine.Events;
+
 public class BattleUIManager        
 {
 	private const float checkTime = 0.1f;
-	private const float mouseOverUI_xPos = 120f;
+	private const float mouseOverUI_xPos = 125f;
 	private const float mouseOverUI_yPos = 105f;
     private UIManager uiManager;
 	private Image potionUI;
@@ -15,8 +15,9 @@ public class BattleUIManager
 	private Image[] skillCoolTimeUI; // 0 - SKill1 // 1 - SKill2 // 2 - Skill3 // 3 - Skill4 //
     private Image hpBar;
     private Image mpBar;
-    private EventTrigger eventTrigger ;
-    
+    private Image monsterHpBar;
+    private Text monsterName;
+   
 	public Image[] SkillCoolTimeUI{ get{ return skillCoolTimeUI; }}
 	public Text MouseOverUI{ get { return mouseOverUI; } set { mouseOverUI = value; } }
 
@@ -70,7 +71,15 @@ public class BattleUIManager
         mpBar.fillAmount = (float) currentMP / maxMp; 
     }
 
-
+    public void monsterHpBarCalculation(string name, float maxHp, float currentHP)
+    {
+        if (!monsterHpBar.transform.parent.gameObject.activeSelf)
+        { 
+        monsterHpBar.transform.parent.gameObject.SetActive(true);
+        }
+        monsterName.text = name;
+        monsterHpBar.fillAmount = currentHP / maxHp; 
+    }
 
     public void SetUIObject()
     {
@@ -79,6 +88,9 @@ public class BattleUIManager
         mpBar = GameObject.Find("MPBar").GetComponent<Image>();
         mouseOverUI = GameObject.Find("MouseOverUI").GetComponent<Text>();
         mouseOverUI.transform.parent.gameObject.SetActive(false);
+        monsterHpBar = GameObject.Find("MonsterHPBar").GetComponent<Image>();
+        monsterName = GameObject.Find("MonsterName").GetComponent<Text>();
+        monsterHpBar.transform.parent.gameObject.SetActive(false);
         skillUI = new Image[6];
         skillCoolTimeUI = new Image[4];
         EventTrigger.Entry[] enterEvent = new EventTrigger.Entry[6];

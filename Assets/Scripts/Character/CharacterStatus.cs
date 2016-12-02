@@ -75,7 +75,7 @@ public class CharacterStatus : MonoBehaviour
         charClass = 0;
         exp = 0;
         healthPoint = 100;
-        maxMagicPoint = 20000;
+        maxMagicPoint = 2000;
         magicPoint = maxMagicPoint;
         hpRegeneration = 0;
         mpRegeneration = 0;

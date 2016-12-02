@@ -81,6 +81,17 @@ public class Monster : MonoBehaviour {
 		set{ isHited = value;}
 	}
 
+    public float MaxHP
+    {
+        get { return maxLife; }
+        set { maxLife = value; }
+    }
+    
+    public float CurrentHP
+    {
+        get { return currentLife; }
+        set { currentLife = value; }
+    }
 	public enum StateDirecion{
 		right,
 		left

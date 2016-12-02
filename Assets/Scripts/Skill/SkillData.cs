@@ -21,7 +21,7 @@ public class SkillData{
         skillList.Add(new SkillBasicData(SkillBasicData.SkillTypes.Active, "검무", 3, 100, 3, "검으로 근접한 적들을 도륙하는 공격을한다."));
         skillList.Add(new SkillBasicData(SkillBasicData.SkillTypes.Active, "기간틱소드", 4, 150, 4, "검으로 근접한 적들을 도륙하는 공격을한다."));
         skillList.Add(new SkillBasicData(SkillBasicData.SkillTypes.Passive, "흡혈공격", 5, "일반 공격시 준 데미지의 일정량을 체력으로 회복한다."));
-        skillList.Add(new SkillBasicData(SkillBasicData.SkillTypes.Passive, "극의", 6, 100, 30, "무기 공격력의 일정량의 추가 방어력을 얻는다."));
+        skillList.Add(new SkillBasicData(SkillBasicData.SkillTypes.Passive, "극의", 6, "무기 공격력의 일정량의 추가 방어력을 얻는다."));
 
         skillList[1].AddSkillLevelData(new SkillLevelData(1, 1.2f, "무기 공격력에 120%의 공격력을 가진다."));
         skillList[1].AddSkillLevelData(new SkillLevelData(2, 1.4f, "무기 공격력에 140%의 공격력을 가진다."));
@@ -117,9 +117,7 @@ public class SkillBasicData
     {
         return SkillData[_level - 1];
     }
-
 }
-
 
 public class SkillLevelData
 {
