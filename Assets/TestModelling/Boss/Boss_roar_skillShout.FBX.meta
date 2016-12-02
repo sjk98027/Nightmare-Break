@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 373638ae80ec7ee4199168b7f17a3777
-timeCreated: 1478672133
+guid: baa9feb5e847df343b05fea07d32cf74
+timeCreated: 1480320112
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -108,7 +108,7 @@ ModelImporter:
     4300004: Boss_arm
     4300006: Boss_leg
     4300008: Boss_ribbon
-    7400000: BossRoar
+    7400000: BigBearBossShout
     9500000: //RootNode
     13700000: Boss_arm
     13700002: Boss_body
@@ -137,10 +137,10 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: BossRoar
+      name: BigBearBossShout
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 40
+      lastFrame: 81
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -160,18 +160,18 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.92827004
-        functionName: roarEnd
+      - time: 0.53424656
+        functionName: RoarStart
         data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 03d6bf8e6a2538c4eb6a25cc15af3f76,
+        objectReferenceParameter: {fileID: 11500000, guid: a883e47a0a6da8f4da250fc393a2ac79,
           type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.57310367
-        functionName: roarStart
+      - time: 0.9615385
+        functionName: RoarEnd
         data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 03d6bf8e6a2538c4eb6a25cc15af3f76,
+        objectReferenceParameter: {fileID: 11500000, guid: a883e47a0a6da8f4da250fc393a2ac79,
           type: 3}
         floatParameter: 0
         intParameter: 0

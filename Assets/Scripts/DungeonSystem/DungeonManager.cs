@@ -236,7 +236,7 @@ public class DungeonManager : MonoBehaviour
 
 			if (bossMonster != null) {
 				bossMonster.PlayerSearch ();
-				bossMonster.MonsterSet (900,2);
+				bossMonster.BossMonsterSet (900, 2);
 				if (hostGuest == HostGuest.Host) {
 					bossMonster.BossMonsterPatternUpdateConduct ();
 				}

@@ -2615,6 +2615,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000010342677024}
   - 65: {fileID: 65000010852713514}
+  - 114: {fileID: 114000011415858592}
   m_Layer: 0
   m_Name: Bip01 R Forearm
   m_TagString: Untagged
@@ -8732,6 +8733,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000010158128336}
   - 65: {fileID: 65000014208360912}
+  - 114: {fileID: 114000014007036686}
   m_Layer: 0
   m_Name: Bip01 L Forearm
   m_TagString: Untagged
@@ -16462,7 +16464,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010377513662}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -3.6, y: -0.09999988, z: -4.3}
+  m_LocalPosition: {x: -3.6, y: -0.09999988, z: 42.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_Children:
@@ -17537,7 +17539,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012171973326}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 5.88, y: -0.09999988, z: -1.74}
+  m_LocalPosition: {x: 5.88, y: -0.09999988, z: 45.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_Children:
@@ -22162,7 +22164,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012252692278}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 11.85, y: -0.09999988, z: -3.25}
+  m_LocalPosition: {x: 11.85, y: -0.09999988, z: 43.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_Children:
@@ -24953,7 +24955,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013679480454}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 6.9411564, y: -0.09999988, z: 107.8}
+  m_LocalPosition: {x: 6.9411564, y: -0.09999988, z: -8.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_Children:
@@ -29784,6 +29786,7 @@ MonoBehaviour:
   warriorMonster: []
   shockWaveMonster: []
   bossMonster: {fileID: 114000011244573646}
+  monsterTransForm: []
   section: []
   mapNumber: 0
 --- !u!114 &114000011037858132
@@ -29922,9 +29925,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: []
-  animator: {fileID: 0}
+  animator: {fileID: 95000013875542340}
   targetPlayer: {fileID: 0}
-  HittedBox: {fileID: 0}
+  HittedBox: {fileID: 65000011309434980}
   normalMode: 0
   gateArrayNumber: 0
   monsterArrayNumber: 0
@@ -29942,11 +29945,15 @@ MonoBehaviour:
   attackCollider: {fileID: 0}
   currentDisTanceArray: []
   stateDirecion: 0
+  patternReserveList: 
+  PatternRank: 0
   searchRange: 20
   moveSpeed: 1
   currentDisTance: 0
   uiManager: {fileID: 0}
-  MonsterWeapon: []
+  MonsterWeapon:
+  - {fileID: 114000014007036686}
+  - {fileID: 114000011415858592}
   BigBearBossState: 0
   skillInsertImage: {fileID: 0}
   imageSpeed: 1
@@ -30026,6 +30033,20 @@ MonoBehaviour:
   monsterState: 0
   pointVector: []
   transitionVector: {x: 0, y: 0, z: 0}
+--- !u!114 &114000011415858592
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010850868158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6da0f17e5319eec419b9ccc02f22fb66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monster: {fileID: 0}
+  AttackCollider: {fileID: 65000010852713514}
+  damage: 0
 --- !u!114 &114000011425937280
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -30946,6 +30967,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monster: {fileID: 0}
   AttackCollider: {fileID: 65000013278771544}
+  damage: 0
+--- !u!114 &114000014007036686
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012523549968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6da0f17e5319eec419b9ccc02f22fb66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monster: {fileID: 0}
+  AttackCollider: {fileID: 65000014208360912}
   damage: 0
 --- !u!114 &114000014069553106
 MonoBehaviour:

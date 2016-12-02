@@ -112,7 +112,7 @@ public class Monster : MonoBehaviour {
 		if (attackCollider != null) {
 			attackCollider = this.transform.GetComponentInChildren<MonsterWeapon> ();
 			attackCollider.MonsterWeaponSet ();
-		}
+		} 
 	}
 
 	public void LookAtPattern(StateDirecion state)
