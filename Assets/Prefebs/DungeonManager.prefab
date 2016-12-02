@@ -29949,6 +29949,7 @@ MonoBehaviour:
   PatternRank: 0
   searchRange: 20
   moveSpeed: 1
+  shoutCount: 0
   currentDisTance: 0
   uiManager: {fileID: 0}
   MonsterWeapon:

@@ -28,6 +28,7 @@ public class WarriorMonster : Monster {
 			Pattern (StatePosition.TakeDamage);
 		}
 		if (currentLife <= 0) {
+			currentLife = 0;
 			IsAlive = false;
 			HittedBox.enabled = false;
 			monsterState = StatePosition.Death;
