@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections;
-
+using System.Collections.Generic;
+using System.Net;
 
 //this class manage monsterStageLevel, sumon, player sumon, player death;
 public class DungeonManager : MonoBehaviour
@@ -30,9 +30,9 @@ public class DungeonManager : MonoBehaviour
 	public ShockWaveMonster[] shockWaveMonster;
 	public BossMonsterKYW bossMonster;
 
+    NetworkManager networkManager;
     InputManager inputManager;
     UIManager uiManager;
-    DataSender dataSender;
     GameObject m_camera;
 
     protected bool normalMode; //false  -> normalBattle, true -> Defence; 
@@ -61,7 +61,6 @@ public class DungeonManager : MonoBehaviour
 		if(section.Length != 0){
 			SectionSet ();
 		}
-
 	}
 
 	void Update()
@@ -113,6 +112,11 @@ public class DungeonManager : MonoBehaviour
 		}
 	}
 
+    //각종 매니저 초기화
+    public void Initialize()
+    {
+        networkManager = GameObject.FindWithTag("NetworkManager").GetComponent<NetworkManager>();
+    }
 
     //defence mode, normal mode
     public void ModeChange(bool modeForm)
@@ -299,11 +303,14 @@ public class DungeonManager : MonoBehaviour
         player.GetComponent<CharacterManager>().UIManager = uiManager;
         player.GetComponent<CharacterManager>().SetCharacterStatus();
         player.GetComponent<CharacterManager>().SetCharacterType();
+                
+        foreach (KeyValuePair<EndPoint, int> user in networkManager.DataHandler.userNum)
+        {
+            DataSender.Instance.CreateUnitSend(0, player.transform.position, user.Key, DataSender.Instance.udpId[user.Value]);
+        }
 
-        dataSender = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<DataSender>();
-        dataSender.CreateUnitSend(0, player.transform.position);
-        StartCoroutine(dataSender.CharacterPositionSend());
-        StartCoroutine(dataSender.EnqueueMessage());
+        StartCoroutine(DataSender.Instance.CharacterPositionSend());
+        StartCoroutine(DataSender.Instance.EnqueueMessage());
 
         return player;
     }

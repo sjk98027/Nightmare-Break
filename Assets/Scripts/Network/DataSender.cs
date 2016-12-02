@@ -390,29 +390,21 @@ public class DataSender : MonoBehaviour
     }
 
     //캐릭터의 생성 - Udp
-    public void CreateUnitSend(short newId, Vector3 position)
+    public void CreateUnitSend(short newCharId, Vector3 position, EndPoint newEndPoint, int id)
     {
-        short id = newId;
-        float xPos = position.x;
-        float yPos = position.y;
-        float zPos = position.z;
-
-        CreateUnitData createUnitData = new CreateUnitData(id, xPos, yPos, zPos);
+        CreateUnitData createUnitData = new CreateUnitData(newCharId, position.x, position.y, position.z);
         CreateUnitPacket createUnitDataPacket = new CreateUnitPacket(createUnitData);
         createUnitDataPacket.SetPacketId((int)P2PPacketId.CreateUnit);
-        
-        foreach (KeyValuePair<EndPoint, int> user in networkManager.DataHandler.userNum)
+
+        DataPacket packet = new DataPacket(CreateUdpPacket(createUnitDataPacket, id), newEndPoint);
+        sendMsgs.Enqueue(packet);
+
+        int index = networkManager.DataHandler.userNum[newEndPoint];
+
+        if (id >= udpId[index])
         {
-            DataPacket packet = new DataPacket(CreateUdpPacket(createUnitDataPacket, id), user.Key);
-            sendMsgs.Enqueue(packet);
-
-            int index = networkManager.DataHandler.userNum[user.Key];
-
-            if (id >= udpId[index])
-            {
-                networkManager.ReSendManager.AddReSendData(id, user.Key, RequestConnectionCheck);
-                udpId[index]++;
-            }
+            networkManager.ReSendManager.AddReSendData(id, newEndPoint, RequestConnectionCheck);
+            udpId[index]++;
         }
     }
 
@@ -431,12 +423,18 @@ public class DataSender : MonoBehaviour
             float zPos = characterManager.transform.position.z;
 
             CharacterPositionData CharacterPosition = new CharacterPositionData(dir, xPos, yPos, zPos);
-            CharacterPositionPacket characterStatePacket = new CharacterPositionPacket(CharacterPosition);
-            characterStatePacket.SetPacketId((int)P2PPacketId.CharacterPosition);
+            CharacterPositionPacket characterPositionPacket = new CharacterPositionPacket(CharacterPosition);
+            characterPositionPacket.SetPacketId((int)P2PPacketId.CharacterPosition);
 
-            byte[] packet = CreatePacket(characterStatePacket);
+            byte[] msg = CreatePacket(characterPositionPacket);
 
-            udpMsg = CombineByte(udpMsg, packet);
+            foreach (KeyValuePair<EndPoint, int> user in networkManager.DataHandler.userNum)
+            {
+                DataPacket packet = new DataPacket(CreateUdpPacket(characterPositionPacket, udpId[user.Value]), user.Key);
+                sendMsgs.Enqueue(packet);
+
+                int index = networkManager.DataHandler.userNum[user.Key];
+            }
         }
     }
 
