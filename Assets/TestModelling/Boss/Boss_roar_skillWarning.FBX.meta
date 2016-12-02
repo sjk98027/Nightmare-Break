@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: fd3041530afed9b429e9f2a62f64e7d0
-timeCreated: 1478573418
+guid: 373638ae80ec7ee4199168b7f17a3777
+timeCreated: 1478672133
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -50,9 +50,9 @@ ModelImporter:
     100084: Boss_arm
     100086: Boss_body
     100088: Boss_head
-    100090: //RootNode
-    100092: Boss_leg
-    100094: Boss_ribbon
+    100090: Boss_leg
+    100092: Boss_ribbon
+    100094: //RootNode
     100096: Box03
     400000: Bip01
     400002: Bip01 Footsteps
@@ -99,16 +99,16 @@ ModelImporter:
     400084: Boss_arm
     400086: Boss_body
     400088: Boss_head
-    400090: //RootNode
-    400092: Boss_leg
-    400094: Boss_ribbon
+    400090: Boss_leg
+    400092: Boss_ribbon
+    400094: //RootNode
     400096: Box03
     4300000: Boss_body
     4300002: Boss_head
     4300004: Boss_arm
     4300006: Boss_leg
     4300008: Boss_ribbon
-    7400000: BigBearJumpAttack
+    7400000: BossRoar
     9500000: //RootNode
     13700000: Boss_arm
     13700002: Boss_body
@@ -137,10 +137,10 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: BigBearJumpAttack
+      name: BossRoar
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 63
+      lastFrame: 40
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -160,8 +160,16 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.6284667
-        functionName: earthQuakeEffect
+      - time: 0.57310367
+        functionName: RoarStart
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: a883e47a0a6da8f4da250fc393a2ac79,
+          type: 3}
+        floatParameter: 0
+        intParameter: 1
+        messageOptions: 0
+      - time: 0.92827004
+        functionName: RoarEnd
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: a883e47a0a6da8f4da250fc393a2ac79,
           type: 3}
