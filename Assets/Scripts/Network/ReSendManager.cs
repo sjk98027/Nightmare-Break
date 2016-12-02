@@ -87,7 +87,7 @@ public class ReSendManager : MonoBehaviour
             yield return new WaitForSeconds(1.0f);
 
             //모든 플레이어들의 ReSend Dictionary를 확인한다
-            for (int i = 0; i < WaitUIManager.maxPlayerNum - 1; i++)
+            for (int i = 0; i < reSendDatum[i].Count - 1; i++)
             {
                 reSendKey = new List<int>(reSendDatum[i].Keys);
 
