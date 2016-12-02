@@ -20,7 +20,7 @@ public class DataHandler : MonoBehaviour
 
     public Queue<DataPacket> receiveMsgs;
 
-    public delegate void P2PRecvNotifier(DataPacket packet);
+    public delegate void P2PRecvNotifier(DataPacket packet, int udpId);
     public delegate void ServerRecvNotifier(DataPacket packet);
     P2PRecvNotifier p2pRecvNotifier;
     ServerRecvNotifier serverRecvNotifier;
@@ -28,6 +28,10 @@ public class DataHandler : MonoBehaviour
     private Dictionary<int, ServerRecvNotifier> server_notifier = new Dictionary<int, ServerRecvNotifier>();
 
     Dictionary<EndPoint, bool> connectionCheck;
+    public Dictionary<EndPoint, int> userNum;
+    int userIndexNum;
+    object userIndexLock;
+
     public DateTime dTime;
 
     public void Initialize(Queue<DataPacket> receiveQueue, Queue<DataPacket> sendQueue)
@@ -40,6 +44,8 @@ public class DataHandler : MonoBehaviour
 
         SetServerNotifier();
         SetUdpNotifier();
+
+        userIndexLock = new object();
 
         StartCoroutine(DataHandle());
     }
@@ -92,13 +98,17 @@ public class DataHandler : MonoBehaviour
                 HeaderData headerData = new HeaderData();
                 HeaderSerializer headerSerializer = new HeaderSerializer();
                 headerSerializer.SetDeserializedData(packet.msg);
-                headerSerializer.Deserialize(ref headerData);
 
-                //Debug.Log("패킷 길이 : " + msg.Length);
-                //Debug.Log("패킷 아이디 : " + headerData.id);
-                //Debug.Log("패킷 출처 : " + headerData.source);
-
-                DataReceiver.ResizeByteArray(0, NetworkManager.packetSource + NetworkManager.packetId, ref packet.msg);
+                if(packet.endPoint == null)
+                {
+                    headerSerializer.Deserialize(ref headerData);
+                    DataReceiver.ResizeByteArray(0, NetworkManager.packetSource + NetworkManager.packetId, ref packet.msg);
+                }
+                else
+                {
+                    headerSerializer.UdpDeserialize(ref headerData);
+                    DataReceiver.ResizeByteArray(0, NetworkManager.packetSource + NetworkManager.packetId + NetworkManager.udpId, ref packet.msg);
+                }
 
                 if (packet.endPoint == null)
                 {
@@ -115,7 +125,7 @@ public class DataHandler : MonoBehaviour
                 {
                     if (p2p_notifier.TryGetValue(headerData.id, out p2pRecvNotifier))
                     {
-                        p2pRecvNotifier(packet);
+                        p2pRecvNotifier(packet, headerData.udpId);
                     }
                     else
                     {
@@ -320,6 +330,7 @@ public class DataHandler : MonoBehaviour
         MatchDataPacket matchDataPacket = new MatchDataPacket(packet.msg);
         MatchData matchData = matchDataPacket.GetData();
 
+        userIndexNum = 0;
         connectionCheck = new Dictionary<EndPoint, bool>();
 
         for (int i = 0; i < matchData.ip.Length; i++)
@@ -338,11 +349,12 @@ public class DataHandler : MonoBehaviour
             }
         }
 
-        StartCoroutine(ConnectionCheck());
+        networkManager.ReSendManager.Initialize(matchData.ip.Length);
+        StartCoroutine(networkManager.ReSendManager.StartCheckSendData());
     }
 
     //Client - 연결 확인 답장
-    public void ConnectionCheckAnswer(DataPacket packet)
+    public void ConnectionCheckAnswer(DataPacket packet, int udpId)
     {
         Debug.Log("연결 확인 답장");
 
@@ -350,7 +362,7 @@ public class DataHandler : MonoBehaviour
     }
 
     //Client - 연결 확인
-    public void ConnectionCheck(DataPacket packet)
+    public void ConnectionCheck(DataPacket packet, int udpId)
     {
         Debug.Log("연결 확인");
 
@@ -361,7 +373,14 @@ public class DataHandler : MonoBehaviour
 
         try
         {
+            lock (userIndexLock)
+            {
+                userNum.Add(packet.endPoint, userIndexNum++);
+            }
+            
             connectionCheck[packet.endPoint] = true;
+
+            networkManager.ReSendManager.RemoveReSendData(udpId, packet.endPoint);
         }
         catch
         {
@@ -382,7 +401,7 @@ public class DataHandler : MonoBehaviour
     }
 
     //Client
-    public void CreateUnit(DataPacket packet)
+    public void CreateUnit(DataPacket packet, int udpId)
     {
         Debug.Log("유닛 생성");
         CreateUnitPacket createUnitPacket = new CreateUnitPacket(packet.msg);
@@ -392,7 +411,7 @@ public class DataHandler : MonoBehaviour
     }
 
     //Client
-    public void CharacterPosition(DataPacket packet)
+    public void CharacterPosition(DataPacket packet, int udpId)
     {
         Debug.Log("캐릭터 위치 수신");
 
@@ -407,7 +426,7 @@ public class DataHandler : MonoBehaviour
     }
 
     //Client
-    public void CharacterAction(DataPacket packet)
+    public void CharacterAction(DataPacket packet, int udpId)
     {
         Debug.Log("캐릭터 행동 수신");
 
@@ -420,42 +439,5 @@ public class DataHandler : MonoBehaviour
         characterManager.CharState(characterActionData.action);
     }
 
-    public IEnumerator ConnectionCheck()
-    {
-        bool check = false;
-
-        while (!check)
-        {
-            yield return new WaitForSeconds(1.0f);
-
-            foreach (KeyValuePair<EndPoint, bool> coCheck in connectionCheck)
-            {
-                Debug.Log(coCheck.Key);
-                Debug.Log(coCheck.Value);
-                if (!coCheck.Value)
-                {
-                    DataSender.Instance.RequestConnectionCheck(coCheck.Key);
-                }
-            }
-
-            foreach(KeyValuePair<EndPoint, bool> coCheck in connectionCheck)
-            {
-                if (!coCheck.Value)
-                {
-                    check = false;
-                    break;
-                }
-                else
-                {
-                    check = true;
-                }
-            }
-
-            if (check)
-            {
-                StopCoroutine(ConnectionCheck());
-                DataSender.Instance.UDPConnectComplete();
-            }            
-        }
-    }
+    
 }

@@ -13,7 +13,7 @@ public class NetworkManager : MonoBehaviour
     public const int packetLength = 2;
     public const int packetSource = 1;
     public const int packetId = 1;
-    public const int udpId = 2;
+    public const int udpId = 4;
 
     //패킷이 어디서 오는지 - 서버/클라이언트
     public enum Source
@@ -40,11 +40,13 @@ public class NetworkManager : MonoBehaviour
     DataReceiver dataReceiver;
     DataHandler dataHandler;
     DataSender dataSender;
+    ReSendManager reSendManager;
 
     public List<EndPoint> Clients { get { return clients; } }
     public DataReceiver DataReceiver { get { return dataReceiver; } }
     public DataHandler DataHandler { get { return dataHandler; } }
     public DataSender DataSender { get { return dataSender; } }
+    public ReSendManager ReSendManager { get { return reSendManager; } }
 
     public void InitializeManager(string ip)
     {
@@ -67,6 +69,7 @@ public class NetworkManager : MonoBehaviour
             dataReceiver = GetComponent<DataReceiver>();
             dataHandler = GetComponent<DataHandler>();
             dataSender = GetComponent<DataSender>();
+            reSendManager = GetComponent<ReSendManager>();
             dataSender = DataSender.Instance;
 
             dataReceiver.Initialize(receiveMsgs, serverSock);

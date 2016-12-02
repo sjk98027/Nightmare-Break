@@ -7,24 +7,6 @@ using System.Net.Sockets;
 
 public class DataSender : MonoBehaviour
 {
-    public class ReSend
-    {
-        EndPoint endPoint;
-        ReSendData reSendData;
-
-        public ReSend()
-        {
-            endPoint = null;
-            reSendData = null;
-        }
-
-        public ReSend(EndPoint newEndPoint, ReSendData newReSendData)
-        {
-            endPoint = newEndPoint;
-            reSendData = newReSendData;
-        }
-    }
-
     private static DataSender instance;
 
     public static DataSender Instance
@@ -54,11 +36,8 @@ public class DataSender : MonoBehaviour
 
     Queue<DataPacket> sendMsgs;
 
+    int udpId;
     byte[] udpMsg;
-    
-    public delegate void ReSendData(DataPacket packet);
-    ReSend reSendData;
-    private Dictionary<int, ReSend> reSendDatum = new Dictionary<int, ReSend>();
 
     public void Initialize(Queue<DataPacket> newSendMsgs, Socket newTcpSock, Socket newUdpSock)
     {
@@ -71,30 +50,6 @@ public class DataSender : MonoBehaviour
         udpMsg = new byte[0];
 
         StartCoroutine(DataSend());
-    }
-
-    public void AddReSendDatum(int id, EndPoint endPoint, ReSendData reSendData)
-    {
-        ReSend resend = new ReSend(endPoint, reSendData);
-        reSendDatum.Add(id, resend);
-    }
-
-    public void RemoveReSendDatum(int id)
-    {
-        reSendDatum.Remove(id);
-    }
-
-    IEnumerator StartCheckSendData()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(1.0f);
-
-            foreach (KeyValuePair <int, ReSend> sendData in reSendDatum)
-            {
-
-            }
-        }
     }
 
     //데이타를 전송하는 메소드. byte[] msg 를 newIPEndPoint로 전송한다.
@@ -381,6 +336,8 @@ public class DataSender : MonoBehaviour
         DataPacket packet = new DataPacket(CreatePacket(resultPacket), null);
 
         sendMsgs.Enqueue(packet);
+
+        udpId = 0;
     }
 
     //연결 확인 요청 - Udp
@@ -396,12 +353,14 @@ public class DataSender : MonoBehaviour
 
         packet.endPoint = newEndPoint;
         sendMsgs.Enqueue(packet);
+
+        networkManager.ReSendManager.AddReSendData(udpId++, newEndPoint, RequestConnectionCheck);
     }
 
     //연결 확인 - Udp
     public void ConnectionCheckAnswer(EndPoint newEndPoint)
     {
-        Debug.Log(newEndPoint.ToString() + " 연결 체크");
+        Debug.Log(newEndPoint.ToString() + " 연결 확인");
 
         ResultData resultData = new ResultData(new byte());
         ResultPacket resultDataPacket = new ResultPacket(resultData);
@@ -478,13 +437,6 @@ public class DataSender : MonoBehaviour
         byte[] packet = CreatePacket(characterActionPacket);
 
         udpMsg = CombineByte(udpMsg, packet);
-
-        
-
-        foreach (EndPoint client in networkManager.Clients)
-        {
-
-        }
     }
 
     //0.1초 마다 Udp메시지를 큐에 넣는다.
@@ -548,5 +500,3 @@ public class DataSender : MonoBehaviour
         return array4;
     }
 }
-
-
