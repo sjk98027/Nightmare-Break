@@ -349,9 +349,8 @@ public class DataSender : MonoBehaviour
         ResultPacket resultDataPacket = new ResultPacket(resultData);
         resultDataPacket.SetPacketId((int)P2PPacketId.RequestConnectionCheck);
 
-        DataPacket packet = new DataPacket(CreatePacket(resultDataPacket), null);
-
-        packet.endPoint = newEndPoint;
+        DataPacket packet = new DataPacket(CreatePacket(resultDataPacket), newEndPoint);
+        
         sendMsgs.Enqueue(packet);
 
         networkManager.ReSendManager.AddReSendData(udpId++, newEndPoint, RequestConnectionCheck);

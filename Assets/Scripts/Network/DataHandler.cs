@@ -344,12 +344,13 @@ public class DataHandler : MonoBehaviour
             if (ip != networkManager.client.ToString().Substring(0, networkManager.client.ToString().IndexOf(":")))
             {
                 IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(ip), NetworkManager.clientPortNumber);
-                networkManager.ConnectP2P(ip);
 
                 lock (userIndexLock)
                 {
                     userNum.Add(endPoint, userIndexNum++);
                 }
+
+                networkManager.ConnectP2P(ip);
             }
         }
 
