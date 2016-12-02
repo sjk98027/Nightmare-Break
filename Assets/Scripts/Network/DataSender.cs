@@ -355,7 +355,7 @@ public class DataSender : MonoBehaviour
 
         networkManager.ReSendManager.AddReSendData(id, newEndPoint, RequestConnectionCheck);
 
-        if(id <= udpId)
+        if(id >= udpId)
         {
             udpId++;
         }
@@ -408,7 +408,7 @@ public class DataSender : MonoBehaviour
             networkManager.ReSendManager.AddReSendData(id, user.Key, RequestConnectionCheck);
         }
 
-        if (id <= udpId)
+        if (id >= udpId)
         {
             udpId++;
         }
