@@ -62,11 +62,11 @@ public class MageManager : CharacterManager
 		{
 			if (transform.rotation.y == 0)
 			{
-				frameDestroy = Instantiate (Resources.Load<GameObject> ("Effect/FireMagic"), new Vector3 (transform.position.x, transform.position.y + 10.0f, transform.position.z - 2.0f), Quaternion.Euler (-135, 0, 0)) as GameObject;
+				frameDestroy = Instantiate (Resources.Load<GameObject> ("Effect/FireMagic"), new Vector3 (transform.position.x, transform.position.y + 10.0f, transform.position.z -3.0f), Quaternion.Euler (-135, 0, 0)) as GameObject;
 			}
 			else
 			{
-				frameDestroy = Instantiate (Resources.Load<GameObject> ("Effect/FireMagic"), new Vector3 (transform.position.x, transform.position.y + 10.0f, transform.position.z + 2.0f),Quaternion.Euler (-45, 0, 0)) as GameObject;
+				frameDestroy = Instantiate (Resources.Load<GameObject> ("Effect/FireMagic"), new Vector3 (transform.position.x, transform.position.y + 10.0f, transform.position.z + 3.0f),Quaternion.Euler (-45, 0, 0)) as GameObject;
 			}
 		}
 		
