@@ -89,7 +89,7 @@ public class ReSendManager : MonoBehaviour
             yield return new WaitForSeconds(1.0f);
 
             //모든 플레이어들의 ReSend Dictionary를 확인한다 //Error
-            for (int i = 0; i < reSendDatum.Length - 1; i++)
+            for (int i = 0; i < reSendDatum.Length; i++)
             {
                 reSendKey = new List<int>(reSendDatum[i].Keys);
 
@@ -106,7 +106,7 @@ public class ReSendManager : MonoBehaviour
 
             if (isConnecting)
             {
-                for (int i = 0; i < reSendDatum.Length - 1; i++)
+                for (int i = 0; i < reSendDatum.Length; i++)
                 {
                     Debug.Log(reSendDatum[i].Count);
                     if (reSendDatum[i].Count != 0)
