@@ -307,7 +307,7 @@ public class DungeonManager : MonoBehaviour
         return player;
     }
 
-    public GameObject CreateUnit(int unitId, Vector3 newPosition)
+    public GameObject CreateUnit(int unitId, int unitIndex, Vector3 newPosition)
     {
         //위와 같은 생성이지만 이곳에서는 다른 플레이어의 캐릭터를 생성한다.
         //DataHandler 에서 데이타를 받아서 실행된다.
@@ -316,7 +316,7 @@ public class DungeonManager : MonoBehaviour
         unit.transform.position = newPosition;
         unit.name = "Warrior";
 
-        players[1] = unit;
+        players[unitIndex + 1] = unit;
 
         return unit;
     }

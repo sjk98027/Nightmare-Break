@@ -29,7 +29,6 @@ public class DataHandler : MonoBehaviour
     
     public Dictionary<EndPoint, int> userNum;
     int userIndexNum;
-    object userIndexLock;
 
     public DateTime dTime;
 
@@ -43,8 +42,6 @@ public class DataHandler : MonoBehaviour
 
         SetServerNotifier();
         SetUdpNotifier();
-
-        userIndexLock = new object();
 
         StartCoroutine(DataHandle());
     }
@@ -347,10 +344,7 @@ public class DataHandler : MonoBehaviour
             {
                 IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(ip), NetworkManager.clientPortNumber);
 
-                lock (userIndexLock)
-                {
-                    userNum.Add(endPoint, userIndexNum++);
-                }
+                userNum.Add(endPoint, userIndexNum++);
 
                 networkManager.ConnectP2P(ip);
             }
@@ -406,7 +400,9 @@ public class DataHandler : MonoBehaviour
         CreateUnitPacket createUnitPacket = new CreateUnitPacket(packet.msg);
         CreateUnitData createUnitData = createUnitPacket.GetData();
 
-        dungeonManager.CreateUnit(createUnitData.ID, new Vector3(createUnitData.PosX, createUnitData.PosY, createUnitData.PosZ));
+        int index = userNum[packet.endPoint];
+
+        dungeonManager.CreateUnit(createUnitData.ID, index, new Vector3(createUnitData.PosX, createUnitData.PosY, createUnitData.PosZ));
     }
 
     //Client
@@ -420,7 +416,9 @@ public class DataHandler : MonoBehaviour
         Debug.Log("캐릭터 방향 : " + characterPositionData.dir);
         Debug.Log("캐릭터 위치 : " + characterPositionData.posX + ", " + characterPositionData.posY + ", " + characterPositionData.posZ + ", ");
 
-        CharacterManager characterManager = dungeonManager.Players[1].GetComponent<CharacterManager>();
+        int index = userNum[packet.endPoint];
+
+        CharacterManager characterManager = dungeonManager.Players[index + 1].GetComponent<CharacterManager>();
         characterManager.SetPosition(characterPositionData);
     }
 
@@ -434,7 +432,9 @@ public class DataHandler : MonoBehaviour
 
         Debug.Log("캐릭터 행동" + characterActionData.action);
 
-        CharacterManager characterManager = dungeonManager.Players[1].GetComponent<CharacterManager>();
+        int index = userNum[packet.endPoint];
+
+        CharacterManager characterManager = dungeonManager.Players[index + 1].GetComponent<CharacterManager>();
         characterManager.CharState(characterActionData.action);
-    }    
+    }
 }

@@ -349,17 +349,17 @@ public class DataSender : MonoBehaviour
         ResultPacket resultDataPacket = new ResultPacket(resultData);
         resultDataPacket.SetPacketId((int)P2PPacketId.RequestConnectionCheck);
 
-        DataPacket packet = new DataPacket(CreatePacket(resultDataPacket), newEndPoint);
+        DataPacket packet = new DataPacket(CreateUdpPacket(resultDataPacket, udpId), newEndPoint);
         
         sendMsgs.Enqueue(packet);
 
         networkManager.ReSendManager.AddReSendData(udpId++, newEndPoint, RequestConnectionCheck);
     }
 
-    //연결 확인 - Udp
+    //연결 확인 답신 - Udp
     public void ConnectionCheckAnswer(EndPoint newEndPoint)
     {
-        Debug.Log(newEndPoint.ToString() + " 연결 확인");
+        Debug.Log(newEndPoint.ToString() + " 연결 확인 답신");
 
         ResultData resultData = new ResultData(new byte());
         ResultPacket resultDataPacket = new ResultPacket(resultData);
@@ -397,12 +397,17 @@ public class DataSender : MonoBehaviour
         CreateUnitPacket createUnitDataPacket = new CreateUnitPacket(createUnitData);
         createUnitDataPacket.SetPacketId((int)P2PPacketId.CreateUnit);
 
-        byte[] packet = CreatePacket(createUnitDataPacket);
-        
-        udpMsg = CombineByte(udpMsg, packet);
+        foreach (KeyValuePair<EndPoint, int> user in networkManager.DataHandler.userNum)
+        {
+            DataPacket packet = new DataPacket(CreateUdpPacket(createUnitDataPacket, udpId), user.Key);
+            sendMsgs.Enqueue(packet);
+            networkManager.ReSendManager.AddReSendData(udpId, user.Key, RequestConnectionCheck);
+        }
+
+        udpId++;
     }
 
-    //캐릭터 움직임 - Udp
+    //캐릭터 위치 - Udp
     public IEnumerator CharacterPositionSend()
     {
         characterManager = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterManager>();
@@ -480,6 +485,35 @@ public class DataSender : MonoBehaviour
     {
         byte[] msg = data.GetPacketData();
         byte[] header = CreateHeader(data);
+        byte[] packet = CombineByte(header, msg);
+
+        return packet;
+    }
+
+    //패킷의 헤더 생성
+    byte[] CreateUdpHeader<T>(Packet<T> data, int udpId)
+    {
+        byte[] msg = data.GetPacketData();
+
+        HeaderData headerData = new HeaderData();
+        HeaderSerializer headerSerializer = new HeaderSerializer();
+
+        headerData.length = (short)msg.Length;
+        headerData.source = (byte)NetworkManager.Source.ClientSource;
+        headerData.id = (byte)data.GetPacketId();
+        headerData.udpId = udpId;
+
+        headerSerializer.UdpSerialize(headerData);
+        byte[] header = headerSerializer.GetSerializedData();
+
+        return header;
+    }
+
+    //패킷 생성
+    byte[] CreateUdpPacket<T>(Packet<T> data, int udpId)
+    {
+        byte[] msg = data.GetPacketData();
+        byte[] header = CreateUdpHeader(data, udpId);
         byte[] packet = CombineByte(header, msg);
 
         return packet;
