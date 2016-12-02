@@ -89,11 +89,11 @@ public class BattleUIManager
         hpBar = GameObject.Find("HPBar").GetComponent<Image>();
         mpBar = GameObject.Find("MPBar").GetComponent<Image>();
         monsterHpBar = GameObject.Find("MonsterHPBar").GetComponent<Image>();
-        monsterName = GameObject.Find("MonsterName").GetComponent<Text>();
+       monsterName = GameObject.Find("MonsterName").GetComponent<Text>();
         mouseOverUI = GameObject.Find("MouseOverUI").GetComponent<Text>();
 
         mouseOverUI.transform.parent.gameObject.SetActive(false);
-        monsterHpBar.transform.parent.gameObject.SetActive(false);
+       monsterHpBar.transform.parent.gameObject.SetActive(false);
         skillUI = new Image[maxSkillUI];
         skillCoolTimeUI = new Image[maxskillCoolTimeUI];
         EventTrigger.Entry[] enterEvent = new EventTrigger.Entry[maxSkillUI];

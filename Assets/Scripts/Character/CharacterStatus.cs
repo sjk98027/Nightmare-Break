@@ -80,7 +80,7 @@ public class CharacterStatus : MonoBehaviour
         hpRegeneration = 0;
         mpRegeneration = 0;
 		moveSpeed = 7;
-        attack = 10;
+        attack = 100;
         defense = 10;
         dreamStone = 0;
         skillLevel = new int[skillNum];
