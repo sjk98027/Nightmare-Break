@@ -328,6 +328,8 @@ public class DataHandler : MonoBehaviour
 
         userIndexNum = 0;
 
+        DataSender.Instance.udpId = new int[matchData.ip.Length - 1];
+
         userNum = new Dictionary<EndPoint, int>();
         
         networkManager.ReSendManager.Initialize(matchData.ip.Length);

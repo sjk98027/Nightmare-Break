@@ -36,7 +36,7 @@ public class DataSender : MonoBehaviour
 
     Queue<DataPacket> sendMsgs;
 
-    int udpId;
+    public int[] udpId;
     byte[] udpMsg;
 
     public void Initialize(Queue<DataPacket> newSendMsgs, Socket newTcpSock, Socket newUdpSock)
@@ -104,7 +104,7 @@ public class DataSender : MonoBehaviour
         AccountData accountData = new AccountData(id, pw);
         AccountPacket accountDataPacket = new AccountPacket(accountData);
         accountDataPacket.SetPacketId((int)ClientPacketId.DeleteAccount);
-        
+
         DataPacket packet = new DataPacket(CreatePacket(accountDataPacket), null);
         sendMsgs.Enqueue(packet);
     }
@@ -157,7 +157,7 @@ public class DataSender : MonoBehaviour
         catch
         {
             Debug.Log("GameClose.Send 에러");
-        }        
+        }
 
         try
         {
@@ -167,7 +167,7 @@ public class DataSender : MonoBehaviour
         catch
         {
             Debug.Log("이미 소켓이 닫혀있습니다.");
-        }        
+        }
     }
 
     //캐릭터 생성 - Tcp
@@ -336,8 +336,6 @@ public class DataSender : MonoBehaviour
         DataPacket packet = new DataPacket(CreatePacket(resultPacket), null);
 
         sendMsgs.Enqueue(packet);
-
-        udpId = 0;
     }
 
     //연결 확인 요청 - Udp
@@ -350,14 +348,15 @@ public class DataSender : MonoBehaviour
         resultDataPacket.SetPacketId((int)P2PPacketId.RequestConnectionCheck);
 
         DataPacket packet = new DataPacket(CreateUdpPacket(resultDataPacket, id), newEndPoint);
-        
+
         sendMsgs.Enqueue(packet);
 
-        networkManager.ReSendManager.AddReSendData(id, newEndPoint, RequestConnectionCheck);
+        int index = networkManager.DataHandler.userNum[newEndPoint];
 
-        if(id >= udpId)
+        if (id >= udpId[index])
         {
-            udpId++;
+            networkManager.ReSendManager.AddReSendData(id, newEndPoint, RequestConnectionCheck);
+            udpId[index]++;
         }
     }
 
@@ -371,7 +370,7 @@ public class DataSender : MonoBehaviour
         resultDataPacket.SetPacketId((int)P2PPacketId.UdpAnswer);
 
         DataPacket packet = new DataPacket(CreateUdpPacket(resultDataPacket, udpId), newEndPoint);
-        
+
         sendMsgs.Enqueue(packet);
     }
 
@@ -400,17 +399,19 @@ public class DataSender : MonoBehaviour
         CreateUnitData createUnitData = new CreateUnitData(id, xPos, yPos, zPos);
         CreateUnitPacket createUnitDataPacket = new CreateUnitPacket(createUnitData);
         createUnitDataPacket.SetPacketId((int)P2PPacketId.CreateUnit);
-
+        
         foreach (KeyValuePair<EndPoint, int> user in networkManager.DataHandler.userNum)
         {
             DataPacket packet = new DataPacket(CreateUdpPacket(createUnitDataPacket, id), user.Key);
             sendMsgs.Enqueue(packet);
-            networkManager.ReSendManager.AddReSendData(id, user.Key, RequestConnectionCheck);
-        }
 
-        if (id >= udpId)
-        {
-            udpId++;
+            int index = networkManager.DataHandler.userNum[user.Key];
+
+            if (id >= udpId[index])
+            {
+                networkManager.ReSendManager.AddReSendData(id, user.Key, RequestConnectionCheck);
+                udpId[index]++;
+            }
         }
     }
 
@@ -422,7 +423,7 @@ public class DataSender : MonoBehaviour
         while (true)
         {
             yield return new WaitForFixedUpdate();
-            
+
             bool dir = characterManager.charDir;
             float xPos = characterManager.transform.position.x;
             float yPos = characterManager.transform.position.y;
@@ -466,7 +467,7 @@ public class DataSender : MonoBehaviour
             }
 
             udpMsg = new byte[0];
-        }        
+        }
     }
 
     //패킷의 헤더 생성
