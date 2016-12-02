@@ -12,6 +12,7 @@ public class WarriorManager : CharacterManager
 	public bool rise = false;
 	public CharWeapon bloodingWeapon;
 	public float riseCooltime;
+    private GameObject wind;
 
 	public override void NormalAttack ()
 	{
@@ -27,14 +28,17 @@ public class WarriorManager : CharacterManager
 	{
 		float maelstromSpeed = 0.5f;
 		float maelstromDistance;
-		skillTime += Time.deltaTime;
-			
-		if (enermy != null)
+        skillTime += Time.deltaTime;
+        if (!wind)
+        {
+        wind = Instantiate(Resources.Load<GameObject>("Effect/Wind"), new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z), Quaternion.identity) as GameObject;
+        }
+            if (enermy != null)
 		{
 			for (int i = 0; i < enermy.Length; i++)
 			{
 				maelstromDistance = Vector3.Distance (this.transform.position, enermy [i].transform.position);
-
+                
 				if (maelstromDistance < 10)
 				{
 					enermy [i].transform.Translate ((this.transform.position - enermy [i].transform.position) * maelstromSpeed * Time.deltaTime, Space.World);

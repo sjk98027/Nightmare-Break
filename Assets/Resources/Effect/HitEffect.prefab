@@ -21,6 +21,7 @@ GameObject:
   - 4: {fileID: 4000011853597496}
   - 198: {fileID: 198000013294471678}
   - 199: {fileID: 199000011490639766}
+  - 114: {fileID: 114000013558779070}
   m_Layer: 0
   m_Name: HitEffect
   m_TagString: Untagged
@@ -41,6 +42,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &114000013558779070
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011567565322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ece80dbf9c9f5e84ea9e08f0aac10052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &198000013294471678
 ParticleSystem:
   m_ObjectHideFlags: 1

@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000011241482450}
   m_Layer: 0
-  m_Name: Wind_Skill
+  m_Name: Wind
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,7 +95,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011732174258}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -120,9 +120,9 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011732174258}
   serializedVersion: 4
-  lengthInSec: 5
+  lengthInSec: 2
   startDelay:
-    scalar: 0
+    scalar: 0.15
     maxCurve:
       serializedVersion: 2
       m_Curve:
@@ -163,7 +163,7 @@ ParticleSystem:
   moveWithTransform: 1
   autoRandomSeed: 1
   scalingMode: 2
-  randomSeed: -96013363
+  randomSeed: 1957664784
   InitialModule:
     serializedVersion: 2
     enabled: 1
@@ -306,7 +306,7 @@ ParticleSystem:
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.7490196, g: 0.8666667, b: 1, a: 0.5882353}
+      maxColor: {r: 0.18431373, g: 0.5647059, b: 1, a: 0.5882353}
       minMaxState: 0
     startSize:
       scalar: 7
@@ -1837,7 +1837,7 @@ ParticleSystem:
   moveWithTransform: 1
   autoRandomSeed: 1
   scalingMode: 2
-  randomSeed: 1659209558
+  randomSeed: 333398338
   InitialModule:
     serializedVersion: 2
     enabled: 1
