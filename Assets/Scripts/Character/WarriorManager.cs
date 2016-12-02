@@ -101,7 +101,7 @@ public class WarriorManager : CharacterManager
 
 	public void CutoffStop ()
 	{
-		animator.speed = 0;
+		//animator.speed = 0;
 	}
 
 	public void SwordDanceBoxSummon ()
