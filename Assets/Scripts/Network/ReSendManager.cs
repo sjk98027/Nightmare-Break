@@ -86,8 +86,8 @@ public class ReSendManager : MonoBehaviour
         {
             yield return new WaitForSeconds(1.0f);
 
-            //모든 플레이어들의 ReSend Dictionary를 확인한다
-            for (int i = 0; i < reSendDatum[i].Count - 1; i++)
+            //모든 플레이어들의 ReSend Dictionary를 확인한다 //Error
+            for (int i = 0; i < reSendDatum.Length - 1; i++)
             {
                 reSendKey = new List<int>(reSendDatum[i].Keys);
 
@@ -116,10 +116,7 @@ public class ReSendManager : MonoBehaviour
                         isConnecting = false;
                     }
                 }
-            }
 
-            if (isConnecting)
-            {
                 DataSender.Instance.UdpConnectComplete();
             }
         }
