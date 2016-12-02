@@ -8,6 +8,8 @@ public class BattleUIManager
 	private const float checkTime = 0.1f;
 	private const float mouseOverUI_xPos = 125f;
 	private const float mouseOverUI_yPos = 105f;
+    private const int maxSkillUI = 6;
+    private const int maxskillCoolTimeUI = 4;
     private UIManager uiManager;
 	private Image potionUI;
 	private Text mouseOverUI;
@@ -86,14 +88,15 @@ public class BattleUIManager
         uiManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
         hpBar = GameObject.Find("HPBar").GetComponent<Image>();
         mpBar = GameObject.Find("MPBar").GetComponent<Image>();
-        mouseOverUI = GameObject.Find("MouseOverUI").GetComponent<Text>();
-        mouseOverUI.transform.parent.gameObject.SetActive(false);
         monsterHpBar = GameObject.Find("MonsterHPBar").GetComponent<Image>();
         monsterName = GameObject.Find("MonsterName").GetComponent<Text>();
+        mouseOverUI = GameObject.Find("MouseOverUI").GetComponent<Text>();
+
+        mouseOverUI.transform.parent.gameObject.SetActive(false);
         monsterHpBar.transform.parent.gameObject.SetActive(false);
-        skillUI = new Image[6];
-        skillCoolTimeUI = new Image[4];
-        EventTrigger.Entry[] enterEvent = new EventTrigger.Entry[6];
+        skillUI = new Image[maxSkillUI];
+        skillCoolTimeUI = new Image[maxskillCoolTimeUI];
+        EventTrigger.Entry[] enterEvent = new EventTrigger.Entry[maxSkillUI];
         EventTrigger.Entry exitEvent = new EventTrigger.Entry();
         exitEvent.eventID = EventTriggerType.PointerExit;
         exitEvent.callback.AddListener((data) => { uiManager.OnPointExit(); });
@@ -104,7 +107,7 @@ public class BattleUIManager
             enterEvent[i].eventID = EventTriggerType.PointerEnter;
             skillUI[i].GetComponent<EventTrigger>().triggers.Add(enterEvent[i]);
             skillUI[i].GetComponent<EventTrigger>().triggers.Add(exitEvent);
-            Debug.Log(enterEvent[i]);
+          
             if (i < skillCoolTimeUI.Length)
             {
                 skillCoolTimeUI[i] = GameObject.Find("Skill" + (i + 1) + "_CoolTime").GetComponent<Image>();
