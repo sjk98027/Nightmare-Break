@@ -334,7 +334,6 @@ public class DataHandler : MonoBehaviour
         userNum = new Dictionary<EndPoint, int>();
         
         networkManager.ReSendManager.Initialize(matchData.ip.Length);
-        StartCoroutine(networkManager.ReSendManager.StartCheckSendData());
 
         for (int i = 0; i < matchData.ip.Length; i++)
         {
@@ -356,6 +355,8 @@ public class DataHandler : MonoBehaviour
                 networkManager.ConnectP2P(ip);
             }
         }
+
+        StartCoroutine(networkManager.ReSendManager.StartCheckSendData());
     }
 
     //Client - 연결 확인 답장
