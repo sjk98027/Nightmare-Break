@@ -341,7 +341,7 @@ public class DataSender : MonoBehaviour
     }
 
     //연결 확인 요청 - Udp
-    public void RequestConnectionCheck(EndPoint newEndPoint)
+    public void RequestConnectionCheck(EndPoint newEndPoint, int id)
     {
         Debug.Log(newEndPoint.ToString() + " 연결 체크 요청");
 
@@ -349,11 +349,16 @@ public class DataSender : MonoBehaviour
         ResultPacket resultDataPacket = new ResultPacket(resultData);
         resultDataPacket.SetPacketId((int)P2PPacketId.RequestConnectionCheck);
 
-        DataPacket packet = new DataPacket(CreateUdpPacket(resultDataPacket, udpId), newEndPoint);
+        DataPacket packet = new DataPacket(CreateUdpPacket(resultDataPacket, id), newEndPoint);
         
         sendMsgs.Enqueue(packet);
 
-        networkManager.ReSendManager.AddReSendData(udpId++, newEndPoint, RequestConnectionCheck);
+        networkManager.ReSendManager.AddReSendData(id, newEndPoint, RequestConnectionCheck);
+
+        if(id <= udpId)
+        {
+            udpId++;
+        }
     }
 
     //Udp 답신 - Udp
@@ -398,12 +403,15 @@ public class DataSender : MonoBehaviour
 
         foreach (KeyValuePair<EndPoint, int> user in networkManager.DataHandler.userNum)
         {
-            DataPacket packet = new DataPacket(CreateUdpPacket(createUnitDataPacket, udpId), user.Key);
+            DataPacket packet = new DataPacket(CreateUdpPacket(createUnitDataPacket, id), user.Key);
             sendMsgs.Enqueue(packet);
-            networkManager.ReSendManager.AddReSendData(udpId, user.Key, RequestConnectionCheck);
+            networkManager.ReSendManager.AddReSendData(id, user.Key, RequestConnectionCheck);
         }
 
-        udpId++;
+        if (id <= udpId)
+        {
+            udpId++;
+        }
     }
 
     //캐릭터 위치 - Udp

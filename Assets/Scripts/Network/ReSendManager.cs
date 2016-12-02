@@ -27,9 +27,8 @@ public class ReSendManager : MonoBehaviour
     }
 
     NetworkManager networkManager;
-    public EndPoint[] endPoints;
 
-    public delegate void ReSendData(EndPoint endPoint);
+    public delegate void ReSendData(EndPoint endPoint, int id);
     ReSend reSendData;
     private Dictionary<int, ReSend>[] reSendDatum;
     List<int> reSendKey;
@@ -39,8 +38,6 @@ public class ReSendManager : MonoBehaviour
 
     public void Initialize(int userNum)
     {
-        Debug.Log(userNum);
-
         networkManager = GetComponent<NetworkManager>();
         reSendDatum = new Dictionary<int, ReSend>[userNum - 1];
 
@@ -48,8 +45,6 @@ public class ReSendManager : MonoBehaviour
         {
             reSendDatum[i] = new Dictionary<int, ReSend>();
         }
-
-        endPoints = new EndPoint[userNum - 1];
         isConnecting = true;
     }
 
@@ -99,7 +94,7 @@ public class ReSendManager : MonoBehaviour
                     //i번 플레이어의 foreach문에 걸린 method를 하나 실행한다.
                     if (reSendDatum[i].TryGetValue(key, out reSendData))
                     {
-                        reSendData.ReSendData((reSendDatum[i])[key].EndPoint);
+                        reSendData.ReSendData((reSendDatum[i])[key].EndPoint, key);
                     }
                 }
             }

@@ -100,7 +100,7 @@ public class NetworkManager : MonoBehaviour
         IPEndPoint client = new IPEndPoint(IPAddress.Parse(newIp), clientPortNumber);
         clients.Add(client);
         dataReceiver.StartUdpReceive(clientSock, client);
-        dataSender.RequestConnectionCheck(client);
+        dataSender.RequestConnectionCheck(client, 0);
     }
 
     public void DisconnectP2P()
