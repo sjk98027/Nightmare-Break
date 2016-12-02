@@ -46,6 +46,9 @@ public class ReSendManager : MonoBehaviour
     public void AddReSendData(int id, EndPoint endPoint, ReSendData reSendData)
     {
         ReSend resend = new ReSend(endPoint, reSendData);
+        Debug.Log(networkManager.DataHandler.userNum);
+        Debug.Log(endPoint);
+        Debug.Log(networkManager.DataHandler.userNum[endPoint]);
         int index = networkManager.DataHandler.userNum[endPoint];
 
         try
