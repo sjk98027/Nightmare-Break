@@ -342,6 +342,7 @@ public class DataSender : MonoBehaviour
     public void RequestConnectionCheck(EndPoint newEndPoint, int id)
     {
         Debug.Log(newEndPoint.ToString() + " 연결 체크 요청");
+        Debug.Log("아이디 : " + id);
 
         ResultData resultData = new ResultData(new byte());
         ResultPacket resultDataPacket = new ResultPacket(resultData);
@@ -363,7 +364,7 @@ public class DataSender : MonoBehaviour
     //Udp 답신 - Udp
     public void UdpAnswer(EndPoint newEndPoint, int udpId)
     {
-        Debug.Log(newEndPoint.ToString() + " Udp 답신");
+        Debug.Log(newEndPoint.ToString() + " Udp 답신 Id : " + udpId);
 
         ResultData resultData = new ResultData(new byte());
         ResultPacket resultDataPacket = new ResultPacket(resultData);

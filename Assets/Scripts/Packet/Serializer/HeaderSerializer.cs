@@ -79,7 +79,7 @@
         ret &= Deserialize(ref udpId);
         element.source = source;
         element.id = id;
-        element.udpId = id;
+        element.udpId = udpId;
 
         return ret;
     }

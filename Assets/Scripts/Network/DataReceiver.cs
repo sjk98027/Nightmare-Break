@@ -142,7 +142,6 @@ public class DataReceiver : MonoBehaviour
         try
         {
             asyncData.msgSize = (short)udpSock.EndReceive(asyncResult);
-            Debug.Log("메시지 받음 : " + asyncData.msgSize);
         }
         catch (Exception e)
         {

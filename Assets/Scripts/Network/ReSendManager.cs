@@ -55,7 +55,9 @@ public class ReSendManager : MonoBehaviour
 
         try
         {
+            Debug.Log(index + "번 유저에 " + id + " 아이디 메소드 추가");
             reSendDatum[index].Add(id, resend);
+            Debug.Log("메소드 개수 : " + reSendDatum[index].Count);
         }
         catch
         {
@@ -69,7 +71,9 @@ public class ReSendManager : MonoBehaviour
 
         try
         {
+            Debug.Log(index + "번 유저에 " + id + " 아이디 메소드 삭제");
             reSendDatum[index].Remove(id);
+            Debug.Log("메소드 개수 : " + reSendDatum[index].Count);
         }
         catch
         {
