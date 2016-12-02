@@ -55,6 +55,10 @@ public class BossMonsterKYW : Monster {
 		skillInsertImage = GameObject.Find ("InGameUICanvas").transform.Find ("BossDeadlyPatternImage").Find("BossDeadlyPattern").GetComponent<Image>();
 		//skillInsertImage = transform.Find("InGameUICanvas").gameObject;
 		halfLife = false;
+
+		MonsterWeapon [0].MonsterWeaponSet();
+		MonsterWeapon [1].MonsterWeaponSet();
+
 		patternReserveList = new int[5];
 		for (int listSet = 0; listSet < patternReserveList.Length; listSet++) {
 			Debug.Log (Random.Range (2, 4)); // max + 1-> (min <-> max)
