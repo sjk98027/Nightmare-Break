@@ -104,12 +104,11 @@ public class CharacterManager : MonoBehaviour
 
 			if (normalAttackState || skillAttackState)
 			{
-				//    charWeapon.size = new Vector3(0.11f, 0.11f, 1.28f);
+                charWeapon.enabled = true;
 			}
 			else
 			{
-
-				//    charWeapon.size = new Vector3(0, 0, 0);
+                charWeapon.enabled = false;
 			}
 		}
 
