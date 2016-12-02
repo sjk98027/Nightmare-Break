@@ -403,7 +403,7 @@ public class DataSender : MonoBehaviour
 
         if (id >= udpId[index])
         {
-            networkManager.ReSendManager.AddReSendData(id, newEndPoint, RequestConnectionCheck);
+            networkManager.ReSendManager.AddReSendData(id, newEndPoint, CreateUnitSend);
             udpId[index]++;
         }
     }

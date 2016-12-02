@@ -95,8 +95,6 @@ public class DataHandler : MonoBehaviour
                 HeaderSerializer headerSerializer = new HeaderSerializer();
                 headerSerializer.SetDeserializedData(packet.msg);
 
-                Debug.Log("메시지 타입 : " + headerData.id);
-
                 if (packet.endPoint == null)
                 {
                     headerSerializer.Deserialize(ref headerData);
@@ -107,6 +105,8 @@ public class DataHandler : MonoBehaviour
                     headerSerializer.UdpDeserialize(ref headerData);
                     DataReceiver.ResizeByteArray(0, NetworkManager.packetSource + NetworkManager.packetId + NetworkManager.udpId, ref packet.msg);
                 }
+                
+                Debug.Log("메시지 타입 : " + headerData.id);
 
                 if (packet.endPoint == null)
                 {
