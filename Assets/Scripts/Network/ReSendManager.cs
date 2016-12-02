@@ -32,6 +32,8 @@ public class ReSendManager : MonoBehaviour
     public delegate void ReSendData(EndPoint endPoint);
     ReSend reSendData;
     private Dictionary<int, ReSend>[] reSendDatum;
+    List<int> reSendKey;
+    List<ReSend> reSendValue;
 
     bool isConnecting;
 
@@ -87,13 +89,15 @@ public class ReSendManager : MonoBehaviour
             //모든 플레이어들의 ReSend Dictionary를 확인한다
             for (int i = 0; i < WaitUIManager.maxPlayerNum - 1; i++)
             {
+                reSendKey = new List<int>(reSendDatum[i].Keys);
+
                 //i번 플레이어의 ReSendData를 확인한다
-                foreach (KeyValuePair<int, ReSend> sendData in reSendDatum[i])
+                foreach (int key in reSendKey)
                 {
                     //i번 플레이어의 foreach문에 걸린 method를 하나 실행한다.
-                    if (reSendDatum[i].TryGetValue(sendData.Key, out reSendData))
+                    if (reSendDatum[i].TryGetValue(key, out reSendData))
                     {
-                        reSendData.ReSendData((sendData.Value).EndPoint);
+                        reSendData.ReSendData((reSendDatum[i])[key].EndPoint);
                     }
                 }
             }
