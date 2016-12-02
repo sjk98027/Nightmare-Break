@@ -48,7 +48,7 @@ public class BossMonsterKYW : Monster {
 
 	public void BossMonsterSet(int _maxlife, int _basedamage){
 		RunRange = 10;
-		attackRange = 8;
+		attackRange = 4;
 		MonsterSet (_maxlife, _basedamage);
 		uiManager = GameObject.FindWithTag ("UIManager").GetComponent<UIManager> ();
 		isAttack = false;
@@ -153,6 +153,7 @@ public override void HitDamage (int _Damage, GameObject attacker)
 
 		else if (currentLife <= 0)
 		{
+			currentLife = 0;
 			if (!stateInfo.IsName ("BigBearBossDeath"))
 			{
 				BigBearBossState = BigBearBossPatternName.BigBearBossDeath;
@@ -219,6 +220,7 @@ public void RoarStart (int waringOrshout)
 			imageState = insertImageState.Left; //이미지 상태 값 저장 왼쪽
 			StartCoroutine (LMoveImage ()); //코루틴 실행
 		}
+		HittedBox.enabled = false;
 }
 
 public void RoarEnd ()
@@ -228,7 +230,7 @@ public void RoarEnd ()
 	//		imageState = insertImageState.Right;//이미지 상태 값 저장 오른쪽
 		BigBearBossState = BigBearBossPatternName.BigBearBossIdle;
 		StartCoroutine(BossMonsterPatternChange());
-
+		HittedBox.enabled = true;
 }
 
 IEnumerator LMoveImage ()
@@ -323,12 +325,12 @@ public void ImageBackPos()
 				} else if (currentDisTance > RunRange) {
 					BigBearBossState = BigBearBossPatternName.BigBearBossIdle;
 					BigBearBossPattern ((int)BigBearBossState);
-					changeDirection ();
+					//changeDirection ();
 
 				} else if (currentDisTance <= RunRange && currentDisTance > attackRange) {
 					BigBearBossState = BigBearBossPatternName.BigBearBossRun;
 					BigBearBossPattern ((int)BigBearBossState);
-					changeDirection ();
+					//changeDirection ();
 //				if (stateInfo.IsName ("BigBearBossRun")) {
 //
 //					//transform.LookAt(player[0].transform.position);
