@@ -18,10 +18,10 @@ public class UIManager : MonoBehaviour
     public GameObject dialogPanel;
     public Text dialog;
 
-	void Start()
-	{
-		SetBattleUIManager ();
-	}
+	//void Start()
+	//{
+	//	SetBattleUIManager ();
+	//}
 
     public void SetLoginUIManager()
     {
@@ -32,7 +32,7 @@ public class UIManager : MonoBehaviour
     public void SetBattleUIManager()
     {
         charManager = GameObject.FindWithTag("Player").GetComponent<CharacterManager>();
-       battleUIManager = new BattleUIManager();
+        battleUIManager = new BattleUIManager();
 		battleUIManager.SetUIObject();
     }
 
