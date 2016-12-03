@@ -163,11 +163,10 @@ public class DataReceiver : MonoBehaviour
 
                 msgs.Enqueue(packet);
             }
-
-            //다시 수신 준비
-            asyncData = new AsyncData(asyncData.EP);
-            udpSock.BeginReceiveFrom(asyncData.msg, 0, AsyncData.msgMaxSize, SocketFlags.None, ref asyncData.EP, new AsyncCallback(UdpReceiveDataCallback), asyncData);
         }
+
+        asyncData = new AsyncData(asyncData.EP);
+        udpSock.BeginReceiveFrom(asyncData.msg, 0, AsyncData.msgMaxSize, SocketFlags.None, ref asyncData.EP, new AsyncCallback(UdpReceiveDataCallback), asyncData);
     }
 
     //index 부터 length만큼을 잘라 반환하고 매개변수 배열을 남은 만큼 잘라서 반환한다
