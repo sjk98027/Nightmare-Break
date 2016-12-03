@@ -4785,7 +4785,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1000012208004432, guid: d7e06b340bc70db47bfaed018e15ced1, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 54000011434209758, guid: d7e06b340bc70db47bfaed018e15ced1,
         type: 2}
@@ -4809,6 +4809,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 846081488}
+  - 65: {fileID: 846081489}
   m_Layer: 0
   m_Name: Bip01 Prop2
   m_TagString: Untagged
@@ -4830,6 +4831,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 612004153}
   m_RootOrder: 2
+--- !u!65 &846081489
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 846081487}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &860236703
 GameObject:
   m_ObjectHideFlags: 0
@@ -12397,7 +12410,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2101068748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12413,7 +12426,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   rend: {fileID: 0}
   rigdbody: {fileID: 0}
-  charWeapon: {fileID: 0}
+  charWeapon: {fileID: 846081489}
   inputmanager: {fileID: 0}
   charStatus: {fileID: 0}
   enermy: []
