@@ -65,6 +65,7 @@ public class Armageddon : MonoBehaviour {
 
 			if (monsterDamage != null)
 			{	
+				armageddonDamage = charStatus.Attack;
 				monsterDamage.HitDamage (armageddonDamage,character );
 				armageddonDamage = 0;
 			}

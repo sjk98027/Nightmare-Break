@@ -67,6 +67,7 @@ public class CharacterManager : MonoBehaviour
 		enermy = GameObject.FindGameObjectsWithTag ("Enermy");
 		charDir = true;
 		JumpMove = false;
+		jumpPower = 10;
 	}
 
 	void Update ()
@@ -209,7 +210,7 @@ public class CharacterManager : MonoBehaviour
 
 	public void JumpForce ()
 	{
-		rigdbody.AddForce (Vector3.up * jumpPower, ForceMode.Impulse);
+		rigdbody.AddForce (Vector3.up * 10, ForceMode.Impulse);
 		JumpMove = true;
 	}
 
