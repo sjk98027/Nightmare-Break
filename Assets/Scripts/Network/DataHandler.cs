@@ -372,7 +372,8 @@ public class DataHandler : MonoBehaviour
 
         try
         {
-            networkManager.ReSendManager.RemoveReSendData(udpId, packet.endPoint);
+            SendData sendData = new SendData(packet.endPoint, udpId);
+            networkManager.ReSendManager.RemoveReSendData(sendData);
         }
         catch
         {
