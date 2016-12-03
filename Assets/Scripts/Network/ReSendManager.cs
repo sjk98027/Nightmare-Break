@@ -28,7 +28,7 @@ public class ReSendManager : MonoBehaviour
 
     NetworkManager networkManager;
     
-    public delegate void ReSendCallBack(EndPoint endPoint, SendData sendData);
+    public delegate void ReSendCallBack(SendData sendData);
     ReSend reSendData;
     private Dictionary<int, ReSend>[] reSendDatum;
     List<int> reSendKey;
@@ -99,7 +99,7 @@ public class ReSendManager : MonoBehaviour
                     //i번 플레이어의 foreach문에 걸린 method를 하나 실행한다.
                     if (reSendDatum[i].TryGetValue(key, out reSendData))
                     {
-                        reSendData.ReSendCallBack((reSendDatum[i])[key].SendData.EndPoint, (reSendDatum[i])[key].SendData);
+                        reSendData.ReSendCallBack((reSendDatum[i])[key].SendData);
                     }
                 }
             }
