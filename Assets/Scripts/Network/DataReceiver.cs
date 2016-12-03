@@ -149,12 +149,6 @@ public class DataReceiver : MonoBehaviour
             return;
         }
 
-        if (asyncData.msgSize <= 0)
-        {
-            Debug.Log("클라이언트와의 연결이 끊겼습니다." );
-            return;
-        }
-
         Array.Resize(ref asyncData.msg, asyncData.msgSize);
 
         if (asyncData.msgSize > 0)

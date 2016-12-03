@@ -434,8 +434,6 @@ public class DataSender : MonoBehaviour
             {
                 DataPacket packet = new DataPacket(CreateUdpPacket(characterPositionPacket, udpId[user.Value]), user.Key);
                 sendMsgs.Enqueue(packet);
-
-                int index = networkManager.DataHandler.userNum[user.Key];
             }
         }
     }
