@@ -303,15 +303,12 @@ public class DungeonManager : MonoBehaviour
         player.GetComponent<CharacterManager>().UIManager = uiManager;
         player.GetComponent<CharacterManager>().SetCharacterStatus();
         player.GetComponent<CharacterManager>().SetCharacterType();
-            
+        
         foreach (KeyValuePair<EndPoint, int> user in networkManager.DataHandler.userNum)
         {
             SendData sendData = new SendData(user.Key, DataSender.Instance.udpId[user.Value], characterId, player.transform.position.x, player.transform.position.y, player.transform.position.z);
             DataSender.Instance.CreateUnitSend(sendData);
         }
-
-        StartCoroutine(DataSender.Instance.CharacterPositionSend());
-        StartCoroutine(DataSender.Instance.EnqueueMessage());
 
         return player;
     }

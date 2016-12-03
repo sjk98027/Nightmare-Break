@@ -374,6 +374,11 @@ public class DataHandler : MonoBehaviour
         {
             SendData sendData = new SendData(packet.endPoint, udpId);
             networkManager.ReSendManager.RemoveReSendData(sendData);
+
+            if(sendData.UdpId == 1)
+            {
+                StartCoroutine(DataSender.Instance.CharacterPositionSend());
+            }
         }
         catch
         {
