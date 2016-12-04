@@ -106,8 +106,15 @@ public class MageManager : CharacterManager
 	}
 	public void Armageddon()
 	{
-		armageddon = Instantiate (Resources.Load<GameObject> ("Effect/Armageddon"), new Vector3 (transform.position.x, transform.position.y+3.0f, transform.position.z + 2.0f),Quaternion.Euler (0, 0, 0)) as GameObject;
-		ArmageddonDamage = armageddon.GetComponent<Armageddon> ();
+		if (transform.rotation.y == 0) 
+		{
+			armageddon = Instantiate (Resources.Load<GameObject> ("Effect/Armageddon"), new Vector3 (transform.position.x, transform.position.y+3.0f, transform.position.z + 2.0f), Quaternion.Euler (0, 0, 0)) as GameObject;
+		}
+		else 
+		{
+			armageddon = Instantiate (Resources.Load<GameObject> ("Effect/Armageddon"), new Vector3 (transform.position.x, transform.position.y+3.0f, transform.position.z - 2.0f), Quaternion.Euler (0, 180, 0)) as GameObject;
+		}
+			ArmageddonDamage = armageddon.GetComponent<Armageddon> ();
 
 		ArmageddonDamage.armageddonDamage = 100;
 		
