@@ -4,11 +4,11 @@ using System.Collections;
 public class EarthQuake : MonoBehaviour
 {
 	[UnityEngine.SerializeField, Range(1f, 50f)]
-	public float magnitude = 30f;//지진의 진도
+	public float magnitude = 1.9f;//지진의 진도
 	[UnityEngine.SerializeField, Range(0f, 100f)]
 	public float shakingSpeed = 68;//흔들리는 스피드
 	[UnityEngine.SerializeField, Range(0f, 1f)]
-	public float randomAmount = 0.5f;//랜덤 정도
+	public float randomAmount = 0f;//랜덤 정도
 	public float duration = 1;//지속 시간
 	public Vector3 forceByAxis =new Vector3(1,0,1);//흔들리는 축
 	public AnimationCurve forceOverTime;//진도의 변화 그래프
