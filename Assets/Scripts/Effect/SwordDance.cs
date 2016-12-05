@@ -37,6 +37,9 @@ public class SwordDance : MonoBehaviour
 	{
 		if (coll.gameObject.layer == LayerMask.NameToLayer ("Enermy"))
 		{
+			Debug.Log (skillLv);
+			Debug.Log (bladeStormDamage);
+
 			Monster monsterDamage = coll.gameObject.GetComponent<Monster> ();
 
 			if (monsterDamage != null)

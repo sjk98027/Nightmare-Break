@@ -9,6 +9,7 @@ public class CharWeapon : MonoBehaviour {
 	public int damage= 0;
 	bool normalAttack;
 	bool skillAttack;
+	int skillLv;
 
 	public bool NormalAttack {get {return this.normalAttack;}}
 	public bool SkillAttack {get {return this.skillAttack;}}
@@ -20,6 +21,7 @@ public class CharWeapon : MonoBehaviour {
 		charManager = character.GetComponent<CharacterManager> ();
 		charStatus = GameObject.FindGameObjectWithTag("CharStatus").GetComponent<CharacterStatus>();
 		charStatus.SetCharacterStatus ();
+		skillLv = charStatus.SkillLevel [5];
 	}
 	// Update is called once per frame
 	void Update () 
@@ -51,23 +53,34 @@ public class CharWeapon : MonoBehaviour {
 				{
 					if (charStatus.HClass == CharacterStatus.CharClass.Warrior)
 					{
-						if (charStatus.SkillLevel [4] < 4)
+						if ( charStatus.SkillLevel [5] < 4)
 						{
 							if (normalAttack)
 							{
 								int testPassiveHP;
 
-								testPassiveHP = (int)(damage * charStatus.SkillLevel [4] * 0.1f);
-                                charStatus.DecreaseHealthPoint(-testPassiveHP);
+								testPassiveHP = (int) ((SkillManager.instance.SkillData.GetSkill ((int)charStatus.HClass, 4).GetSkillData (skillLv).SkillValue)*  damage);
+
+								if(charStatus.MaxHealthPoint > charStatus.HealthPoint)
+								{
+                              	 	charStatus.DecreaseHealthPoint(-testPassiveHP);
+									Debug.Log ("blood");
+
+								}
 							}														
 						}
-						else if(charStatus.SkillLevel [4] == 4)
+						else if( charStatus.SkillLevel [5] == 4)
 						{
 							Debug.Log ("in Warrior");
 							int testPassiveHP;
 
-							testPassiveHP = (int)(damage * charStatus.SkillLevel [4] * 0.1f);
-                            charStatus.DecreaseHealthPoint(-testPassiveHP);
+							testPassiveHP = (int) ((SkillManager.instance.SkillData.GetSkill ((int)charStatus.HClass, 4).GetSkillData (skillLv).SkillValue)*  damage);
+							if(charStatus.MaxHealthPoint > charStatus.HealthPoint)
+							{
+                           	 	charStatus.DecreaseHealthPoint(-testPassiveHP);
+
+
+							}
                         }
 
 					}

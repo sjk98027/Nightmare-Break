@@ -120,8 +120,71 @@ public class MageManager : CharacterManager
 		
 	}
 
+	public override void HitDamage (int _damage)
+	{
+		if (CharStatus.SkillLevel [5] < 4)
+		{
+			if (charAlive)
+			{
+				int chance = (CharStatus.SkillLevel [4]) * 25;
+				int superArmor;
+				superArmor = Random.Range (0, 100);
+
+				if (CharStatus.HealthPoint > 0)
+				{
+					CharStatus.DecreaseHealthPoint (_damage);
+
+					if (chance > superArmor)
+					{
+						if (State != CharacterState.Skill1 && State != CharacterState.Skill2 && State != CharacterState.Skill3 && State != CharacterState.Skill4)
+						{
+							CharState ((int)CharacterState.HitDamage);
+						}
+					}
+				}
+				else if (CharStatus.HealthPoint <= 0)
+				{
+					CharState ((int)CharacterState.Death);
+					charAlive = false;
+				}
+			}
+
+		}
+		else if (CharStatus.SkillLevel [5] == 4)
+		{
+			Debug.Log (CharStatus.HealthPoint );
+			if (charAlive)
+			{
+				if (CharStatus.HealthPoint > 0)
+				{
+					CharStatus.DecreaseHealthPoint (_damage);
+
+					CharState ((int)CharacterState.HitDamage);
+
+					if (State != CharacterState.Skill1 && State != CharacterState.Skill2 && State != CharacterState.Skill3 && State != CharacterState.Skill4)
+					{
+						CharState ((int)CharacterState.HitDamage);
+					}
+				}
+				else if (CharStatus.HealthPoint <= 0)
+				{
+					CharState ((int)CharacterState.Death);
+					charAlive = false;
+				}
+			}
+		}
+	}
+
     public override void SetCharacterType()
     {
         charStatus.HClass = CharacterStatus.CharClass.Warrior;
     }
+
+
+	public override void UsingMagicPoint(int SkillArray)
+	{
+		float manaFury =SkillManager.instance.SkillData.GetSkill ((int)charStatus.HClass, 6).GetSkillData (CharStatus.SkillLevel [5]).SkillValue;
+		charStatus.DecreaseMagicPoint ((int)((float)(SkillManager.instance.SkillData.GetSkill ((int)charStatus.HClass, SkillArray).ManaCost)* manaFury));
+	}
+
 }
