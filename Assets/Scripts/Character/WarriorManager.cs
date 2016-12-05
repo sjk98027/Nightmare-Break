@@ -33,7 +33,11 @@ public class WarriorManager : CharacterManager
         {
         wind = Instantiate(Resources.Load<GameObject>("Effect/Wind"), new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z), Quaternion.identity) as GameObject;
         }
-            if (enermy != null)
+
+		transform.Translate ((Vector3.forward * testinput.vertical - Vector3.right * testinput.horizontal) * Time.deltaTime * (charStatus.MoveSpeed - 6.0f), Space.World);
+
+
+        if (enermy != null)
 		{
 			for (int i = 0; i < enermy.Length; i++)
 			{

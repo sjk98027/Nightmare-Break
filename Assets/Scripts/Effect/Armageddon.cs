@@ -20,7 +20,7 @@ public class Armageddon : MonoBehaviour {
 		charStatus = charManager.CharStatus;
         ps = GetComponent<ParticleSystem>();
 		FireBallRigid = GetComponent<Rigidbody> ();
-		FireBallRigid.velocity = transform.forward* FireBallSpeed;
+		FireBallRigid.velocity =(transform.forward* FireBallSpeed);
         StartCoroutine(ArmageddonPause());
 
 		spherecol = this.GetComponent<SphereCollider> ();
@@ -35,7 +35,6 @@ public class Armageddon : MonoBehaviour {
         yield return new WaitForSeconds(ps.duration - 0.2f);
         ps.Pause();
 		FireBallRigid.velocity = transform.forward* 0;
-
     }
 	IEnumerator ArmageddonColl()
 	{
