@@ -441,9 +441,13 @@ public class DataSender : MonoBehaviour
         CharacterActionPacket characterActionPacket = new CharacterActionPacket(characterActionData);
         characterActionPacket.SetPacketId((int)P2PPacketId.CharacterAction);
 
-        byte[] packet = CreatePacket(characterActionPacket);
+        byte[] msg = CreatePacket(characterActionPacket);
 
-        udpMsg = CombineByte(udpMsg, packet);
+        foreach (KeyValuePair<EndPoint, int> user in networkManager.DataHandler.userNum)
+        {
+            DataPacket packet = new DataPacket(CreateUdpPacket(characterActionPacket, udpId[user.Value]), user.Key);
+            sendMsgs.Enqueue(packet);
+        }
     }
 
     //0.1초 마다 Udp메시지를 큐에 넣는다.
