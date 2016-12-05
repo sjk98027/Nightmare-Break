@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using UnityEngine.UI;
 
 public class CharacterSelectUI : MonoBehaviour {
@@ -35,5 +36,6 @@ public class CharacterSelectUI : MonoBehaviour {
         selectImage[Imageindex].SetActive(true);
     }
 
+    
 
 }

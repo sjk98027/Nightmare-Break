@@ -284,7 +284,7 @@ public class BoomMonster : Monster {
 		{
 			if (moveAble) 
 			{
-				this.transform.Translate (movePoint * moveSpeed * Time.deltaTime, 0);
+				this.transform.Translate (movePoint.normalized * moveSpeed * Time.deltaTime, 0);
 			}
 		}
 		ChasePlayer ();
