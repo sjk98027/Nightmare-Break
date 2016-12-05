@@ -83,9 +83,11 @@ public class DataHandler : MonoBehaviour
         {
             yield return new WaitForFixedUpdate();
 
-            while (receiveMsgs.Count > 0)
+            int readCount = receiveMsgs.Count;
+
+            for (int i = 0; i < readCount; i++)
             {
-                //패킷을 Dequeue 한다 
+                //패킷을 Dequeue 한다
                 //패킷 : 메시지 타입 + 메시지 내용
                 DataPacket packet;
 
@@ -105,7 +107,7 @@ public class DataHandler : MonoBehaviour
                     headerSerializer.UdpDeserialize(ref headerData);
                     DataReceiver.ResizeByteArray(0, NetworkManager.packetSource + NetworkManager.packetId + NetworkManager.udpId, ref packet.msg);
                 }
-                
+
                 Debug.Log("메시지 타입 : " + headerData.id);
 
                 if (packet.endPoint == null)
