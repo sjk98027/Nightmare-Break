@@ -355,6 +355,7 @@ public class DataHandler : MonoBehaviour
         }
 
         StartCoroutine(networkManager.ReSendManager.StartCheckSendData());
+        networkManager.ReSendManager.isConnecting = true;
     }
 
     //Client - 연결 확인 답장
@@ -374,11 +375,6 @@ public class DataHandler : MonoBehaviour
         {
             SendData sendData = new SendData(udpId, packet.endPoint);
             networkManager.ReSendManager.RemoveReSendData(sendData);
-
-            if(sendData.UdpId == 1)
-            {
-                StartCoroutine(DataSender.Instance.CharacterPositionSend());
-            }
         }
         catch
         {
@@ -392,6 +388,7 @@ public class DataHandler : MonoBehaviour
         Debug.Log("던전 시작");
 
         gameManager.SetManagerInDungeon();
+        networkManager.ReSendManager.characterCreating = true;
         dungeonManager = GameObject.FindGameObjectWithTag("DungeonManager").GetComponent<DungeonManager>();
         dungeonManager.CreatePlayer(0);
         dTime = DateTime.Now;
@@ -423,6 +420,9 @@ public class DataHandler : MonoBehaviour
         Debug.Log("캐릭터 위치 : " + characterPositionData.posX + ", " + characterPositionData.posY + ", " + characterPositionData.posZ + ", ");
 
         int index = userNum[packet.endPoint];
+
+        Debug.Log(index);
+        Debug.Log(dungeonManager.Players[index + 1]);
 
         CharacterManager characterManager = dungeonManager.Players[index + 1].GetComponent<CharacterManager>();
         characterManager.SetPosition(characterPositionData);

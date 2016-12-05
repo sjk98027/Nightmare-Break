@@ -12,7 +12,8 @@ public class ReSendManager : MonoBehaviour
 
     List<int> reSendKey;
 
-    bool isConnecting;
+    public bool isConnecting;
+    public bool characterCreating;
 
     public void Initialize(int userNum)
     {
@@ -23,8 +24,6 @@ public class ReSendManager : MonoBehaviour
         {
             reSendDatum[i] = new Dictionary<int, SendData>();
         }
-
-        isConnecting = true;
     }
 
     public void AddReSendData(SendData sendData)
@@ -71,6 +70,8 @@ public class ReSendManager : MonoBehaviour
         {
             yield return new WaitForSeconds(1.0f);
 
+            Debug.Log("ReSendData 체크");
+
             //모든 플레이어들의 ReSend Dictionary를 확인한다 //Error
             for (int i = 0; i < reSendDatum.Length; i++)
             {
@@ -110,6 +111,31 @@ public class ReSendManager : MonoBehaviour
                 {
                     DataSender.Instance.UdpConnectComplete();
                 }                
+            }
+
+            if (characterCreating)
+            {
+                for (int i = 0; i < reSendDatum.Length; i++)
+                {
+                    Debug.Log(reSendDatum[i].Count);
+                    if (reSendDatum[i].Count != 0)
+                    {
+                        characterCreating = true;
+                        break;
+                    }
+                    else
+                    {
+                        characterCreating = false;
+                    }
+
+                    Debug.Log(i);
+                    Debug.Log(characterCreating);
+                }
+
+                if (!characterCreating)
+                {
+                    StartCoroutine(DataSender.Instance.CharacterPositionSend());
+                }
             }
         }
     }

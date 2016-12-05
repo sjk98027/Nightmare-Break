@@ -411,6 +411,7 @@ public class DataSender : MonoBehaviour
     public IEnumerator CharacterPositionSend()
     {
         characterManager = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterManager>();
+        Debug.Log("캐릭터 위치 보내기 시작");
 
         while (true)
         {

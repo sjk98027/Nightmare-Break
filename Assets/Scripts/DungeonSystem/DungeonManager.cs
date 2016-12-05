@@ -321,6 +321,8 @@ public class DungeonManager : MonoBehaviour
         unit.transform.position = newPosition;
         unit.name = "Warrior";
 
+        Debug.Log("생성 인덱스" + unitIndex);
+
         players[unitIndex + 1] = unit;
 
         return unit;
