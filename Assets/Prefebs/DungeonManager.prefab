@@ -29593,6 +29593,7 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 114000014069553106}
+  shockWaveInstantiate: {fileID: 0}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -29644,6 +29645,8 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 0}
+  shockWaveInstantiate: {fileID: 114000012395617532, guid: 1849101d47e5f1d4489ef638a5b516ee,
+    type: 2}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -29681,6 +29684,7 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 0}
+  shockWaveInstantiate: {fileID: 0}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -29718,6 +29722,8 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 0}
+  shockWaveInstantiate: {fileID: 114000012395617532, guid: 1849101d47e5f1d4489ef638a5b516ee,
+    type: 2}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -29755,6 +29761,7 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 114000013508062836}
+  shockWaveInstantiate: {fileID: 0}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -29835,6 +29842,7 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 114000012054050388}
+  shockWaveInstantiate: {fileID: 0}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -29895,6 +29903,7 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 114000012273339002}
+  shockWaveInstantiate: {fileID: 0}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -29943,6 +29952,7 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 0}
+  shockWaveInstantiate: {fileID: 0}
   currentDisTanceArray: []
   stateDirecion: 0
   patternReserveList: 
@@ -29990,6 +30000,8 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 0}
+  shockWaveInstantiate: {fileID: 114000012395617532, guid: 1849101d47e5f1d4489ef638a5b516ee,
+    type: 2}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -30027,6 +30039,7 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 0}
+  shockWaveInstantiate: {fileID: 0}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -30078,6 +30091,8 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 0}
+  shockWaveInstantiate: {fileID: 114000012395617532, guid: 1849101d47e5f1d4489ef638a5b516ee,
+    type: 2}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -30129,6 +30144,7 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 0}
+  shockWaveInstantiate: {fileID: 0}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -30166,6 +30182,8 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 0}
+  shockWaveInstantiate: {fileID: 114000012395617532, guid: 1849101d47e5f1d4489ef638a5b516ee,
+    type: 2}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -30231,6 +30249,7 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 114000011687105732}
+  shockWaveInstantiate: {fileID: 0}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -30268,6 +30287,7 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 0}
+  shockWaveInstantiate: {fileID: 0}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -30321,6 +30341,7 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 114000011788626098}
+  shockWaveInstantiate: {fileID: 0}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -30386,6 +30407,7 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 0}
+  shockWaveInstantiate: {fileID: 0}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -30462,6 +30484,8 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 0}
+  shockWaveInstantiate: {fileID: 114000012395617532, guid: 1849101d47e5f1d4489ef638a5b516ee,
+    type: 2}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -30499,6 +30523,8 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 0}
+  shockWaveInstantiate: {fileID: 114000012395617532, guid: 1849101d47e5f1d4489ef638a5b516ee,
+    type: 2}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -30536,6 +30562,7 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 0}
+  shockWaveInstantiate: {fileID: 0}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -30573,6 +30600,7 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 114000011456454570}
+  shockWaveInstantiate: {fileID: 0}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -30610,6 +30638,7 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 114000012015627682}
+  shockWaveInstantiate: {fileID: 0}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -30647,6 +30676,7 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 114000010398287748}
+  shockWaveInstantiate: {fileID: 0}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -30684,6 +30714,7 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 114000012858371062}
+  shockWaveInstantiate: {fileID: 0}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -30735,6 +30766,7 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 114000010241545534}
+  shockWaveInstantiate: {fileID: 0}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -30786,6 +30818,7 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 0}
+  shockWaveInstantiate: {fileID: 0}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -30837,6 +30870,7 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 114000012950314964}
+  shockWaveInstantiate: {fileID: 0}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -30874,6 +30908,7 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 0}
+  shockWaveInstantiate: {fileID: 0}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -30911,6 +30946,7 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 114000012807722150}
+  shockWaveInstantiate: {fileID: 0}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -30948,6 +30984,7 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 0}
+  shockWaveInstantiate: {fileID: 0}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
@@ -31027,6 +31064,8 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 0}
+  shockWaveInstantiate: {fileID: 114000012395617532, guid: 1849101d47e5f1d4489ef638a5b516ee,
+    type: 2}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0

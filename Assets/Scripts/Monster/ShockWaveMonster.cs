@@ -14,6 +14,7 @@ public class ShockWaveMonster : Monster {
 	private Vector3 boomObjectPosition;
 
 
+
 	public override void HitDamage(int _Damage,GameObject attacker)
 	{
 		IsHited = true;
