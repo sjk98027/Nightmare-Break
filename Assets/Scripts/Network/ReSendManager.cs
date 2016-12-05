@@ -34,7 +34,6 @@ public class ReSendManager : MonoBehaviour
         {
             Debug.Log(index + "번 유저에 " + sendData.UdpId + " 아이디 메소드 추가");
             reSendDatum[index].Add(sendData.UdpId, sendData);
-            Debug.Log("메소드 개수 : " + reSendDatum[index].Count);
         }
         catch
         {
@@ -50,7 +49,6 @@ public class ReSendManager : MonoBehaviour
         {
             Debug.Log(index + "번 유저에 " + sendData.UdpId + " 아이디 메소드 삭제");
             reSendDatum[index].Remove(sendData.UdpId);
-            Debug.Log("메소드 개수 : " + reSendDatum[index].Count);
         }
         catch
         {
@@ -72,7 +70,7 @@ public class ReSendManager : MonoBehaviour
 
             Debug.Log("ReSendData 체크");
 
-            //모든 플레이어들의 ReSend Dictionary를 확인한다 //Error
+            //모든 플레이어들의 ReSendData를 확인한다
             for (int i = 0; i < reSendDatum.Length; i++)
             {
                 reSendKey = new List<int>(reSendDatum[i].Keys);
@@ -110,7 +108,7 @@ public class ReSendManager : MonoBehaviour
                 if (!isConnecting)
                 {
                     DataSender.Instance.UdpConnectComplete();
-                }                
+                }
             }
 
             if (characterCreating)

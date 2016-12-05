@@ -344,7 +344,7 @@ public class DataHandler : MonoBehaviour
             ip = ip.Substring(0, ip.IndexOf(":"));
 
             Debug.Log("온 아이피 : " + ip);
-            Debug.Log("내 아이피 " + networkManager.client.ToString().Substring(0, networkManager.client.ToString().IndexOf(":")));
+            Debug.Log("번호 : " + userIndexNum);
 
             if (ip != networkManager.client.ToString().Substring(0, networkManager.client.ToString().IndexOf(":")))
             {
@@ -372,6 +372,11 @@ public class DataHandler : MonoBehaviour
     public void AnswerCheck(DataPacket packet, int udpId)
     {
         Debug.Log(packet.endPoint.ToString() + "답신 받음");
+
+        if (udpId < userNum[packet.endPoint])
+        {
+            return;
+        }
 
         try
         {

@@ -347,8 +347,6 @@ public class DataSender : MonoBehaviour
 
         int index = networkManager.DataHandler.userNum[endPoint];
 
-        Debug.Log("아이디 : " + udpId[index]);
-
         ResultData resultData = new ResultData(new byte());
         ResultPacket resultDataPacket = new ResultPacket(resultData);
         resultDataPacket.SetPacketId((int)P2PPacketId.RequestConnectionCheck);

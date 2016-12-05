@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections;
+using System.Net;
+using System.Collections.Generic;
 
 
 //this class manage monsterStageLevel, sumon, player sumon, player death;
@@ -32,7 +33,7 @@ public class DungeonManager : MonoBehaviour
 
     InputManager inputManager;
     UIManager uiManager;
-    DataSender dataSender;
+    NetworkManager networkManager;
     GameObject m_camera;
 
     protected bool normalMode; //false  -> normalBattle, true -> Defence; 
@@ -113,6 +114,11 @@ public class DungeonManager : MonoBehaviour
 		}
 	}
 
+    //각종 매니저 초기화
+    public void Initialize()
+    {
+        networkManager = GameObject.FindWithTag("NetworkManager").GetComponent<NetworkManager>();
+    }
 
     //defence mode, normal mode
     public void ModeChange(bool modeForm)
@@ -274,7 +280,7 @@ public class DungeonManager : MonoBehaviour
 	}
 
     
-    public GameObject CreatePlayer(int CharacterId)
+    public GameObject CreatePlayer(int characterId)
     {
         //여기서는 플레이어 캐릭터 딕셔너리 -> 각 직업에 따른 플레이어 스탯과 능력치, 스킬, 이름을 가지고 있음
         //딕셔너리를 사용하여 그에 맞는 캐릭터를 소환해야 하지만 Prototype 진행 시에는 고정된 플레이어를 소환하도록 함.
@@ -294,15 +300,15 @@ public class DungeonManager : MonoBehaviour
         StartCoroutine(inputManager.GetKeyInput());
 
         uiManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
-        uiManager.SetBattleUIManager();
+        //uiManager.SetBattleUIManager();
         player.GetComponent<CharacterManager>().UIManager = uiManager;
         player.GetComponent<CharacterManager>().SetCharacterStatus();
         player.GetComponent<CharacterManager>().SetCharacterType();
 
-        dataSender = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<DataSender>();
-        dataSender.CreateUnitSend(0, player.transform.position);
-        StartCoroutine(dataSender.CharacterPositionSend());
-        StartCoroutine(dataSender.EnqueueMessage());
+        foreach (KeyValuePair<EndPoint, int> user in networkManager.DataHandler.userNum)
+        {
+            DataSender.Instance.CreateUnitSend(user.Key, (short)characterId, player.transform.position.x, player.transform.position.y, player.transform.position.z);
+        }
 
         return player;
     }
