@@ -412,7 +412,7 @@ public class CharacterManager : MonoBehaviour
 				break;
 			}
             
-            if(Inputstate != (int) CharacterState.Idle|| Inputstate != (int)CharacterState.Run)
+            if(Inputstate != (int) CharacterState.Idle && Inputstate != (int)CharacterState.Run)
 			    DataSender.Instance.CharacterActionSend(Inputstate);
 		}
 	}
