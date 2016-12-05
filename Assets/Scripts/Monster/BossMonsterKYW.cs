@@ -61,7 +61,7 @@ public class BossMonsterKYW : Monster {
 
 		patternReserveList = new int[5];
 		for (int listSet = 0; listSet < patternReserveList.Length; listSet++) {
-			Debug.Log (Random.Range (2, 4)); // max + 1-> (min <-> max)
+//			Debug.Log (Random.Range (2, 4)); // max + 1-> (min <-> max)
 			patternReserveList [listSet] = Random.Range ((int)BigBearBossPatternName.BigBearBossAttack,(int)BigBearBossPatternName.BigBearBossOneHandAttack+1);
 		}
 	}
@@ -123,7 +123,7 @@ public void changeDirection ()
 }
 
 
-public override void HitDamage (int _Damage, GameObject attacker)
+	public override void HitDamage (int _Damage, GameObject attacker)
 {
 
 	stateInfo = this.animator.GetCurrentAnimatorStateInfo (0);

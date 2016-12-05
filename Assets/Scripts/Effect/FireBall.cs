@@ -10,6 +10,7 @@ public class FireBall : MonoBehaviour {
 	public int FireBallDamage;
 	public float FireBallSpeed = 180;
 	public Rigidbody FireBallRigid;
+	int skillLv;
 
     void Start()
     {
@@ -19,6 +20,9 @@ public class FireBall : MonoBehaviour {
 		FireBallRigid = GetComponent<Rigidbody> ();
 		FireBallRigid.velocity = transform.forward* FireBallSpeed;
 		FireBallparticleSystem = GetComponent<ParticleSystem>();
+		skillLv = charStatus.SkillLevel [0];
+		FireBallDamage =(int) ((SkillManager.instance.SkillData.GetSkill ((int)charStatus.HClass, 1).GetSkillData (skillLv).SkillValue)*  charStatus.Attack);
+
     }
 
     void Update()

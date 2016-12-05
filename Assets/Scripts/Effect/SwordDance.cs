@@ -11,6 +11,7 @@ public class SwordDance : MonoBehaviour
 	public float bladeStormSpeed = 20;
 	public Rigidbody bladeStromRigid;
 	public GameObject swordDanceEffect;
+	int skillLv;
 
 	// Use this for initialization
 	void Start ()
@@ -21,6 +22,8 @@ public class SwordDance : MonoBehaviour
 		bladeStromRigid = GetComponent<Rigidbody> ();
 		bladeStromRigid.velocity = transform.forward * bladeStormSpeed;
 		swordDanceEffect = Resources.Load<GameObject> ("Effect/SwordShadow");
+		skillLv = charStatus.SkillLevel [2];
+		bladeStormDamage =(int) ((SkillManager.instance.SkillData.GetSkill ((int)charStatus.HClass, 3).GetSkillData (skillLv).SkillValue)*  charStatus.Attack);
 	}
 	void Update()
 	{
