@@ -13,6 +13,7 @@ public class WarriorManager : CharacterManager
 	public CharWeapon bloodingWeapon;
 	public float riseCooltime;
     private GameObject wind;
+	int skillLv;
 
 	public override void NormalAttack ()
 	{
@@ -32,9 +33,10 @@ public class WarriorManager : CharacterManager
         if (!wind)
         {
         wind = Instantiate(Resources.Load<GameObject>("Effect/Wind"), new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z), Quaternion.identity) as GameObject;
+			wind.transform.parent = this.gameObject.transform;
         }
 
-		transform.Translate ((Vector3.forward * testinput.vertical - Vector3.right * testinput.horizontal) * Time.deltaTime * (charStatus.MoveSpeed - 6.0f), Space.World);
+	//	transform.Translate ((Vector3.forward * testinput.vertical - Vector3.right * testinput.horizontal) * Time.deltaTime * (charStatus.MoveSpeed -6.0f), Space.World);
 
 
         if (enermy != null)
@@ -136,10 +138,7 @@ public class WarriorManager : CharacterManager
 
 	public override void HitDamage (int _damage)
 	{
-
-		CharStatus.SkillLevel [5] = 4;
-
-		if (CharStatus.SkillLevel [5] > 4)
+		if (CharStatus.SkillLevel [5] < 4)
 		{
 			if (charAlive)
 			{
@@ -149,15 +148,14 @@ public class WarriorManager : CharacterManager
 					{
 						int deFendDamage;
 						deFendDamage = _damage - (CharStatus.SkillLevel [5] * 1);
-						deFendDamage = _damage - (CharStatus.SkillLevel [5] * 1);
 						Debug.Log (deFendDamage);
 						if (deFendDamage < 0)
 						{
 							deFendDamage = 0;
 						}
 						CharStatus.DecreaseHealthPoint (deFendDamage);
-						CharState ((int)CharacterState.HitDamage);
-						if (State != CharacterState.Skill3)
+
+						if (State != CharacterState.Skill1 && State != CharacterState.Skill2 && State != CharacterState.Skill3 && State != CharacterState.Skill4)
 						{
 							CharState ((int)CharacterState.HitDamage);
 						}
@@ -172,12 +170,12 @@ public class WarriorManager : CharacterManager
 		}
 		else if (CharStatus.SkillLevel [5] == 4)
 		{
+			Debug.Log (CharStatus.HealthPoint );
 			if (charAlive)
 			{
 				if (CharStatus.HealthPoint > 0)
 				{
 					int deFendDamage;
-					deFendDamage = _damage - (CharStatus.SkillLevel [5] * 1);
 					deFendDamage = _damage - (CharStatus.SkillLevel [5] * 1);
 
 					if (deFendDamage < 0)
@@ -207,7 +205,6 @@ public class WarriorManager : CharacterManager
 						animator.SetBool ("Rise", false);
 						StartCoroutine (colltimeCheck());
 						CharStatus.DecreaseHealthPoint ((-100));
-						Debug.Log (charStatus.HealthPoint);
 					
 					}
 					else if (rise)

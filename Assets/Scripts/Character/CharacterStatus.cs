@@ -74,7 +74,7 @@ public class CharacterStatus : MonoBehaviour
         level = 0;
         charClass = 0;
         exp = 0;
-        healthPoint = 100;
+        healthPoint = 2000;
         maxMagicPoint = 2000;
         magicPoint = maxMagicPoint;
         hpRegeneration = 0;
@@ -83,9 +83,14 @@ public class CharacterStatus : MonoBehaviour
         attack = 100;
         defense = 10;
         dreamStone = 0;
-        skillLevel = new int[skillNum]; 
+        skillLevel = new int[skillNum];
         activeSkillUse = new bool[equipNum];
         equipLevel = new int[equipNum];
+
+		for (int i = 0; i < skillLevel.Length; i++)
+		{
+			skillLevel [i] = 1;
+		}
 
         for (int i = 0; i < activeSkillUse.Length; i++)
         {
@@ -125,6 +130,7 @@ public class CharacterStatus : MonoBehaviour
     public void DecreaseHealthPoint(int amount)
     {
         healthPoint -= amount;
+
     }
 
     public void DecreaseMagicPoint(int amount)

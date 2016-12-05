@@ -29,8 +29,6 @@ public class Armageddon : MonoBehaviour {
 		StartCoroutine(ArmageddonColl());
 		skillLv = charStatus.SkillLevel [4];
 		armageddonDamage =(int) ((SkillManager.instance.SkillData.GetSkill ((int)charStatus.HClass, 4).GetSkillData (skillLv).SkillValue)*  charStatus.Attack);
-
-
     }
     IEnumerator ArmageddonPause()
     {
