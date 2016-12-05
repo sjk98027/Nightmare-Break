@@ -39,6 +39,8 @@ public class DataSender : MonoBehaviour
     public int[] udpId;
     byte[] udpMsg;
 
+    public Queue<DataPacket> SendMsgs { get { return sendMsgs; } }
+
     public void Initialize(Queue<DataPacket> newSendMsgs, Socket newTcpSock, Socket newUdpSock)
     {
         networkManager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManager>();
@@ -339,27 +341,25 @@ public class DataSender : MonoBehaviour
     }
 
     //연결 확인 요청 - Udp
-    public void RequestConnectionCheck(SendData sendData)
+    public void RequestConnectionCheck(EndPoint endPoint)
     {
-        Debug.Log(sendData.EndPoint.ToString() + " 연결 체크 요청");
-        Debug.Log("아이디 : " + sendData.UdpId);
+        Debug.Log(endPoint.ToString() + " 연결 체크 요청");
+
+        int index = networkManager.DataHandler.userNum[endPoint];
+
+        Debug.Log("아이디 : " + udpId[index]);
 
         ResultData resultData = new ResultData(new byte());
         ResultPacket resultDataPacket = new ResultPacket(resultData);
         resultDataPacket.SetPacketId((int)P2PPacketId.RequestConnectionCheck);
 
-        DataPacket packet = new DataPacket(CreateUdpPacket(resultDataPacket, sendData.UdpId), sendData.EndPoint);
+        DataPacket packet = new DataPacket(CreateUdpPacket(resultDataPacket, udpId[index]), endPoint);
 
         sendMsgs.Enqueue(packet);
 
-        int index = networkManager.DataHandler.userNum[sendData.EndPoint];
-
-        if (sendData.UdpId >= udpId[index])
-        {
-            sendData = new SendData(sendData.EndPoint, sendData.UdpId);
-            networkManager.ReSendManager.AddReSendData(sendData, RequestConnectionCheck);
-            udpId[index]++;
-        }
+        SendData sendData = new SendData(udpId[index], endPoint, packet.msg);
+        networkManager.ReSendManager.AddReSendData(sendData);
+        udpId[index]++;
     }
 
     //Udp 답신 - Udp
@@ -391,23 +391,20 @@ public class DataSender : MonoBehaviour
     }
 
     //캐릭터의 생성 - Udp
-    public void CreateUnitSend(SendData sendData)
+    public void CreateUnitSend(EndPoint endPoint, short characterId, float posX, float posY, float posZ)
     {
-        CreateUnitData createUnitData = new CreateUnitData((short)sendData.CharacterId, sendData.PosX, sendData.PosY, sendData.PosZ);
+        CreateUnitData createUnitData = new CreateUnitData(characterId, posX, posY, posZ);
         CreateUnitPacket createUnitDataPacket = new CreateUnitPacket(createUnitData);
         createUnitDataPacket.SetPacketId((int)P2PPacketId.CreateUnit);
 
-        DataPacket packet = new DataPacket(CreateUdpPacket(createUnitDataPacket, sendData.UdpId), sendData.EndPoint);
+        int index = networkManager.DataHandler.userNum[endPoint];
+
+        DataPacket packet = new DataPacket(CreateUdpPacket(createUnitDataPacket, udpId[index]), endPoint);
         sendMsgs.Enqueue(packet);
 
-        int index = networkManager.DataHandler.userNum[sendData.EndPoint];
-
-        if (sendData.UdpId >= udpId[index])
-        {
-            sendData = new SendData(sendData.EndPoint, sendData.UdpId, createUnitData.ID, sendData.PosX, sendData.PosY, sendData.PosZ);
-            networkManager.ReSendManager.AddReSendData(sendData, CreateUnitSend);
-            udpId[index]++;
-        }
+        SendData sendData = new SendData(udpId[index], endPoint, packet.msg);
+        networkManager.ReSendManager.AddReSendData(sendData);
+        udpId[index]++;
     }
 
     //캐릭터 위치 - Udp

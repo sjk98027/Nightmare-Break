@@ -102,8 +102,7 @@ public class NetworkManager : MonoBehaviour
         dataReceiver.StartUdpReceive(clientSock, client);
 
         int index = dataHandler.userNum[(EndPoint)client];
-        SendData sendData = new SendData(client, DataSender.Instance.udpId[index]);
-        dataSender.RequestConnectionCheck(sendData);
+        dataSender.RequestConnectionCheck((EndPoint)client);
     }
 
     public void DisconnectP2P()

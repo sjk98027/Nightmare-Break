@@ -5,59 +5,36 @@ using UnityEngine;
 
 public class ReSendManager : MonoBehaviour
 {
-    public class ReSend
-    {
-        SendData sendData;
-        ReSendCallBack reSendCallBack;
-        
-        public SendData SendData { get { return sendData; } }
-        public ReSendCallBack ReSendCallBack { get { return reSendCallBack; } }
-
-        public ReSend()
-        {
-            sendData = null;
-            reSendCallBack = null;
-        }
-
-        public ReSend(SendData newSendData, ReSendCallBack newReSendCallBack)
-        {
-            sendData = newSendData;
-            reSendCallBack = newReSendCallBack;
-        }
-    }
-
     NetworkManager networkManager;
     
-    public delegate void ReSendCallBack(SendData sendData);
-    ReSend reSendData;
-    private Dictionary<int, ReSend>[] reSendDatum;
+    private Dictionary<int, SendData>[] reSendDatum;
+    SendData reSendData;
+
     List<int> reSendKey;
-    List<ReSend> reSendValue;
 
     bool isConnecting;
 
     public void Initialize(int userNum)
     {
         networkManager = GetComponent<NetworkManager>();
-        reSendDatum = new Dictionary<int, ReSend>[userNum - 1];
+        reSendDatum = new Dictionary<int, SendData>[userNum - 1];
 
         for (int i = 0; i < userNum - 1; i++)
         {
-            reSendDatum[i] = new Dictionary<int, ReSend>();
+            reSendDatum[i] = new Dictionary<int, SendData>();
         }
 
         isConnecting = true;
     }
 
-    public void AddReSendData(SendData sendData, ReSendCallBack reSendData)
+    public void AddReSendData(SendData sendData)
     {
-        ReSend resend = new ReSend(sendData, reSendData);
         int index = networkManager.DataHandler.userNum[sendData.EndPoint];
 
         try
         {
             Debug.Log(index + "번 유저에 " + sendData.UdpId + " 아이디 메소드 추가");
-            reSendDatum[index].Add(sendData.UdpId, resend);
+            reSendDatum[index].Add(sendData.UdpId, sendData);
             Debug.Log("메소드 개수 : " + reSendDatum[index].Count);
         }
         catch
@@ -82,6 +59,12 @@ public class ReSendManager : MonoBehaviour
         }
     }
 
+    public void DataReSend(SendData sendData)
+    {
+        DataPacket packet = new DataPacket(sendData.Msg, sendData.EndPoint);
+        DataSender.Instance.SendMsgs.Enqueue(packet);
+    }
+
     public IEnumerator StartCheckSendData()
     {
         while (true)
@@ -99,7 +82,7 @@ public class ReSendManager : MonoBehaviour
                     //i번 플레이어의 foreach문에 걸린 method를 하나 실행한다.
                     if (reSendDatum[i].TryGetValue(key, out reSendData))
                     {
-                        reSendData.ReSendCallBack((reSendDatum[i])[key].SendData);
+                        DataReSend(reSendData);
                     }
                 }
             }
@@ -134,43 +117,32 @@ public class ReSendManager : MonoBehaviour
 
 public class SendData
 {
-    EndPoint endPoint;
     int udpId;
-    int characterId;
-    float posX;
-    float posY;
-    float posZ;
+    EndPoint endPoint;
+    byte[] msg;
 
-    public EndPoint EndPoint { get { return endPoint; } }
     public int UdpId { get { return udpId; } }
-    public int CharacterId { get { return characterId; } }
-    public float PosX { get { return posX; } }
-    public float PosY { get { return posY; } }
-    public float PosZ { get { return posZ; } }
+    public EndPoint EndPoint { get { return endPoint; } }
+    public byte[] Msg { get { return msg; } }
 
     public SendData()
     {
-        endPoint = null;
         udpId = 0;
-        characterId = 0;
-        posX = 0;
-        posY = 0;
-        posZ = 0;
+        endPoint = null;
+        msg = new byte[0];
     }
 
-    public SendData(EndPoint newEndPoint, int newUdpId)
+    public SendData(int newUdpId, EndPoint newEndPoint)
     {
-        endPoint = newEndPoint;
         udpId = newUdpId;
+        endPoint = newEndPoint;
+        msg = new byte[0];
     }
 
-    public SendData(EndPoint newEndPoint, int newUdpId, int newCharacterId, float newPosX, float newPosY, float newPosZ)
+    public SendData(int newUdpId, EndPoint newEndPoint, byte[] newMsg)
     {
-        endPoint = newEndPoint;
         udpId = newUdpId;
-        characterId = newCharacterId;
-        posX = newPosX;
-        posY = newPosY;
-        posZ = newPosZ;
+        endPoint = newEndPoint;
+        msg = newMsg;
     }
 }

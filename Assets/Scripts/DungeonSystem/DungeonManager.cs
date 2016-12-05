@@ -306,8 +306,7 @@ public class DungeonManager : MonoBehaviour
         
         foreach (KeyValuePair<EndPoint, int> user in networkManager.DataHandler.userNum)
         {
-            SendData sendData = new SendData(user.Key, DataSender.Instance.udpId[user.Value], characterId, player.transform.position.x, player.transform.position.y, player.transform.position.z);
-            DataSender.Instance.CreateUnitSend(sendData);
+            DataSender.Instance.CreateUnitSend(user.Key, (short)characterId, player.transform.position.x, player.transform.position.y, player.transform.position.z);
         }
 
         return player;
