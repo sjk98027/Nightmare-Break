@@ -42,8 +42,6 @@ public class DataHandler : MonoBehaviour
 
         SetServerNotifier();
         SetUdpNotifier();
-
-        StartCoroutine(DataHandle());
     }
 
     public void SetCharacter(GameObject character)
@@ -77,64 +75,59 @@ public class DataHandler : MonoBehaviour
         p2p_notifier.Add((int)P2PPacketId.CharacterAction, CharacterAction);
     }
 
-    public IEnumerator DataHandle()
+    public void DataHandle()
     {
-        while (true)
+        int readCount = receiveMsgs.Count;
+
+        //for (int i = 0; i < readCount; i++)
+        for (int i=0; i< readCount; i++)
         {
-            yield return new WaitForFixedUpdate();
+            //패킷을 Dequeue 한다
+            //패킷 : 메시지 타입 + 메시지 내용
+            DataPacket packet;
 
-            int readCount = receiveMsgs.Count;
+            packet = receiveMsgs.Dequeue();
 
-            //for (int i = 0; i < readCount; i++)
-            if(receiveMsgs.Count > 0)
+            HeaderData headerData = new HeaderData();
+            HeaderSerializer headerSerializer = new HeaderSerializer();
+            headerSerializer.SetDeserializedData(packet.msg);
+
+            if (packet.endPoint == null)
             {
-                //패킷을 Dequeue 한다
-                //패킷 : 메시지 타입 + 메시지 내용
-                DataPacket packet;
+                headerSerializer.Deserialize(ref headerData);
+                DataReceiver.ResizeByteArray(0, NetworkManager.packetSource + NetworkManager.packetId, ref packet.msg);
+            }
+            else
+            {
+                headerSerializer.UdpDeserialize(ref headerData);
+                DataReceiver.ResizeByteArray(0, NetworkManager.packetSource + NetworkManager.packetId + NetworkManager.udpId, ref packet.msg);
+            }
 
-                packet = receiveMsgs.Dequeue();
+            Debug.Log("메시지 타입 : " + headerData.id);
 
-                HeaderData headerData = new HeaderData();
-                HeaderSerializer headerSerializer = new HeaderSerializer();
-                headerSerializer.SetDeserializedData(packet.msg);
-
-                if (packet.endPoint == null)
+            if (packet.endPoint == null)
+            {
+                if (server_notifier.TryGetValue(headerData.id, out serverRecvNotifier))
                 {
-                    headerSerializer.Deserialize(ref headerData);
-                    DataReceiver.ResizeByteArray(0, NetworkManager.packetSource + NetworkManager.packetId, ref packet.msg);
+                    serverRecvNotifier(packet);
                 }
                 else
                 {
-                    headerSerializer.UdpDeserialize(ref headerData);
-                    DataReceiver.ResizeByteArray(0, NetworkManager.packetSource + NetworkManager.packetId + NetworkManager.udpId, ref packet.msg);
-                }
-
-                Debug.Log("메시지 타입 : " + headerData.id);
-
-                if (packet.endPoint == null)
-                {
-                    if (server_notifier.TryGetValue(headerData.id, out serverRecvNotifier))
-                    {
-                        serverRecvNotifier(packet);
-                    }
-                    else
-                    {
-                        Debug.Log("DataHandler::Server.TryGetValue 에러 " + headerData.id);
-                    }
-                }
-                else if (packet.endPoint != null)
-                {
-                    if (p2p_notifier.TryGetValue(headerData.id, out p2pRecvNotifier))
-                    {
-                        p2pRecvNotifier(packet, headerData.udpId);
-                    }
-                    else
-                    {
-                        Debug.Log("DataHandler::P2P.TryGetValue 에러 " + headerData.id);
-                    }
+                    Debug.Log("DataHandler::Server.TryGetValue 에러 " + headerData.id);
                 }
             }
-        }        
+            else if (packet.endPoint != null)
+            {
+                if (p2p_notifier.TryGetValue(headerData.id, out p2pRecvNotifier))
+                {
+                    p2pRecvNotifier(packet, headerData.udpId);
+                }
+                else
+                {
+                    Debug.Log("DataHandler::P2P.TryGetValue 에러 " + headerData.id);
+                }
+            }
+        }
     }
     
     //Server - 가입 결과
