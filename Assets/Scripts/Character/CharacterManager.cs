@@ -412,7 +412,7 @@ public class CharacterManager : MonoBehaviour
 				break;
 			}
             
-			//DataSender.Instance.CharacterActionSend(Inputstate);
+			DataSender.Instance.CharacterActionSend(Inputstate);
 		}
 	}
 

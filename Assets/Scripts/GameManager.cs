@@ -11,17 +11,15 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     string ip;
 
-    bool dungeonStart;
-
     void Start()
     {
         InitializeManager();
-        dungeonStart = false;
     }
 
     void Update()
     {
         networkManager.DataHandler.DataHandle();
+        networkManager.DataSender.DataSend();
     }
 
     void InitializeManager()
