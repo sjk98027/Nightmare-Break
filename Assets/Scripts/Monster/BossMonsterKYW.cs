@@ -8,8 +8,8 @@ public class BossMonsterKYW : Monster {
 		BigBearBossRun,
 		BigBearBossAttack,
 		BigBearBossOneHandAttack,
-		BigBearJumpAttack,
-		BigBearBossRoar,
+	    BigBearBossRoar,
+		BigBearBossShout,
 		BigBearBossDeath}
 
 	;
@@ -45,6 +45,8 @@ public class BossMonsterKYW : Monster {
 		Left,
 		Right
 	}
+	public GameObject bullet;
+	public GameObject muzzle;
 
 	public void BossMonsterSet(int _maxlife, int _basedamage){
 		RunRange = 10;
@@ -61,17 +63,30 @@ public class BossMonsterKYW : Monster {
 
 		patternReserveList = new int[5];
 		for (int listSet = 0; listSet < patternReserveList.Length; listSet++) {
-//			Debug.Log (Random.Range (2, 4)); // max + 1-> (min <-> max)
+			Debug.Log (Random.Range (2, 4)); // max + 1-> (min <-> max)
+			//patternReserveList [listSet] = Random.Range ((int)BigBearBossPatternName.BigBearBossAttack,(int)BigBearBossPatternName.BigBearBossShout);
 			patternReserveList [listSet] = Random.Range ((int)BigBearBossPatternName.BigBearBossAttack,(int)BigBearBossPatternName.BigBearBossOneHandAttack+1);
 		}
 	}
 
 	public void BossMonsterUpdate(){
-		if (Input.GetKeyDown (KeyCode.A)) {
-			PatternReserveListCleanUp ((int)BigBearBossPatternName.BigBearJumpAttack);
-			BigBearBossState = BigBearBossPatternName.BigBearJumpAttack;
-			BigBearBossPattern ((int)BigBearBossState);
+		/*
+		if (Input.GetKeyDown (KeyCode.Q)) {
+			PatternReserveListCleanUp ((int)BigBearBossPatternName.BigBearBossRoar);
+			//BigBearBossState = BigBearBossPatternName.BigBearBossRoar;
+			//BigBearBossPattern ((int)BigBearBossState);
 		}
+		if (Input.GetKeyDown (KeyCode.W)) {
+			PatternReserveListCleanUp ((int)BigBearBossPatternName.BigBearBossOneHandAttack);
+			//BigBearBossState = BigBearBossPatternName.BigBearBossRoar;
+			//BigBearBossPattern ((int)BigBearBossState);
+		}
+		if (Input.GetKeyDown (KeyCode.E)) {
+			PatternReserveListCleanUp ((int)BigBearBossPatternName.BigBearBossShout);
+			//BigBearBossState = BigBearBossPatternName.BigBearBossRoar;
+			//BigBearBossPattern ((int)BigBearBossState);
+		}
+		*/
 		if (targetPlayer != null) {
 			currentDisTance = Vector3.Distance (targetPlayer.transform.position, transform.position);		
 		}
@@ -102,8 +117,9 @@ public class BossMonsterKYW : Monster {
 
 
 public void earthQuakeEffect ()
-{//애니메이션 이벤트를 사용하여 지진 효과를 추가 한다.
-	//		GameObject.FindGameObjectWithTag ("Floor").GetComponent<EarthQuake> ().Running = true;.
+{
+		//애니메이션 이벤트를 사용하여 지진 효과를 추가 한다.
+	    GameObject.FindGameObjectWithTag ("Floor").GetComponent<EarthQuake> ().Running = true;
 
 		BigBearBossState = BigBearBossPatternName.BigBearBossIdle;
 		BigBearBossPattern ((int)BigBearBossState);
@@ -111,10 +127,13 @@ public void earthQuakeEffect ()
 		StartCoroutine(BossMonsterPatternChange());
 
 }
-
+public void shotEffect()//원거리 공격가능
+{
+  Instantiate (bullet, muzzle.transform.position, muzzle.transform.rotation);
+}
 public void changeDirection ()
 {//캐릭터 이동시 보스가 보는 방향을 정한다.
-	Vector3 vecLookPos = player [0].transform.position;
+		Vector3 vecLookPos = targetPlayer.transform.position;
 	vecLookPos.y = transform.position.y;
 	vecLookPos.x = transform.position.x;
 
@@ -123,7 +142,7 @@ public void changeDirection ()
 }
 
 
-	public override void HitDamage (int _Damage, GameObject attacker)
+public override void HitDamage (int _Damage, GameObject attacker)
 {
 
 	stateInfo = this.animator.GetCurrentAnimatorStateInfo (0);
@@ -143,10 +162,14 @@ public void changeDirection ()
 					targetPlayer = player [i];
 				}
 			}
-			if (shoutCount >= 100) {
+			if (targetPlayer != null) {
+				currentDisTance = Vector3.Distance (targetPlayer.transform.position, transform.position);		
+			}
+			if (currentDisTance <= RunRange && currentDisTance > attackRange) {//원거리 케릭터가 공격시 원거리 공격
+			    PatternReserveListCleanUp ((int)BigBearBossPatternName.BigBearBossOneHandAttack);
+			}
+			if (shoutCount >= 100) {//100회 이상 데미지를 받을 경우
 				PatternReserveListCleanUp ((int)BigBearBossPatternName.BigBearBossRoar);
-				BigBearBossState = BigBearBossPatternName.BigBearBossRoar;
-				BigBearBossPattern ((int)BigBearBossState);
 			}
 				//hitanimation
 		}
@@ -197,12 +220,12 @@ public void BigBearBossPattern (int bossState)
 		break;
 
 	case 4:
-		BigBearBossState = BigBearBossPatternName.BigBearJumpAttack;
+	    BigBearBossState = BigBearBossPatternName.BigBearBossRoar;
 		animator.SetInteger ("state", 4);
 		break;
 
 	case 5:
-		BigBearBossState = BigBearBossPatternName.BigBearBossRoar;
+		BigBearBossState = BigBearBossPatternName.BigBearBossShout;
 		animator.SetInteger ("state", 5);
 		break;
 
@@ -215,7 +238,7 @@ public void BigBearBossPattern (int bossState)
 
 public void RoarStart (int waringOrshout)
 {//애니메이션 이벤트를 사용하여 포효시 붉은 이펙트를 켠다.
-	//GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<RedRenderImage> ().enabled = true;
+	GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<RedRenderImage> ().enabled = true;
 		if(waringOrshout == 0){	
 			imageState = insertImageState.Left; //이미지 상태 값 저장 왼쪽
 			StartCoroutine (LMoveImage ()); //코루틴 실행
@@ -225,10 +248,11 @@ public void RoarStart (int waringOrshout)
 
 public void RoarEnd ()
 {//애니메이션 이벤트를 사용하여 포효시 붉은 이펙트를 끈다.
-	//GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<RedRenderImage> ().enabled = false;
+	GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<RedRenderImage> ().enabled = false;
 	////이미지를 오른쪽이동하는 코루틴을 실행 시키는 함수 애니메이션 이벤트로 실행
 	//		imageState = insertImageState.Right;//이미지 상태 값 저장 오른쪽
 		BigBearBossState = BigBearBossPatternName.BigBearBossIdle;
+		patternReserveList [0] = (int)BigBearBossPatternName.BigBearBossIdle;
 		StartCoroutine(BossMonsterPatternChange());
 		HittedBox.enabled = true;
 }
@@ -325,12 +349,12 @@ public void ImageBackPos()
 				} else if (currentDisTance > RunRange) {
 					BigBearBossState = BigBearBossPatternName.BigBearBossIdle;
 					BigBearBossPattern ((int)BigBearBossState);
-					//changeDirection ();
+					changeDirection ();
 
 				} else if (currentDisTance <= RunRange && currentDisTance > attackRange) {
 					BigBearBossState = BigBearBossPatternName.BigBearBossRun;
 					BigBearBossPattern ((int)BigBearBossState);
-					//changeDirection ();
+					changeDirection ();
 //				if (stateInfo.IsName ("BigBearBossRun")) {
 //
 //					//transform.LookAt(player[0].transform.position);
@@ -359,7 +383,7 @@ public void ImageBackPos()
 
 	
 
-	void PatternReserveListCleanUp(int _normal){
+	void PatternReserveListCleanUp(int _normal){ //애니메이션 이벤트로 실행
 		if (_normal == 0) {
 			for (int i = 0; i < patternReserveList.Length; i++) {
 				if (i < patternReserveList.Length - 1) {
@@ -368,11 +392,19 @@ public void ImageBackPos()
 					patternReserveList [i] = Random.Range ((int)BigBearBossPatternName.BigBearBossAttack, (int)BigBearBossPatternName.BigBearBossOneHandAttack + 1); // max +1 => min <-> max;
 				}
 			}
-		}
-		if(_normal >3){
+
+		}else if(_normal == 3){
+			patternReserveList[0] = _normal;
+			for(int j= 1;j<patternReserveList.Length; j++){
+				patternReserveList [j] = Random.Range ((int)BigBearBossPatternName.BigBearBossAttack, (int)BigBearBossPatternName.BigBearBossOneHandAttack + 1); // max +1 => min <-> max;
+			}
+			BigBearBossPattern (patternReserveList[0]);
+			StopCoroutine (BossMonsterPatternChange());
+
+		}else if(_normal >3){
 		patternReserveList[0] = _normal;
-		for(int j= 1;  j<patternReserveList.Length; j++){
-			patternReserveList [j] = Random.Range ((int)BigBearBossPatternName.BigBearBossAttack, (int)BigBearBossPatternName.BigBearBossOneHandAttack + 1); // max +1 => min <-> max;
+		for(int k= 1;  k<patternReserveList.Length; k++){
+			patternReserveList [k] = Random.Range ((int)BigBearBossPatternName.BigBearBossAttack, (int)BigBearBossPatternName.BigBearBossOneHandAttack + 1); // max +1 => min <-> max;
 			}
 			BigBearBossPattern (patternReserveList[0]);
 			StopCoroutine (BossMonsterPatternChange());
