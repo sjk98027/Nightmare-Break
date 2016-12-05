@@ -146,13 +146,12 @@ public class DataReceiver : MonoBehaviour
         catch (Exception e)
         {
             Debug.Log("연결 끊김 :" + e.Message);
-            return;
         }
-
-        Array.Resize(ref asyncData.msg, asyncData.msgSize);
 
         if (asyncData.msgSize > 0)
         {
+            Array.Resize(ref asyncData.msg, asyncData.msgSize);
+
             while (asyncData.msg.Length > 0)
             {
                 byte[] msgSize = ResizeByteArray(0, NetworkManager.packetLength, ref asyncData.msg);

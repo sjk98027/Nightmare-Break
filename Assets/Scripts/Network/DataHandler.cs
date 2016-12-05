@@ -369,7 +369,7 @@ public class DataHandler : MonoBehaviour
     //Client - 답신 확인
     public void AnswerCheck(DataPacket packet, int udpId)
     {
-        Debug.Log("답신 확인");
+        Debug.Log(packet.endPoint.ToString() + "답신 받음");
 
         try
         {

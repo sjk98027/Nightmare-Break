@@ -365,7 +365,7 @@ public class DataSender : MonoBehaviour
     //Udp 답신 - Udp
     public void UdpAnswer(EndPoint newEndPoint, int udpId)
     {
-        Debug.Log(newEndPoint.ToString() + " Udp 답신 Id : " + udpId);
+        Debug.Log(newEndPoint.ToString() + " Udp 답신 보냄 Id : " + udpId);
 
         ResultData resultData = new ResultData(new byte());
         ResultPacket resultDataPacket = new ResultPacket(resultData);
