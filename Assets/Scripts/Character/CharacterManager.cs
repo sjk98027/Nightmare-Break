@@ -67,7 +67,7 @@ public class CharacterManager : MonoBehaviour
 		state = CharacterState.Idle;
 		rigdbody = GetComponent<Rigidbody> ();
 		enermy = GameObject.FindGameObjectsWithTag ("Enermy");
-		testinput = GameObject.Find ("TestInputManager").GetComponent<TestInputManager> ();
+		//testinput = GameObject.Find ("TestInputManager").GetComponent<TestInputManager> ();
 		charDir = true;
 		JumpMove = false;
 		jumpPower = 10;
