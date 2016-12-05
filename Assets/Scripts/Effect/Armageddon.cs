@@ -12,7 +12,8 @@ public class Armageddon : MonoBehaviour {
 	public Rigidbody FireBallRigid;
     private ParticleSystem ps;
 	public SphereCollider spherecol;
-    
+	int skillLv;
+
     void Start()
     {
 		character = GameObject.FindWithTag ("Player");
@@ -26,6 +27,8 @@ public class Armageddon : MonoBehaviour {
 		spherecol = this.GetComponent<SphereCollider> ();
 		spherecol.enabled = false;
 		StartCoroutine(ArmageddonColl());
+		skillLv = charStatus.SkillLevel [4];
+		armageddonDamage =(int) ((SkillManager.instance.SkillData.GetSkill ((int)charStatus.HClass, 4).GetSkillData (skillLv).SkillValue)*  charStatus.Attack);
 
 
     }
@@ -64,7 +67,6 @@ public class Armageddon : MonoBehaviour {
 
 			if (monsterDamage != null)
 			{	
-				armageddonDamage = charStatus.Attack;
 				monsterDamage.HitDamage (armageddonDamage,character );
 				armageddonDamage = 0;
 			}

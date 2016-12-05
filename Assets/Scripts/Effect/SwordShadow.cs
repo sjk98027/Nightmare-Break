@@ -1,44 +1,39 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MageRing : MonoBehaviour 
+public class SwordShadow : MonoBehaviour 
 {
-
-	public ParticleSystem FireBallparticleSystem;
 	public CharacterStatus charStatus;
 	public CharacterManager charManager;
 	public GameObject character;
-	public int ringDamage;
+	int swordShadowDamage;
 	int skillLv;
+
 
 	// Use this for initialization
 	void Start () 
 	{
-	
 		character = GameObject.FindWithTag ("Player");
 		charManager = character.GetComponent<CharacterManager> ();
 		charStatus = charManager.CharStatus;
-		skillLv = charStatus.SkillLevel [2];
-		ringDamage =(int) ((SkillManager.instance.SkillData.GetSkill ((int)charStatus.HClass, 3).GetSkillData (skillLv).SkillValue)*  charStatus.Attack);
-
-	}
-	
+		skillLv = charStatus.SkillLevel [1];
+		swordShadowDamage =(int) ((SkillManager.instance.SkillData.GetSkill ((int)charStatus.HClass, 2).GetSkillData (skillLv).SkillValue)*  charStatus.Attack);
+	}	
 	// Update is called once per frame
+
 
 	void OnTriggerEnter(Collider coll)
 	{
+
+		Debug.Log (swordShadowDamage);
 		if (coll.gameObject.layer == LayerMask.NameToLayer ("Enermy"))
 		{
-			Debug.Log ("in monster");
 			Monster monsterDamage = coll.gameObject.GetComponent<Monster> ();
-
 			if (monsterDamage != null)
 			{	
-				monsterDamage.HitDamage (ringDamage,character );
-				ringDamage = 0;
+				monsterDamage.HitDamage (swordShadowDamage,character );
+				swordShadowDamage = 0;
 			}
-
 		}
 	}
-
 }
