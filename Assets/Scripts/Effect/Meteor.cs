@@ -6,13 +6,17 @@ public class Meteor : MonoBehaviour {
 	public CharacterStatus charStatus;
 	public CharacterManager charManager;
 	public GameObject character;
-	public int MeteorDamage= 10;
+	public int MeteorDamage;
+	int skillLv;
 
 	void Start()
 	{
 		character = GameObject.FindWithTag ("Player");
 		charManager = character.GetComponent<CharacterManager> ();
 		charStatus = charManager.CharStatus;
+		skillLv = charStatus.SkillLevel [1];
+		MeteorDamage =(int) ((SkillManager.instance.SkillData.GetSkill ((int)charStatus.HClass, 2).GetSkillData (skillLv).SkillValue)*  charStatus.Attack);
+
 	}
 
     void Update()

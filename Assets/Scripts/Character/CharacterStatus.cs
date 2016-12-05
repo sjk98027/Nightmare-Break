@@ -83,7 +83,7 @@ public class CharacterStatus : MonoBehaviour
         attack = 100;
         defense = 10;
         dreamStone = 0;
-        skillLevel = new int[skillNum];
+        skillLevel = new int[skillNum]; 
         activeSkillUse = new bool[equipNum];
         equipLevel = new int[equipNum];
 
