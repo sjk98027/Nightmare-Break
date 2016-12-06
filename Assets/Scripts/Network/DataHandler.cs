@@ -70,7 +70,7 @@ public class DataHandler : MonoBehaviour
 
     public void SetUdpNotifier()
     {
-        p2p_notifier.Add((int)P2PPacketId.RequestConnectionCheck, ConnectionCheckAnswer);
+        p2p_notifier.Add((int)P2PPacketId.RequestConnectionCheck, RequestConnectionCheck);
         p2p_notifier.Add((int)P2PPacketId.UdpAnswer, AnswerCheck);
         p2p_notifier.Add((int)P2PPacketId.CreateUnit, CreateUnit);
         p2p_notifier.Add((int)P2PPacketId.CharacterPosition, CharacterPosition);
@@ -357,9 +357,9 @@ public class DataHandler : MonoBehaviour
     }
 
     //Client - 연결 확인 답장
-    public void ConnectionCheckAnswer(DataPacket packet, int udpId)
+    public void RequestConnectionCheck(DataPacket packet, int udpId)
     {
-        Debug.Log(packet.endPoint.ToString() + "연결 확인 답장");
+        Debug.Log(packet.endPoint.ToString() + "연결 확인 요청 UdpId : " + udpId);
 
         DataSender.Instance.UdpAnswer(packet.endPoint, udpId);
     }
