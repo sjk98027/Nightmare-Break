@@ -158,13 +158,17 @@ public class CharacterManager : MonoBehaviour
 						transform.rotation = Quaternion.Euler (new Vector3 (0, 0.0f, 0));
 						charDir = true;
 					}
-					CharState ((int)CharacterState.Run);
 
+					if (CharacterState.Run != state)
+					{
+						CharState ((int)CharacterState.Run);
+					}
 					if (runState.IsName ("Run"))
 					{
 						if (hor == -1.0f || hor == 1.0f)
 						{
 							transform.Translate ((Vector3.forward * ver - Vector3.right * hor) * Time.deltaTime * (charStatus.MoveSpeed - 3.0f), Space.World);
+
 
 						}
 						else
@@ -175,8 +179,11 @@ public class CharacterManager : MonoBehaviour
 				}
 				else if (ver == 0 && hor == 0)
 				{
-					animator.SetBool ("Run", false);
-					CharState ((int)CharacterState.Idle);
+					if (!animator.GetBool ("Run"))
+					{
+						animator.SetBool ("Run", false);
+						CharState ((int)CharacterState.Idle);
+					}
 				}
 			}
 		}
@@ -238,7 +245,6 @@ public class CharacterManager : MonoBehaviour
 		//	StartCoroutine (uiManager.BattleUIManager.SetSkillCoolTimeUI (0, SkillManager.instance.SkillData.GetSkill((int)charStatus.HClass, 1).SkillCoolTime));
 			if (state == CharacterState.Run || state == CharacterState.Idle || state == CharacterState.Skill1)
 			{
-				state = CharacterState.Skill1;
 				CharState ((int)CharacterState.Skill1);
 			}
 		}
@@ -413,7 +419,7 @@ public class CharacterManager : MonoBehaviour
 			}
             
             //if(Inputstate != (int) CharacterState.Idle && Inputstate != (int)CharacterState.Run)
-			    //DataSender.Instance.CharacterActionSend(Inputstate);
+			 //   DataSender.Instance.CharacterActionSend(Inputstate);
 		}
 	}
 
