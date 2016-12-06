@@ -60,6 +60,8 @@ public class NetworkManager : MonoBehaviour
             receiveMsgs = new Queue<DataPacket>();
             sendMsgs = new Queue<DataPacket>();
 
+            receiveLock = new object();
+
             serverSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             clientSock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             clientSock.Bind(client);

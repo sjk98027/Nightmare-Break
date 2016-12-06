@@ -56,6 +56,7 @@ public class WaitUIManager
 
     public void CreateRoom(int roomNum)
     {
+        Debug.Log("방 생성 성공");
         currentRoomNum = roomNum;
         DataSender.Instance.EnterRoom(roomNum);
     }
