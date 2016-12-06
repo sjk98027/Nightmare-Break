@@ -41,6 +41,7 @@ public class CharacterSelectUI : MonoBehaviour {
             characterPos[i] = GameObject.Find("Pos" + (i+1));
 			if (characterPos [i].transform.GetChild (1)) {
 				characterAnim [i] = characterPos [i].transform.GetChild (1).GetComponent<Animator> ();
+                characterAnim[i].speed = 0;
 			}
             selectImage[i].SetActive(false);
         }
@@ -56,6 +57,7 @@ public class CharacterSelectUI : MonoBehaviour {
                 selectImage[i].SetActive(false);
 				characterAnim [i].SetBool("Select", false);
                 backImage[i].color = alphaChange[1];
+                characterAnim[i].speed = 0;
             }
         }
         if(!selectImage[_imageindex].activeSelf)
@@ -64,6 +66,7 @@ public class CharacterSelectUI : MonoBehaviour {
             characterPos[_imageindex].SetActive(true);
             selectImage[_imageindex].SetActive(true);
 			characterAnim [_imageindex].SetBool ("Select", true);
+            characterAnim[_imageindex].speed = 1;
             startButton.interactable = true;
             deleteButton.interactable = true;
         } else
