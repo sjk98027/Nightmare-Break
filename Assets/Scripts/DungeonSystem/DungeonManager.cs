@@ -123,11 +123,6 @@ public class DungeonManager : MonoBehaviour
         Debug.Log("DungeonManager 초기화 - " + userNum);
         networkManager = GameObject.FindWithTag("NetworkManager").GetComponent<NetworkManager>();
         players = new GameObject[userNum];
-
-        for (int i = 0; i < userNum; i++)
-        {
-            players[i] = new GameObject();
-        }
     }
 
     //defence mode, normal mode

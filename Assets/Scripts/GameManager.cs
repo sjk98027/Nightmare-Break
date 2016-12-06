@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
         inputManager.name = "InputManager";
         inputManager.tag = "InputManager";
 
-        dungeonManager.Initialize(networkManager.Clients.Count);
+        dungeonManager.Initialize(networkManager.Clients.Count + 1);
         //uiManager.SetBattleUIManager();
     }
 
