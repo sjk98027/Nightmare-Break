@@ -8,22 +8,27 @@ public class MonsterSpawnPoint : MonoBehaviour {
 	public GameObject[] ShockwaveMonsterSpawn;
 	public GameObject[] WarriorMonsterSpawn;
 
-	public Transform[] spawnPoint;
+	public int boomMonsterCount;
+	public int shockWaveMonsterCount;
+	public int warriorMonsterCount;
 	public Vector3[] spawnVector;
+
+
+
 	public int sumMonsterCount;
 
 
 
 
 	public void RespawnPointSend(){
-		spawnVector = new Vector3[spawnPoint.Length];
-		for (int i = 0; i < spawnPoint.Length; i++) {
-			spawnVector[i] = spawnPoint [i].transform.position;
+		spawnVector = new Vector3[spawnVector.Length];
+		for (int i = 0; i < spawnVector.Length; i++) {
+			//spawnVector[i] = spawnVector [i].transform.position;
 		}
 	}
 
 	// Use this for initialization
-	void Awake () {
+	public void SpawnMonsterGetting () {
 		sumMonsterCount = WarriorMonsterSpawn.Length + ShockwaveMonsterSpawn.Length + BoomMonsterSpawn.Length;
 		dungeonManager = GameObject.Find ("DungeonManager").GetComponent<DungeonManager>();
 		spawnVector = new Vector3[sumMonsterCount];
@@ -37,8 +42,13 @@ public class MonsterSpawnPoint : MonoBehaviour {
 
 			}
 		}
-		dungeonManager.GetMonsterTransForm (spawnVector);
+		boomMonsterCount = BoomMonsterSpawn.Length;
+		shockWaveMonsterCount = ShockwaveMonsterSpawn.Length;
+		warriorMonsterCount = WarriorMonsterSpawn.Length;
+	}
 
+	public void SpawnVectorGetting(){
+		
 	}
 
 }
