@@ -7,7 +7,7 @@ public class SceneChanger : MonoBehaviour {
     public enum SceneName
     {
         TitleScene,
-        //	waitingScene,
+        waitingScene,
         InGameScene,
         LoadingScene
     }
@@ -17,10 +17,9 @@ public class SceneChanger : MonoBehaviour {
 	[SerializeField]private Image fadePanel;
 	[SerializeField]private LoadingSceneUI loadingScene;
     private SceneName currentScene;
-
     public SceneName CurrentScene { get { return currentScene; } }
-	private static SceneChanger instance = null;
 
+	private static SceneChanger instance = null;
     public static SceneChanger Instance {
 		get{
 			return instance;
@@ -50,7 +49,7 @@ public class SceneChanger : MonoBehaviour {
 		StartCoroutine (FadeOut ());
 	}
 
-	IEnumerator FadeOut(){
+	private	IEnumerator FadeOut(){
 		{
 			GameObject fadeCanvas = Instantiate (Resources.Load<GameObject> ("UI/FadeCanvas"));
 			fadePanel = fadeCanvas.transform.GetChild (0).GetComponent<Image>();
@@ -66,7 +65,7 @@ public class SceneChanger : MonoBehaviour {
 		}
 	}
 
-	IEnumerator FadeIn()
+	private IEnumerator FadeIn()
 	{
 		GameObject fadeCanvas = Instantiate (Resources.Load<GameObject> ("UI/FadeCanvas"));
 		fadePanel = fadeCanvas.transform.GetChild (0).GetComponent<Image> ();

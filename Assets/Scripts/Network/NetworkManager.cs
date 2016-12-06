@@ -34,6 +34,8 @@ public class NetworkManager : MonoBehaviour
     Queue<DataPacket> receiveMsgs;
     Queue<DataPacket> sendMsgs;
 
+    object receiveLock;
+
     Socket clientSock;
     Socket serverSock;
 
@@ -72,8 +74,8 @@ public class NetworkManager : MonoBehaviour
             reSendManager = GetComponent<ReSendManager>();
             dataSender = DataSender.Instance;
 
-            dataReceiver.Initialize(receiveMsgs, serverSock);
-            dataHandler.Initialize(receiveMsgs, sendMsgs);
+            dataReceiver.Initialize(receiveMsgs, serverSock, receiveLock);
+            dataHandler.Initialize(receiveMsgs, sendMsgs, receiveLock);
             dataSender.Initialize(sendMsgs, serverSock, clientSock);
         }
         catch

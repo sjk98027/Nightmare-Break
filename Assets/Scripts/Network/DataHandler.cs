@@ -19,6 +19,7 @@ public class DataHandler : MonoBehaviour
     CharacterStatus characterStatus;
 
     public Queue<DataPacket> receiveMsgs;
+    object receiveLock;
 
     public delegate void P2PRecvNotifier(DataPacket packet, int udpId);
     public delegate void ServerRecvNotifier(DataPacket packet);
@@ -32,9 +33,10 @@ public class DataHandler : MonoBehaviour
 
     public DateTime dTime;
 
-    public void Initialize(Queue<DataPacket> receiveQueue, Queue<DataPacket> sendQueue)
+    public void Initialize(Queue<DataPacket> receiveQueue, Queue<DataPacket> sendQueue, object newLock)
     {
         receiveMsgs = receiveQueue;
+        receiveLock = newLock;
 
         networkManager = GetComponent<NetworkManager>();
         uiManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
@@ -85,7 +87,10 @@ public class DataHandler : MonoBehaviour
             //패킷 : 메시지 타입 + 메시지 내용
             DataPacket packet;
 
-            packet = receiveMsgs.Dequeue();
+            lock (receiveLock)
+            {
+                packet = receiveMsgs.Dequeue();
+            }
 
             HeaderData headerData = new HeaderData();
             HeaderSerializer headerSerializer = new HeaderSerializer();
