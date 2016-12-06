@@ -16,6 +16,8 @@ public class Monster : MonoBehaviour {
 	private Vector3 rightVector3 = new Vector3(0,0,0);
 
 	public BoxCollider HittedBox;
+	private int monsterRunAttackAround;
+	public int MonsterRunAttackAround;
 	//mode,gateArraynumber,monsterArraynumber
 	protected bool moveAble;
 	public bool MoveAble{
@@ -130,6 +132,12 @@ public class Monster : MonoBehaviour {
 			shockWaveInstantiate.GetDamage (baseDamage, this.gameObject.GetComponent<ShockWaveMonster> ());
 		}
 	}
+
+	public virtual void NormalMonsterRealizePattern(){
+		
+	}
+
+
 
 	public void LookAtPattern(StateDirecion state)
 	{

@@ -3,8 +3,8 @@ using System.Collections;
 
 
 public class BoomMonster : Monster {
-	private float searchRange = 12.0f;
-	private float moveSpeed = 3f;
+	private float searchRange = 8.0f;
+	private float moveSpeed = 2f;
 
 	public float currentDisTance;
 	float middleBossToMonsterLimitDistanceMonsterToCenter = 6.0f;
@@ -67,32 +67,32 @@ public class BoomMonster : Monster {
 		for (int i=0; i < _v3.Length; i++) {
 			pointVector [i] = _v3 [i];
 		}
-		StartCoroutine (pointVectorchange ());
+		//StartCoroutine (pointVectorchange ());
 	}
 
-	public IEnumerator pointVectorchange()
-	{
-		while (true)
-		{
-			for (int i = 0; i < pointVector.Length; i++)
-			{
-				if (i > 0 && i < pointVector.Length - 1)
-				{
-					transitionVector = pointVector[i];
-					pointVector[i] = pointVector[i + 1];
-					pointVector[i + 1] = transitionVector;
-				}
-
-				if (i == pointVector.Length - 1)
-				{
-					transitionVector = pointVector[i];
-					pointVector[i] = pointVector[0];
-					pointVector[0] = transitionVector;
-				}
-			}
-			yield return new WaitForSeconds(0.5f);
-		}
-	}
+//	public IEnumerator pointVectorchange()
+//	{
+//		while (true)
+//		{
+//			for (int i = 0; i < pointVector.Length; i++)
+//			{
+//				if (i > 0 && i < pointVector.Length - 1)
+//				{
+//					transitionVector = pointVector[i];
+//					pointVector[i] = pointVector[i + 1];
+//					pointVector[i + 1] = transitionVector;
+//				}
+//
+//				if (i == pointVector.Length - 1)
+//				{
+//					transitionVector = pointVector[i];
+//					pointVector[i] = pointVector[0];
+//					pointVector[0] = transitionVector;
+//				}
+//			}
+//			yield return new WaitForSeconds(0.5f);
+//		}
+//	}
 
 
 	//animation Set; move;
@@ -175,7 +175,35 @@ public class BoomMonster : Monster {
 		}
 	}
 
+	public override void NormalMonsterRealizePattern(){
+		StartCoroutine (AttackAroundRun ());
+	}
 
+	public IEnumerator AttackAroundRun(){
+		while (true) {
+
+			if(IsAlive){
+				if (targetPlayer != null) {
+					MonsterRunAttackAround = Random.Range (0, 3);
+					if (MonsterRunAttackAround == 0) {
+						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
+					}
+					if (MonsterRunAttackAround == 1) {
+						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
+					}
+					if (MonsterRunAttackAround == 2) {
+						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
+					}
+					yield return new WaitForSeconds (2f);
+				} else
+					yield return new WaitForSeconds (2f);
+			}
+			else if(!IsAlive){
+
+				yield return false;
+			}
+		}
+	}
 
 
 	public IEnumerator PatternNormalChange(){
@@ -186,17 +214,31 @@ public class BoomMonster : Monster {
 				if (currentDisTance > searchRange) {
 					monsterState = StatePosition.Idle;
 					Pattern (monsterState);
-					SendMonsterState (monsterState,isAttack, moveAble, movePoint, targetPlayer);
+					SendMonsterState (monsterState, isAttack, moveAble, movePoint, targetPlayer);
 				}
 				//if this object get Attackmotion pattern(stateposition.boom -> attack), and this monsterlife is 20%, boomPattern start;
 				else if (currentDisTance <= searchRange) {
-					movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
+					int i= Random.Range(0,3);
+					if (i == 0) {
+						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
+					}
+					if (i == 1) {
+						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
+					}
+					if (i == 2) {
+						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
+					}
+
+					movePoint = new Vector3(checkDirection.x,0,checkDirection.z);
+
+					{
+						
 					if (currentDisTance > searchRange * 0.2f) {
 						moveAble = true;
 						isAttack = false;
 						monsterState = StatePosition.Run;
 						Pattern (monsterState);
-						SendMonsterState (monsterState,isAttack, moveAble, movePoint, targetPlayer);
+						SendMonsterState (monsterState, isAttack, moveAble, movePoint, targetPlayer);
 					}
 					if (currentDisTance <= searchRange * 0.3f) {
 						if (!isAttack) {
@@ -206,19 +248,20 @@ public class BoomMonster : Monster {
 						if (currentLife > maxLife * 0.3f) {
 							monsterState = StatePosition.Attack;
 							Pattern (monsterState);
-							SendMonsterState (monsterState,isAttack, moveAble, movePoint, targetPlayer);
+							SendMonsterState (monsterState, isAttack, moveAble, movePoint, targetPlayer);
 							yield return new WaitForSeconds (0.5f);
 						} else if (currentLife < maxLife * 0.3) {
 							if (Random.Range (0, 4) <= 2) {
 								monsterState = StatePosition.Attack;
 								Pattern (monsterState);
-								SendMonsterState (monsterState,isAttack, moveAble, movePoint, targetPlayer);
+								SendMonsterState (monsterState, isAttack, moveAble, movePoint, targetPlayer);
 								yield return new WaitForSeconds (0.5f);
-							} else if(Random.Range (0, 4) > 2)
+							} else if (Random.Range (0, 4) > 2)
 								monsterState = StatePosition.Boom;
 							Pattern (monsterState);
-							SendMonsterState (monsterState,isAttack, moveAble, movePoint,targetPlayer);
+							SendMonsterState (monsterState, isAttack, moveAble, movePoint, targetPlayer);
 							yield return new WaitForSeconds (4f);
+							}
 						}
 					}
 				}

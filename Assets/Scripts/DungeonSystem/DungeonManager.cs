@@ -195,8 +195,10 @@ public class DungeonManager : MonoBehaviour
 					boomMonster [i].PlayerSearch ();
 					boomMonster [i].MonsterSet (900,2);
 					boomMonster [i].NormalMode = normalMode;
+					boomMonster [i].NormalMonsterRealizePattern ();
 					boomMonster [i].GateArrayNumber = mapNumber;
 					boomMonster [i].MonsterArrayNumber = i;
+
 					if (hostGuest != HostGuest.Host) {
 						boomMonster [i].GuestMonsterPatternChange ();
 					}
@@ -213,6 +215,7 @@ public class DungeonManager : MonoBehaviour
 					shockWaveMonster [j].PlayerSearch ();
 					shockWaveMonster [j].MonsterSet (900,2);
 					shockWaveMonster [j].NormalMode = normalMode;
+					shockWaveMonster [j].NormalMonsterRealizePattern ();
 					shockWaveMonster [j].GateArrayNumber = mapNumber;
 					shockWaveMonster [j].MonsterArrayNumber = j;
 					if (hostGuest == HostGuest.Host) {
@@ -229,6 +232,7 @@ public class DungeonManager : MonoBehaviour
 					warriorMonster [k].PlayerSearch ();
 					warriorMonster [k].MonsterSet (900,2);
 					warriorMonster [k].NormalMode = normalMode;
+					warriorMonster [k].NormalMonsterRealizePattern ();
 					warriorMonster [k].GateArrayNumber = mapNumber;
 					warriorMonster [k].MonsterArrayNumber = k;
 					if (hostGuest == HostGuest.Host) {
