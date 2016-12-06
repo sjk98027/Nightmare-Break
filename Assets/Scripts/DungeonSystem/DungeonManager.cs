@@ -332,6 +332,7 @@ public class DungeonManager : MonoBehaviour
         }
         else
         {
+            Debug.Log("이미 있는 캐릭터 인덱스");
             return null;
         }        
     }
