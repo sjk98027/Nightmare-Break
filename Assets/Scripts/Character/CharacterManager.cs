@@ -454,7 +454,7 @@ public class CharacterManager : MonoBehaviour
 
 	public void SetPosition (CharacterPositionData newPositionData)
 	{
-		Debug.Log ("캐릭터 위치 설정");
+		Debug.Log ("캐릭터 위치 설정 유저 번호 : " + userNum);
 
 		if (newPositionData.dir)
 		{
@@ -478,4 +478,3 @@ public class CharacterManager : MonoBehaviour
 		charStatus.DecreaseMagicPoint (SkillManager.instance.SkillData.GetSkill ((int)charStatus.HClass, SkillArray).ManaCost);
 	}
 }
-

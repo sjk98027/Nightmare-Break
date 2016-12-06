@@ -419,7 +419,7 @@ public class DataHandler : MonoBehaviour
     //Client
     public void CharacterPosition(DataPacket packet, int udpId)
     {
-        Debug.Log("캐릭터 위치 수신");
+        Debug.Log(packet.endPoint.ToString() + "캐릭터 위치 수신");
 
         CharacterPositionPacket characterPositionPacket = new CharacterPositionPacket(packet.msg);
         CharacterPositionData characterPositionData = characterPositionPacket.GetData();

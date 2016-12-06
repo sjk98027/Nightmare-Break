@@ -18,9 +18,8 @@ public class DungeonManager : MonoBehaviour
 	public HostGuest hostGuest;
     //MonsterController change-> DungeonManager;
     //DungeonScene change -> DungeonManager;
-    private const int MaxPlayerNum = 4;
     [SerializeField]
-    private GameObject[] players = new GameObject[MaxPlayerNum];
+    private GameObject[] players;
     public GameObject[] Players { get { return players; } }
     public SceneChangeObject nextSceneObject;
     public SceneChangeObject beforeScneObject;
@@ -116,9 +115,10 @@ public class DungeonManager : MonoBehaviour
 	}
 
     //각종 매니저 초기화
-    public void Initialize()
+    public void Initialize(int userNum)
     {
         networkManager = GameObject.FindWithTag("NetworkManager").GetComponent<NetworkManager>();
+        players = new GameObject[userNum];
     }
 
     //defence mode, normal mode
