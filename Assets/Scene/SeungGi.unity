@@ -1272,6 +1272,49 @@ Transform:
   - {fileID: 1790493270}
   m_Father: {fileID: 1116179784}
   m_RootOrder: 0
+--- !u!1001 &821951687
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 400002, guid: a434b024ef3164944a4305eae609e021, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: a434b024ef3164944a4305eae609e021, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: a434b024ef3164944a4305eae609e021, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.726
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: a434b024ef3164944a4305eae609e021, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: a434b024ef3164944a4305eae609e021, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: a434b024ef3164944a4305eae609e021, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: a434b024ef3164944a4305eae609e021, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: a434b024ef3164944a4305eae609e021, type: 3}
+      propertyPath: m_RootOrder
+      value: 16
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 9500000, guid: a434b024ef3164944a4305eae609e021, type: 3}
+  m_ParentPrefab: {fileID: 100100000, guid: a434b024ef3164944a4305eae609e021, type: 3}
+  m_IsPrefabParent: 0
 --- !u!1 &843519919
 GameObject:
   m_ObjectHideFlags: 0
@@ -1597,6 +1640,7 @@ GameObject:
   - 224: {fileID: 987881999}
   - 222: {fileID: 987882001}
   - 114: {fileID: 987882000}
+  - 95: {fileID: 987882002}
   m_Layer: 5
   m_Name: ComBoText
   m_TagString: Untagged
@@ -1662,6 +1706,23 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 987881998}
+--- !u!95 &987882002
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 987881998}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9eda7b45e9e3c4c4889620777a6586a2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1056214446
 GameObject:
   m_ObjectHideFlags: 0
@@ -2041,8 +2102,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 188, y: 0.25001645}
-  m_SizeDelta: {x: 103, y: 108.5}
+  m_AnchoredPosition: {x: 226.6, y: -0.25}
+  m_SizeDelta: {x: 174.9, y: 108.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1263837126
 MonoBehaviour:
@@ -2056,7 +2117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0.03676468, g: 1, b: 0.96014184, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2064,19 +2125,19 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
-    m_FontStyle: 0
+    m_Font: {fileID: 12800000, guid: 3f825f1d59629c14a8c11f39be1af614, type: 3}
+    m_FontSize: 70
+    m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 0
+    m_MinSize: 7
+    m_MaxSize: 70
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: 999
 --- !u!222 &1263837127
 CanvasRenderer:
   m_ObjectHideFlags: 0
