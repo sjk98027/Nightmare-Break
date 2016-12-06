@@ -408,6 +408,8 @@ public class DataHandler : MonoBehaviour
 
         int index = userNum[packet.endPoint];
 
+        Debug.Log("인덱스 : " + index);
+
         if(dungeonManager.CreateUnit(createUnitData.ID, index, new Vector3(createUnitData.PosX, createUnitData.PosY, createUnitData.PosZ)) != null)
         {
             DataSender.Instance.UdpAnswer(packet.endPoint, udpId);
@@ -421,11 +423,10 @@ public class DataHandler : MonoBehaviour
 
         CharacterPositionPacket characterPositionPacket = new CharacterPositionPacket(packet.msg);
         CharacterPositionData characterPositionData = characterPositionPacket.GetData();
-        
-        Debug.Log("캐릭터 방향 : " + characterPositionData.dir);
-        Debug.Log("캐릭터 위치 : " + characterPositionData.posX + ", " + characterPositionData.posY + ", " + characterPositionData.posZ + ", ");
 
         int index = userNum[packet.endPoint];
+
+        Debug.Log("캐릭터 인덱스 : " + index);
 
         CharacterManager characterManager = dungeonManager.Players[index + 1].GetComponent<CharacterManager>();
         characterManager.SetPosition(characterPositionData);

@@ -91,7 +91,6 @@ public class ReSendManager : MonoBehaviour
             {
                 for (int i = 0; i < reSendDatum.Length; i++)
                 {
-                    Debug.Log(reSendDatum[i].Count);
                     if (reSendDatum[i].Count != 0)
                     {
                         isConnecting = true;
@@ -101,9 +100,6 @@ public class ReSendManager : MonoBehaviour
                     {
                         isConnecting = false;
                     }
-
-                    Debug.Log(i);
-                    Debug.Log(isConnecting);
                 }
 
                 if (!isConnecting)
@@ -116,7 +112,6 @@ public class ReSendManager : MonoBehaviour
             {
                 for (int i = 0; i < reSendDatum.Length; i++)
                 {
-                    Debug.Log(reSendDatum[i].Count);
                     if (reSendDatum[i].Count != 0)
                     {
                         characterCreating = true;
@@ -126,9 +121,6 @@ public class ReSendManager : MonoBehaviour
                     {
                         characterCreating = false;
                     }
-
-                    Debug.Log(i);
-                    Debug.Log(characterCreating);
                 }
 
                 if (!characterCreating)

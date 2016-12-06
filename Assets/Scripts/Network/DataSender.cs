@@ -380,6 +380,8 @@ public class DataSender : MonoBehaviour
     //캐릭터의 생성 - Udp
     public void CreateUnitSend(EndPoint endPoint, short characterId, float posX, float posY, float posZ)
     {
+        Debug.Log(endPoint.ToString() + "캐릭터 생성 보냄");
+
         CreateUnitData createUnitData = new CreateUnitData(characterId, posX, posY, posZ);
         CreateUnitPacket createUnitDataPacket = new CreateUnitPacket(createUnitData);
         createUnitDataPacket.SetPacketId((int)P2PPacketId.CreateUnit);
