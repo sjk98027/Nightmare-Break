@@ -128,11 +128,14 @@ public class DataReceiver : MonoBehaviour
         tcpSock.BeginReceive(asyncData.msg, 0, NetworkManager.packetLength, SocketFlags.None, new AsyncCallback(TcpReceiveLengthCallback), asyncData);
     }
 
-    //Udp (클라이언트) 수신 시작
-    public void StartUdpReceive(Socket newSock, EndPoint client)
+    public void SetUdpSocket(Socket newSock)
     {
         udpSock = newSock;
+    }
 
+    //Udp (클라이언트) 수신 시작
+    public void StartUdpReceive(EndPoint client)
+    {
         //매개변수로 받은 리스트의 EndPoint에서 비동기 수신을 대기한다
         AsyncData asyncData = new AsyncData(client);
         udpSock.BeginReceiveFrom(asyncData.msg, 0, AsyncData.msgMaxSize, SocketFlags.None, ref asyncData.EP, new AsyncCallback(UdpReceiveDataCallback), asyncData);
@@ -188,7 +191,7 @@ public class DataReceiver : MonoBehaviour
         byte[] sourArray = new byte[array.Length - length];
 
         Array.Copy(array, index, desArray, 0, length);
-        Array.Copy(array, length, sourArray, 0, array.Length - length);
+        Array.Copy(array, length + index, sourArray, 0, array.Length - length - index);
         array = sourArray;
 
         return desArray;

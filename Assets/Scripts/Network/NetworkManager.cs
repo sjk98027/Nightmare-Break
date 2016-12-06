@@ -44,6 +44,7 @@ public class NetworkManager : MonoBehaviour
     DataSender dataSender;
     ReSendManager reSendManager;
 
+    public Socket ClientSock { get { return clientSock; } }
     public List<EndPoint> Clients { get { return clients; } }
     public DataReceiver DataReceiver { get { return dataReceiver; } }
     public DataHandler DataHandler { get { return dataHandler; } }
@@ -54,13 +55,13 @@ public class NetworkManager : MonoBehaviour
     {
         try
         {
-            mainServer = new IPEndPoint(IPAddress.Parse("192.168.94.88"), mainServerPortNumber);
-            client = new IPEndPoint(IPAddress.Parse(ip), clientPortNumber);
-
             receiveMsgs = new Queue<DataPacket>();
             sendMsgs = new Queue<DataPacket>();
 
             receiveLock = new object();
+
+            mainServer = new IPEndPoint(IPAddress.Parse("192.168.94.88"), mainServerPortNumber);
+            client = new IPEndPoint(IPAddress.Parse(ip), clientPortNumber);
 
             serverSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             clientSock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
@@ -103,7 +104,7 @@ public class NetworkManager : MonoBehaviour
     {
         IPEndPoint client = new IPEndPoint(IPAddress.Parse(newIp), clientPortNumber);
         clients.Add(client);
-        dataReceiver.StartUdpReceive(clientSock, client);
+        dataReceiver.StartUdpReceive(client);
 
         int index = dataHandler.userNum[(EndPoint)client];
         dataSender.RequestConnectionCheck((EndPoint)client);

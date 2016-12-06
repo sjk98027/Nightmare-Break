@@ -88,8 +88,6 @@ public class LoginUIManager
 
     public void OnClickCreateAccountButton()
     {
-        Debug.Log("회원가입");
-
         if (createId.text.Length >= 4 && createPw.text.Length >= 6)
         {
             DataSender.Instance.CreateAccount(createId.text, createPw.text);
@@ -102,8 +100,6 @@ public class LoginUIManager
 
     public void OnClickDeleteAccountButton()
     {
-        Debug.Log("계정 탈퇴");
-
         if (deleteId.text.Length >= 4 && deletePw.text.Length >= 6)
         {
             DataSender.Instance.DeleteAccount(deleteId.text, deletePw.text);
@@ -116,8 +112,6 @@ public class LoginUIManager
 
     public void OnClickLoginButton()
     {
-        Debug.Log("로그인");
-
         if (loginId.text.Length >= 4 && loginPw.text.Length >= 6)
         {
             DataSender.Instance.Login(loginId.text, loginPw.text);
@@ -160,8 +154,6 @@ public class LoginUIManager
 
     public void OnClickCreateCharacterButton()
     {
-        Debug.Log("캐릭터 생성");
-
         if (createCharacterName.text.Length < 1)
         {
             Debug.Log("캐릭터 이름을 1글자 이상 입력하세요");
@@ -174,15 +166,11 @@ public class LoginUIManager
 
     public void OnClickDeleteCharacterButton()
     {
-        Debug.Log("캐릭터 삭제");
-
         DataSender.Instance.DeleteCharacter(currentCharacter);
     }
 
     public void OnClickSelectCharacterButton()
     {
-        Debug.Log("캐릭터 선택");
-
         DataSender.Instance.SelectCharacter(currentCharacter);
     }
 }

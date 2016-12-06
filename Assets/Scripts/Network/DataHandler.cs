@@ -131,6 +131,11 @@ public class DataHandler : MonoBehaviour
             }
         }
     }
+
+    public int GetUserNum(EndPoint endPoint)
+    {
+        return userNum[endPoint];
+    }
     
     //Server - 가입 결과
     public void CreateAccountResult(DataPacket packet)
@@ -333,6 +338,7 @@ public class DataHandler : MonoBehaviour
         userNum = new Dictionary<EndPoint, int>();
         
         networkManager.ReSendManager.Initialize(matchData.ip.Length);
+        networkManager.DataReceiver.SetUdpSocket(networkManager.ClientSock);
 
         for (int i = 0; i < matchData.ip.Length; i++)
         {

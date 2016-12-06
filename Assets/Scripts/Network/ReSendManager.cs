@@ -28,7 +28,7 @@ public class ReSendManager : MonoBehaviour
 
     public void AddReSendData(SendData sendData)
     {
-        int index = networkManager.DataHandler.userNum[sendData.EndPoint];
+        int index = networkManager.DataHandler.GetUserNum(sendData.EndPoint);
 
         try
         {
@@ -43,7 +43,7 @@ public class ReSendManager : MonoBehaviour
 
     public void RemoveReSendData(SendData sendData)
     {
-        int index = networkManager.DataHandler.userNum[sendData.EndPoint];
+        int index = networkManager.DataHandler.GetUserNum(sendData.EndPoint);
 
         if (reSendDatum[index].ContainsKey(sendData.UdpId))
         {

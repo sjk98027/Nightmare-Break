@@ -338,7 +338,7 @@ public class DataSender : MonoBehaviour
     {
         Debug.Log(endPoint.ToString() + " 연결 체크 요청");
 
-        int index = networkManager.DataHandler.userNum[endPoint];
+        int index = networkManager.DataHandler.GetUserNum(endPoint);
 
         ResultData resultData = new ResultData(new byte());
         ResultPacket resultDataPacket = new ResultPacket(resultData);
@@ -388,7 +388,7 @@ public class DataSender : MonoBehaviour
         CreateUnitPacket createUnitDataPacket = new CreateUnitPacket(createUnitData);
         createUnitDataPacket.SetPacketId((int)P2PPacketId.CreateUnit);
 
-        int index = networkManager.DataHandler.userNum[endPoint];
+        int index = networkManager.DataHandler.GetUserNum(endPoint);
 
         DataPacket packet = new DataPacket(CreateUdpPacket(createUnitDataPacket, udpId[index]), endPoint);
         sendMsgs.Enqueue(packet);
