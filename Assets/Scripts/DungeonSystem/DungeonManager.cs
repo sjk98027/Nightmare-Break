@@ -30,6 +30,8 @@ public class DungeonManager : MonoBehaviour
 	public ShockWaveMonster[] shockWaveMonster;
 	public BossMonsterKYW bossMonster;
 
+	public MonsterSpawnPoint spawnPoint;
+
     InputManager inputManager;
     UIManager uiManager;
     NetworkManager networkManager;
@@ -49,7 +51,7 @@ public class DungeonManager : MonoBehaviour
     [SerializeField]int mapNumber;
 
 
-	//monsterSpawnPoint -> dungeonManager monsterinstantiate count send;
+
 	void Start()
 	{
 		DungeonConstruct();//mapNumber - > inspector define
@@ -61,6 +63,7 @@ public class DungeonManager : MonoBehaviour
 		if(section.Length != 0){
 			SectionSet ();
 		}
+		//spawnPoint.SpawnVectorGetting ();
 
 	}
 
@@ -159,10 +162,16 @@ public class DungeonManager : MonoBehaviour
 
     void DungeonConstruct()
     {
-     
-		normalMode = true;
-        MonsterSet();
+		if (spawnPoint != null) {
+			spawnPoint.SpawnMonsterGetting ();
+		
 
+			boomMonster = new BoomMonster[spawnPoint.boomMonsterCount];
+			shockWaveMonster = new ShockWaveMonster[spawnPoint.shockWaveMonsterCount];
+			warriorMonster = new WarriorMonster[spawnPoint.warriorMonsterCount];
+			normalMode = true;
+			MonsterSet ();
+		}
         //if (mapNumber == 0) {
         //	nextSceneObject.SceneChangeObjectSet (mapNumber+1);
         //}
@@ -178,16 +187,28 @@ public class DungeonManager : MonoBehaviour
 
     public void MonsterSet()
     {
-		
-
-
-		//Instantiate(Resources.Load("MonsterPrefebs/"+boomMonster.ToString()));
-		{
-			boomMonster = gameObject.transform.GetComponentsInChildren<BoomMonster> ();
-			shockWaveMonster = gameObject.transform.GetComponentsInChildren<ShockWaveMonster> ();
-			warriorMonster = gameObject.GetComponentsInChildren<WarriorMonster> ();
-			monsterCount = (boomMonster.Length + warriorMonster.Length + shockWaveMonster.Length);
+		for (int i = 0; i < spawnPoint.boomMonsterCount; i++) {
+			GameObject objBoomMonster = (GameObject)Instantiate (Resources.Load ("Monster/Frog"),new Vector3(spawnPoint.spawnVector[i].x,spawnPoint.spawnVector[i].y,spawnPoint.spawnVector[i].z),this.gameObject.transform.rotation);
+			objBoomMonster.transform.SetParent (this.transform);
+			boomMonster [i] = objBoomMonster.GetComponent<BoomMonster> ();
 		}
+		for (int i = 0; i < spawnPoint.shockWaveMonsterCount; i++) {
+			GameObject objShockwaveMonster= (GameObject)Instantiate (Resources.Load ("Monster/Duck"),new Vector3 (spawnPoint.spawnVector[i+spawnPoint.boomMonsterCount].x,spawnPoint.spawnVector[i+spawnPoint.boomMonsterCount].y,spawnPoint.spawnVector[i+spawnPoint.boomMonsterCount].z), this.transform.rotation);
+			objShockwaveMonster.transform.SetParent (this.transform);
+			shockWaveMonster [i] = objShockwaveMonster.GetComponent<ShockWaveMonster> (); 
+		}
+		for (int i = 0; i < spawnPoint.warriorMonsterCount; i++) {
+			GameObject objWarriorMonster= (GameObject)Instantiate (Resources.Load ("Monster/Rabbit"),new Vector3 (spawnPoint.spawnVector[i+spawnPoint.boomMonsterCount+spawnPoint.shockWaveMonsterCount].x,spawnPoint.spawnVector[i+spawnPoint.boomMonsterCount+spawnPoint.shockWaveMonsterCount].y,spawnPoint.spawnVector[i+spawnPoint.boomMonsterCount+spawnPoint.shockWaveMonsterCount].z), this.transform.rotation);
+			objWarriorMonster.transform.SetParent (this.transform);
+			warriorMonster[i]= objWarriorMonster.GetComponent<WarriorMonster> ();
+		}
+
+//		{
+//			boomMonster = gameObject.transform.GetComponentsInChildren<BoomMonster> ();
+//			shockWaveMonster = gameObject.transform.GetComponentsInChildren<ShockWaveMonster> ();
+//			warriorMonster = gameObject.GetComponentsInChildren<WarriorMonster> ();
+			monsterCount = (boomMonster.Length + warriorMonster.Length + shockWaveMonster.Length);
+//		}
 
 
 			for (int i = 0; i < boomMonster.Length; i++) {
