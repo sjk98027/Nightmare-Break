@@ -45,14 +45,17 @@ public class ReSendManager : MonoBehaviour
     {
         int index = networkManager.DataHandler.userNum[sendData.EndPoint];
 
-        try
+        if (reSendDatum[index].ContainsKey(sendData.UdpId))
         {
-            Debug.Log(index + "번 유저에 " + sendData.UdpId + " 아이디 메소드 삭제");
-            reSendDatum[index].Remove(sendData.UdpId);
-        }
-        catch
-        {
-            Debug.Log("ReSendManager::AddReSendData.Remove 에러");
+            try
+            {
+                Debug.Log(index + "번 유저에 " + sendData.UdpId + " 아이디 메소드 삭제");
+                reSendDatum[index].Remove(sendData.UdpId);
+            }
+            catch
+            {
+                Debug.Log("ReSendManager::AddReSendData.Remove 에러");
+            }
         }
     }
 
@@ -66,9 +69,7 @@ public class ReSendManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(3.0f);
-
-            Debug.Log("ReSendData 체크");
+            yield return new WaitForSeconds(1.0f);
 
             //모든 플레이어들의 ReSendData를 확인한다
             for (int i = 0; i < reSendDatum.Length; i++)

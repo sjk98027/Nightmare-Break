@@ -107,8 +107,6 @@ public class DataHandler : MonoBehaviour
                 DataReceiver.ResizeByteArray(0, NetworkManager.packetSource + NetworkManager.packetId + NetworkManager.udpId, ref packet.msg);
             }
 
-            Debug.Log("메시지 타입 : " + headerData.id);
-
             if (packet.endPoint == null)
             {
                 if (server_notifier.TryGetValue(headerData.id, out serverRecvNotifier))
@@ -361,7 +359,7 @@ public class DataHandler : MonoBehaviour
     //Client - 연결 확인 답장
     public void ConnectionCheckAnswer(DataPacket packet, int udpId)
     {
-        Debug.Log("연결 확인 답장");
+        Debug.Log(packet.endPoint.ToString() + "연결 확인 답장");
 
         DataSender.Instance.UdpAnswer(packet.endPoint, udpId);
     }
@@ -369,7 +367,7 @@ public class DataHandler : MonoBehaviour
     //Client - 답신 확인
     public void AnswerCheck(DataPacket packet, int udpId)
     {
-        Debug.Log(packet.endPoint.ToString() + "답신 받음");
+        Debug.Log(packet.endPoint.ToString() + "답신 받음 아이디 : " + udpId);
 
         try
         {

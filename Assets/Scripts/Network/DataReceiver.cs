@@ -95,7 +95,7 @@ public class DataReceiver : MonoBehaviour
             return;
         }
 
-        Debug.Log("받은 메시지 길이 : " + asyncData.msgSize);
+        //Debug.Log("받은 메시지 길이 : " + asyncData.msgSize);
 
         if (asyncData.msgSize <= 0)
         {
