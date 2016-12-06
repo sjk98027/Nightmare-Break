@@ -64,7 +64,7 @@ public class CharacterManager : MonoBehaviour
 	void Start ()
 	{
 		SetCharacterStatus ();
-		uiManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
+		//uiManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
 		animator = GetComponent<Animator> ();
 		state = CharacterState.Idle;
 		rigdbody = GetComponent<Rigidbody> ();

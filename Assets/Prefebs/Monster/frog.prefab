@@ -341,7 +341,7 @@ GameObject:
   - 114: {fileID: 114000011794516460}
   - 65: {fileID: 65000010380416406}
   m_Layer: 0
-  m_Name: Frog
+  m_Name: frog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
