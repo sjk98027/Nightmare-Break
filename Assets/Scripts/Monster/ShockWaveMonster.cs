@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ShockWaveMonster : Monster {
 	private float searchRange = 12.0f;
-	private float moveSpeed = 1f;
+	private float moveSpeed = 3f;
 
 	public float currentDisTance;
 	float middleBossToMonsterLimitDistanceMonsterToCenter = 6.0f;
