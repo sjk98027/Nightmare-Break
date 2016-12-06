@@ -402,7 +402,7 @@ public class DataHandler : MonoBehaviour
     //Client
     public void CreateUnit(DataPacket packet, int udpId)
     {
-        Debug.Log("유닛 생성");
+        Debug.Log(packet.endPoint.ToString() + "유닛 생성");
         CreateUnitPacket createUnitPacket = new CreateUnitPacket(packet.msg);
         CreateUnitData createUnitData = createUnitPacket.GetData();
 

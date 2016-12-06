@@ -43,7 +43,7 @@ GameObject:
   - 65: {fileID: 65000010153199934}
   - 114: {fileID: 114000013021141906}
   m_Layer: 0
-  m_Name: EspadaSword
+  m_Name: GiganticSword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,7 +89,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: d9533e0f750cccb4cb297de6620a6885, type: 2}
+  - {fileID: 2100000, guid: c99b19c3cc6ad7542a74a449594ae678, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
@@ -111,7 +111,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012396006902}
-  m_Mesh: {fileID: 4300000, guid: 54054d837c2b63b47bc481b307091a6f, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 6fb4ffedb2248664b899215848a21014, type: 3}
 --- !u!54 &54000011825610840
 Rigidbody:
   m_ObjectHideFlags: 1
