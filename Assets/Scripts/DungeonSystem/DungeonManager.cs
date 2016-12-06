@@ -210,14 +210,14 @@ public class DungeonManager : MonoBehaviour
 			for (int j = 0; j < shockWaveMonster.Length; j++) {
 				if (shockWaveMonster.Length != 0) {
 					shockWaveMonster [j].PlayerSearch ();
-				shockWaveMonster [j].MonsterSet (900,2);
+					shockWaveMonster [j].MonsterSet (900,2);
 					shockWaveMonster [j].NormalMode = normalMode;
 					shockWaveMonster [j].GateArrayNumber = mapNumber;
 					shockWaveMonster [j].MonsterArrayNumber = j;
 					if (hostGuest == HostGuest.Host) {
 						shockWaveMonster [j].MonSterPatternUpdateConduct (normalMode);
 					}
-					else if (hostGuest != HostGuest.Guest) {
+					else if (hostGuest != HostGuest.Host) {
 						shockWaveMonster [j].GuestMonsterPatternChange ();
 					}
 				}
