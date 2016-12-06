@@ -11,11 +11,14 @@ public class DataReceiver : MonoBehaviour
 
     Queue<DataPacket> msgs;
 
+    object receiveLock;
+
     //클래스 초기화
-    public void Initialize(Queue<DataPacket> receiveMsgs, Socket newSock)
+    public void Initialize(Queue<DataPacket> receiveMsgs, Socket newSock, object newLock)
     {
         msgs = receiveMsgs;
         tcpSock = newSock;
+        receiveLock = newLock;
         StartTcpReceive();
     }
 
@@ -109,7 +112,10 @@ public class DataReceiver : MonoBehaviour
 
             try
             {
-                msgs.Enqueue(packet);
+                lock (receiveLock)
+                {
+                    msgs.Enqueue(packet);
+                }
             }
             catch
             {
@@ -160,7 +166,10 @@ public class DataReceiver : MonoBehaviour
                 byte[] msg = ResizeByteArray(0, asyncData.msgSize, ref asyncData.msg);
                 DataPacket packet = new DataPacket(msg, asyncData.EP);
 
-                msgs.Enqueue(packet);
+                lock (receiveLock)
+                {
+                    msgs.Enqueue(packet);
+                }
             }
         }
 
