@@ -179,7 +179,7 @@ public class CharacterManager : MonoBehaviour
 				}
 				else if (ver == 0 && hor == 0)
 				{
-					if (!animator.GetBool ("Run"))
+					if (animator.GetBool ("Run"))
 					{
 						animator.SetBool ("Run", false);
 						CharState ((int)CharacterState.Idle);
