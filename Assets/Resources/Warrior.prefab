@@ -1921,11 +1921,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000011635215412}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 736e31eafd411b44f850521955e8355c, type: 3}
+  m_Script: {fileID: 11500000, guid: 85b143f7a0671c14ab000f9a7fbb12ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 0}
   charManager: {fileID: 0}
+  charStatus: {fileID: 0}
   damage: 0
 --- !u!114 &114000013422170302
 MonoBehaviour:
@@ -1938,45 +1939,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49494eaf77bde6e4a96a0fded9f18500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   rend: {fileID: 0}
-  charstate:
-    charClass: 0
-    characterName: 
-    characterNum: 0
-    characterLevel: 0
-    maxHealthPoint: 0
-    maxManaPoint: 0
-    demendExp: 0
-    needExp: 0
-    healthPoint: 0
-    magicPoint: 0
-    defense: 0
-    critical: 0
-    charSpeed: 0
-    dreamStone: 0
-  skillTime: 0
-  skillCoolTime: []
-  charDir: 0
-  JumpMove: 0
   rigdbody: {fileID: 0}
   charWeapon: {fileID: 65000013061797578}
+  inputmanager: {fileID: 0}
+  charStatus: {fileID: 0}
+  enermy: []
+  jumpPower: 0
+  charDir: 0
+  JumpMove: 0
   normalAttackState: 0
   skillAttackState: 0
-  basicDamage: 0
-  inputmanager: {fileID: 0}
-  enermy: []
-  wall: {fileID: 0}
-  jumpPower: 0
   charAlive: 1
+  charBasicDamage: 0
+  skillTime: 0
   state: 0
-  uiManager: {fileID: 0}
+  testinput: {fileID: 0}
   GiganticSword: {fileID: 0}
   giganticSwordSpeed: 0
-  giganticSwordMatarial: 0
-  giganticSwordRendTime: 0
   giganticSwordTemp: {fileID: 0}
-  giganticSwordCastSword: {fileID: 0}
   SwordDance: {fileID: 0}
+  rise: 0
+  bloodingWeapon: {fileID: 0}
+  riseCooltime: 0
 --- !u!137 &137000010394733438
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
