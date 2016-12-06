@@ -52,7 +52,45 @@ public class SkillData{
         skillList[6].AddSkillLevelData(new SkillLevelData(4, 2.0f, "무기 공격력의 200%의 추가 방어력을 얻는다."));
 
         #endregion
-    }
+		#region 마법사 스킬리스트
+		skillList.Add(new SkillBasicData(SkillBasicData.SkillTypes.Active, "파이어볼", 1, 40, 5, "불덩이를 소환하여 전방에 투사한다."));
+		skillList.Add(new SkillBasicData(SkillBasicData.SkillTypes.Active, "메테오스트라이크", 2, 50, 3, "마법진을 소환하여 메테오 폭격을 가한다."));
+		skillList.Add(new SkillBasicData(SkillBasicData.SkillTypes.Active, "플레임임팩트", 3, 100, 3, "주위 적들에게 데미지를 주며, 캐릭터에게서 밀쳐낸다."));
+		skillList.Add(new SkillBasicData(SkillBasicData.SkillTypes.Active, "아마겟돈", 4, 150, 4, "거대한 화염구를 소환하여 적들을 섬멸한다."));
+		skillList.Add(new SkillBasicData(SkillBasicData.SkillTypes.Passive, "스펠레이지", 5, "스킬시전시 공격력을 추가하지만, 더 많은 마나를 소모하게 한다."));
+		skillList.Add(new SkillBasicData(SkillBasicData.SkillTypes.Passive, "집중", 6, "마나 회복량이 증가한다."));
+
+		skillList[7].AddSkillLevelData(new SkillLevelData(1, 1.2f, "마법 공격력에 120%의 공격력을 가진다."));
+		skillList[7].AddSkillLevelData(new SkillLevelData(2, 1.4f, "마법 공격력에 140%의 공격력을 가진다."));
+		skillList[7].AddSkillLevelData(new SkillLevelData(3, 1.2f, "마법 공격력에 160%의 공격력을 가진다."));
+		skillList[7].AddSkillLevelData(new SkillLevelData(4, 1.4f, "마법 공격력에 180%의 공격력을 가진다."));
+
+		skillList[8].AddSkillLevelData(new SkillLevelData(1, 1.1f, "마법 공격력에 110%의 공격력을 가진다."));
+		skillList[8].AddSkillLevelData(new SkillLevelData(2, 1.2f, "마법 공격력에 120%의 공격력을 가진다."));
+		skillList[8].AddSkillLevelData(new SkillLevelData(3, 1.3f, "마법 공격력에 130%의 공격력을 가진다."));
+		skillList[8].AddSkillLevelData(new SkillLevelData(4, 1.4f, "마법 공격력에 140%의 공격력을 가진다."));
+
+		skillList[9].AddSkillLevelData(new SkillLevelData(1, 1.2f, "마법 공격력에 120%의 공격력을 가진다."));
+		skillList[9].AddSkillLevelData(new SkillLevelData(2, 1.4f, "마법 공격력에 140%의 공격력을 가진다."));
+		skillList[9].AddSkillLevelData(new SkillLevelData(3, 1.6f, "마법 공격력에 160%의 공격력을 가진다."));
+		skillList[9].AddSkillLevelData(new SkillLevelData(4, 1.8f, "마법 공격력에 180%의 공격력을 가진다."));
+
+		skillList[10].AddSkillLevelData(new SkillLevelData(1, 1.2f, "마법 공격력에 120%의 공격력을 가진다."));
+		skillList[10].AddSkillLevelData(new SkillLevelData(2, 2.2f, "마법 공격력에 220%의 공격력을 가진다."));
+
+		skillList[11].AddSkillLevelData(new SkillLevelData(1, 0.05f, 0.05f, "추가 마나 5%를 소모하고 5%의 스킬추가공격력을 가진다."));
+		skillList[11].AddSkillLevelData(new SkillLevelData(2, 0.1f, 0.1f, "추가 마나 10%를 소모하고 10%의 스킬추가공격력을 가진다."));
+		skillList[11].AddSkillLevelData(new SkillLevelData(3, 0.15f, 0.15f, "추가 마나 15%를 소모하고 15%의 스킬추가공격력을 가진다."));
+		skillList[11].AddSkillLevelData(new SkillLevelData(4, 0.2f, 0.2f, "추가 마나 20%를 소모하고 20%의 스킬추가공격력을 가진다."));
+
+		skillList[12].AddSkillLevelData(new SkillLevelData(1, 0.5f, "50% 추가 마나회복력을 얻는다."));
+		skillList[12].AddSkillLevelData(new SkillLevelData(2, 1.0f, "100% 추가 마나회복력을 얻는다."));
+		skillList[12].AddSkillLevelData(new SkillLevelData(3, 1.5f, "150% 추가 마나회복력을 얻는다."));
+		skillList[12].AddSkillLevelData(new SkillLevelData(4, 2.0f, "200% 추가 마나회복력을 얻는다."));
+
+		#endregion
+    
+	}
 }
 
 public class SkillBasicData
@@ -123,10 +161,12 @@ public class SkillLevelData
 {
     private int level;
     private float skillValue;
+	private float skillSubValue;
     private string skillExplanation;
 
     public int Level { get { return level; } }
     public float SkillValue { get { return skillValue; } }
+	public float SkillSubValue { get { return skillSubValue; } }
     public string SkillExplanation { get { return skillExplanation; } }
 
     public SkillLevelData(int _level, float _skillValue, string _skillExplanation)
@@ -135,5 +175,13 @@ public class SkillLevelData
         skillValue = _skillValue;
         skillExplanation = _skillExplanation;
     }
+
+	public SkillLevelData(int _level, float _skillValue, float _skillSubValue , string _skillExplanation)
+	{
+		level = _level;
+		skillValue = _skillValue;
+		skillSubValue = _skillSubValue;
+		skillExplanation = _skillExplanation;
+	}
 
 }

@@ -30,7 +30,7 @@ Material:
     m_Floats:
     - first:
         name: _Outline
-      second: 0.0135
+      second: 0.002
     - first:
         name: _Shininess
       second: 0.579717
