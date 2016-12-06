@@ -319,14 +319,20 @@ public class DungeonManager : MonoBehaviour
     {
         //위와 같은 생성이지만 이곳에서는 다른 플레이어의 캐릭터를 생성한다.
         //DataHandler 에서 데이타를 받아서 실행된다.
+        if (players[unitIndex + 1] == null)
+        {
+            GameObject unit = Instantiate(Resources.Load("Warrior")) as GameObject;
+            unit.transform.position = newPosition;
+            unit.name = "Warrior";
+            unit.GetComponent<CharacterManager>().SetUserNum(unitIndex + 1);
 
-        GameObject unit = Instantiate(Resources.Load("Warrior")) as GameObject;
-        unit.transform.position = newPosition;
-        unit.name = "Warrior";
-        unit.GetComponent<CharacterManager>().SetUserNum(unitIndex + 1);
+            players[unitIndex + 1] = unit;
 
-        players[unitIndex + 1] = unit;
-
-        return unit;
+            return unit;
+        }
+        else
+        {
+            return null;
+        }        
     }
 }
