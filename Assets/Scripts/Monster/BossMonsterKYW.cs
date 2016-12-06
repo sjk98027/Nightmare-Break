@@ -26,7 +26,7 @@ public class BossMonsterKYW : Monster {
 	bool halfLife;
 
 	public UIManager uiManager;
-	public MonsterWeapon[] MonsterWeapon;
+	public MonsterWeapon[] BossMonsterWeapon;
 
 	public BigBearBossPatternName BigBearBossState;
 	//	public PatternRank patternRank;
@@ -58,8 +58,8 @@ public class BossMonsterKYW : Monster {
 		//skillInsertImage = transform.Find("InGameUICanvas").gameObject;
 		halfLife = false;
 
-		MonsterWeapon [0].MonsterWeaponSet();
-		MonsterWeapon [1].MonsterWeaponSet();
+		BossMonsterWeapon [0].MonsterWeaponSet();
+		BossMonsterWeapon [1].MonsterWeaponSet();
 
 		patternReserveList = new int[5];
 		for (int listSet = 0; listSet < patternReserveList.Length; listSet++) {
@@ -364,12 +364,12 @@ public void ImageBackPos()
 				}
 
 				if (IsAttack) {
-					for (int i = 0; i < MonsterWeapon.Length; i++) {
-						MonsterWeapon [i].AttackColliderSizeChange (new Vector3 (3.6f, 1f, 1.1f));
+					for (int i = 0; i < BossMonsterWeapon.Length; i++) {
+						BossMonsterWeapon [i].AttackColliderSizeChange (new Vector3 (3.6f, 1f, 1.1f));
 					}
 				} else if (!IsAttack) {
-					for (int i = 0; i < MonsterWeapon.Length; i++) {
-						MonsterWeapon [i].AttackColliderSizeChange (new Vector3 (0, 0, 0));
+					for (int i = 0; i < BossMonsterWeapon.Length; i++) {
+						BossMonsterWeapon [i].AttackColliderSizeChange (new Vector3 (0, 0, 0));
 					}
 				}
 			} else

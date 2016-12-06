@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class ShockWaveMonster : Monster {
-	private float searchRange = 12.0f;
-	private float moveSpeed = 3f;
+	private float searchRange = 8.0f;
+	private float moveSpeed = 2.5f;
 
 	public float currentDisTance;
 	float middleBossToMonsterLimitDistanceMonsterToCenter = 6.0f;
@@ -157,6 +157,35 @@ public class ShockWaveMonster : Monster {
 		}
 	}
 
+	public override void NormalMonsterRealizePattern(){
+		StartCoroutine (AttackAroundRun ());
+	}
+
+	public IEnumerator AttackAroundRun(){
+		while (true) {
+
+			if(IsAlive){
+				if (targetPlayer != null) {
+					MonsterRunAttackAround = Random.Range (0, 3);
+					if (MonsterRunAttackAround == 0) {
+						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
+					}
+					if (MonsterRunAttackAround == 1) {
+						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
+					}
+					if (MonsterRunAttackAround == 2) {
+						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
+					}
+					yield return new WaitForSeconds (2f);
+				} else
+					yield return new WaitForSeconds (2f);
+			}
+			else if(!IsAlive){
+
+				yield return false;
+			}
+		}
+	}
 	public IEnumerator PatternNormalChange(){
 		while(IsAlive){
 			if (targetPlayer != null) {	

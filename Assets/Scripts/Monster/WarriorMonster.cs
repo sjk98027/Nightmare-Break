@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.EventSystems;
 
 public class WarriorMonster : Monster {
-	private float searchRange = 12.0f;
+	private float searchRange = 8.0f;
 	private float moveSpeed = 3f;
 
 	public float currentDisTance;
@@ -157,6 +157,36 @@ public class WarriorMonster : Monster {
 			StartCoroutine (PatternNormalChange ());
 		} else if (!NormalMode) {
 			StartCoroutine (PatternDefenceChange ());
+		}
+	}
+
+	public override void NormalMonsterRealizePattern(){
+		StartCoroutine (AttackAroundRun ());
+	}
+
+	public IEnumerator AttackAroundRun(){
+		while (true) {
+
+			if(IsAlive){
+				if (targetPlayer != null) {
+					MonsterRunAttackAround = Random.Range (0, 3);
+					if (MonsterRunAttackAround == 0) {
+						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
+					}
+					if (MonsterRunAttackAround == 1) {
+						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
+					}
+					if (MonsterRunAttackAround == 2) {
+						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
+					}
+					yield return new WaitForSeconds (2f);
+				} else
+					yield return new WaitForSeconds (2f);
+			}
+			else if(!IsAlive){
+
+				yield return false;
+			}
 		}
 	}
 
