@@ -163,6 +163,7 @@ public class CharacterManager : MonoBehaviour
 					{
 						CharState ((int)CharacterState.Run);
 					}
+
 					if (runState.IsName ("Run"))
 					{
 						if (hor == -1.0f || hor == 1.0f)
@@ -418,8 +419,7 @@ public class CharacterManager : MonoBehaviour
 				break;
 			}
             
-            //if(Inputstate != (int) CharacterState.Idle && Inputstate != (int)CharacterState.Run)
-			 //   DataSender.Instance.CharacterActionSend(Inputstate);
+			DataSender.Instance.CharacterActionSend(Inputstate);
 		}
 	}
 
