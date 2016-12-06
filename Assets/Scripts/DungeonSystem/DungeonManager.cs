@@ -292,6 +292,7 @@ public class DungeonManager : MonoBehaviour
         player.name = "Warrior";
         player.tag = "Player";
         players[0] = player;
+        player.GetComponent<CharacterManager>().SetUserNum(0);
 
         m_camera = GameObject.FindGameObjectWithTag("MainCamera");
         StartCoroutine(m_camera.GetComponent<CameraController>().CameraCtrl(player.transform));
@@ -322,6 +323,7 @@ public class DungeonManager : MonoBehaviour
         GameObject unit = Instantiate(Resources.Load("Warrior")) as GameObject;
         unit.transform.position = newPosition;
         unit.name = "Warrior";
+        unit.GetComponent<CharacterManager>().SetUserNum(unitIndex + 1);
 
         players[unitIndex + 1] = unit;
 

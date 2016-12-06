@@ -141,10 +141,6 @@ public class DataSender : MonoBehaviour
 
         byte[] msg = CreatePacket(resultDataPacket);
 
-        Debug.Log("메시지 보냄 (길이) : " + msg.Length);
-        Debug.Log("메시지 보냄 (출처) : " + msg[2]);
-        Debug.Log("메시지 보냄 (타입) : " + msg[3]);
-
         try
         {
             tcpSock.Send(msg, 0, msg.Length, SocketFlags.None);
@@ -435,6 +431,8 @@ public class DataSender : MonoBehaviour
         characterActionPacket.SetPacketId((int)P2PPacketId.CharacterAction);
 
         byte[] msg = CreatePacket(characterActionPacket);
+
+        Debug.Log("캐릭터 상태 보냄");
 
         foreach (KeyValuePair<EndPoint, int> user in networkManager.DataHandler.userNum)
         {

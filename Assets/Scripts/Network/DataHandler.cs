@@ -425,9 +425,6 @@ public class DataHandler : MonoBehaviour
 
         int index = userNum[packet.endPoint];
 
-        Debug.Log(index);
-        Debug.Log(dungeonManager.Players[index + 1]);
-
         CharacterManager characterManager = dungeonManager.Players[index + 1].GetComponent<CharacterManager>();
         characterManager.SetPosition(characterPositionData);
     }

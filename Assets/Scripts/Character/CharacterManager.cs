@@ -42,6 +42,8 @@ public class CharacterManager : MonoBehaviour
 
 	public float skillTime;
 
+    int userNum;
+
 	[SerializeField]
 	CharacterState state;
 
@@ -123,6 +125,11 @@ public class CharacterManager : MonoBehaviour
 		charStatus = GameObject.FindGameObjectWithTag ("CharStatus").GetComponent<CharacterStatus> ();
 		charStatus.SetCharacterStatus ();
 	}
+
+    public void SetUserNum(int num)
+    {
+        userNum = num;
+    }
 
 	public void AnimationEnd ()
 	{
@@ -418,8 +425,11 @@ public class CharacterManager : MonoBehaviour
 				animator.SetTrigger ("PlayerDie");
 				break;
 			}
-            
-			DataSender.Instance.CharacterActionSend(Inputstate);
+
+            if (userNum == 0)
+            {
+                DataSender.Instance.CharacterActionSend(Inputstate);
+            }			
 		}
 	}
 

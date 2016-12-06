@@ -74,7 +74,6 @@ public class GameManager : MonoBehaviour
 
     public void OnApplicationQuit()
     {
-        Debug.Log("게임 종료");
         networkManager.DataSender.GameClose();
     }
 }
