@@ -413,7 +413,7 @@ public class DataHandler : MonoBehaviour
         if(dungeonManager.CreateUnit(createUnitData.ID, index, new Vector3(createUnitData.PosX, createUnitData.PosY, createUnitData.PosZ)) != null)
         {
             DataSender.Instance.UdpAnswer(packet.endPoint, udpId);
-        }        
+        }
     }
 
     //Client

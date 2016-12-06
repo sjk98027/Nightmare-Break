@@ -147,9 +147,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000013548049514}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 2bebcc55c5446a94b9785ad06a673bdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  count: 0
+  charStatus: {fileID: 0}
+  charManager: {fileID: 0}
+  character: {fileID: 0}
+  swordDamage: 0
 --- !u!114 &114000012361368984
 MonoBehaviour:
   m_ObjectHideFlags: 1
