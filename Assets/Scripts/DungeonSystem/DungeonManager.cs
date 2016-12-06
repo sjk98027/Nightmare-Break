@@ -88,10 +88,11 @@ public class DungeonManager : MonoBehaviour
 			}
 			for (int k = 0; k < shockWaveMonster.Length; k++) {
 				if (hostGuest != HostGuest.Host) {
-					shockWaveMonster [k].UpdateNormalMode ();
+					shockWaveMonster [k].GuestMonsterUpdate ();
+						
 				}
 				if (hostGuest == HostGuest.Host) {
-					shockWaveMonster [k].GuestMonsterUpdate ();
+					shockWaveMonster [k].UpdateNormalMode ();
 				}
 			}
 		}
