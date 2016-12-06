@@ -370,9 +370,11 @@ public class DataHandler : MonoBehaviour
     public void AnswerCheck(DataPacket packet, int udpId)
     {
         Debug.Log(packet.endPoint.ToString() + "답신 받음");
+        Debug.Log("UdpId : " + udpId);
 
-        if (udpId < userNum[packet.endPoint])
+        if (udpId < DataSender.Instance.udpId[userNum[packet.endPoint]])
         {
+            Debug.Log("UdpId Over");
             return;
         }
 
