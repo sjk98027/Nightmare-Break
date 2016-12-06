@@ -23,6 +23,7 @@ GameObject:
   - 199: {fileID: 199000011470777562}
   - 65: {fileID: 65000011109421678}
   - 114: {fileID: 114000012660809960}
+  - 114: {fileID: 114000012298874180}
   m_Layer: 0
   m_Name: MagicionRing
   m_TagString: Untagged
@@ -55,6 +56,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10, y: 1, z: 10}
   m_Center: {x: -0.00000011920929, y: 0, z: -0.00000011920929}
+--- !u!114 &114000012298874180
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013429443792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ece80dbf9c9f5e84ea9e08f0aac10052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114000012660809960
 MonoBehaviour:
   m_ObjectHideFlags: 1

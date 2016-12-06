@@ -49,7 +49,7 @@ public class MageManager : CharacterManager
 			}
 			else
 			{
-				frameDestroy = Instantiate (Resources.Load<GameObject> ("Effect/FireBall"), FireBallPos.transform.position,Quaternion.Euler (0, 0, 0)) as GameObject;
+				frameDestroy = Instantiate (Resources.Load<GameObject> ("Effect/FireBall"), FireBallPos.transform.position,Quaternion.Euler (0, 180, 0)) as GameObject;
 			}
 			
 		}
@@ -91,7 +91,7 @@ public class MageManager : CharacterManager
 
 					if (howlingDistance < 10)
 					{
-						enermy [i].transform.Translate ((this.transform.position + enermy [i].transform.position) * howlingSpeed * Time.deltaTime, Space.World);
+					enermy [i].transform.Translate ((enermy [i].transform.position- this.transform.position ) * howlingSpeed * Time.deltaTime, Space.World);
 					}
 				}
 			}
