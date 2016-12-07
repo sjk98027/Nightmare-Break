@@ -433,8 +433,8 @@ public class CharacterManager : MonoBehaviour
 
             if (userNum == 0)
             {
-                //DataSender.Instance.CharacterActionSend(Inputstate);
-            }			
+                DataSender.Instance.CharacterActionSend(Inputstate);
+            }
 		}
 	}
 
