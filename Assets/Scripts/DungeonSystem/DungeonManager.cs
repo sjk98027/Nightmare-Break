@@ -208,6 +208,11 @@ public class DungeonManager : MonoBehaviour
 			warriorMonster[i]= objWarriorMonster.GetComponent<WarriorMonster> ();
 		}
 
+		if (bossMonster != null) {
+			GameObject objBossMonster = (GameObject)Instantiate (Resources.Load ("Monster/Bear"), new Vector3 (0, 0, 0), this.transform.rotation);
+			bossMonster = objBossMonster.GetComponent<BossMonsterKYW> ();
+		}
+
 //		{
 //			boomMonster = gameObject.transform.GetComponentsInChildren<BoomMonster> ();
 //			shockWaveMonster = gameObject.transform.GetComponentsInChildren<ShockWaveMonster> ();
