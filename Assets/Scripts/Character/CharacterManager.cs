@@ -112,6 +112,7 @@ public class CharacterManager : MonoBehaviour
 			if (normalAttackState || skillAttackState)
 			{
                 charWeapon.enabled = true;
+                
 			}
 			else
 			{
