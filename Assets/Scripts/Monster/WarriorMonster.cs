@@ -172,20 +172,15 @@ public class WarriorMonster : Monster {
 					MonsterRunAttackAround = Random.Range (0, 3);
 					if (MonsterRunAttackAround == 0) {
 						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
-						Debug.Log ("a");
 						yield return new WaitForSeconds (2f);
 						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
-						Debug.Log ("b");
 						yield return new WaitForSeconds (2f);
 						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
-						Debug.Log ("c");
 						yield return new WaitForSeconds (2f);
 						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
-						Debug.Log ("d");
 						yield return new WaitForSeconds (2f);
-
-
 					}
+
 					if (MonsterRunAttackAround == 1) {
 						int i = Random.Range (0, 2);
 						if (i == 0) {

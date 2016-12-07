@@ -187,20 +187,15 @@ public class BoomMonster : Monster {
 					MonsterRunAttackAround = Random.Range (0, 3);
 					if (MonsterRunAttackAround == 0) {
 						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
-						Debug.Log ("a");
 						yield return new WaitForSeconds (2f);
 						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
-						Debug.Log ("b");
 						yield return new WaitForSeconds (2f);
 						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
-						Debug.Log ("c");
 						yield return new WaitForSeconds (2f);
 						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
-						Debug.Log ("d");
 						yield return new WaitForSeconds (2f);
-
-
 					}
+
 					if (MonsterRunAttackAround == 1) {
 						int i = Random.Range (0, 2);
 						if (i == 0) {
@@ -294,18 +289,8 @@ public class BoomMonster : Monster {
 				}
 				//if this object get Attackmotion pattern(stateposition.boom -> attack), and this monsterlife is 20%, boomPattern start;
 				else if (currentDisTance <= searchRange) {
-//					int i= Random.Range(0,3);
-//					if (i == 0) {
-//						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
-//					}
-//					if (i == 1) {
-//						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
-//					}
-//					if (i == 2) {
-//						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
-//					}
 
-					movePoint = new Vector3(checkDirection.x,0,checkDirection.z);
+//					movePoint = new Vector3(checkDirection.x,0,checkDirection.z);
 
 					{
 						
@@ -327,16 +312,9 @@ public class BoomMonster : Monster {
 							SendMonsterState (monsterState, isAttack, moveAble, movePoint, targetPlayer);
 							yield return new WaitForSeconds (0.5f);
 						} else if (currentLife < maxLife * 0.3) {
-							if (Random.Range (0, 4) <= 2) {
 								monsterState = StatePosition.Attack;
 								Pattern (monsterState);
-								SendMonsterState (monsterState, isAttack, moveAble, movePoint, targetPlayer);
 								yield return new WaitForSeconds (0.5f);
-							} else if (Random.Range (0, 4) > 2)
-								monsterState = StatePosition.Boom;
-							Pattern (monsterState);
-							SendMonsterState (monsterState, isAttack, moveAble, movePoint, targetPlayer);
-							yield return new WaitForSeconds (4f);
 							}
 						}
 					}
