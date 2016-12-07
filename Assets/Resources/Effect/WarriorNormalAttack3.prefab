@@ -21,6 +21,7 @@ GameObject:
   - 4: {fileID: 4000013855275354}
   - 198: {fileID: 198000011023376490}
   - 199: {fileID: 199000011100697532}
+  - 114: {fileID: 114000010001878916}
   m_Layer: 0
   m_Name: WarriorNormalAttack3
   m_TagString: Untagged
@@ -41,6 +42,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &114000010001878916
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012857359262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ece80dbf9c9f5e84ea9e08f0aac10052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &198000011023376490
 ParticleSystem:
   m_ObjectHideFlags: 1
