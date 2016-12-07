@@ -131,6 +131,9 @@ public class Monster : MonoBehaviour {
 		if (shockWaveInstantiate != null) {
 			shockWaveInstantiate.GetDamage (baseDamage, this.gameObject.GetComponent<ShockWaveMonster> ());
 		}
+		if(shockWaveInstantiate != null || attackCollider !=null){
+			NormalMonsterRealizePattern ();
+		}
 	}
 
 	public virtual void NormalMonsterRealizePattern(){

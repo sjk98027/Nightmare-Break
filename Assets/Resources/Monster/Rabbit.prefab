@@ -938,7 +938,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.75, y: 1.2174249, z: 0.75}
+  m_Size: {x: 1, y: 1.2174249, z: 1}
   m_Center: {x: 0, y: 0.60871243, z: 0}
 --- !u!95 &95000013412628816
 Animator:
@@ -972,6 +972,7 @@ MonoBehaviour:
   animator: {fileID: 95000013412628816}
   targetPlayer: {fileID: 0}
   HittedBox: {fileID: 65000014174060228}
+  MonsterRunAttackAround: 0
   normalMode: 0
   gateArrayNumber: 0
   monsterArrayNumber: 0

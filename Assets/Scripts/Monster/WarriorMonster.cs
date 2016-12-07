@@ -172,12 +172,88 @@ public class WarriorMonster : Monster {
 					MonsterRunAttackAround = Random.Range (0, 3);
 					if (MonsterRunAttackAround == 0) {
 						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
+						Debug.Log ("a");
+						yield return new WaitForSeconds (2f);
+						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
+						Debug.Log ("b");
+						yield return new WaitForSeconds (2f);
+						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
+						Debug.Log ("c");
+						yield return new WaitForSeconds (2f);
+						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
+						Debug.Log ("d");
+						yield return new WaitForSeconds (2f);
+
+
 					}
 					if (MonsterRunAttackAround == 1) {
-						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
+						int i = Random.Range (0, 2);
+						if (i == 0) {
+							if (checkDirection.z >= 0) {
+								movePoint = new Vector3 (1, 0, 1);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (-1, 0, 1);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (-1, 0, -1);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (1, 0, 1);
+								yield return new WaitForSeconds (2f);
+							} else if (checkDirection.z < 0) {
+								movePoint = new Vector3 (1, 0, -1);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (-1, 0, -1);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (-1, 0, 1);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (1, 0, 1);
+								yield return new WaitForSeconds (2f);
+							}
+						}
+						else if(i ==1){
+							if (checkDirection.z >= 0) {
+								movePoint = new Vector3 (-1, 0, 1);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (1, 0, 1);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (1, 0, -1);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (-1, 0, 1);
+								yield return new WaitForSeconds (2f);
+							} else if (checkDirection.z < 0) {
+								movePoint = new Vector3 (-1, 0, -1);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (1, 0, -1);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (1, 0, 1);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (-1, 0, 1);
+								yield return new WaitForSeconds (2f);
+							}
+						}
 					}
 					if (MonsterRunAttackAround == 2) {
 						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
+						int k = Random.Range(0,1);
+						if(k == 0){
+							movePoint = new Vector3 (-checkDirection.x, 0, -checkDirection.z);
+							yield return new WaitForSeconds (2f);
+							movePoint = new Vector3 (checkDirection.x, 0, -checkDirection.z);
+							yield return new WaitForSeconds (2f);
+							movePoint = new Vector3 (checkDirection.x, 0, -checkDirection.z);
+							yield return new WaitForSeconds (2f);
+							movePoint = new Vector3 (-checkDirection.x, 0, -checkDirection.z);
+							yield return new WaitForSeconds (2f);
+						}
+						if(k == 1){
+							movePoint = new Vector3 (checkDirection.x, 0, -checkDirection.z);
+							yield return new WaitForSeconds (2f);
+							movePoint = new Vector3 (-checkDirection.x, 0, -checkDirection.z);
+							yield return new WaitForSeconds (2f);
+							movePoint = new Vector3 (-checkDirection.x, 0, -checkDirection.z);
+							yield return new WaitForSeconds (2f);
+							movePoint = new Vector3 (checkDirection.x, 0, -checkDirection.z);
+							yield return new WaitForSeconds (2f);
+						}
 					}
 					yield return new WaitForSeconds (2f);
 				} else
