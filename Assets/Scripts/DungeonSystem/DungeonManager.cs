@@ -372,8 +372,8 @@ public class DungeonManager : MonoBehaviour
             unit.name = "Warrior";
             players[unitIndex] = unit;
 
-            characters[unitIndex].SetUserNum(unitIndex);
             characters[unitIndex] = unit.GetComponent<CharacterManager>();
+            characters[unitIndex].SetUserNum(unitIndex);
 
             return unit;
         }
