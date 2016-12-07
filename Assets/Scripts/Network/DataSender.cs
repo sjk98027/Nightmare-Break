@@ -410,7 +410,7 @@ public class DataSender : MonoBehaviour
 
         while (true)
         {
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.016f);
 
             Debug.Log("번호 : " + characterManager.UserNum);
 
