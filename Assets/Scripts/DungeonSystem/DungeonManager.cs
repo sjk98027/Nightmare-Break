@@ -20,6 +20,7 @@ public class DungeonManager : MonoBehaviour
     //DungeonScene change -> DungeonManager;
     [SerializeField]
     private GameObject[] players;
+    public CharacterManager[] characters;
     public GameObject[] Players { get { return players; } }
     public SceneChangeObject nextSceneObject;
     public SceneChangeObject beforeScneObject;
@@ -127,6 +128,7 @@ public class DungeonManager : MonoBehaviour
     public void InitializePlayer(int playerNum)
     {
         players = new GameObject[playerNum];
+        characters = new CharacterManager[playerNum];
     }
 
     //defence mode, normal mode
@@ -322,12 +324,15 @@ public class DungeonManager : MonoBehaviour
         //딕셔너리를 사용하여 그에 맞는 캐릭터를 소환해야 하지만 Prototype 진행 시에는 고정된 플레이어를 소환하도록 함.
 
         GameObject player = Instantiate(Resources.Load("Warrior")) as GameObject;
-        player.transform.position = Vector3.zero;
-        player.GetComponent<CharacterManager>().enabled = true;
         player.name = "Warrior";
         player.tag = "Player";
+        player.transform.position = Vector3.zero;
+
+        characters[networkManager.MyIndex] = player.GetComponent<CharacterManager>();
+        characters[networkManager.MyIndex].enabled = true;
+        characters[networkManager.MyIndex].SetUserNum(networkManager.MyIndex);
+
         players[networkManager.MyIndex] = player;
-        player.GetComponent<CharacterManager>().SetUserNum(networkManager.MyIndex);
 
         Debug.Log("캐릭터 생성 번호 : " + networkManager.MyIndex);
 
@@ -365,9 +370,10 @@ public class DungeonManager : MonoBehaviour
             GameObject unit = Instantiate(Resources.Load("Warrior")) as GameObject;
             unit.transform.position = newPosition;
             unit.name = "Warrior";
-            unit.GetComponent<CharacterManager>().SetUserNum(unitIndex);
-
             players[unitIndex] = unit;
+
+            characters[unitIndex].SetUserNum(unitIndex);
+            characters[unitIndex] = unit.GetComponent<CharacterManager>();
 
             return unit;
         }

@@ -421,7 +421,7 @@ public class DataHandler : MonoBehaviour
         Debug.Log("캐릭터 위치 : " + characterPositionData.posX + ". " + characterPositionData.posY + ". " + characterPositionData.posZ);
         Debug.Log("캐릭터 인덱스 : " + index);
 
-        CharacterManager characterManager = dungeonManager.Players[index].GetComponent<CharacterManager>();
+        CharacterManager characterManager = dungeonManager.characters[index];
         characterManager.SetPosition(characterPositionData);
     }
 
@@ -435,7 +435,7 @@ public class DataHandler : MonoBehaviour
 
         int index = networkManager.GetUserIndex(packet.endPoint);
 
-        CharacterManager characterManager = dungeonManager.Players[index].GetComponent<CharacterManager>();
+        CharacterManager characterManager = dungeonManager.characters[index];
         characterManager.CharState(characterActionData.action);
     }
 }
