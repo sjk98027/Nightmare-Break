@@ -340,7 +340,10 @@ public class DungeonManager : MonoBehaviour
 
         foreach (KeyValuePair<EndPoint, int> user in networkManager.UserIndex)
         {
-            DataSender.Instance.CreateUnitSend(user.Key, (short)characterId, player.transform.position.x, player.transform.position.y, player.transform.position.z);
+            if (networkManager.MyIndex != networkManager.UserIndex[user.Key])
+            {
+                DataSender.Instance.CreateUnitSend(user.Key, (short)characterId, player.transform.position.x, player.transform.position.y, player.transform.position.z);
+            }
         }
 
         return player;
