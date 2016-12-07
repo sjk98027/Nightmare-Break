@@ -80,10 +80,10 @@ public class ReSendManager : MonoBehaviour
                 reSendKey = new List<int>(reSendDatum[userIndex].Keys);
 
                 //플레이어의 ReSendData를 확인한다
-                foreach (int key in reSendKey)
+                for (int i = 0; i < reSendKey.Count; i++)
                 {
                     //플레이어의 foreach문에 걸린 method를 하나 실행한다.
-                    if (reSendDatum[userIndex].TryGetValue(key, out reSendData))
+                    if (reSendDatum[userIndex].TryGetValue(reSendKey[i], out reSendData))
                     {
                         DataReSend(reSendData);
                     }

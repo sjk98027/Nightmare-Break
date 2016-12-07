@@ -204,7 +204,7 @@ public class AsyncData
     public EndPoint EP;
     public byte[] msg;
     public short msgSize;
-    public const int msgMaxSize = 1024;
+    public const int msgMaxSize = 2048;
 
     public AsyncData(Socket newSock)
     {

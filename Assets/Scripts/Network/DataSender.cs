@@ -412,8 +412,6 @@ public class DataSender : MonoBehaviour
         {
             yield return new WaitForSeconds(0.02f);
 
-            Debug.Log("번호 : " + characterManager.UserNum);
-
             bool dir = characterManager.charDir;
             float xPos = characterManager.transform.position.x;
             float yPos = characterManager.transform.position.y;
@@ -425,13 +423,13 @@ public class DataSender : MonoBehaviour
 
             byte[] msg = CreatePacket(characterPositionPacket);
 
-            Debug.Log("자기 위치 : " + xPos + ". " + yPos + ". " + zPos);
+            List<EndPoint> endPoint = new List<EndPoint>(networkManager.UserIndex.Keys);
 
-            foreach (KeyValuePair<EndPoint, int> user in networkManager.UserIndex)
+            for(int i=0; i< endPoint.Count; i++)
             {
-                if(networkManager.MyIndex != networkManager.UserIndex[user.Key])
+                if(networkManager.MyIndex != networkManager.UserIndex[endPoint[i]])
                 {
-                    DataPacket packet = new DataPacket(CreateUdpPacket(characterPositionPacket, udpId[user.Value]), user.Key);
+                    DataPacket packet = new DataPacket(CreateUdpPacket(characterPositionPacket, udpId[i]), endPoint[i]);
                     sendMsgs.Enqueue(packet);
                 }                
             }
