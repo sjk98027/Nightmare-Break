@@ -52,7 +52,7 @@ public class BossMonsterKYW : Monster {
 		RunRange = 10;
 		attackRange = 4;
 		MonsterSet (_maxlife, _basedamage);
-		uiManager = GameObject.FindWithTag ("UIManager").GetComponent<UIManager> ();
+//		uiManager = GameObject.FindWithTag ("UIManager").GetComponent<UIManager> ();
 		isAttack = false;
 		skillInsertImage = GameObject.Find ("InGameUICanvas").transform.Find ("BossDeadlyPatternImage").Find("BossDeadlyPattern").GetComponent<Image>();
 		//skillInsertImage = transform.Find("InGameUICanvas").gameObject;
