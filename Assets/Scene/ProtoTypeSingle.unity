@@ -7163,54 +7163,45 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4000010478469166, guid: d02bf2088089ef1439f8c78b59832e14, type: 2}
+    - target: {fileID: 4000013319953316, guid: 94fa33debef3c434abf6303ff98f9faf, type: 2}
       propertyPath: m_LocalPosition.x
       value: -0.49
       objectReference: {fileID: 0}
-    - target: {fileID: 4000010478469166, guid: d02bf2088089ef1439f8c78b59832e14, type: 2}
+    - target: {fileID: 4000013319953316, guid: 94fa33debef3c434abf6303ff98f9faf, type: 2}
       propertyPath: m_LocalPosition.y
       value: -0.09999988
       objectReference: {fileID: 0}
-    - target: {fileID: 4000010478469166, guid: d02bf2088089ef1439f8c78b59832e14, type: 2}
+    - target: {fileID: 4000013319953316, guid: 94fa33debef3c434abf6303ff98f9faf, type: 2}
       propertyPath: m_LocalPosition.z
       value: -53.27
       objectReference: {fileID: 0}
-    - target: {fileID: 4000010478469166, guid: d02bf2088089ef1439f8c78b59832e14, type: 2}
+    - target: {fileID: 4000013319953316, guid: 94fa33debef3c434abf6303ff98f9faf, type: 2}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4000010478469166, guid: d02bf2088089ef1439f8c78b59832e14, type: 2}
+    - target: {fileID: 4000013319953316, guid: 94fa33debef3c434abf6303ff98f9faf, type: 2}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4000010478469166, guid: d02bf2088089ef1439f8c78b59832e14, type: 2}
+    - target: {fileID: 4000013319953316, guid: 94fa33debef3c434abf6303ff98f9faf, type: 2}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4000010478469166, guid: d02bf2088089ef1439f8c78b59832e14, type: 2}
+    - target: {fileID: 4000013319953316, guid: 94fa33debef3c434abf6303ff98f9faf, type: 2}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4000010478469166, guid: d02bf2088089ef1439f8c78b59832e14, type: 2}
+    - target: {fileID: 4000013319953316, guid: 94fa33debef3c434abf6303ff98f9faf, type: 2}
       propertyPath: m_RootOrder
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 1000010133496276, guid: d02bf2088089ef1439f8c78b59832e14, type: 2}
-      propertyPath: m_Name
-      value: DungeonManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000010251098950, guid: d02bf2088089ef1439f8c78b59832e14,
+    - target: {fileID: 114000011376646696, guid: 94fa33debef3c434abf6303ff98f9faf,
         type: 2}
       propertyPath: spawnPoint
       value: 
       objectReference: {fileID: 1437371373}
-    - target: {fileID: 114000010251098950, guid: d02bf2088089ef1439f8c78b59832e14,
-        type: 2}
-      propertyPath: bossMonster
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: d02bf2088089ef1439f8c78b59832e14, type: 2}
+  m_ParentPrefab: {fileID: 100100000, guid: 94fa33debef3c434abf6303ff98f9faf, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1634567207
 GameObject:

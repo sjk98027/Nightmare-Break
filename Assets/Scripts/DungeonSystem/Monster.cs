@@ -131,7 +131,7 @@ public class Monster : MonoBehaviour {
 		if (shockWaveInstantiate != null) {
 			shockWaveInstantiate.GetDamage (baseDamage, this.gameObject.GetComponent<ShockWaveMonster> ());
 		}
-		if(shockWaveInstantiate != null || attackCollider !=null){
+		if(shockWaveInstantiate != null|| attackCollider !=null){
 			NormalMonsterRealizePattern ();
 		}
 	}
@@ -159,7 +159,6 @@ public class Monster : MonoBehaviour {
 			if (!isAttack) {
 				if (targetPlayer != null) {
 					if ((targetPlayer.transform.position.z - transform.position.z) >= 0) {
-						
 						LookAtPattern (StateDirecion.right);
 					}
 					if ((targetPlayer.transform.position.z - transform.position.z) < 0) {
