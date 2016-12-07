@@ -18,10 +18,10 @@ public class UIManager : MonoBehaviour
     public GameObject dialogPanel;
     public Text dialog;
 
-	//void Start()
-	//{
-	//	SetBattleUIManager ();
-	//}
+	void Start()
+	{
+		SetBattleUIManager ();
+	}
 
     public void SetLoginUIManager()
     {

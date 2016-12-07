@@ -73,6 +73,7 @@ public class CharacterManager : MonoBehaviour
 		charDir = true;
 		JumpMove = false;
 		jumpPower = 10;
+		SetClassObject ();
 	}
 
 	void Update ()
@@ -469,9 +470,9 @@ public class CharacterManager : MonoBehaviour
 		transform.position = new Vector3 (newPositionData.posX, newPositionData.posY, newPositionData.posZ);
 	}
 
-	public virtual void SetCharacterType ()
-	{
-	}
+	public virtual void SetCharacterType () { }
+
+	public virtual void SetClassObject() {}
 
 	public virtual void UsingMagicPoint(int SkillArray)
 	{
