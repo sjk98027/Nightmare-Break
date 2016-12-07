@@ -325,8 +325,6 @@ public class DataHandler : MonoBehaviour
 
         DataSender.Instance.udpId = new int[matchData.playerNum];
         
-        networkManager.ReSendManager.Initialize(matchData.playerNum);
-
         for (int userIndex = 0; userIndex < matchData.playerNum; userIndex++)
         {
             string newIp = matchData.ip[userIndex];
@@ -339,6 +337,7 @@ public class DataHandler : MonoBehaviour
         }
 
         networkManager.InitializeUdpConnection();
+        networkManager.ReSendManager.Initialize(matchData.playerNum);
 
         for (int userIndex = 0; userIndex < matchData.playerNum; userIndex++)
         {
