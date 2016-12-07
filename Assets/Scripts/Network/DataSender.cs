@@ -425,13 +425,13 @@ public class DataSender : MonoBehaviour
 
             List<EndPoint> endPoint = new List<EndPoint>(networkManager.UserIndex.Keys);
 
-            for(int i=0; i< endPoint.Count; i++)
+            for (int i = 0; i < endPoint.Count; i++)
             {
-                if(networkManager.MyIndex != networkManager.UserIndex[endPoint[i]])
+                if (networkManager.MyIndex != networkManager.UserIndex[endPoint[i]])
                 {
                     DataPacket packet = new DataPacket(CreateUdpPacket(characterPositionPacket, udpId[i]), endPoint[i]);
                     sendMsgs.Enqueue(packet);
-                }                
+                }
             }
         }
     }
@@ -439,7 +439,7 @@ public class DataSender : MonoBehaviour
     //캐릭터 움직임(공격, 점프, 스킬 등등) -> Client
     public void CharacterActionSend(int action)
     {
-        CharacterActionData characterActionData = new CharacterActionData(action);
+        CharacterActionData characterActionData = new CharacterActionData(action, (byte)characterManager.UserNum);
         CharacterActionPacket characterActionPacket = new CharacterActionPacket(characterActionData);
         characterActionPacket.SetPacketId((int)P2PPacketId.CharacterAction);
 

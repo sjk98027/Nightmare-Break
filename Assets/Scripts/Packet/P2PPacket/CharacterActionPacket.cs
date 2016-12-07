@@ -6,6 +6,7 @@
         {
             bool ret = true;
             ret &= Serialize(data.action);
+            ret &= Serialize(data.userNum);
             return ret;
         }
 
@@ -19,9 +20,12 @@
 
             bool ret = true;
             byte action = 0;
+            byte userNum = 0;
 
             ret &= Deserialize(ref action);
+            ret &= Deserialize(ref userNum);
             element.action = action;
+            element.userNum = userNum;
 
             return ret;
         }
@@ -51,14 +55,16 @@
 public class CharacterActionData
 {
     public byte action;
+    public byte userNum;
 
     public CharacterActionData()
     {
         action = 0;
     }
 
-    public CharacterActionData(int newAction)
+    public CharacterActionData(int newAction, byte newUserNum)
     {
         action = (byte)newAction;
+        userNum = newUserNum;
     }
 }

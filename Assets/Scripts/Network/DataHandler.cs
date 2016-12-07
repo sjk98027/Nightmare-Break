@@ -430,9 +430,7 @@ public class DataHandler : MonoBehaviour
 
         Debug.Log("캐릭터 행동 수신" + characterActionData.action);
 
-        int index = networkManager.GetUserIndex(packet.endPoint);
-
-        CharacterManager characterManager = dungeonManager.characters[index];
+        CharacterManager characterManager = dungeonManager.characters[characterActionData.userNum];
         characterManager.CharState(characterActionData.action);
     }
 }
