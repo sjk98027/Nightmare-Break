@@ -425,6 +425,8 @@ public class DataSender : MonoBehaviour
 
             byte[] msg = CreatePacket(characterPositionPacket);
 
+            Debug.Log("자기 위치 : " + xPos + ". " + yPos + ". " + zPos);
+
             foreach (KeyValuePair<EndPoint, int> user in networkManager.UserIndex)
             {
                 if(networkManager.MyIndex != networkManager.UserIndex[user.Key])
