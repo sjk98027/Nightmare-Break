@@ -449,13 +449,15 @@ public class DataSender : MonoBehaviour
 
         Debug.Log("캐릭터 상태 보냄");
 
-        foreach (KeyValuePair<EndPoint, int> user in networkManager.UserIndex)
+        List<EndPoint> endPoint = new List<EndPoint>(networkManager.UserIndex.Keys);
+
+        for (int i = 0; i < endPoint.Count; i++)
         {
-            if (networkManager.MyIndex != networkManager.UserIndex[user.Key])
+            if (networkManager.MyIndex != networkManager.UserIndex[endPoint[i]])
             {
-                DataPacket packet = new DataPacket(CreateUdpPacket(characterActionPacket, udpId[user.Value]), user.Key);
+                DataPacket packet = new DataPacket(CreateUdpPacket(characterActionPacket, udpId[i]), endPoint[i]);
                 sendMsgs.Enqueue(packet);
-            }                
+            }
         }
     }
 
