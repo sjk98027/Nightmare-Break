@@ -61,7 +61,7 @@ public class DataSender : MonoBehaviour
     //데이타를 전송하는 메소드. byte[] msg 를 newIPEndPoint로 전송한다.
     public void DataSend()
     {
-        if (sendMsgs.Count > 0)
+        while (sendMsgs.Count > 0)
         {
             DataPacket packet;
 
@@ -81,7 +81,7 @@ public class DataSender : MonoBehaviour
     //비동기 콜백 메소드
     private void SendData(IAsyncResult ar)
     {
-        udpSock.EndSend(ar);
+        udpSock.EndSendTo(ar);
     }
 
     //계정 생성 -> Server
