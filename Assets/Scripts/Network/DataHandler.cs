@@ -334,9 +334,9 @@ public class DataHandler : MonoBehaviour
             {
                 networkManager.SetMyIndex(userIndex);
             }
+        }
 
-            networkManager.InitializeUdpConnection();
-        }        
+        networkManager.InitializeUdpConnection();
 
         for (int userIndex = 0; userIndex < matchData.playerNum; userIndex++)
         {
