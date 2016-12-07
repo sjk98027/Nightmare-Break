@@ -410,7 +410,7 @@ public class DataSender : MonoBehaviour
 
         while (true)
         {
-            yield return new WaitForSeconds(0.02f);
+            yield return new WaitForSeconds(0.016f);
 
             bool dir = characterManager.charDir;
             float xPos = characterManager.transform.position.x;
