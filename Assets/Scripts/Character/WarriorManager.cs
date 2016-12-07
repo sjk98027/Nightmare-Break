@@ -13,7 +13,8 @@ public class WarriorManager : CharacterManager
 	public CharWeapon bloodingWeapon;
 	public float riseCooltime;
     private GameObject wind;
-	private GameObject[] attackEffect;
+    [SerializeField]
+    private TrailRenderer trailRenderer;
 	int skillLv;
 
 	public override void NormalAttack ()
@@ -23,10 +24,7 @@ public class WarriorManager : CharacterManager
 
 	public override void SetClassObject ()
 	{
-		attackEffect = new GameObject[3];
-		for (int i = 0; i < attackEffect.Length; i++) {
-		 	attackEffect [i] = Resources.Load<GameObject> ("Effect/WarriorNormalAttack" + (i + 1));
-		}
+	
 	}
 
 	public override void SetCharacterType ()
@@ -225,18 +223,15 @@ public class WarriorManager : CharacterManager
 		}
 	}
 
-	public void NormalAttackEffect(int _attackNum)
+	public void NormalAttackEffect(int _attack)
 	{
-		if (_attackNum == 0) {
-			GameObject attack1 = Instantiate (attackEffect[_attackNum], gameObject.transform.position, attackEffect[_attackNum].transform.localRotation) as GameObject;
-			attack1.transform.position = new Vector3 (transform.position.x + 0.05f, transform.position.y + 1.1f, transform.position.z + 1.7f);
-		} else if (_attackNum == 1) {
-			GameObject attack2 = Instantiate (attackEffect[_attackNum], gameObject.transform.position, attackEffect[_attackNum].transform.localRotation) as GameObject;
-			attack2.transform.position = new Vector3 (transform.position.x -0.3f, transform.position.y + 0.7f, transform.position.z + 1.2f);
-		} else {
-			GameObject attack3 = Instantiate (attackEffect[_attackNum], gameObject.transform.position, attackEffect[_attackNum].transform.localRotation) as GameObject;
-			attack3.transform.position = new Vector3 (transform.position.x, transform.position.y + 1.0f, transform.position.z + 1.5f);
-		}
+        if(_attack == 0)
+        {
+            trailRenderer.enabled = true;
+        } else
+        {
+            trailRenderer.enabled = false;
+        }
 	}
 
 	public IEnumerator colltimeCheck ()
