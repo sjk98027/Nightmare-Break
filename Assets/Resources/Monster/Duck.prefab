@@ -628,7 +628,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012217331354}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.8275484, y: 0, z: -8.4}
+  m_LocalPosition: {x: -0.62023354, y: -0.039999884, z: -15.909998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -982,7 +982,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.5, z: 1}
+  m_Size: {x: 1.25, y: 1.5, z: 1.25}
   m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!95 &95000010729959576
 Animator:
@@ -1016,6 +1016,7 @@ MonoBehaviour:
   animator: {fileID: 95000010729959576}
   targetPlayer: {fileID: 0}
   HittedBox: {fileID: 65000014097948880}
+  MonsterRunAttackAround: 0
   normalMode: 0
   gateArrayNumber: 0
   monsterArrayNumber: 0
@@ -1031,7 +1032,8 @@ MonoBehaviour:
   aggroRank: []
   changeTargetTime: 0
   attackCollider: {fileID: 0}
-  shockWaveInstantiate: {fileID: 0}
+  shockWaveInstantiate: {fileID: 114000012395617532, guid: 1849101d47e5f1d4489ef638a5b516ee,
+    type: 2}
   currentDisTanceArray: []
   stateDirecion: 0
   currentDisTance: 0
