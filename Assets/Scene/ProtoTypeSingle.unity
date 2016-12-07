@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.30545154, g: 0.3143605, b: 0.40343353, a: 1}
+  m_IndirectSpecularColor: {r: 0.22860825, g: 0.24387893, b: 0.3763071, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -3473,6 +3473,7 @@ MonoBehaviour:
   rise: 0
   bloodingWeapon: {fileID: 0}
   riseCooltime: 0
+  trailRenderer: {fileID: 0}
 --- !u!65 &742567224
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4022,6 +4023,16 @@ Prefab:
     - target: {fileID: 4000010917363650, guid: 919f30860db5f744f95ab65fc4540658, type: 2}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 54000011423374356, guid: 919f30860db5f744f95ab65fc4540658,
+        type: 2}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
+    - target: {fileID: 54000011423374356, guid: 919f30860db5f744f95ab65fc4540658,
+        type: 2}
+      propertyPath: m_IsKinematic
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 919f30860db5f744f95ab65fc4540658, type: 2}
