@@ -402,10 +402,9 @@ public class DataHandler : MonoBehaviour
 
         int index = networkManager.GetUserIndex(packet.endPoint);
 
-        if(dungeonManager.CreateUnit(createUnitData.ID, index, new Vector3(createUnitData.PosX, createUnitData.PosY, createUnitData.PosZ)) != null)
-        {
-            DataSender.Instance.UdpAnswer(packet.endPoint, udpId);
-        }
+        dungeonManager.CreateUnit(createUnitData.ID, index, new Vector3(createUnitData.PosX, createUnitData.PosY, createUnitData.PosZ));
+
+        DataSender.Instance.UdpAnswer(packet.endPoint, udpId);
     }
 
     //Client
