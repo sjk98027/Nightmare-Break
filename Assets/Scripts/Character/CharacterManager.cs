@@ -61,6 +61,8 @@ public class CharacterManager : MonoBehaviour
 
 	public TestInputManager testinput;
 
+    public int UserNum { get { return userNum; } }
+
 	void Start ()
 	{
 		SetCharacterStatus ();

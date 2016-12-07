@@ -310,7 +310,7 @@ public class DungeonManager : MonoBehaviour
 		monsterTransForm = _monsterTransForm;
 	}
 
-    
+
     public GameObject CreatePlayer(int characterId)
     {
         //여기서는 플레이어 캐릭터 딕셔너리 -> 각 직업에 따른 플레이어 스탯과 능력치, 스킬, 이름을 가지고 있음
@@ -323,6 +323,8 @@ public class DungeonManager : MonoBehaviour
         player.tag = "Player";
         players[networkManager.MyIndex] = player;
         player.GetComponent<CharacterManager>().SetUserNum(networkManager.MyIndex);
+
+        Debug.Log("캐릭터 생성 번호 : " + networkManager.MyIndex);
 
         m_camera = GameObject.FindGameObjectWithTag("MainCamera");
         StartCoroutine(m_camera.GetComponent<CameraController>().CameraCtrl(player.transform));
