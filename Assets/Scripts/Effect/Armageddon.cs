@@ -8,7 +8,7 @@ public class Armageddon : MonoBehaviour {
 	public CharacterManager charManager;
 	public GameObject character;
 	public int armageddonDamage;
-	public float FireBallSpeed = 0.001f;
+	public float FireBallSpeed;
 	public Rigidbody FireBallRigid;
     private ParticleSystem ps;
 	public SphereCollider spherecol;
@@ -24,6 +24,7 @@ public class Armageddon : MonoBehaviour {
 		charStatus = charManager.CharStatus;
         ps = GetComponent<ParticleSystem>();
 		FireBallRigid = GetComponent<Rigidbody> ();
+		FireBallSpeed = 5f;
 		FireBallRigid.velocity =(transform.forward* FireBallSpeed);
         StartCoroutine(ArmageddonPause());
 
