@@ -405,7 +405,10 @@ public class DataSender : MonoBehaviour
     //캐릭터 위치 -> Client
     public IEnumerator CharacterPositionSend()
     {
-        characterManager = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterManager>();
+        if (characterManager == null)
+        {
+            characterManager = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterManager>();
+        }
         Debug.Log("캐릭터 위치 보내기 시작");
 
         while (true)
@@ -439,6 +442,11 @@ public class DataSender : MonoBehaviour
     //캐릭터 움직임(공격, 점프, 스킬 등등) -> Client
     public void CharacterActionSend(int action)
     {
+        if(characterManager == null)
+        {
+            characterManager = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterManager>();
+        }
+
         CharacterActionData characterActionData = new CharacterActionData(action, (byte)characterManager.UserNum);
         CharacterActionPacket characterActionPacket = new CharacterActionPacket(characterActionData);
         characterActionPacket.SetPacketId((int)P2PPacketId.CharacterAction);
