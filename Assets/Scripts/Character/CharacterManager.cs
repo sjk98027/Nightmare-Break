@@ -26,8 +26,9 @@ public class CharacterManager : MonoBehaviour
 
 	public InputManager inputmanager;
 	public CharacterStatus charStatus;
+    NetworkManager networkManager;
 
-	public GameObject[] enermy;
+    public GameObject[] enermy;
 
 	public float jumpPower;
 
@@ -134,6 +135,7 @@ public class CharacterManager : MonoBehaviour
     public void SetUserNum(int num)
     {
         userNum = num;
+        networkManager = GameObject.FindWithTag("NetworkManager").GetComponent<NetworkManager>();
     }
 
 	public void AnimationEnd ()
@@ -431,7 +433,7 @@ public class CharacterManager : MonoBehaviour
 				break;
 			}
 
-            if (userNum == 0)
+            if (userNum == networkManager.MyIndex)
             {
                 DataSender.Instance.CharacterActionSend(Inputstate);
             }
