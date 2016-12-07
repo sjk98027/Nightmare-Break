@@ -105,12 +105,10 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
-    public void ConnectP2P(string newIp)
+    public void ConnectP2P(EndPoint endPoint)
     {
-        IPEndPoint newClient = new IPEndPoint(IPAddress.Parse(newIp), clientPortNumber);
-        dataReceiver.StartUdpReceive(newClient);
-        int index = userIndex[(EndPoint)newClient];
-        dataSender.RequestConnectionCheck((EndPoint)newClient);
+        dataReceiver.StartUdpReceive(endPoint);
+        dataSender.RequestConnectionCheck(endPoint);
     }
 
     public void DisconnectP2P()

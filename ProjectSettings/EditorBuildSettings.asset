@@ -6,8 +6,4 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scene/TitleScene.unity
-  - enabled: 1
-    path: Assets/Scene/CharacterSelectScene.unity
-  - enabled: 1
-    path: Assets/Scene/LoadingScene.unity
+    path: Assets/Scene/ProtoType 2.unity

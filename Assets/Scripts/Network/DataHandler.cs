@@ -351,7 +351,7 @@ public class DataHandler : MonoBehaviour
 
             if (newIp != gameManager.MyIP)
             {
-                networkManager.ConnectP2P(newIp);
+                networkManager.ConnectP2P(endPoint);
             }
         }
 
