@@ -134,13 +134,13 @@ public class DataReceiver : MonoBehaviour
     }
 
     //Udp (클라이언트) 수신 시작
-    public void StartUdpReceive(EndPoint client)
+    public void StartUdpReceive()
     {
         //매개변수로 받은 리스트의 EndPoint에서 비동기 수신을 대기한다
-        AsyncData asyncData = new AsyncData(client);
+        AsyncData asyncData = new AsyncData(new IPEndPoint(IPAddress.Any, 0));
         udpSock.BeginReceiveFrom(asyncData.msg, 0, AsyncData.msgMaxSize, SocketFlags.None, ref asyncData.EP, new AsyncCallback(UdpReceiveDataCallback), asyncData);
 
-        Debug.Log("UDP 수신시작 : " + client);
+        Debug.Log("UDP 수신시작 : ");
     }
 
     //Udp 데이터 수신

@@ -90,6 +90,7 @@ public class NetworkManager : MonoBehaviour
         reSendManager = GetComponent<ReSendManager>();
 
         DataReceiver.SetUdpSocket(clientSock);
+        dataReceiver.StartUdpReceive();
     }
 
     public void ConnectServer()
@@ -107,7 +108,6 @@ public class NetworkManager : MonoBehaviour
 
     public void ConnectP2P(EndPoint endPoint)
     {
-        dataReceiver.StartUdpReceive(endPoint);
         dataSender.RequestConnectionCheck(endPoint);
     }
 
