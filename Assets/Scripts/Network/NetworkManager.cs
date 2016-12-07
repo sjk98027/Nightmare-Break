@@ -69,7 +69,7 @@ public class NetworkManager : MonoBehaviour
 
         dataReceiver.Initialize(receiveMsgs, serverSock, receiveLock);
         dataHandler.Initialize(receiveMsgs, sendMsgs, receiveLock);
-        dataSender.Initialize(sendMsgs, serverSock, clientSock);
+        dataSender.Initialize(sendMsgs, serverSock);
     }
 
     public void InitializeTcpConnection()

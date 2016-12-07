@@ -41,15 +41,21 @@ public class DataSender : MonoBehaviour
 
     public Queue<DataPacket> SendMsgs { get { return sendMsgs; } }
 
-    public void Initialize(Queue<DataPacket> newSendMsgs, Socket newTcpSock, Socket newUdpSock)
+    public void Initialize(Queue<DataPacket> newSendMsgs, Socket newTcpSock)
     {
         networkManager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManager>();
-
         sendMsgs = newSendMsgs;
-        tcpSock = newTcpSock;
-        udpSock = newUdpSock;
+        InitializeTcpSend(newTcpSock);
+    }
 
-        udpMsg = new byte[0];
+    public void InitializeTcpSend(Socket newSocket)
+    {
+        tcpSock = newSocket;
+    }
+    
+    public void InitializeUdpSend(Socket newSocket)
+    {
+        udpSock = newSocket;
     }
 
     //데이타를 전송하는 메소드. byte[] msg 를 newIPEndPoint로 전송한다.
@@ -63,6 +69,9 @@ public class DataSender : MonoBehaviour
 
             if (packet.endPoint != null)
             {
+                Debug.Log(udpSock);
+                Debug.Log(packet);
+                Debug.Log(packet.endPoint);
                 udpSock.BeginSendTo(packet.msg, 0, packet.msg.Length, SocketFlags.None, packet.endPoint, new AsyncCallback(SendData), null);
             }
             else if (packet.endPoint == null)

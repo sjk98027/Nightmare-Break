@@ -338,6 +338,7 @@ public class DataHandler : MonoBehaviour
 
         networkManager.InitializeUdpConnection();
         networkManager.ReSendManager.Initialize(matchData.playerNum);
+        DataSender.Instance.InitializeUdpSend(networkManager.ClientSock);
 
         for (int userIndex = 0; userIndex < matchData.playerNum; userIndex++)
         {
