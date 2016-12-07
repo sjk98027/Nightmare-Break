@@ -79,7 +79,7 @@ public class MageManager : CharacterManager
 		{
 			if (!mageRing)
 			{
-				//mageRing = Instantiate (Resources.Load<GameObject> ("Effect/MagicionRing"), new Vector3 (transform.position.x, transform.position.y + 1.0f, transform.position.z), Quaternion.Euler (0, 0, 0))as GameObject;
+				mageRing = Instantiate (Resources.Load<GameObject> ("Effect/FlameImpact"), new Vector3 (transform.position.x, transform.position.y + 1.0f, transform.position.z), Quaternion.Euler (0, 0, 0))as GameObject;
 			}
 			float howlingSpeed = 5f;
 			float howlingDistance;
@@ -101,6 +101,7 @@ public class MageManager : CharacterManager
 			{
 				skillTime = 0;
 				howling = false;
+				Destroy (mageRing, 0);
 			}
 		}
 	}
