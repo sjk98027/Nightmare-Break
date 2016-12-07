@@ -324,6 +324,8 @@ public class DataHandler : MonoBehaviour
         MatchData matchData = matchDataPacket.GetData();
 
         DataSender.Instance.udpId = new int[matchData.playerNum];
+        
+        networkManager.ReSendManager.Initialize(matchData.playerNum);
 
         for (int userIndex = 0; userIndex < matchData.playerNum; userIndex++)
         {
@@ -354,8 +356,6 @@ public class DataHandler : MonoBehaviour
                 networkManager.ConnectP2P(endPoint);
             }
         }
-
-        networkManager.ReSendManager.Initialize(matchData.playerNum);
     }
 
     //Client - 연결 확인 답장

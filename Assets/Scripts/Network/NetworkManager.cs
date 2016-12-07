@@ -130,6 +130,7 @@ public class NetworkManager : MonoBehaviour
 
     public void SetMyIndex(int newIndex)
     {
+        Debug.Log("내 번호 설정 : " + myIndex);
         myIndex = newIndex;
     }
 }
