@@ -9,6 +9,7 @@ public class MageManager : CharacterManager
 	public GameObject armageddon;
 	public GameObject mageRing;
 	public Armageddon ArmageddonDamage;
+	public bool howling;
 
 	public override void ProcessSkill1 ()
 	{
@@ -74,12 +75,13 @@ public class MageManager : CharacterManager
 
 	public void FireHowling()
 	{
-		if (!mageRing)
+		if (howling)
 		{
-			mageRing = Instantiate (Resources.Load<GameObject> ("Effect/MagicionRing"), new Vector3 (transform.position.x, transform.position.y + 1.0f, transform.position.z), Quaternion.Euler (0, 0, 0))as GameObject;
-
-		}
-			float howlingSpeed = 0.5f;
+			if (!mageRing)
+			{
+				//mageRing = Instantiate (Resources.Load<GameObject> ("Effect/MagicionRing"), new Vector3 (transform.position.x, transform.position.y + 1.0f, transform.position.z), Quaternion.Euler (0, 0, 0))as GameObject;
+			}
+			float howlingSpeed = 5f;
 			float howlingDistance;
 			skillTime += Time.deltaTime;
 
@@ -91,18 +93,16 @@ public class MageManager : CharacterManager
 
 					if (howlingDistance < 10)
 					{
-					enermy [i].transform.Translate ((enermy [i].transform.position- this.transform.position ) * howlingSpeed * Time.deltaTime, Space.World);
+						enermy [i].transform.Translate ((enermy [i].transform.position - this.transform.position) * howlingSpeed * Time.deltaTime, Space.World);
 					}
 				}
 			}
-
-			if (skillTime >= 1.5f)
+			if (skillTime >= 0.23f)
 			{
 				skillTime = 0;
+				howling = false;
 			}
-
-
-
+		}
 	}
 	public void Armageddon()
 	{
@@ -118,6 +118,10 @@ public class MageManager : CharacterManager
 
 		ArmageddonDamage.armageddonDamage = 100;
 		
+	}
+	public void HowlingForce()
+	{
+		howling = true;
 	}
 
 	public override void HitDamage (int _damage)
@@ -175,10 +179,12 @@ public class MageManager : CharacterManager
 		}
 	}
 
+
     public override void SetCharacterType()
     {
         charStatus.HClass = CharacterStatus.CharClass.Warrior;
     }
+
 
 
 	public override void UsingMagicPoint(int SkillArray)
