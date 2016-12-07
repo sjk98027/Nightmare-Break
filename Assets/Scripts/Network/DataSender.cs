@@ -406,11 +406,13 @@ public class DataSender : MonoBehaviour
     public IEnumerator CharacterPositionSend()
     {
         characterManager = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterManager>();
-        Debug.Log("캐릭터 위치 보내기 시작 번호 : " + characterManager.UserNum);
+        Debug.Log("캐릭터 위치 보내기 시작");
 
         while (true)
         {
-            yield return new WaitForFixedUpdate();
+            yield return null;
+
+            Debug.Log("번호 : " + characterManager.UserNum);
 
             bool dir = characterManager.charDir;
             float xPos = characterManager.transform.position.x;
