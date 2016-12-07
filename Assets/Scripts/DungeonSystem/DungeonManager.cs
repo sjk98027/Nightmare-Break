@@ -122,7 +122,11 @@ public class DungeonManager : MonoBehaviour
     {
         Debug.Log("DungeonManager 초기화 - " + userNum);
         networkManager = GameObject.FindWithTag("NetworkManager").GetComponent<NetworkManager>();
-        players = new GameObject[userNum];
+    }
+
+    public void InitializePlayer(int playerNum)
+    {
+        players = new GameObject[playerNum];
     }
 
     //defence mode, normal mode
@@ -317,8 +321,8 @@ public class DungeonManager : MonoBehaviour
         player.GetComponent<CharacterManager>().enabled = true;
         player.name = "Warrior";
         player.tag = "Player";
-        players[0] = player;
-        player.GetComponent<CharacterManager>().SetUserNum(0);
+        players[networkManager.MyIndex] = player;
+        player.GetComponent<CharacterManager>().SetUserNum(networkManager.MyIndex);
 
         m_camera = GameObject.FindGameObjectWithTag("MainCamera");
         StartCoroutine(m_camera.GetComponent<CameraController>().CameraCtrl(player.transform));
@@ -329,11 +333,12 @@ public class DungeonManager : MonoBehaviour
 
         uiManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
         //uiManager.SetBattleUIManager();
+
         player.GetComponent<CharacterManager>().UIManager = uiManager;
         player.GetComponent<CharacterManager>().SetCharacterStatus();
         player.GetComponent<CharacterManager>().SetCharacterType();
 
-        foreach (KeyValuePair<EndPoint, int> user in networkManager.DataHandler.userNum)
+        foreach (KeyValuePair<EndPoint, int> user in networkManager.UserIndex)
         {
             DataSender.Instance.CreateUnitSend(user.Key, (short)characterId, player.transform.position.x, player.transform.position.y, player.transform.position.z);
         }
@@ -345,14 +350,14 @@ public class DungeonManager : MonoBehaviour
     {
         //위와 같은 생성이지만 이곳에서는 다른 플레이어의 캐릭터를 생성한다.
         //DataHandler 에서 데이타를 받아서 실행된다.
-        if (players[unitIndex + 1] == null)
+        if (players[unitIndex] == null)
         {
             GameObject unit = Instantiate(Resources.Load("Warrior")) as GameObject;
             unit.transform.position = newPosition;
             unit.name = "Warrior";
-            unit.GetComponent<CharacterManager>().SetUserNum(unitIndex + 1);
+            unit.GetComponent<CharacterManager>().SetUserNum(unitIndex);
 
-            players[unitIndex + 1] = unit;
+            players[unitIndex] = unit;
 
             return unit;
         }

@@ -8,9 +8,6 @@ public class GameManager : MonoBehaviour
     UIManager uiManager;
     CharacterStatus characterStatus;
 
-    [SerializeField]
-    string ip;
-
     void Start()
     {
         InitializeManager();
@@ -36,7 +33,7 @@ public class GameManager : MonoBehaviour
         uiManager.tag = "UIManager";
         uiManager.SetDialog();
 
-        networkManager.InitializeManager(ip);
+        networkManager.InitializeManager();
 
         SetManagerInWait();
 
@@ -68,7 +65,7 @@ public class GameManager : MonoBehaviour
         inputManager.name = "InputManager";
         inputManager.tag = "InputManager";
 
-        dungeonManager.Initialize(networkManager.Clients.Count + 1);
+        dungeonManager.Initialize(networkManager.UserIndex.Count + 1);
         //uiManager.SetBattleUIManager();
     }
 

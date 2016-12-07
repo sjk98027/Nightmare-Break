@@ -140,7 +140,7 @@ public class DataReceiver : MonoBehaviour
         AsyncData asyncData = new AsyncData(client);
         udpSock.BeginReceiveFrom(asyncData.msg, 0, AsyncData.msgMaxSize, SocketFlags.None, ref asyncData.EP, new AsyncCallback(UdpReceiveDataCallback), asyncData);
 
-        Debug.Log("수신시작 : " + client);
+        Debug.Log("UDP 수신시작 : " + client);
     }
 
     //Udp 데이터 수신

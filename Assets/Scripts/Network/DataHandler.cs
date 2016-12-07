@@ -27,9 +27,6 @@ public class DataHandler : MonoBehaviour
     ServerRecvNotifier serverRecvNotifier;
     private Dictionary<int, P2PRecvNotifier> p2p_notifier = new Dictionary<int, P2PRecvNotifier>();
     private Dictionary<int, ServerRecvNotifier> server_notifier = new Dictionary<int, ServerRecvNotifier>();
-    
-    public Dictionary<EndPoint, int> userNum;
-    int userIndexNum;
 
     public DateTime dTime;
 
@@ -130,11 +127,6 @@ public class DataHandler : MonoBehaviour
                 }
             }
         }
-    }
-
-    public int GetUserNum(EndPoint endPoint)
-    {
-        return userNum[endPoint];
     }
     
     //Server - 가입 결과
@@ -331,35 +323,38 @@ public class DataHandler : MonoBehaviour
         MatchDataPacket matchDataPacket = new MatchDataPacket(packet.msg);
         MatchData matchData = matchDataPacket.GetData();
 
-        userIndexNum = 0;
+        DataSender.Instance.udpId = new int[matchData.playerNum];
 
-        DataSender.Instance.udpId = new int[matchData.ip.Length - 1];
-
-        userNum = new Dictionary<EndPoint, int>();
-        
-        networkManager.ReSendManager.Initialize(matchData.ip.Length);
-        networkManager.DataReceiver.SetUdpSocket(networkManager.ClientSock);
-
-        for (int i = 0; i < matchData.ip.Length; i++)
+        for (int userIndex = 0; userIndex < matchData.playerNum; userIndex++)
         {
-            string ip = matchData.ip[i];
-            ip = ip.Substring(0, ip.IndexOf(":"));
+            string newIp = matchData.ip[userIndex];
+            newIp = newIp.Substring(0, newIp.IndexOf(":"));
 
-            Debug.Log("온 아이피 : " + ip);
-            Debug.Log("번호 : " + userIndexNum);
-
-            if (ip != networkManager.client.ToString().Substring(0, networkManager.client.ToString().IndexOf(":")))
+            if (newIp == networkManager.MyIP)
             {
-                IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(ip), NetworkManager.clientPortNumber);
+                networkManager.SetMyIndex(userIndex);
+            }
 
-                userNum.Add(endPoint, userIndexNum++);
+            networkManager.InitializeUdpConnection(networkManager.MyIP);
+        }        
 
-                networkManager.ConnectP2P(ip);
+        for (int userIndex = 0; userIndex < matchData.playerNum; userIndex++)
+        {
+            string newIp = matchData.ip[userIndex];
+            newIp = newIp.Substring(0, newIp.IndexOf(":"));
+
+            Debug.Log("연결 아이피 : " + newIp);
+
+            networkManager.UserIndex.Add(packet.endPoint, userIndex);
+
+            if (newIp != networkManager.MyIP)
+            {
+                IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(newIp), NetworkManager.clientPortNumber + userIndex);
+                networkManager.ConnectP2P(newIp);
             }
         }
 
-        StartCoroutine(networkManager.ReSendManager.StartCheckSendData());
-        networkManager.ReSendManager.isConnecting = true;
+        networkManager.ReSendManager.Initialize(matchData.playerNum);
     }
 
     //Client - 연결 확인 답장
@@ -393,8 +388,11 @@ public class DataHandler : MonoBehaviour
 
         gameManager.SetManagerInDungeon();
         networkManager.ReSendManager.characterCreating = true;
+
         dungeonManager = GameObject.FindGameObjectWithTag("DungeonManager").GetComponent<DungeonManager>();
+        dungeonManager.InitializePlayer(networkManager.UserIndex.Count);
         dungeonManager.CreatePlayer(0);
+
         dTime = DateTime.Now;
         Debug.Log("시간 지정 : " + dTime.ToString("hh:mm:ss"));
     }
@@ -406,7 +404,7 @@ public class DataHandler : MonoBehaviour
         CreateUnitPacket createUnitPacket = new CreateUnitPacket(packet.msg);
         CreateUnitData createUnitData = createUnitPacket.GetData();
 
-        int index = userNum[packet.endPoint];
+        int index = networkManager.GetUserIndex(packet.endPoint);
 
         Debug.Log("인덱스 : " + index);
 
@@ -424,27 +422,25 @@ public class DataHandler : MonoBehaviour
         CharacterPositionPacket characterPositionPacket = new CharacterPositionPacket(packet.msg);
         CharacterPositionData characterPositionData = characterPositionPacket.GetData();
 
-        int index = userNum[packet.endPoint];
+        int index = networkManager.GetUserIndex(packet.endPoint);
 
         Debug.Log("캐릭터 인덱스 : " + index);
 
-        CharacterManager characterManager = dungeonManager.Players[index + 1].GetComponent<CharacterManager>();
+        CharacterManager characterManager = dungeonManager.Players[index].GetComponent<CharacterManager>();
         characterManager.SetPosition(characterPositionData);
     }
 
     //Client
     public void CharacterAction(DataPacket packet, int udpId)
     {
-        Debug.Log("캐릭터 행동 수신");
-
         CharacterActionPacket characterActionPacket = new CharacterActionPacket(packet.msg);
         CharacterActionData characterActionData = characterActionPacket.GetData();
 
-        Debug.Log("캐릭터 행동" + characterActionData.action);
+        Debug.Log("캐릭터 행동 수신" + characterActionData.action);
 
-        int index = userNum[packet.endPoint];
+        int index = networkManager.GetUserIndex(packet.endPoint);
 
-        CharacterManager characterManager = dungeonManager.Players[index + 1].GetComponent<CharacterManager>();
+        CharacterManager characterManager = dungeonManager.Players[index].GetComponent<CharacterManager>();
         characterManager.CharState(characterActionData.action);
     }
 }

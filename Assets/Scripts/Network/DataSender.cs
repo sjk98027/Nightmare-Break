@@ -78,7 +78,7 @@ public class DataSender : MonoBehaviour
         udpSock.EndSend(ar);
     }
 
-    //계정 생성 - Tcp
+    //계정 생성 -> Server
     public void CreateAccount(string id, string pw)
     {
         Debug.Log("가입 요청");
@@ -91,7 +91,7 @@ public class DataSender : MonoBehaviour
         sendMsgs.Enqueue(packet);
     }
 
-    //계정 탈퇴 - Tcp
+    //계정 탈퇴 -> Server
     public void DeleteAccount(string id, string pw)
     {
         Debug.Log("탈퇴 요청");
@@ -104,7 +104,7 @@ public class DataSender : MonoBehaviour
         sendMsgs.Enqueue(packet);
     }
 
-    //로그인 - Tcp
+    //로그인 -> Server
     public void Login(string id, string pw)
     {
         Debug.Log("로그인");
@@ -117,7 +117,7 @@ public class DataSender : MonoBehaviour
         sendMsgs.Enqueue(packet);
     }
 
-    //로그아웃 - Tcp
+    //로그아웃 -> Server
     public void Logout()
     {
         Debug.Log("로그아웃");
@@ -130,7 +130,7 @@ public class DataSender : MonoBehaviour
         sendMsgs.Enqueue(packet);
     }
 
-    //게임 종료 - Tcp
+    //게임 종료 -> Server
     public void GameClose()
     {
         Debug.Log("게임 종료");
@@ -161,7 +161,7 @@ public class DataSender : MonoBehaviour
         }
     }
 
-    //캐릭터 생성 - Tcp
+    //캐릭터 생성 -> Server
     public void CreateCharacter(int gender, int hClass, string name)
     {
         Debug.Log("캐릭터 생성");
@@ -175,7 +175,7 @@ public class DataSender : MonoBehaviour
         sendMsgs.Enqueue(packet);
     }
 
-    //캐릭터 삭제 - Tcp
+    //캐릭터 삭제 -> Server
     public void DeleteCharacter(int index)
     {
         Debug.Log("캐릭터 삭제");
@@ -189,7 +189,7 @@ public class DataSender : MonoBehaviour
         sendMsgs.Enqueue(packet);
     }
 
-    //캐릭터 선택 - Tcp
+    //캐릭터 선택 -> Server
     public void SelectCharacter(int index)
     {
         Debug.Log("캐릭터 선택");
@@ -203,7 +203,7 @@ public class DataSender : MonoBehaviour
         sendMsgs.Enqueue(packet);
     }
 
-    //캐릭터 정보 요청 - Tcp
+    //캐릭터 정보 요청 -> Server
     public void RequestCharacterStatus()
     {
         Debug.Log("캐릭터 정보 요청");
@@ -217,7 +217,7 @@ public class DataSender : MonoBehaviour
         sendMsgs.Enqueue(packet);
     }
 
-    //방 목록 요청 - Tcp
+    //방 목록 요청 -> Server
     public void RequestRoomList()
     {
         Debug.Log("방 목록 요청");
@@ -231,7 +231,7 @@ public class DataSender : MonoBehaviour
         sendMsgs.Enqueue(packet);
     }
 
-    //스킬 투자 - Tcp
+    //스킬 투자 -> Server
     public void SkillUp(int index)
     {
         Debug.Log("스킬 투자");
@@ -245,7 +245,7 @@ public class DataSender : MonoBehaviour
         sendMsgs.Enqueue(packet);
     }
 
-    //장비 강화 - Tcp
+    //장비 강화 -> Server
     public void EquipUpgrade(int index)
     {
         Debug.Log("장비 강화");
@@ -259,7 +259,7 @@ public class DataSender : MonoBehaviour
         sendMsgs.Enqueue(packet);
     }
 
-    //방 생성 - Tcp
+    //방 생성 -> Server
     public void CreateRoom(string roomName, int dungeonId, int dungeonLevel)
     {
         Debug.Log("방 생성");
@@ -273,7 +273,7 @@ public class DataSender : MonoBehaviour
         sendMsgs.Enqueue(packet);
     }
 
-    //방 입장 - Tcp
+    //방 입장 -> Server
     public void EnterRoom(int roomNum)
     {
         Debug.Log("방 입장 : " + roomNum);
@@ -287,7 +287,7 @@ public class DataSender : MonoBehaviour
         sendMsgs.Enqueue(packet);
     }
 
-    //방 퇴장 - Tcp
+    //방 퇴장 -> Server
     public void ExitRoom(int roomNum)
     {
         Debug.Log("방 퇴장");
@@ -301,7 +301,7 @@ public class DataSender : MonoBehaviour
         sendMsgs.Enqueue(packet);
     }
 
-    //게임 시작 - Tcp
+    //게임 시작 -> Server
     public void StartGame()
     {
         Debug.Log("게임 시작");
@@ -315,7 +315,7 @@ public class DataSender : MonoBehaviour
         sendMsgs.Enqueue(packet);
     }
 
-    //연결 요청 - Tcp
+    //UDP 연결 요청 -> Server
     public void RequestUdpConnection()
     {
         Debug.Log("Udp 연결 요청");
@@ -329,12 +329,12 @@ public class DataSender : MonoBehaviour
         sendMsgs.Enqueue(packet);
     }
 
-    //연결 확인 요청 - Udp
+    //UDP 연결 확인 요청 -> Client
     public void RequestConnectionCheck(EndPoint endPoint)
     {
         Debug.Log(endPoint.ToString() + " 연결 체크 요청");
 
-        int index = networkManager.DataHandler.GetUserNum(endPoint);
+        int index = networkManager.GetUserIndex(endPoint);
 
         ResultData resultData = new ResultData(new byte());
         ResultPacket resultDataPacket = new ResultPacket(resultData);
@@ -349,7 +349,7 @@ public class DataSender : MonoBehaviour
         udpId[index]++;
     }
 
-    //Udp 답신 - Udp
+    //Udp 답신 -> Client
     public void UdpAnswer(EndPoint newEndPoint, int udpId)
     {
         Debug.Log(newEndPoint.ToString() + " Udp 답신 보냄 Id : " + udpId);
@@ -363,7 +363,7 @@ public class DataSender : MonoBehaviour
         sendMsgs.Enqueue(packet);
     }
 
-    //연결 완료 - Tcp
+    //연결 완료 -> Server
     public void UdpConnectComplete()
     {
         Debug.Log("Udp 연결 완료");
@@ -377,7 +377,7 @@ public class DataSender : MonoBehaviour
         sendMsgs.Enqueue(packet);
     }
 
-    //캐릭터의 생성 - Udp
+    //캐릭터의 생성 -> Client
     public void CreateUnitSend(EndPoint endPoint, short characterId, float posX, float posY, float posZ)
     {
         Debug.Log(endPoint.ToString() + "캐릭터 생성 보냄");
@@ -386,7 +386,7 @@ public class DataSender : MonoBehaviour
         CreateUnitPacket createUnitDataPacket = new CreateUnitPacket(createUnitData);
         createUnitDataPacket.SetPacketId((int)P2PPacketId.CreateUnit);
 
-        int index = networkManager.DataHandler.GetUserNum(endPoint);
+        int index = networkManager.GetUserIndex(endPoint);
 
         DataPacket packet = new DataPacket(CreateUdpPacket(createUnitDataPacket, udpId[index]), endPoint);
         sendMsgs.Enqueue(packet);
@@ -396,7 +396,7 @@ public class DataSender : MonoBehaviour
         udpId[index]++;
     }
 
-    //캐릭터 위치 - Udp
+    //캐릭터 위치 -> Client
     public IEnumerator CharacterPositionSend()
     {
         characterManager = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterManager>();
@@ -417,7 +417,7 @@ public class DataSender : MonoBehaviour
 
             byte[] msg = CreatePacket(characterPositionPacket);
 
-            foreach (KeyValuePair<EndPoint, int> user in networkManager.DataHandler.userNum)
+            foreach (KeyValuePair<EndPoint, int> user in networkManager.UserIndex)
             {
                 DataPacket packet = new DataPacket(CreateUdpPacket(characterPositionPacket, udpId[user.Value]), user.Key);
                 sendMsgs.Enqueue(packet);
@@ -425,7 +425,7 @@ public class DataSender : MonoBehaviour
         }
     }
 
-    //캐릭터 움직임(공격, 점프, 스킬 등등) - Udp
+    //캐릭터 움직임(공격, 점프, 스킬 등등) -> Client
     public void CharacterActionSend(int action)
     {
         CharacterActionData characterActionData = new CharacterActionData(action);
@@ -436,7 +436,7 @@ public class DataSender : MonoBehaviour
 
         Debug.Log("캐릭터 상태 보냄");
 
-        foreach (KeyValuePair<EndPoint, int> user in networkManager.DataHandler.userNum)
+        foreach (KeyValuePair<EndPoint, int> user in networkManager.UserIndex)
         {
             DataPacket packet = new DataPacket(CreateUdpPacket(characterActionPacket, udpId[user.Value]), user.Key);
             sendMsgs.Enqueue(packet);
@@ -444,25 +444,26 @@ public class DataSender : MonoBehaviour
     }
 
     //0.1초 마다 Udp메시지를 큐에 넣는다.
-    public IEnumerator EnqueueMessage()
-    {
-        while (true)
-        {
-            yield return new WaitForFixedUpdate();
+    //public IEnumerator EnqueueMessage()
+    //{
+    //    while (true)
+    //    {
+    //        yield return new WaitForFixedUpdate();
 
-            DataPacket packet = new DataPacket(udpMsg, null);
+    //        DataPacket packet = new DataPacket(udpMsg, null);
 
-            foreach (EndPoint client in networkManager.Clients)
-            {
-                packet.endPoint = client;
-                sendMsgs.Enqueue(packet);
-            }
+    //        foreach (EndPoint client in networkManager.UserIndex.Keys)
+    //        {
+    //            packet.endPoint = client;
+    //            sendMsgs.Enqueue(packet);
+    //        }
 
-            udpMsg = new byte[0];
-        }
-    }
+    //        udpMsg = new byte[0];
+    //    }
+    //}
 
     //패킷의 헤더 생성
+
     byte[] CreateHeader<T>(Packet<T> data)
     {
         byte[] msg = data.GetPacketData();

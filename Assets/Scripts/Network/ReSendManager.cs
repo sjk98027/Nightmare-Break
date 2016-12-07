@@ -18,17 +18,20 @@ public class ReSendManager : MonoBehaviour
     public void Initialize(int userNum)
     {
         networkManager = GetComponent<NetworkManager>();
-        reSendDatum = new Dictionary<int, SendData>[userNum - 1];
+        reSendDatum = new Dictionary<int, SendData>[userNum];
 
-        for (int i = 0; i < userNum - 1; i++)
+        for (int i = 0; i < userNum; i++)
         {
             reSendDatum[i] = new Dictionary<int, SendData>();
         }
+
+        StartCoroutine(StartCheckSendData());
+        isConnecting = true;
     }
 
     public void AddReSendData(SendData sendData)
     {
-        int index = networkManager.DataHandler.GetUserNum(sendData.EndPoint);
+        int index = networkManager.GetUserIndex(sendData.EndPoint);
 
         try
         {
@@ -43,7 +46,7 @@ public class ReSendManager : MonoBehaviour
 
     public void RemoveReSendData(SendData sendData)
     {
-        int index = networkManager.DataHandler.GetUserNum(sendData.EndPoint);
+        int index = networkManager.GetUserIndex(sendData.EndPoint);
 
         if (reSendDatum[index].ContainsKey(sendData.UdpId))
         {
@@ -72,15 +75,15 @@ public class ReSendManager : MonoBehaviour
             yield return new WaitForSeconds(1.0f);
 
             //모든 플레이어들의 ReSendData를 확인한다
-            for (int i = 0; i < reSendDatum.Length; i++)
+            for (int userIndex = 0; userIndex < reSendDatum.Length; userIndex++)
             {
-                reSendKey = new List<int>(reSendDatum[i].Keys);
+                reSendKey = new List<int>(reSendDatum[userIndex].Keys);
 
-                //i번 플레이어의 ReSendData를 확인한다
+                //플레이어의 ReSendData를 확인한다
                 foreach (int key in reSendKey)
                 {
-                    //i번 플레이어의 foreach문에 걸린 method를 하나 실행한다.
-                    if (reSendDatum[i].TryGetValue(key, out reSendData))
+                    //플레이어의 foreach문에 걸린 method를 하나 실행한다.
+                    if (reSendDatum[userIndex].TryGetValue(key, out reSendData))
                     {
                         DataReSend(reSendData);
                     }
@@ -89,9 +92,9 @@ public class ReSendManager : MonoBehaviour
 
             if (isConnecting)
             {
-                for (int i = 0; i < reSendDatum.Length; i++)
+                for (int userIndex = 0; userIndex < reSendDatum.Length; userIndex++)
                 {
-                    if (reSendDatum[i].Count != 0)
+                    if (reSendDatum[userIndex].Count != 0)
                     {
                         isConnecting = true;
                         break;
@@ -110,9 +113,9 @@ public class ReSendManager : MonoBehaviour
 
             if (characterCreating)
             {
-                for (int i = 0; i < reSendDatum.Length; i++)
+                for (int userIndex = 0; userIndex < reSendDatum.Length; userIndex++)
                 {
-                    if (reSendDatum[i].Count != 0)
+                    if (reSendDatum[userIndex].Count != 0)
                     {
                         characterCreating = true;
                         break;

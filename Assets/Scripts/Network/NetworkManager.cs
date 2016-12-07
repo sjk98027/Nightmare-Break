@@ -22,15 +22,15 @@ public class NetworkManager : MonoBehaviour
         ClientSource = 1,
     }
 
-    //테스트 중에서는 하나의 컴퓨터에서 진행하므로 다른 ip 대신에 다른 port를 이용한다
-    public const int mainServerPortNumber = 8800;
+    [SerializeField]
+    string myIP;
+
+    public const string serverIP = "192.168.94.88";
+    public const int serverPortNumber = 8800;
     public const int clientPortNumber = 9000;
-    public IPEndPoint mainServer;
-    public IPEndPoint client;
-
-    //udp Socket이 연결할 SocketList
-    List<EndPoint> clients;
-
+    public IPEndPoint serverEndPoint;
+    public IPEndPoint clientEndPoint;
+    
     Queue<DataPacket> receiveMsgs;
     Queue<DataPacket> sendMsgs;
 
@@ -44,54 +44,66 @@ public class NetworkManager : MonoBehaviour
     DataSender dataSender;
     ReSendManager reSendManager;
 
+    Dictionary<EndPoint, int> userIndex;
+    int myIndex;
+
+    public string MyIP
+    {
+        get
+        {
+            return myIP;
+        }
+    }
+    public int MyIndex { get { return myIndex; } }
     public Socket ClientSock { get { return clientSock; } }
-    public List<EndPoint> Clients { get { return clients; } }
+    public Dictionary<EndPoint, int> UserIndex { get { return userIndex; } }
     public DataReceiver DataReceiver { get { return dataReceiver; } }
     public DataHandler DataHandler { get { return dataHandler; } }
     public DataSender DataSender { get { return dataSender; } }
     public ReSendManager ReSendManager { get { return reSendManager; } }
 
-    public void InitializeManager(string ip)
+    public void InitializeManager()
     {
-        try
-        {
-            receiveMsgs = new Queue<DataPacket>();
-            sendMsgs = new Queue<DataPacket>();
+        receiveMsgs = new Queue<DataPacket>();
+        sendMsgs = new Queue<DataPacket>();
+        receiveLock = new object();
 
-            receiveLock = new object();
+        dataReceiver = GetComponent<DataReceiver>();
+        dataHandler = GetComponent<DataHandler>();
+        dataSender = GetComponent<DataSender>();
 
-            mainServer = new IPEndPoint(IPAddress.Parse("192.168.94.88"), mainServerPortNumber);
-            client = new IPEndPoint(IPAddress.Parse(ip), clientPortNumber);
+        dataReceiver.Initialize(receiveMsgs, serverSock, receiveLock);
+        dataHandler.Initialize(receiveMsgs, sendMsgs, receiveLock);
+        dataSender.Initialize(sendMsgs, serverSock, clientSock);
 
-            serverSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            clientSock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            clientSock.Bind(client);
+        InitializeTcpConnection();
+    }
 
-            ConnectServer();
+    public void InitializeTcpConnection()
+    {
+        serverEndPoint = new IPEndPoint(IPAddress.Parse(serverIP), serverPortNumber);
+        serverSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-            clients = new List<EndPoint>();
+        ConnectServer();
+    }
 
-            dataReceiver = GetComponent<DataReceiver>();
-            dataHandler = GetComponent<DataHandler>();
-            dataSender = GetComponent<DataSender>();
-            reSendManager = GetComponent<ReSendManager>();
-            dataSender = DataSender.Instance;
+    public void InitializeUdpConnection(string clientIP)
+    {
+        clientEndPoint = new IPEndPoint(IPAddress.Parse(clientIP), clientPortNumber + myIndex);
+        clientSock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+        clientSock.Bind(clientEndPoint);
 
-            dataReceiver.Initialize(receiveMsgs, serverSock, receiveLock);
-            dataHandler.Initialize(receiveMsgs, sendMsgs, receiveLock);
-            dataSender.Initialize(sendMsgs, serverSock, clientSock);
-        }
-        catch
-        {
-            Debug.Log("네트워크 설정 실패");
-        }
+        userIndex = new Dictionary<EndPoint, int>();
+        reSendManager = GetComponent<ReSendManager>();
+
+        DataReceiver.SetUdpSocket(clientSock);
     }
 
     public void ConnectServer()
     {
         try
         {
-            serverSock.Connect(mainServer);
+            serverSock.Connect(serverEndPoint);
             Debug.Log("서버 연결 성공");
         }
         catch (Exception e)
@@ -102,12 +114,10 @@ public class NetworkManager : MonoBehaviour
 
     public void ConnectP2P(string newIp)
     {
-        IPEndPoint client = new IPEndPoint(IPAddress.Parse(newIp), clientPortNumber);
-        clients.Add(client);
-        dataReceiver.StartUdpReceive(client);
-
-        int index = dataHandler.userNum[(EndPoint)client];
-        dataSender.RequestConnectionCheck((EndPoint)client);
+        IPEndPoint newClient = new IPEndPoint(IPAddress.Parse(newIp), clientPortNumber);
+        dataReceiver.StartUdpReceive(newClient);
+        int index = userIndex[(EndPoint)newClient];
+        dataSender.RequestConnectionCheck((EndPoint)newClient);
     }
 
     public void DisconnectP2P()
@@ -120,5 +130,15 @@ public class NetworkManager : MonoBehaviour
         Debug.Log("소켓 닫기");
         clientSock.Close();
         serverSock.Close();
+    }
+
+    public int GetUserIndex(EndPoint endPoint)
+    {
+        return userIndex[endPoint];
+    }
+
+    public void SetMyIndex(int newIndex)
+    {
+        myIndex = newIndex;
     }
 }
