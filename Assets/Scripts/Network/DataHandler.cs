@@ -418,6 +418,7 @@ public class DataHandler : MonoBehaviour
 
         int index = networkManager.GetUserIndex(packet.endPoint);
 
+        Debug.Log("캐릭터 위치 : " + characterPositionData.posX + ". " + characterPositionData.posY + ". " + characterPositionData.posZ);
         Debug.Log("캐릭터 인덱스 : " + index);
 
         CharacterManager characterManager = dungeonManager.Players[index].GetComponent<CharacterManager>();
