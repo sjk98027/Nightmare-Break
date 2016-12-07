@@ -78,8 +78,6 @@ public class DataHandler : MonoBehaviour
     {
         int readCount = receiveMsgs.Count;
 
-        Debug.Log(readCount);
-
         for (int i = 0; i < readCount; i++)
         {
             //패킷을 Dequeue 한다
