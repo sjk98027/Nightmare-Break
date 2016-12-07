@@ -415,12 +415,10 @@ public class DataHandler : MonoBehaviour
         CharacterPositionPacket characterPositionPacket = new CharacterPositionPacket(packet.msg);
         CharacterPositionData characterPositionData = characterPositionPacket.GetData();
 
-        int index = networkManager.GetUserIndex(packet.endPoint);
-
         Debug.Log("캐릭터 위치 : " + characterPositionData.posX + ". " + characterPositionData.posY + ". " + characterPositionData.posZ);
-        Debug.Log("캐릭터 인덱스 : " + index);
+        Debug.Log("캐릭터 인덱스 : " + characterPositionData.userIndex);
 
-        CharacterManager characterManager = dungeonManager.characters[index];
+        CharacterManager characterManager = dungeonManager.characters[characterPositionData.userIndex];
         characterManager.SetPosition(characterPositionData);
     }
 

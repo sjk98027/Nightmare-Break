@@ -419,7 +419,7 @@ public class DataSender : MonoBehaviour
             float yPos = characterManager.transform.position.y;
             float zPos = characterManager.transform.position.z;
 
-            CharacterPositionData CharacterPosition = new CharacterPositionData(dir, xPos, yPos, zPos);
+            CharacterPositionData CharacterPosition = new CharacterPositionData(dir, (byte)characterManager.UserNum, xPos, yPos, zPos);
             CharacterPositionPacket characterPositionPacket = new CharacterPositionPacket(CharacterPosition);
             characterPositionPacket.SetPacketId((int)P2PPacketId.CharacterPosition);
 
