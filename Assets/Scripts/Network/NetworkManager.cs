@@ -68,6 +68,8 @@ public class NetworkManager : MonoBehaviour
         sendMsgs = new Queue<DataPacket>();
         receiveLock = new object();
 
+        InitializeTcpConnection();
+
         dataReceiver = GetComponent<DataReceiver>();
         dataHandler = GetComponent<DataHandler>();
         dataSender = GetComponent<DataSender>();
@@ -75,8 +77,6 @@ public class NetworkManager : MonoBehaviour
         dataReceiver.Initialize(receiveMsgs, serverSock, receiveLock);
         dataHandler.Initialize(receiveMsgs, sendMsgs, receiveLock);
         dataSender.Initialize(sendMsgs, serverSock, clientSock);
-
-        InitializeTcpConnection();
     }
 
     public void InitializeTcpConnection()
