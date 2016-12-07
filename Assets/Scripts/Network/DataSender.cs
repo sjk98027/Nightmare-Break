@@ -69,9 +69,6 @@ public class DataSender : MonoBehaviour
 
             if (packet.endPoint != null)
             {
-                Debug.Log(udpSock);
-                Debug.Log(packet);
-                Debug.Log(packet.endPoint);
                 udpSock.BeginSendTo(packet.msg, 0, packet.msg.Length, SocketFlags.None, packet.endPoint, new AsyncCallback(SendData), null);
             }
             else if (packet.endPoint == null)

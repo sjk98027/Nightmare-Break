@@ -407,8 +407,6 @@ public class DataHandler : MonoBehaviour
 
         int index = networkManager.GetUserIndex(packet.endPoint);
 
-        Debug.Log("인덱스 : " + index);
-
         if(dungeonManager.CreateUnit(createUnitData.ID, index, new Vector3(createUnitData.PosX, createUnitData.PosY, createUnitData.PosZ)) != null)
         {
             DataSender.Instance.UdpAnswer(packet.endPoint, udpId);
