@@ -42,6 +42,7 @@ public class CharacterManager : MonoBehaviour
 
 	public float skillTime;
 
+    [SerializeField]
     int userNum;
 
 	[SerializeField]

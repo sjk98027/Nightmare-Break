@@ -76,7 +76,9 @@ public class DataHandler : MonoBehaviour
 
     public void DataHandle()
     {
-        while (receiveMsgs.Count > 0)
+        int readCount = receiveMsgs.Count;
+
+        for (int i = 0; i < readCount; i++)
         {
             //패킷을 Dequeue 한다
             //패킷 : 메시지 타입 + 메시지 내용
@@ -95,15 +97,7 @@ public class DataHandler : MonoBehaviour
             {
                 headerSerializer.Deserialize(ref headerData);
                 DataReceiver.ResizeByteArray(0, NetworkManager.packetSource + NetworkManager.packetId, ref packet.msg);
-            }
-            else
-            {
-                headerSerializer.UdpDeserialize(ref headerData);
-                DataReceiver.ResizeByteArray(0, NetworkManager.packetSource + NetworkManager.packetId + NetworkManager.udpId, ref packet.msg);
-            }
 
-            if (packet.endPoint == null)
-            {
                 if (server_notifier.TryGetValue(headerData.id, out serverRecvNotifier))
                 {
                     serverRecvNotifier(packet);
@@ -113,8 +107,11 @@ public class DataHandler : MonoBehaviour
                     Debug.Log("DataHandler::Server.TryGetValue 에러 " + headerData.id);
                 }
             }
-            else if (packet.endPoint != null)
+            else
             {
+                headerSerializer.UdpDeserialize(ref headerData);
+                DataReceiver.ResizeByteArray(0, NetworkManager.packetSource + NetworkManager.packetId + NetworkManager.udpId, ref packet.msg);
+
                 if (p2p_notifier.TryGetValue(headerData.id, out p2pRecvNotifier))
                 {
                     p2pRecvNotifier(packet, headerData.udpId);
