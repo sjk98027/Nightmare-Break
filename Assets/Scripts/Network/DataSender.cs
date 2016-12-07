@@ -419,8 +419,11 @@ public class DataSender : MonoBehaviour
 
             foreach (KeyValuePair<EndPoint, int> user in networkManager.UserIndex)
             {
-                DataPacket packet = new DataPacket(CreateUdpPacket(characterPositionPacket, udpId[user.Value]), user.Key);
-                sendMsgs.Enqueue(packet);
+                if(networkManager.MyIndex != networkManager.UserIndex[user.Key])
+                {
+                    DataPacket packet = new DataPacket(CreateUdpPacket(characterPositionPacket, udpId[user.Value]), user.Key);
+                    sendMsgs.Enqueue(packet);
+                }                
             }
         }
     }
@@ -438,8 +441,11 @@ public class DataSender : MonoBehaviour
 
         foreach (KeyValuePair<EndPoint, int> user in networkManager.UserIndex)
         {
-            DataPacket packet = new DataPacket(CreateUdpPacket(characterActionPacket, udpId[user.Value]), user.Key);
-            sendMsgs.Enqueue(packet);
+            if (networkManager.MyIndex != networkManager.UserIndex[user.Key])
+            {
+                DataPacket packet = new DataPacket(CreateUdpPacket(characterActionPacket, udpId[user.Value]), user.Key);
+                sendMsgs.Enqueue(packet);
+            }                
         }
     }
 

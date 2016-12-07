@@ -22,9 +22,6 @@ public class NetworkManager : MonoBehaviour
         ClientSource = 1,
     }
 
-    [SerializeField]
-    string myIP;
-
     public const string serverIP = "192.168.94.88";
     public const int serverPortNumber = 8800;
     public const int clientPortNumber = 9000;
@@ -39,6 +36,7 @@ public class NetworkManager : MonoBehaviour
     Socket clientSock;
     Socket serverSock;
 
+    GameManager gameManager;
     DataReceiver dataReceiver;
     DataHandler dataHandler;
     DataSender dataSender;
@@ -47,13 +45,6 @@ public class NetworkManager : MonoBehaviour
     Dictionary<EndPoint, int> userIndex;
     int myIndex;
 
-    public string MyIP
-    {
-        get
-        {
-            return myIP;
-        }
-    }
     public int MyIndex { get { return myIndex; } }
     public Socket ClientSock { get { return clientSock; } }
     public Dictionary<EndPoint, int> UserIndex { get { return userIndex; } }
@@ -64,6 +55,8 @@ public class NetworkManager : MonoBehaviour
 
     public void InitializeManager()
     {
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+
         receiveMsgs = new Queue<DataPacket>();
         sendMsgs = new Queue<DataPacket>();
         receiveLock = new object();
@@ -87,9 +80,9 @@ public class NetworkManager : MonoBehaviour
         ConnectServer();
     }
 
-    public void InitializeUdpConnection(string clientIP)
+    public void InitializeUdpConnection()
     {
-        clientEndPoint = new IPEndPoint(IPAddress.Parse(clientIP), clientPortNumber + myIndex);
+        clientEndPoint = new IPEndPoint(IPAddress.Parse(gameManager.MyIP), clientPortNumber + myIndex);
         clientSock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
         clientSock.Bind(clientEndPoint);
 

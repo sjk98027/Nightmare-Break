@@ -330,12 +330,12 @@ public class DataHandler : MonoBehaviour
             string newIp = matchData.ip[userIndex];
             newIp = newIp.Substring(0, newIp.IndexOf(":"));
 
-            if (newIp == networkManager.MyIP)
+            if (newIp == gameManager.MyIP)
             {
                 networkManager.SetMyIndex(userIndex);
             }
 
-            networkManager.InitializeUdpConnection(networkManager.MyIP);
+            networkManager.InitializeUdpConnection();
         }        
 
         for (int userIndex = 0; userIndex < matchData.playerNum; userIndex++)
@@ -345,11 +345,12 @@ public class DataHandler : MonoBehaviour
 
             Debug.Log("연결 아이피 : " + newIp);
 
-            networkManager.UserIndex.Add(packet.endPoint, userIndex);
+            IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(newIp), NetworkManager.clientPortNumber + userIndex);
 
-            if (newIp != networkManager.MyIP)
+            networkManager.UserIndex.Add(endPoint, userIndex);
+
+            if (newIp != gameManager.MyIP)
             {
-                IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(newIp), NetworkManager.clientPortNumber + userIndex);
                 networkManager.ConnectP2P(newIp);
             }
         }

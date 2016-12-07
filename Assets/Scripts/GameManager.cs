@@ -7,6 +7,17 @@ public class GameManager : MonoBehaviour
     InputManager inputManager;
     UIManager uiManager;
     CharacterStatus characterStatus;
+    
+    [SerializeField]
+    string myIP;
+    
+    public string MyIP
+    {
+        get
+        {
+            return myIP;
+        }
+    }
 
     void Start()
     {
