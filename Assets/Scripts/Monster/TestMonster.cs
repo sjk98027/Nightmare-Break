@@ -41,6 +41,8 @@ public class TestMonster : Monster
 	public GameObject handSphere;
 	public OneHandAttack handAttack;
 
+	public GameObject roar;
+
 	public enum insertImageState
 	{
 		Stop = 0,
@@ -85,18 +87,18 @@ public class TestMonster : Monster
 			}
 			if (searchRange < attackRange)
 			{
-//				if (roarTime > 30)
-//				{
-//					SetStateDefault ();
-//					BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossRoar);
-//					roarTime = 0;
-//				}
 				if (true)
 				{
 					SetStateDefault ();
-					BigBearBossPattern ((int)BigBearBossPatternName.BigBearJumpAttack);
-					jumpAttackTime = 0;
+					BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossRoar);
+					roarTime = 0;
 				}
+//				if (true)
+//				{
+//					SetStateDefault ();
+//					BigBearBossPattern ((int)BigBearBossPatternName.BigBearJumpAttack);
+//					jumpAttackTime = 0;
+//				}
 //				if (oneHandTime > 5)
 //				{
 //					SetStateDefault ();
@@ -174,6 +176,14 @@ public class TestMonster : Monster
 			Instantiate (Resources.Load<GameObject> ("Effect/OneHandSphere"), handPos.transform.position + (Vector3.right * xPos) + (Vector3.forward * zPos), Quaternion.Euler (0, 0, 0));
 
 			shootNum++;
+		}
+	}
+
+	public IEnumerator RoarHit()
+	{
+		while (true)
+		{
+			
 		}
 	}
 
