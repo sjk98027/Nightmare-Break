@@ -6,7 +6,7 @@ public class ComboSystem : MonoBehaviour {
 
     [SerializeField]
     private const float comboCheckTime = 1.5f;
-    private Animation comboAnim;
+	private Animator comboAnim;
     private Text comboText;
     private CharacterManager characterManager;
     public static ComboSystem instance = null;
@@ -15,7 +15,7 @@ public class ComboSystem : MonoBehaviour {
     {
         instance = this.gameObject.GetComponent<ComboSystem>();
         comboText = GameObject.Find("ComBoObject").transform.GetChild(0).GetComponent<Text>();
-        comboAnim = comboText.GetComponent<Animation>();
+		comboAnim = comboText.transform.parent.GetComponent<Animator>();
         characterManager = GameObject.FindWithTag("Player").GetComponent<CharacterManager>();
         comboText.transform.parent.gameObject.SetActive(false);
     }
@@ -27,10 +27,10 @@ public class ComboSystem : MonoBehaviour {
             comboText.transform.parent.gameObject.SetActive(true);
         }
         comboText.text = count.ToString();
-     
+		comboAnim.Play ("ComboAnim", -1, 0);
     }
 
-    public void CameraAction(Transform mCamera)
+    public void ComboAction(Transform mCamera)
     {
         mCamera.gameObject.transform.position = new Vector3(Random.Range(mCamera.position.x - 0.09f, mCamera.position.x + 0.09f), Random.Range(mCamera.position.y - 0.09f, mCamera.position.y + 0.09f), mCamera.position.z);
        
