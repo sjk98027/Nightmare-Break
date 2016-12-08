@@ -145,6 +145,10 @@ public class MageManager : CharacterManager
 						{
 							CharState ((int)CharacterState.HitDamage);
 						}
+						else
+						{
+							//ArmorEffect
+						}
 					}
 				}
 				else if (CharStatus.HealthPoint <= 0)
