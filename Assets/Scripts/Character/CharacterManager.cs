@@ -488,4 +488,23 @@ public class CharacterManager : MonoBehaviour
 	{
 		charStatus.DecreaseMagicPoint (SkillManager.instance.SkillData.GetSkill ((int)charStatus.HClass, SkillArray).ManaCost);
 	}
+
+    public IEnumerator ComboCheck(int count)
+    {
+        float checkTime = Time.time;
+        while(Time.time - checkTime < 1.5f)
+        {
+            if(comboCount != count)
+            {
+                break;   
+            }
+            yield return null;
+        }
+        if(comboCount == count)
+        {
+            comboCount = 0;
+            ComboSystem.instance.ComboEnd();
+        }
+        checkTime = 0;
+    }
 }
