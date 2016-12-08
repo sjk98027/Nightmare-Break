@@ -340,9 +340,9 @@ GameObject:
   - 95: {fileID: 95000011394082880}
   - 114: {fileID: 114000011794516460}
   - 65: {fileID: 65000010380416406}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: frog
-  m_TagString: Untagged
+  m_TagString: Enermy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -625,7 +625,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013499179378}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.7303638, y: -0.09999988, z: -105.47047}
+  m_LocalPosition: {x: 6.0294895, y: 1.1840004, z: 2.9063778}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
