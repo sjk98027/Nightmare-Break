@@ -141,8 +141,8 @@ public class DungeonManager : MonoBehaviour
 
         for (int playerCount = 0; playerCount < playerNum; playerCount++)
         {
-            players[playerNum] = new GameObject();
-            characters[playerNum] = new CharacterManager();
+            players[playerCount] = new GameObject();
+            characters[playerCount] = new CharacterManager();
         }
     }
 
