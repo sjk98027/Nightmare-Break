@@ -21,6 +21,7 @@ public class TestMonster : Monster
 	public float moveSpeed;
 	bool secondAttack;
 	float AttackTime;
+	int shootNumber;
 
 	public UIManager uiManager;
 	public BoxCollider[] MonsterWeapon;
@@ -32,6 +33,13 @@ public class TestMonster : Monster
 	public float imageSpeed = 1.0f;
 	public float imageLerpTime;
 
+	public float roarTime;
+	public float oneHandTime;
+	public float jumpAttackTime;
+
+	public GameObject handPos;
+	public GameObject handSphere;
+	public OneHandAttack handAttack;
 
 	public enum insertImageState
 	{
@@ -44,25 +52,30 @@ public class TestMonster : Monster
 
 	void Start ()
 	{
+		shootNumber = 6;
 		RunRange = 10;
 		attackRange = 8;
 		//MonsterSet ();
-		uiManager = GameObject.FindWithTag ("UIManager").GetComponent<UIManager> ();
+		PlayerSearch ();
+//		uiManager = GameObject.FindWithTag ("UIManager").GetComponent<UIManager> ();
 		secondAttack = false;
+		animator = GetComponent<Animator> ();
 		BoxCollider[] MonsterWeapon = new BoxCollider[2];
 		skillInsertImage = GameObject.Find ("InGameUICanvas").transform.Find ("BossDeadlyPatternImage").Find("BossDeadlyPattern").GetComponent<Image>();
 		//skillInsertImage = transform.Find("InGameUICanvas").gameObject;
 	}
 
 
-
-	//animation Set; move;
-
 	void Update ()
 	{
 
 		if (monsterAlive)
 		{
+			roarTime += Time.deltaTime;
+			oneHandTime += Time.deltaTime;
+			jumpAttackTime += Time.deltaTime;
+
+
 			stateInfo = this.animator.GetCurrentAnimatorStateInfo (0);
 			searchRange = Vector3.Distance (player [0].transform.position, transform.position);
 			AttackTime += Time.deltaTime;
@@ -73,19 +86,25 @@ public class TestMonster : Monster
 			}
 			if (searchRange < attackRange)
 			{
-				if (!secondAttack)
+//				if (roarTime > 30)
+//				{
+//					SetStateDefault ();
+//					BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossRoar);
+//					roarTime = 0;
+//				}
+				if (true)
 				{
-					//BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossAttack);
-					BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossRoar);
-					//애니메이션 이벤트로 효과를 넣었음
-					secondAttack = true;
-				}
-				else if (!secondAttack)
-				{
+					SetStateDefault ();
 					BigBearBossPattern ((int)BigBearBossPatternName.BigBearJumpAttack);
-					//애니메이션 이벤트로 효과를 넣었음
-					secondAttack = true;
+					jumpAttackTime = 0;
 				}
+//				if (oneHandTime > 5)
+//				{
+//					SetStateDefault ();
+//					BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossOneHandAttack);
+//					oneHandTime = 0;
+//
+//				}
 			}
 			else if (searchRange > RunRange)
 			{
@@ -111,15 +130,14 @@ public class TestMonster : Monster
 			{
 				for (int i = 0; i < MonsterWeapon.Length; i++)
 				{
-					//				MonsterWeapon [i].size = new Vector3 (3.6f, 1f, 1.1f);
-					MonsterWeapon [i].size = new Vector3 (0, 0, 0);
+					MonsterWeapon [i].enabled = true;
 				}
 			}
 			else if (!monsterAttack)
 			{
 				for (int i = 0; i < MonsterWeapon.Length; i++)
 				{
-					MonsterWeapon [i].size = new Vector3 (0, 0, 0);
+					MonsterWeapon [i].enabled = false;
 				}
 			}
 
@@ -131,11 +149,35 @@ public class TestMonster : Monster
 		}
 
 	}
-	public void earthQuakeEffect ()
-	{//애니메이션 이벤트를 사용하여 지진 효과를 추가 한다.
-//		GameObject.FindGameObjectWithTag ("Floor").GetComponent<EarthQuake> ().Running = true;
 
+	void SetStateDefault ()
+	{
+		if (animator == null)
+		{
+			animator = GetComponent<Animator> ();
+		}
+
+		animator.SetInteger ("state",0);
+		//animator.SetBool ("Run", false);
 	}
+
+	public IEnumerator Shooting()
+	{
+		int shootNum = 0;
+
+		while (shootNum < shootNumber)
+		{
+			yield return new WaitForSeconds (0.2f);
+
+			int xPos = Random.Range (-2, 2);
+			int zPos = Random.Range (-2, 2);
+
+			Instantiate (Resources.Load<GameObject> ("Effect/OneHandSphere"), handPos.transform.position + (Vector3.right * xPos) + (Vector3.forward * zPos), Quaternion.Euler (0, 0, 0));
+
+			shootNum++;
+		}
+	}
+
 
 	public void changeDirection ()
 	{//캐릭터 이동시 보스가 보는 방향을 정한다.
@@ -150,9 +192,7 @@ public class TestMonster : Monster
 
 	public override void HitDamage (int _Damage, GameObject attacker)
 	{
-		
 		stateInfo = this.animator.GetCurrentAnimatorStateInfo (0);
-
 
 		if (monsterAlive)
 		{
