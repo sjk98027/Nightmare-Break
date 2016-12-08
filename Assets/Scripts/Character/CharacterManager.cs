@@ -40,6 +40,7 @@ public class CharacterManager : MonoBehaviour
 	public int charBasicDamage;
 
 	private int potionCount = 3;
+    private int comboCount;
 
 	public float skillTime;
 
@@ -65,6 +66,8 @@ public class CharacterManager : MonoBehaviour
 
     public int UserNum { get { return userNum; } }
 
+    public int ComboCount { get { return comboCount; } set { comboCount = value; } }
+
 	void Start ()
 	{
 		SetCharacterStatus ();
@@ -77,6 +80,7 @@ public class CharacterManager : MonoBehaviour
 		charDir = true;
 		JumpMove = false;
 		jumpPower = 10;
+        comboCount = 0;
 		SetClassObject ();
 	}
 
