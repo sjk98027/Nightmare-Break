@@ -257,6 +257,24 @@ public class ShockWaveMonster : Monster {
 			}
 		}
 	}
+
+	public enum State
+	{
+		Standby = 0,
+		Idle,
+		Run
+	};
+
+//	public IEnumerator MonsterAi(){
+//		while (IsAlive) {
+//			if (targetPlayer != null) {
+//				currentDisTance = Vector3.Distance (targetPlayer.transform.position, transform.position);
+//				checkDirection = targetPlayer.transform.position - transform.position;
+//			}		
+//
+//		}
+//	}
+
 	public IEnumerator PatternNormalChange(){
 		while(IsAlive){
 			if (targetPlayer != null) {	
