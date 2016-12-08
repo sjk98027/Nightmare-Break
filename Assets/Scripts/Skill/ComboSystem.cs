@@ -30,22 +30,4 @@ public class ComboSystem : MonoBehaviour {
         comboText.text = count.ToString();
         StartCoroutine(ComboCheck());
     }
-
-    IEnumerator ComboCheck()
-    {
-        float time = Time.time;
-        while(Time.time - time < comboCheckTime)
-        {
-            if(currentComboCount == characterManager.ComboCount)
-            {
-                print("콤보카운트 체크중");
-            } else
-            {
-                currentComboCount = 0;
-                comboAnim.gameObject.SetActive(false);
-                break;
-            }
-            yield return null;
-        }
-    }
 }
