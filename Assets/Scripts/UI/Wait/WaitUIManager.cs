@@ -20,6 +20,7 @@ public class WaitUIManager
     int userNum;
 
     public Room[] Rooms { get { return rooms; } }
+    public int UserNum { get { return userNum; } }
 
     public void ManagerInitialize()
     {

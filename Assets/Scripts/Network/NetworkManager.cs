@@ -42,12 +42,13 @@ public class NetworkManager : MonoBehaviour
     DataSender dataSender;
     ReSendManager reSendManager;
 
-    Dictionary<EndPoint, int> userIndex;
+    List<UserIndex> userIndex;
     int myIndex;
 
     public int MyIndex { get { return myIndex; } }
+    public Socket ServerSock { get { return serverSock; } }
     public Socket ClientSock { get { return clientSock; } }
-    public Dictionary<EndPoint, int> UserIndex { get { return userIndex; } }
+    public List<UserIndex> UserIndex { get { return userIndex; } }
     public DataReceiver DataReceiver { get { return dataReceiver; } }
     public DataHandler DataHandler { get { return dataHandler; } }
     public DataSender DataSender { get { return dataSender; } }
@@ -86,7 +87,7 @@ public class NetworkManager : MonoBehaviour
         clientSock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
         clientSock.Bind(clientEndPoint);
 
-        userIndex = new Dictionary<EndPoint, int>();
+        userIndex = new List<UserIndex>();
         reSendManager = GetComponent<ReSendManager>();
 
         DataReceiver.SetUdpSocket(clientSock);
@@ -125,12 +126,43 @@ public class NetworkManager : MonoBehaviour
 
     public int GetUserIndex(EndPoint endPoint)
     {
-        return userIndex[endPoint];
+        for (int index = 0; index < userIndex.Count; index++)
+        {
+            Debug.Log(userIndex[index].EndPoint + ". " + endPoint);
+
+            if (userIndex[index].EndPoint.ToString() == endPoint.ToString())
+            {
+                return index;
+            }
+        }
+
+        return -1;
     }
 
     public void SetMyIndex(int newIndex)
     {
-        Debug.Log("내 번호 설정 : " + myIndex);
+        Debug.Log("내 번호 설정 : " + newIndex);
         myIndex = newIndex;
+    }
+}
+
+public class UserIndex
+{
+    EndPoint endPoint;
+    int userNum;
+
+    public EndPoint EndPoint { get { return endPoint; } }
+    public int UserNum { get { return userNum; } }
+
+    public UserIndex()
+    {
+        endPoint = null;
+        userNum = -1;
+    }
+
+    public UserIndex(EndPoint newEndPoint, int newUserNum)
+    {
+        endPoint = newEndPoint;
+        userNum = newUserNum;
     }
 }

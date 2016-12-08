@@ -426,13 +426,13 @@ public class DataSender : MonoBehaviour
 
             byte[] msg = CreatePacket(characterPositionPacket);
 
-            List<EndPoint> endPoint = new List<EndPoint>(networkManager.UserIndex.Keys);
-
-            for (int i = 0; i < endPoint.Count; i++)
+            for (int index = 0; index < networkManager.UserIndex.Count; index++)
             {
-                if (networkManager.MyIndex != networkManager.UserIndex[endPoint[i]])
+                int userIndex = networkManager.UserIndex[index].UserNum;
+
+                if (networkManager.MyIndex != userIndex)
                 {
-                    DataPacket packet = new DataPacket(CreateUdpPacket(characterPositionPacket, udpId[i]), endPoint[i]);
+                    DataPacket packet = new DataPacket(CreateUdpPacket(characterPositionPacket, udpId[userIndex]), networkManager.UserIndex[index].EndPoint);
                     sendMsgs.Enqueue(packet);
                 }
             }
@@ -454,14 +454,14 @@ public class DataSender : MonoBehaviour
         byte[] msg = CreatePacket(characterActionPacket);
 
         Debug.Log("캐릭터 상태 보냄");
-
-        List<EndPoint> endPoint = new List<EndPoint>(networkManager.UserIndex.Keys);
-
-        for (int i = 0; i < endPoint.Count; i++)
+        
+        for (int index = 0; index < networkManager.UserIndex.Count; index++)
         {
-            if (networkManager.MyIndex != networkManager.UserIndex[endPoint[i]])
+            int userIndex = networkManager.UserIndex[index].UserNum;
+
+            if (networkManager.MyIndex != userIndex)
             {
-                DataPacket packet = new DataPacket(CreateUdpPacket(characterActionPacket, udpId[i]), endPoint[i]);
+                DataPacket packet = new DataPacket(CreateUdpPacket(characterActionPacket, udpId[userIndex]), networkManager.UserIndex[index].EndPoint);
                 sendMsgs.Enqueue(packet);
             }
         }
