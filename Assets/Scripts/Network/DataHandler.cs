@@ -322,10 +322,9 @@ public class DataHandler : MonoBehaviour
         
         for (int userIndex = 0; userIndex < matchData.playerNum; userIndex++)
         {
-            string newIp = matchData.ip[userIndex];
-            newIp = newIp.Substring(0, newIp.IndexOf(":"));
+            string endPoint = matchData.endPoint[userIndex];
 
-            if (newIp == gameManager.MyIP)
+            if (endPoint == networkManager.ServerSock.LocalEndPoint.ToString())
             {
                 networkManager.SetMyIndex(userIndex);
             }
@@ -337,18 +336,17 @@ public class DataHandler : MonoBehaviour
 
         for (int userIndex = 0; userIndex < matchData.playerNum; userIndex++)
         {
-            string newIp = matchData.ip[userIndex];
-            newIp = newIp.Substring(0, newIp.IndexOf(":"));
+            string endPoint = matchData.endPoint[userIndex];
+            string ip = endPoint.Substring(0, endPoint.IndexOf(":"));
 
-            Debug.Log("연결 아이피 : " + newIp);
+            IPEndPoint newEndPoint = new IPEndPoint(IPAddress.Parse(ip), NetworkManager.clientPortNumber + userIndex);
 
-            IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(newIp), NetworkManager.clientPortNumber + userIndex);
+            networkManager.UserIndex.Add(new UserIndex(newEndPoint, userIndex));
 
-            networkManager.UserIndex.Add(endPoint, userIndex);
-
-            if (newIp != gameManager.MyIP)
+            if (endPoint != networkManager.ServerSock.LocalEndPoint.ToString())
             {
-                networkManager.ConnectP2P(endPoint);
+                Debug.Log("연결 아이피 : " + newEndPoint.ToString());
+                networkManager.ConnectP2P(newEndPoint);
             }
         }
     }
@@ -366,10 +364,10 @@ public class DataHandler : MonoBehaviour
     {
         Debug.Log(packet.endPoint.ToString() + "답신 받음 아이디 : " + udpId);
 
+        SendData sendData = new SendData(udpId, packet.endPoint);
+        networkManager.ReSendManager.RemoveReSendData(sendData);
         try
         {
-            SendData sendData = new SendData(udpId, packet.endPoint);
-            networkManager.ReSendManager.RemoveReSendData(sendData);
         }
         catch
         {

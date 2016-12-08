@@ -160,10 +160,10 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.6284667
-        functionName: earthQuakeEffect
+      - time: 0.60920346
+        functionName: Shooting
         data: 
-        objectReferenceParameter: {fileID: 11500000, guid: a883e47a0a6da8f4da250fc393a2ac79,
+        objectReferenceParameter: {fileID: 11500000, guid: 03d6bf8e6a2538c4eb6a25cc15af3f76,
           type: 3}
         floatParameter: 0
         intParameter: 0

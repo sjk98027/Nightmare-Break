@@ -9,7 +9,7 @@
 
             for (int i = 0; i < data.playerNum; i++)
             {
-                ret &= Serialize(data.ip[i]);
+                ret &= Serialize(data.endPoint[i]);
                 ret &= Serialize(',');
             }
 
@@ -39,11 +39,11 @@
             }
 
             element.playerNum = playerNum;
-            element.ip = new string[element.playerNum];
+            element.endPoint = new string[element.playerNum];
 
             for (int i = 0; i < playerNum; i++)
             {
-                element.ip[i] = str[i];
+                element.endPoint[i] = str[i];
             }
 
             return ret;
@@ -74,17 +74,17 @@
 public class MatchData
 {
     public byte playerNum;
-    public string[] ip;
+    public string[] endPoint;
 
     public MatchData()
     {
         playerNum = 0;
-        ip = new string[playerNum];
+        endPoint = new string[playerNum];
     }
 
     public MatchData(string[] newIp)
     {
         playerNum = (byte)newIp.Length;
-        ip = newIp;
+        endPoint = newIp;
     }
 }

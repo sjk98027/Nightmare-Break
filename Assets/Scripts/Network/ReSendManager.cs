@@ -48,6 +48,8 @@ public class ReSendManager : MonoBehaviour
     {
         int index = networkManager.GetUserIndex(sendData.EndPoint);
 
+        Debug.Log(index);
+
         if (reSendDatum[index].ContainsKey(sendData.UdpId))
         {
             try

@@ -112,21 +112,6 @@ public class BossMonsterKYW : Monster {
 
 
 	}
-
-
-
-
-public void earthQuakeEffect ()
-{
-		//애니메이션 이벤트를 사용하여 지진 효과를 추가 한다.
-	    GameObject.FindGameObjectWithTag ("Floor").GetComponent<EarthQuake> ().Running = true;
-
-		BigBearBossState = BigBearBossPatternName.BigBearBossIdle;
-		BigBearBossPattern ((int)BigBearBossState);
-		patternReserveList [0] = (int)BigBearBossPatternName.BigBearBossIdle;
-		StartCoroutine(BossMonsterPatternChange());
-
-}
 public void shotEffect()//원거리 공격가능
 {
   Instantiate (bullet, muzzle.transform.position, muzzle.transform.rotation);
@@ -186,9 +171,7 @@ public override void HitDamage (int _Damage, GameObject attacker)
 				return;
 			}
 		}
-//			if (halfLife <= maxLife * 0.5) {
-//			
-//			}
+
 
 	}
 }
@@ -236,26 +219,7 @@ public void BigBearBossPattern (int bossState)
 	}
 }
 
-public void RoarStart (int waringOrshout)
-{//애니메이션 이벤트를 사용하여 포효시 붉은 이펙트를 켠다.
-	GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<RedRenderImage> ().enabled = true;
-		if(waringOrshout == 0){	
-			imageState = insertImageState.Left; //이미지 상태 값 저장 왼쪽
-			StartCoroutine (LMoveImage ()); //코루틴 실행
-		}
-		HittedBox.enabled = false;
-}
 
-public void RoarEnd ()
-{//애니메이션 이벤트를 사용하여 포효시 붉은 이펙트를 끈다.
-	GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<RedRenderImage> ().enabled = false;
-	////이미지를 오른쪽이동하는 코루틴을 실행 시키는 함수 애니메이션 이벤트로 실행
-	//		imageState = insertImageState.Right;//이미지 상태 값 저장 오른쪽
-		BigBearBossState = BigBearBossPatternName.BigBearBossIdle;
-		patternReserveList [0] = (int)BigBearBossPatternName.BigBearBossIdle;
-		StartCoroutine(BossMonsterPatternChange());
-		HittedBox.enabled = true;
-}
 
 IEnumerator LMoveImage ()
 {  //이미지를 왼쪽이동시키는 함수
