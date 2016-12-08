@@ -1,0 +1,10 @@
+diff a/Assets/Scripts/Monster/ShockWaveMonster.cs b/Assets/Scripts/Monster/ShockWaveMonster.cs	(rejected hunks)
+@@ -34,7 +34,7 @@
+ 			Pattern (monsterState);
+ 		}
+ 	}
+-	private Vector3 movePoint;
++
+ 	private Vector3 idlePoint = new Vector3(0,0,0);
+ 
+ 	//private Vector3 boomPoint = new Vector3(100,100,100);
