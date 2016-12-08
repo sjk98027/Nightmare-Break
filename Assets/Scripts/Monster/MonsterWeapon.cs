@@ -13,13 +13,12 @@ public class MonsterWeapon : MonoBehaviour {
 		AttackCollider = this.GetComponent<BoxCollider> ();
 		AttackColliderOff ();
 	}
-
-
-
-	public void AttackColliderOff(){
+	public void AttackColliderOff()
+	{
 		AttackCollider.enabled=false;
 	}
-	public  void AttackColliderOn(){
+	public  void AttackColliderOn()
+	{
 		AttackCollider.enabled = true;
 	}
 
@@ -31,6 +30,7 @@ public class MonsterWeapon : MonoBehaviour {
 			if (damage != 0)
 			{
 				CharObject.HitDamage (damage);
+				//damage = 0;
 			}
 		}
 	}

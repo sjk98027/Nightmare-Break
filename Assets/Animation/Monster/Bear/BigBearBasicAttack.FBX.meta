@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: baa9feb5e847df343b05fea07d32cf74
-timeCreated: 1480320112
+guid: 3050789a48e546a4193d7ebc0557033a
+timeCreated: 1481163581
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -48,11 +48,11 @@ ModelImporter:
     100080: Bip01 Spine
     100082: Bip01 Spine1
     100084: Boss_arm
-    100086: Boss_body
-    100088: Boss_head
-    100090: Boss_leg
-    100092: Boss_ribbon
-    100094: //RootNode
+    100086: //RootNode
+    100088: Boss_body
+    100090: Boss_head
+    100092: Boss_leg
+    100094: Boss_ribbon
     100096: Box03
     400000: Bip01
     400002: Bip01 Footsteps
@@ -97,18 +97,18 @@ ModelImporter:
     400080: Bip01 Spine
     400082: Bip01 Spine1
     400084: Boss_arm
-    400086: Boss_body
-    400088: Boss_head
-    400090: Boss_leg
-    400092: Boss_ribbon
-    400094: //RootNode
+    400086: //RootNode
+    400088: Boss_body
+    400090: Boss_head
+    400092: Boss_leg
+    400094: Boss_ribbon
     400096: Box03
     4300000: Boss_body
     4300002: Boss_head
     4300004: Boss_arm
     4300006: Boss_leg
     4300008: Boss_ribbon
-    7400000: BigBearBossShout
+    7400000: BigBearBasicAttack
     9500000: //RootNode
     13700000: Boss_arm
     13700002: Boss_body
@@ -137,10 +137,10 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: BigBearBossShout
+      name: BigBearBasicAttack
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 81
+      lastFrame: 68
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -159,23 +159,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0.53424656
-        functionName: RoarStart
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: a883e47a0a6da8f4da250fc393a2ac79,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.9615385
-        functionName: RoarEnd
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: a883e47a0a6da8f4da250fc393a2ac79,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask:
       - path: 
         weight: 1

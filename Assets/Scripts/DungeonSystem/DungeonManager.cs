@@ -212,6 +212,7 @@ public class DungeonManager : MonoBehaviour
 
 		if (bossMonster != null) {
 			GameObject objBossMonster = (GameObject)Instantiate (Resources.Load ("Monster/Bear"), new Vector3 (0, 0, 0), this.transform.rotation);
+			Debug.Log ("in boss");
 			bossMonster = objBossMonster.GetComponent<BossMonsterKYW> ();
 		}
 
