@@ -1479,7 +1479,7 @@ Animator:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012297216572}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 672e2de0eab6b1d48a00b6e93d71bfa6, type: 3}
+  m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 4f6ef3d2c1e2f09488841ef0959c289a, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
@@ -1527,7 +1527,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a883e47a0a6da8f4da250fc393a2ac79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: []
+  player:
+  - {fileID: 0}
   animator: {fileID: 95000013381445766}
   targetPlayer: {fileID: 0}
   HittedBox: {fileID: 65000011329525362}
@@ -1535,27 +1536,30 @@ MonoBehaviour:
   normalMode: 0
   gateArrayNumber: 0
   monsterArrayNumber: 0
-  currentLife: 0
-  maxLife: 0
+  currentLife: 900
+  maxLife: 900
   RunRange: 10
-  attackRange: 5
+  attackRange: 4
   attackCycle: 0
-  baseDamage: 0
-  isAlive: 0
+  baseDamage: 2
+  isAlive: 1
   isAttack: 0
-  playerToMonsterDamage: []
-  aggroRank: []
-  changeTargetTime: 0
+  playerToMonsterDamage:
+  - 0
+  aggroRank:
+  - 0
+  changeTargetTime: 0.03313248
   attackCollider: {fileID: 0}
   shockWaveInstantiate: {fileID: 0}
-  currentDisTanceArray: []
+  currentDisTanceArray:
+  - 11.643879
   stateDirecion: 0
   patternReserveList: 
   PatternRank: 0
   searchRange: 10
   moveSpeed: 0
   shoutCount: 0
-  currentDisTance: 0
+  currentDisTance: 11.643879
   uiManager: {fileID: 0}
   BossMonsterWeapon:
   - {fileID: 114000010980241794}
