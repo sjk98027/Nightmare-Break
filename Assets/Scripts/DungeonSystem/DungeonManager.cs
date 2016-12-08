@@ -342,13 +342,11 @@ public class DungeonManager : MonoBehaviour
         player.GetComponent<CharacterManager>().SetCharacterStatus();
         player.GetComponent<CharacterManager>().SetCharacterType();
 
-        List<EndPoint> endPoint = new List<EndPoint>(networkManager.UserIndex.Keys);
-
-        for (int i = 0; i < endPoint.Count; i++)
+        for (int index = 0; index < networkManager.UserIndex.Count; index++)
         {
-            if (networkManager.MyIndex != networkManager.UserIndex[endPoint[i]])
+            if (networkManager.MyIndex != networkManager.UserIndex[index].UserNum)
             {
-                DataSender.Instance.CreateUnitSend(endPoint[i], (short)characterId, player.transform.position.x, player.transform.position.y, player.transform.position.z);
+                DataSender.Instance.CreateUnitSend(networkManager.UserIndex[index].EndPoint, (short)characterId, player.transform.position.x, player.transform.position.y, player.transform.position.z);
             }
         }
 
