@@ -28,6 +28,6 @@ public class ComboSystem : MonoBehaviour {
         }
         currentComboCount = count;
         comboText.text = count.ToString();
-        StartCoroutine(ComboCheck());
+      
     }
 }
