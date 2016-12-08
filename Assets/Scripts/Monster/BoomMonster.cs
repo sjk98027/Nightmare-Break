@@ -4,7 +4,7 @@ using System.Collections;
 
 public class BoomMonster : Monster {
 	private float searchRange = 8.0f;
-	private float moveSpeed = 2f;
+	private float moveSpeed = 4f;
 
 	public float currentDisTance;
 	float middleBossToMonsterLimitDistanceMonsterToCenter = 6.0f;
@@ -391,10 +391,12 @@ public class BoomMonster : Monster {
 
 		if (aniState.IsName ("Run")) 
 		{
-			if (transform.position.x > 8 || transform.position.x < -8) {
-				if (moveAble) {
+			if (moveAble) 
+			{
+				//if (Mathf.Abs (transform.position.x) < 6 || Mathf.Abs(transform.position.z)<30) {
 					this.transform.Translate (movePoint.normalized * moveSpeed * Time.deltaTime, 0);
-				}
+				//}
+
 			}
 		}
 		ChasePlayer ();
@@ -479,7 +481,11 @@ public class BoomMonster : Monster {
 		{
 			if (moveAble) 
 			{
-				this.transform.Translate (movePoint * moveSpeed * Time.deltaTime, 0);
+				if (Mathf.Abs (transform.position.x + movePoint.x) <= 5 || Mathf.Abs (transform.position.z + movePoint.z) <= 30) {
+					this.transform.Translate (movePoint.normalized * moveSpeed * Time.deltaTime, 0);
+				}
+
+
 			}
 		}
 		ChasePlayer ();

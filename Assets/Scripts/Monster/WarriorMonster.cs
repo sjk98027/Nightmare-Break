@@ -362,7 +362,11 @@ public class WarriorMonster : Monster {
 		{
 			if (moveAble) 
 			{
-				this.transform.Translate (movePoint.normalized * moveSpeed * Time.deltaTime, 0);
+				if (Mathf.Abs (transform.position.x + movePoint.x) <= 5 || Mathf.Abs (transform.position.z + movePoint.z) <= 30) {
+					this.transform.Translate (movePoint.normalized * moveSpeed * Time.deltaTime, 0);
+				}
+
+
 			}
 		}
 		ChasePlayer ();
