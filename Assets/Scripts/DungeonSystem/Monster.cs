@@ -18,6 +18,9 @@ public class Monster : MonoBehaviour {
 	public BoxCollider HittedBox;
 	private int monsterRunAttackAround;
 	public int MonsterRunAttackAround;
+
+	protected int randomStandby;
+	//public int RandomStandby;
 	//mode,gateArraynumber,monsterArraynumber
 	protected bool moveAble;
 	public bool MoveAble{

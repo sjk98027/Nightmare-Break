@@ -2,13 +2,13 @@
 using System.Collections;
 
 public class ShockWaveMonster : Monster {
-	private float searchRange = 8.0f;
+	private float searchRange = 12.0f;
 	private float moveSpeed = 2.5f;
 
 	public float currentDisTance;
 	float middleBossToMonsterLimitDistanceMonsterToCenter = 6.0f;
 	private float middleBossToMonsterMinDistance = 1.5f;
-	public AnimatorStateInfo aniState;
+
 
 	[SerializeField]GameObject middleboss;
 	private Vector3 boomObjectPosition;
@@ -35,7 +35,6 @@ public class ShockWaveMonster : Monster {
 			Pattern (monsterState);
 		}
 	}
-	private Vector3 movePoint;
 	private Vector3 idlePoint = new Vector3(0,0,0);
 
 	//private Vector3 boomPoint = new Vector3(100,100,100);
@@ -158,159 +157,213 @@ public class ShockWaveMonster : Monster {
 	}
 
 	public override void NormalMonsterRealizePattern(){
-		StartCoroutine (AttackAroundRun ());
+		StartCoroutine (MonsterNormalMoveAI ());
 	}
 
-	public IEnumerator AttackAroundRun(){
+	public IEnumerator MonsterNormalMoveAI(){
 		while (true) {
 
 			if(IsAlive){
 				if (targetPlayer != null) {
-					MonsterRunAttackAround = Random.Range (0, 3);
-					if (MonsterRunAttackAround == 0) {
-						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
-						yield return new WaitForSeconds (2f);
-						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
-						yield return new WaitForSeconds (2f);
-						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
-						yield return new WaitForSeconds (2f);
-						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
-						yield return new WaitForSeconds (2f);
-					}
+					if (Mathf.Abs(targetPlayer.transform.position.z-transform.position.z) >8 || Mathf.Abs(targetPlayer.transform.position.x-this.gameObject.transform.position.x) > 0.6f )
+					//if (currentDisTance > searchRange * 0.3f) 
+					{
+						randomStandby = Random.Range(0,3);
+						if (randomStandby == 0) {
+							//for 문 -> Fuck go;
+							if (checkDirection.z>0) {
+								movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z-3f);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z-3f);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z-3f);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z-3f);
+								yield return new WaitForSeconds (2f);
+							}
+							if (checkDirection.z<0) {
+								movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z+3f);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z+3f);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z+3f);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z+3f);
+								yield return new WaitForSeconds (2f);
+							}
+						}
 
-					if (MonsterRunAttackAround == 1) {
-						int i = Random.Range (0, 2);
-						if (i == 0) {
-							if (checkDirection.z >= 0) {
-								movePoint = new Vector3 (1, 0, 1);
+						if (randomStandby == 1) {
+							
+							int a = Random.Range (0, 4);
+							if (a == 0) {
+								movePoint = new Vector3 (targetPlayer.transform.position.x-transform.position.x+1.5f, 0, checkDirection.z);
 								yield return new WaitForSeconds (2f);
-								movePoint = new Vector3 (-1, 0, 1);
+								movePoint = new Vector3 (checkDirection.x, 0, targetPlayer.transform.position.z-transform.position.z-1.5f);
 								yield return new WaitForSeconds (2f);
-								movePoint = new Vector3 (-1, 0, -1);
+								movePoint = new Vector3 (targetPlayer.transform.position.x-transform.position.x-1.5f, 0, checkDirection.z);
 								yield return new WaitForSeconds (2f);
-								movePoint = new Vector3 (1, 0, 1);
+								movePoint = new Vector3 (checkDirection.x, 0, targetPlayer.transform.position.z-transform.position.z+1.5f);
 								yield return new WaitForSeconds (2f);
-							} else if (checkDirection.z < 0) {
-								movePoint = new Vector3 (1, 0, -1);
+							}
+							if (a == 1) {
+								movePoint = new Vector3 (targetPlayer.transform.position.x-transform.position.x+1.5f, 0, checkDirection.z);
 								yield return new WaitForSeconds (2f);
-								movePoint = new Vector3 (-1, 0, -1);
+								movePoint = new Vector3 (checkDirection.x, 0, targetPlayer.transform.position.z-transform.position.z+1.5f);
 								yield return new WaitForSeconds (2f);
-								movePoint = new Vector3 (-1, 0, 1);
+								movePoint = new Vector3 (targetPlayer.transform.position.x-transform.position.x-1.5f, 0, checkDirection.z);
 								yield return new WaitForSeconds (2f);
-								movePoint = new Vector3 (1, 0, 1);
+								movePoint = new Vector3 (checkDirection.x, 0, targetPlayer.transform.position.z-transform.position.z-1.5f);
+								yield return new WaitForSeconds (2f);
+							}
+							if (a == 2) {
+								movePoint = new Vector3 (targetPlayer.transform.position.x-transform.position.x-1.5f, 0, checkDirection.z);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (checkDirection.x, 0, targetPlayer.transform.position.z-transform.position.z-1.5f);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (targetPlayer.transform.position.x-transform.position.x+1.5f, 0, checkDirection.z);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (checkDirection.x, 0, targetPlayer.transform.position.z-transform.position.z+1.5f);
+								yield return new WaitForSeconds (2f);
+							}
+							if (a == 3) {
+								movePoint = new Vector3 (targetPlayer.transform.position.x-transform.position.x-1.5f, 0, checkDirection.z);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (checkDirection.x, 0, targetPlayer.transform.position.z-transform.position.z+1.5f);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (targetPlayer.transform.position.x-transform.position.x+1.5f, 0, checkDirection.z);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (checkDirection.x, 0, targetPlayer.transform.position.z-transform.position.z-1.5f);
 								yield return new WaitForSeconds (2f);
 							}
 						}
-						else if(i ==1){
-							if (checkDirection.z >= 0) {
-								movePoint = new Vector3 (-1, 0, 1);
+						if (randomStandby == 2) {
+							int a = Random.Range (0, 4);
+							if (a == 0) {
+								movePoint = new Vector3 (checkDirection.x, 0, -checkDirection.z);
 								yield return new WaitForSeconds (2f);
-								movePoint = new Vector3 (1, 0, 1);
+								movePoint = new Vector3 (-checkDirection.x, 0, -checkDirection.z);
 								yield return new WaitForSeconds (2f);
-								movePoint = new Vector3 (1, 0, -1);
+								movePoint = new Vector3 (checkDirection.x, 0, -checkDirection.z);
 								yield return new WaitForSeconds (2f);
-								movePoint = new Vector3 (-1, 0, 1);
-								yield return new WaitForSeconds (2f);
-							} else if (checkDirection.z < 0) {
-								movePoint = new Vector3 (-1, 0, -1);
-								yield return new WaitForSeconds (2f);
-								movePoint = new Vector3 (1, 0, -1);
-								yield return new WaitForSeconds (2f);
-								movePoint = new Vector3 (1, 0, 1);
-								yield return new WaitForSeconds (2f);
-								movePoint = new Vector3 (-1, 0, 1);
+								movePoint = new Vector3 (-checkDirection.x, 0, -checkDirection.z);
 								yield return new WaitForSeconds (2f);
 							}
+							if (a == 1) {
+								movePoint = new Vector3 (0, 0, -checkDirection.z);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (0, 0, -checkDirection.z);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (checkDirection.x, 0, -checkDirection.z);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (-checkDirection.x, 0, -checkDirection.z);
+								yield return new WaitForSeconds (2f);
+							}
+							if (a == 2) {
+								movePoint = new Vector3 (checkDirection.x, 0, -checkDirection.z);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (-checkDirection.x, 0, -checkDirection.z);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (0, 0, -checkDirection.z);
+								yield return new WaitForSeconds (2f);
+								movePoint = new Vector3 (0, 0, -checkDirection.z);
+								yield return new WaitForSeconds (2f);
+							}
+							if (a == 3) {
+								movePoint = new Vector3 (-checkDirection.x, 0, -checkDirection.z);
+								yield return new WaitForSeconds (1f);
+								movePoint = new Vector3 (checkDirection.x, 0, -checkDirection.z);
+								yield return new WaitForSeconds (1f);
+								movePoint = new Vector3 (0, 0, -checkDirection.z);
+								yield return new WaitForSeconds (1f);
+								movePoint = new Vector3 (0, 0, -checkDirection.z);
+								yield return new WaitForSeconds (1f);
+							}
 						}
+						yield return new WaitForSeconds (0.2f);
+					} else if(Mathf.Abs(targetPlayer.transform.position.z-transform.position.z) <8 && Mathf.Abs(targetPlayer.transform.position.x-this.gameObject.transform.position.x) <= 0.6f ) {
+						aniState = this.animator.GetCurrentAnimatorStateInfo (0);
+						if (!aniState.IsName ("Attack")) {
+							if (moveAble) {
+								if (checkDirection.z > 0) {
+									if (checkDirection.x > 0) {
+										movePoint = new Vector3 (-checkDirection.x, 0, 0);
+									}
+									if (checkDirection.x < 0) {
+										movePoint = new Vector3 (checkDirection.x, 0, 0);
+									}
+								}
+								if (checkDirection.z <= 0) {
+									if (checkDirection.x > 0) {
+										movePoint = new Vector3 (-checkDirection.x, 0, 0);
+									}
+									if (checkDirection.x < 0) {
+										movePoint = new Vector3 (checkDirection.x, 0, 0);
+									}
+								}
+							}
+						}
+						yield return new WaitForSeconds (2f);
 					}
-					if (MonsterRunAttackAround == 2) {
-						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
-						int k = Random.Range(0,1);
-						if(k == 0){
-							movePoint = new Vector3 (-checkDirection.x, 0, -checkDirection.z);
-							yield return new WaitForSeconds (2f);
-							movePoint = new Vector3 (checkDirection.x, 0, -checkDirection.z);
-							yield return new WaitForSeconds (2f);
-							movePoint = new Vector3 (checkDirection.x, 0, -checkDirection.z);
-							yield return new WaitForSeconds (2f);
-							movePoint = new Vector3 (-checkDirection.x, 0, -checkDirection.z);
-							yield return new WaitForSeconds (2f);
-						}
-						if(k == 1){
-							movePoint = new Vector3 (checkDirection.x, 0, -checkDirection.z);
-							yield return new WaitForSeconds (2f);
-							movePoint = new Vector3 (-checkDirection.x, 0, -checkDirection.z);
-							yield return new WaitForSeconds (2f);
-							movePoint = new Vector3 (-checkDirection.x, 0, -checkDirection.z);
-							yield return new WaitForSeconds (2f);
-							movePoint = new Vector3 (checkDirection.x, 0, -checkDirection.z);
-							yield return new WaitForSeconds (2f);
-						}
-					}
-					yield return new WaitForSeconds (2f);
 				} else
-					yield return new WaitForSeconds (2f);
-			}
+					Debug.Log ("a");
+				yield return new WaitForSeconds (3f);
+		}
 			else if(!IsAlive){
 
 				yield return false;
 			}
+
 		}
 	}
 
-	public enum State
-	{
-		Standby = 0,
-		Idle,
-		Run
-	};
 
-//	public IEnumerator MonsterAi(){
-//		while (IsAlive) {
-//			if (targetPlayer != null) {
-//				currentDisTance = Vector3.Distance (targetPlayer.transform.position, transform.position);
-//				checkDirection = targetPlayer.transform.position - transform.position;
-//			}		
-//
-//		}
-//	}
 
+
+
+
+
+
+	//name change  -> MonsterNormalActAI;
 	public IEnumerator PatternNormalChange(){
 		while(IsAlive){
 			if (targetPlayer != null) {	
 				currentDisTance = Vector3.Distance (targetPlayer.transform.position, this.gameObject.transform.position);
 				checkDirection = targetPlayer.transform.position - this.gameObject.transform.position;
-				if (currentDisTance > searchRange) {
-					monsterState = StatePosition.Idle;
+
+				if (Mathf.Abs(targetPlayer.transform.position.z-transform.position.z) <8 && Mathf.Abs(targetPlayer.transform.position.x-this.gameObject.transform.position.x) <= 0.6f ){
+					if (!isAttack) {
+						isAttack = true;
+						moveAble = false;
+					}
+					monsterState = StatePosition.Attack;
+					if (checkDirection.z > 0) {
+						LookAtPattern (StateDirecion.right);
+					}
+					if (checkDirection.z < 0) {
+						LookAtPattern (StateDirecion.left);
+					}
 					Pattern (monsterState);
+					yield return new WaitForSeconds (0.5f);
+
 				}
-				//if this object get Attackmotion pattern(stateposition.boom -> attack), and this monsterlife is 20%, boomPattern start;
-				else if (currentDisTance <= searchRange) {
-//					movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
-					if (currentDisTance > searchRange * 0.2f) {
+
+					else if(currentDisTance > searchRange){
+						
+							moveAble = false;
+							isAttack = false;
+							monsterState = StatePosition.Idle;
+							Pattern (monsterState);
+						
+					}
+					else 
+				{
 						moveAble = true;
 						isAttack = false;
 						monsterState = StatePosition.Run;
 						Pattern (monsterState);
-					}
-					if (currentDisTance <= searchRange * 0.3f) {
-						if (!isAttack) {
-							isAttack = true;
-							moveAble = false;
-						}
-						if (currentLife > maxLife * 0.3f) {
-							monsterState = StatePosition.Attack;
-							Pattern (monsterState);
-							yield return new WaitForSeconds (0.5f);
-						} else if (currentLife < maxLife * 0.3) {
-//							if (Random.Range (0, 4) <= 2) {
-								monsterState = StatePosition.Attack;
-								Pattern (monsterState);
-								yield return new WaitForSeconds (0.5f);
-;
-						}
-					}
 				}
+
 			}
 			yield return new WaitForSeconds(0.2f);
 		}
@@ -373,10 +426,14 @@ public class ShockWaveMonster : Monster {
 		{
 			if (moveAble) 
 			{
-				this.transform.Translate (movePoint.normalized * moveSpeed * Time.deltaTime, 0);
+				if (Mathf.Abs (transform.position.x + movePoint.x) <= 5 || Mathf.Abs (transform.position.z + movePoint.z) <= 30) {
+					this.transform.Translate (movePoint.normalized * moveSpeed * Time.deltaTime, 0);
+				}
+
 
 			}
 		}
+
 		ChasePlayer ();
 	}
 	public void UpdateDefenceMode(){
