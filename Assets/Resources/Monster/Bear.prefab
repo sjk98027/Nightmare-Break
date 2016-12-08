@@ -368,6 +368,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1000011830148064
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 4000011275506474}
+  m_Layer: 9
+  m_Name: HandPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1000011938227806
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,7 +879,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010977677556}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.215365, y: -0.09999988, z: -111.483665}
+  m_LocalPosition: {x: 0.23295736, y: -0.095, z: -116.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -875,6 +890,7 @@ Transform:
   - {fileID: 4000011379358478}
   - {fileID: 4000011242835082}
   - {fileID: 4000013626628194}
+  - {fileID: 4000011275506474}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &4000010419693202
@@ -973,6 +989,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4000010375311164}
   m_RootOrder: 5
+--- !u!4 &4000011275506474
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011830148064}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.24, z: 4.03}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 4000010375311164}
+  m_RootOrder: 7
 --- !u!4 &4000011329880814
 Transform:
   m_ObjectHideFlags: 1
@@ -1550,9 +1579,8 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   HittedBox: {fileID: 0}
   MonsterRunAttackAround: 0
-  normalMode: 0
-  gateArrayNumber: 0
   monsterArrayNumber: 0
+  movePoint: {x: 0, y: 0, z: 0}
   currentLife: 0
   maxLife: 0
   RunRange: 0
@@ -1579,6 +1607,12 @@ MonoBehaviour:
   skillInsertImage: {fileID: 0}
   imageSpeed: 1
   imageLerpTime: 0
+  roarTime: 0
+  oneHandTime: 0
+  jumpAttackTime: 0
+  handPos: {fileID: 1000011830148064}
+  handSphere: {fileID: 0}
+  handAttack: {fileID: 0}
   imageState: 0
 --- !u!114 &114000013819207996
 MonoBehaviour:

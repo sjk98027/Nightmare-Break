@@ -173,9 +173,8 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   HittedBox: {fileID: 0}
   MonsterRunAttackAround: 0
-  normalMode: 0
-  gateArrayNumber: 0
   monsterArrayNumber: 0
+  movePoint: {x: 0, y: 0, z: 0}
   currentLife: 0
   maxLife: 0
   RunRange: 0
@@ -4145,6 +4144,48 @@ Transform:
   m_Children: []
   m_Father: {fileID: 949580621}
   m_RootOrder: 0
+--- !u!1001 &324816749
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4000010375311164, guid: 12ac353f6279fa140b9b948c087b7a96, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0.23295736
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010375311164, guid: 12ac353f6279fa140b9b948c087b7a96, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -0.095
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010375311164, guid: 12ac353f6279fa140b9b948c087b7a96, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -116.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010375311164, guid: 12ac353f6279fa140b9b948c087b7a96, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010375311164, guid: 12ac353f6279fa140b9b948c087b7a96, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010375311164, guid: 12ac353f6279fa140b9b948c087b7a96, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010375311164, guid: 12ac353f6279fa140b9b948c087b7a96, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010375311164, guid: 12ac353f6279fa140b9b948c087b7a96, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 12ac353f6279fa140b9b948c087b7a96, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &326346978
 GameObject:
   m_ObjectHideFlags: 0
@@ -4579,9 +4620,8 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   HittedBox: {fileID: 0}
   MonsterRunAttackAround: 0
-  normalMode: 0
-  gateArrayNumber: 0
   monsterArrayNumber: 0
+  movePoint: {x: 0, y: 0, z: 0}
   currentLife: 0
   maxLife: 0
   RunRange: 0
@@ -5456,9 +5496,8 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   HittedBox: {fileID: 0}
   MonsterRunAttackAround: 0
-  normalMode: 0
-  gateArrayNumber: 0
   monsterArrayNumber: 0
+  movePoint: {x: 0, y: 0, z: 0}
   currentLife: 0
   maxLife: 0
   RunRange: 0
@@ -6107,9 +6146,8 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   HittedBox: {fileID: 455764880}
   MonsterRunAttackAround: 0
-  normalMode: 0
-  gateArrayNumber: 0
   monsterArrayNumber: 0
+  movePoint: {x: 0, y: 0, z: 0}
   currentLife: 0
   maxLife: 0
   RunRange: 0
@@ -6458,7 +6496,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000012003445268, guid: e46862edff31b9148ade419324d09439, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e46862edff31b9148ade419324d09439, type: 2}
@@ -7864,7 +7902,7 @@ Transform:
   - {fileID: 151249846}
   - {fileID: 505801945}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
 --- !u!1 &589169445
 GameObject:
   m_ObjectHideFlags: 0
@@ -8488,7 +8526,7 @@ Transform:
   - {fileID: 1387371886}
   - {fileID: 1797509691}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!1 &652401454
 GameObject:
   m_ObjectHideFlags: 0
@@ -9124,9 +9162,8 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   HittedBox: {fileID: 723040209}
   MonsterRunAttackAround: 0
-  normalMode: 0
-  gateArrayNumber: 0
   monsterArrayNumber: 0
+  movePoint: {x: 0, y: 0, z: 0}
   currentLife: 0
   maxLife: 0
   RunRange: 0
@@ -10152,9 +10189,8 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   HittedBox: {fileID: 0}
   MonsterRunAttackAround: 0
-  normalMode: 0
-  gateArrayNumber: 0
   monsterArrayNumber: 0
+  movePoint: {x: 0, y: 0, z: 0}
   currentLife: 0
   maxLife: 0
   RunRange: 0
@@ -11537,67 +11573,6 @@ Transform:
   - {fileID: 410131960}
   m_Father: {fileID: 381183784}
   m_RootOrder: 0
---- !u!1001 &917072890
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4000010375311164, guid: 4d414332310318f49bb6b4e8dc9c4b8c, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -2.215365
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000010375311164, guid: 4d414332310318f49bb6b4e8dc9c4b8c, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -0.09999988
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000010375311164, guid: 4d414332310318f49bb6b4e8dc9c4b8c, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -111.483665
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000010375311164, guid: 4d414332310318f49bb6b4e8dc9c4b8c, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000010375311164, guid: 4d414332310318f49bb6b4e8dc9c4b8c, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000010375311164, guid: 4d414332310318f49bb6b4e8dc9c4b8c, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000010375311164, guid: 4d414332310318f49bb6b4e8dc9c4b8c, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000010375311164, guid: 4d414332310318f49bb6b4e8dc9c4b8c, type: 2}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 1000010977677556, guid: 4d414332310318f49bb6b4e8dc9c4b8c, type: 2}
-      propertyPath: m_Name
-      value: BIgBear
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000013340848608, guid: 4d414332310318f49bb6b4e8dc9c4b8c,
-        type: 2}
-      propertyPath: maxLife
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000013340848608, guid: 4d414332310318f49bb6b4e8dc9c4b8c,
-        type: 2}
-      propertyPath: currentLife
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000013340848608, guid: 4d414332310318f49bb6b4e8dc9c4b8c,
-        type: 2}
-      propertyPath: handPos
-      value: 
-      objectReference: {fileID: 1176986507}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 4d414332310318f49bb6b4e8dc9c4b8c, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &920270528
 GameObject:
   m_ObjectHideFlags: 0
@@ -11904,7 +11879,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!1 &958054537
 GameObject:
   m_ObjectHideFlags: 0
@@ -11970,9 +11945,8 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   HittedBox: {fileID: 958054539}
   MonsterRunAttackAround: 0
-  normalMode: 0
-  gateArrayNumber: 0
   monsterArrayNumber: 0
+  movePoint: {x: 0, y: 0, z: 0}
   currentLife: 0
   maxLife: 0
   RunRange: 0
@@ -12483,9 +12457,8 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   HittedBox: {fileID: 0}
   MonsterRunAttackAround: 0
-  normalMode: 0
-  gateArrayNumber: 0
   monsterArrayNumber: 0
+  movePoint: {x: 0, y: 0, z: 0}
   currentLife: 0
   maxLife: 0
   RunRange: 0
@@ -14656,34 +14629,6 @@ Transform:
   - {fileID: 372229989}
   m_Father: {fileID: 309831076}
   m_RootOrder: 0
---- !u!1 &1176986507
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1176986508}
-  m_Layer: 9
-  m_Name: OneHandPos
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1176986508
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1176986507}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.08, z: 3.04}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children: []
-  m_Father: {fileID: 2044533929}
-  m_RootOrder: 7
 --- !u!1 &1177525797
 GameObject:
   m_ObjectHideFlags: 0
@@ -15240,9 +15185,8 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   HittedBox: {fileID: 0}
   MonsterRunAttackAround: 0
-  normalMode: 0
-  gateArrayNumber: 0
   monsterArrayNumber: 0
+  movePoint: {x: 0, y: 0, z: 0}
   currentLife: 0
   maxLife: 0
   RunRange: 0
@@ -16013,9 +15957,8 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   HittedBox: {fileID: 0}
   MonsterRunAttackAround: 0
-  normalMode: 0
-  gateArrayNumber: 0
   monsterArrayNumber: 0
+  movePoint: {x: 0, y: 0, z: 0}
   currentLife: 0
   maxLife: 0
   RunRange: 0
@@ -16111,7 +16054,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
 --- !u!1 &1280834242
 GameObject:
   m_ObjectHideFlags: 0
@@ -16448,9 +16391,8 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   HittedBox: {fileID: 1284810403}
   MonsterRunAttackAround: 0
-  normalMode: 0
-  gateArrayNumber: 0
   monsterArrayNumber: 0
+  movePoint: {x: 0, y: 0, z: 0}
   currentLife: 0
   maxLife: 0
   RunRange: 0
@@ -18356,9 +18298,8 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   HittedBox: {fileID: 1447598220}
   MonsterRunAttackAround: 0
-  normalMode: 0
-  gateArrayNumber: 0
   monsterArrayNumber: 0
+  movePoint: {x: 0, y: 0, z: 0}
   currentLife: 0
   maxLife: 0
   RunRange: 0
@@ -19212,9 +19153,8 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   HittedBox: {fileID: 0}
   MonsterRunAttackAround: 0
-  normalMode: 0
-  gateArrayNumber: 0
   monsterArrayNumber: 0
+  movePoint: {x: 0, y: 0, z: 0}
   currentLife: 0
   maxLife: 0
   RunRange: 0
@@ -19331,9 +19271,8 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   HittedBox: {fileID: 1533228484}
   MonsterRunAttackAround: 0
-  normalMode: 0
-  gateArrayNumber: 0
   monsterArrayNumber: 0
+  movePoint: {x: 0, y: 0, z: 0}
   currentLife: 0
   maxLife: 0
   RunRange: 0
@@ -20404,9 +20343,8 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   HittedBox: {fileID: 0}
   MonsterRunAttackAround: 0
-  normalMode: 0
-  gateArrayNumber: 0
   monsterArrayNumber: 0
+  movePoint: {x: 0, y: 0, z: 0}
   currentLife: 0
   maxLife: 0
   RunRange: 0
@@ -22272,7 +22210,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
 --- !u!1 &1742202995
 GameObject:
   m_ObjectHideFlags: 0
@@ -23002,9 +22940,8 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   HittedBox: {fileID: 0}
   MonsterRunAttackAround: 0
-  normalMode: 0
-  gateArrayNumber: 0
   monsterArrayNumber: 0
+  movePoint: {x: 0, y: 0, z: 0}
   currentLife: 20
   maxLife: 100
   RunRange: 0
@@ -26672,11 +26609,6 @@ Transform:
   - {fileID: 1502545476}
   m_Father: {fileID: 1786780985}
   m_RootOrder: 0
---- !u!4 &2044533929 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4000010375311164, guid: 4d414332310318f49bb6b4e8dc9c4b8c,
-    type: 2}
-  m_PrefabInternal: {fileID: 917072890}
 --- !u!1 &2044627377
 GameObject:
   m_ObjectHideFlags: 0
@@ -27318,9 +27250,8 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   HittedBox: {fileID: 0}
   MonsterRunAttackAround: 0
-  normalMode: 0
-  gateArrayNumber: 0
   monsterArrayNumber: 0
+  movePoint: {x: 0, y: 0, z: 0}
   currentLife: 0
   maxLife: 0
   RunRange: 0
@@ -27468,9 +27399,8 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   HittedBox: {fileID: 2089734048}
   MonsterRunAttackAround: 0
-  normalMode: 0
-  gateArrayNumber: 0
   monsterArrayNumber: 0
+  movePoint: {x: 0, y: 0, z: 0}
   currentLife: 0
   maxLife: 0
   RunRange: 0
