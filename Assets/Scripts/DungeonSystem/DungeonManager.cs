@@ -138,6 +138,12 @@ public class DungeonManager : MonoBehaviour
     {
         players = new GameObject[playerNum];
         characters = new CharacterManager[playerNum];
+
+        for (int playerCount = 0; playerCount < playerNum; playerCount++)
+        {
+            players[playerNum] = new GameObject();
+            characters[playerNum] = new CharacterManager();
+        }
     }
 
     //defence mode, normal mode
