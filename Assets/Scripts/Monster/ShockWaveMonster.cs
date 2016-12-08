@@ -8,7 +8,6 @@ public class ShockWaveMonster : Monster {
 	public float currentDisTance;
 	float middleBossToMonsterLimitDistanceMonsterToCenter = 6.0f;
 	private float middleBossToMonsterMinDistance = 1.5f;
-	public AnimatorStateInfo aniState;
 
 	[SerializeField]GameObject middleboss;
 	private Vector3 boomObjectPosition;
@@ -35,7 +34,7 @@ public class ShockWaveMonster : Monster {
 			Pattern (monsterState);
 		}
 	}
-	private Vector3 movePoint;
+
 	private Vector3 idlePoint = new Vector3(0,0,0);
 
 	//private Vector3 boomPoint = new Vector3(100,100,100);
