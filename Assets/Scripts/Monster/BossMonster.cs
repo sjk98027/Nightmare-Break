@@ -9,7 +9,9 @@ public class BossMonster : Monster {
 	private float currentDistance;
 	private float perceive = 20.0f;
 	private float moveSpeed = 0.3f;
-    
+
+	private Vector3 movePoint;
+
 	public enum MonsterState {Idle = 1 , Run, Walk, BigSmash, TwoHandSmash, Roar, UPSmash, DownSmash, Death };//콤보 state
 
 	private MonsterState monsterState;
