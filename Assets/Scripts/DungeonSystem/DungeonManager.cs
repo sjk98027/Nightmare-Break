@@ -58,7 +58,7 @@ public class DungeonManager : MonoBehaviour
 	{
 
 		//test
-		players = GameObject.FindGameObjectsWithTag ("Player");
+		//players = GameObject.FindGameObjectsWithTag ("Player");
 
 
 		DungeonConstruct();//mapNumber - > inspector define
@@ -138,12 +138,6 @@ public class DungeonManager : MonoBehaviour
     {
         players = new GameObject[playerNum];
         characters = new CharacterManager[playerNum];
-
-        for (int playerCount = 0; playerCount < playerNum; playerCount++)
-        {
-            players[playerCount] = new GameObject();
-            characters[playerCount] = new CharacterManager();
-        }
     }
 
     //defence mode, normal mode

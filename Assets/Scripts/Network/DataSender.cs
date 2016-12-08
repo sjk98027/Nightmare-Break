@@ -351,7 +351,7 @@ public class DataSender : MonoBehaviour
         sendMsgs.Enqueue(packet);
 
         SendData sendData = new SendData(udpId[index], endPoint, packet.msg);
-        networkManager.ReSendManager.AddReSendData(sendData);
+        networkManager.ReSendManager.AddReSendData(sendData, index);
         udpId[index]++;
     }
 
@@ -398,7 +398,7 @@ public class DataSender : MonoBehaviour
         sendMsgs.Enqueue(packet);
 
         SendData sendData = new SendData(udpId[index], endPoint, packet.msg);
-        networkManager.ReSendManager.AddReSendData(sendData);
+        networkManager.ReSendManager.AddReSendData(sendData, index);
         udpId[index]++;
     }
 

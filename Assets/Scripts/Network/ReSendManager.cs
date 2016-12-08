@@ -29,10 +29,8 @@ public class ReSendManager : MonoBehaviour
         isConnecting = true;
     }
 
-    public void AddReSendData(SendData sendData)
+    public void AddReSendData(SendData sendData, int index)
     {
-        int index = networkManager.GetUserIndex(sendData.EndPoint);
-
         try
         {
             Debug.Log(index + "번 유저에 " + sendData.UdpId + " 아이디 메소드 추가");
