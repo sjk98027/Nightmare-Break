@@ -437,10 +437,10 @@ public class CharacterManager : MonoBehaviour
 				break;
 			}
 
-            if (userNum == networkManager.MyIndex)
-            {
-                DataSender.Instance.CharacterActionSend(Inputstate);
-            }
+//            if (userNum == networkManager.MyIndex)
+//            {
+//                DataSender.Instance.CharacterActionSend(Inputstate);
+//            }
 		}
 	}
 

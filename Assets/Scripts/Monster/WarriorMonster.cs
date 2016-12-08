@@ -9,7 +9,7 @@ public class WarriorMonster : Monster {
 	public float currentDisTance;
 	float middleBossToMonsterLimitDistanceMonsterToCenter = 6.0f;
 	private float middleBossToMonsterMinDistance = 1.5f;
-	public AnimatorStateInfo aniState;
+
 
 	[SerializeField]GameObject middleboss;
 
@@ -35,7 +35,7 @@ public class WarriorMonster : Monster {
 			Pattern (monsterState);
 		}
 	}
-	private Vector3 movePoint;
+
 	private Vector3 idlePoint = new Vector3(0,0,0);
 
 	private Vector3 boomPoint = new Vector3(100,100,100);
@@ -169,8 +169,8 @@ public class WarriorMonster : Monster {
 
 			if(IsAlive){
 				if (targetPlayer != null) {
-					MonsterRunAttackAround = Random.Range (0, 3);
-					if (MonsterRunAttackAround == 0) {
+					MonsterRunAttackAround = Random.Range (0, 4);
+					if (MonsterRunAttackAround == 0 || MonsterRunAttackAround == 1) {
 						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
 						yield return new WaitForSeconds (2f);
 						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
@@ -181,7 +181,7 @@ public class WarriorMonster : Monster {
 						yield return new WaitForSeconds (2f);
 					}
 
-					if (MonsterRunAttackAround == 1) {
+					if (MonsterRunAttackAround == 2) {
 						int i = Random.Range (0, 2);
 						if (i == 0) {
 							if (checkDirection.z >= 0) {
@@ -226,7 +226,7 @@ public class WarriorMonster : Monster {
 							}
 						}
 					}
-					if (MonsterRunAttackAround == 2) {
+					if (MonsterRunAttackAround == 3) {
 						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
 						int k = Random.Range(0,1);
 						if(k == 0){

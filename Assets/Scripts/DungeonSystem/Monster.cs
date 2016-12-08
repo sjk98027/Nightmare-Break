@@ -9,7 +9,7 @@ public class Monster : MonoBehaviour {
 
 	public GameObject[] player;//
 	public Animator animator;
-//	public AnimationState aniState;
+	public AnimatorStateInfo aniState;
 
 	public GameObject targetPlayer;
 	private Vector3 leftVector3 = new Vector3(0,180,0);
@@ -25,21 +25,12 @@ public class Monster : MonoBehaviour {
 		set{ moveAble = value;}
 	}
 
-	[SerializeField]private bool normalMode;
-	public bool NormalMode{
-		set { normalMode = value;}
-	}
-    [SerializeField]
-    private int gateArrayNumber;
-    public int GateArrayNumber
-    {
-        set { gateArrayNumber = value; }
-    }
-
     [SerializeField]private int monsterArrayNumber;
 	public int MonsterArrayNumber{
 		set{ monsterArrayNumber = value;}
 	}
+
+	public Vector3 movePoint;
 
 	//server send to this class monsterinfomation;
 	protected int stageLevel;
@@ -102,28 +93,24 @@ public class Monster : MonoBehaviour {
 	};
 	public StateDirecion stateDirecion;
 
-	//start monster Haves infomation setting(playersuch,monsterset)
-	public void PlayerSearch()
-	{
-		
-		player= GameObject.FindGameObjectsWithTag("Player");
-		currentDisTanceArray = new float[player.Length];
-		aggroRank = new float[player.Length];
-		playerToMonsterDamage = new float[player.Length];
-	}
-
-
 	public void MonsterSet(int _maxlife, int _baseDamage)
 	{
 		isAlive = true;
 		isHited = false;
 		moveAble = true;
-		animator = this.gameObject.GetComponent<Animator> ();
-		StartCoroutine(LookatChange ());
 		maxLife = _maxlife;
 		currentLife = maxLife;
-		HittedBox = this.gameObject.GetComponent<BoxCollider> ();
 		baseDamage = _baseDamage;
+
+		currentDisTanceArray = new float[player.Length];
+		aggroRank = new float[player.Length];
+		playerToMonsterDamage = new float[player.Length];
+
+		animator = this.gameObject.GetComponent<Animator> ();
+		HittedBox = this.gameObject.GetComponent<BoxCollider> ();
+
+		StartCoroutine(LookatChange ());
+
 		if (attackCollider != null) {
 			attackCollider = this.transform.GetComponentInChildren<MonsterWeapon> ();
 			attackCollider.MonsterWeaponSet ();
@@ -157,35 +144,37 @@ public class Monster : MonoBehaviour {
 	IEnumerator LookatChange(){
 		while (true) {
 			if (!isAttack) {
+				aniState = this.animator.GetCurrentAnimatorStateInfo (0);
 				if (targetPlayer != null) {
-					if ((targetPlayer.transform.position.z - transform.position.z) >= 0) {
-						LookAtPattern (StateDirecion.right);
-					}
-					if ((targetPlayer.transform.position.z - transform.position.z) < 0) {
-						
-						LookAtPattern (StateDirecion.left);
+					if (aniState.IsName ("Run")||aniState.IsName("Idle")){
+						if (movePoint.z > 0) {
+							LookAtPattern (StateDirecion.right);
+						} else if (movePoint.z < 0) {
+							LookAtPattern (StateDirecion.left);
+						}
 					}
 				}
 			}
-			yield return new WaitForSeconds (2f);
+			yield return new WaitForSeconds (0.2f);
 		}
 	}
 
     public void ChasePlayer(){
 		//Debug.Log (changeTargetTime);
-		if(!isHited)
-		{
-			changeTargetTime +=Time.deltaTime;
-			if(changeTargetTime >=3){
-				changeTargetTime = 0;
-				NormalchasePlayer();
+		if(player[0] != null){
+			if (!isHited) {
+				changeTargetTime += Time.deltaTime;
+				if (changeTargetTime >= 3) {
+					changeTargetTime = 0;
+					NormalchasePlayer ();
+				}
 			}
-		}
-		if(isHited){
-			changeTargetTime += Time.deltaTime;
-			if(changeTargetTime >=2){
-				changeTargetTime = 0;
-				HitedchasePlayer();
+			if (isHited) {
+				changeTargetTime += Time.deltaTime;
+				if (changeTargetTime >= 2) {
+					changeTargetTime = 0;
+					HitedchasePlayer ();
+				}
 			}
 		}
 	}

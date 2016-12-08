@@ -31,7 +31,6 @@ public class BossMonster : Monster {
 	void Start () {
 		anim = GetComponent<Animator>();
 		 monsterState = MonsterState.Idle;
-		PlayerSearch ();
 		//MonsterSet ();
 
 		NormalchasePlayer ();

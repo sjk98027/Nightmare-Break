@@ -8,6 +8,7 @@ using System.Collections.Generic;
 public class DungeonManager : MonoBehaviour
 {
 	//need revise code;
+
 	public enum HostGuest
 	{
 		Host = 0,
@@ -55,6 +56,11 @@ public class DungeonManager : MonoBehaviour
 
 	void Start()
 	{
+
+		//test
+		players = GameObject.FindGameObjectsWithTag ("Player");
+
+
 		DungeonConstruct();//mapNumber - > inspector define
 		//        modeForm = false;
 //		        ModeChange(n);//client get modeform and ingame play ;
@@ -64,7 +70,10 @@ public class DungeonManager : MonoBehaviour
 		if(section.Length != 0){
 			SectionSet ();
 		}
-		//spawnPoint.SpawnVectorGetting ();
+
+
+
+
 
 	}
 
@@ -194,18 +203,20 @@ public class DungeonManager : MonoBehaviour
 
     public void MonsterSet()
     {
+		monsterCount = 0;
+
 		for (int i = 0; i < spawnPoint.boomMonsterCount; i++) {
-			GameObject objBoomMonster = (GameObject)Instantiate (Resources.Load ("Monster/Frog"),new Vector3(spawnPoint.spawnVector[i].x,spawnPoint.spawnVector[i].y,spawnPoint.spawnVector[i].z),this.gameObject.transform.rotation);
+			GameObject objBoomMonster = (GameObject)Instantiate (Resources.Load ("Monster/Frog"), spawnPoint.spawnVector[i] ,this.gameObject.transform.rotation);
 			objBoomMonster.transform.SetParent (this.transform);
 			boomMonster [i] = objBoomMonster.GetComponent<BoomMonster> ();
 		}
 		for (int i = 0; i < spawnPoint.shockWaveMonsterCount; i++) {
-			GameObject objShockwaveMonster= (GameObject)Instantiate (Resources.Load ("Monster/Duck"),new Vector3 (spawnPoint.spawnVector[i+spawnPoint.boomMonsterCount].x,spawnPoint.spawnVector[i+spawnPoint.boomMonsterCount].y,spawnPoint.spawnVector[i+spawnPoint.boomMonsterCount].z), this.transform.rotation);
+			GameObject objShockwaveMonster= (GameObject)Instantiate (Resources.Load ("Monster/Duck"), spawnPoint.spawnVector[i+spawnPoint.boomMonsterCount], this.transform.rotation);
 			objShockwaveMonster.transform.SetParent (this.transform);
 			shockWaveMonster [i] = objShockwaveMonster.GetComponent<ShockWaveMonster> (); 
 		}
 		for (int i = 0; i < spawnPoint.warriorMonsterCount; i++) {
-			GameObject objWarriorMonster= (GameObject)Instantiate (Resources.Load ("Monster/Rabbit"),new Vector3 (spawnPoint.spawnVector[i+spawnPoint.boomMonsterCount+spawnPoint.shockWaveMonsterCount].x,spawnPoint.spawnVector[i+spawnPoint.boomMonsterCount+spawnPoint.shockWaveMonsterCount].y,spawnPoint.spawnVector[i+spawnPoint.boomMonsterCount+spawnPoint.shockWaveMonsterCount].z), this.transform.rotation);
+			GameObject objWarriorMonster= (GameObject)Instantiate (Resources.Load ("Monster/Rabbit"), spawnPoint.spawnVector[i+spawnPoint.boomMonsterCount+spawnPoint.shockWaveMonsterCount], this.transform.rotation);
 			objWarriorMonster.transform.SetParent (this.transform);
 			warriorMonster[i]= objWarriorMonster.GetComponent<WarriorMonster> ();
 		}
@@ -213,84 +224,64 @@ public class DungeonManager : MonoBehaviour
 		if (bossMonster != null) {
 			GameObject objBossMonster = (GameObject)Instantiate (Resources.Load ("Monster/Bear"), new Vector3 (0, 0, 0), this.transform.rotation);
 			bossMonster = objBossMonster.GetComponent<BossMonsterKYW> ();
+			monsterCount++;
 		}
 
-//		{
-//			boomMonster = gameObject.transform.GetComponentsInChildren<BoomMonster> ();
-//			shockWaveMonster = gameObject.transform.GetComponentsInChildren<ShockWaveMonster> ();
-//			warriorMonster = gameObject.GetComponentsInChildren<WarriorMonster> ();
-			monsterCount = (boomMonster.Length + warriorMonster.Length + shockWaveMonster.Length);
-//		}
+		monsterCount += spawnPoint.sumMonsterCount;
 
+		for (int i = 0; i < boomMonster.Length; i++) {
+			boomMonster [i].player = players;
+			boomMonster [i].MonsterSet (900,2);
+			boomMonster [i].NormalMonsterRealizePattern ();
+			boomMonster [i].MonsterArrayNumber = i;
 
-			for (int i = 0; i < boomMonster.Length; i++) {
-				if (boomMonster.Length != 0) {
-					boomMonster [i].PlayerSearch ();
-					boomMonster [i].MonsterSet (900,2);
-					boomMonster [i].NormalMode = normalMode;
-					boomMonster [i].NormalMonsterRealizePattern ();
-					boomMonster [i].GateArrayNumber = mapNumber;
-					boomMonster [i].MonsterArrayNumber = i;
-
-					if (hostGuest != HostGuest.Host) {
-						boomMonster [i].GuestMonsterPatternChange ();
-					}
-					else if (hostGuest == HostGuest.Host) {
-						boomMonster [i].MonSterPatternUpdateConduct (normalMode);
-					}
-					//boomMonster [i].MonSterPatternUpdateConduct (normalMode);
-				}
+			if (hostGuest != HostGuest.Host) {
+				boomMonster [i].GuestMonsterPatternChange ();
+			} else if (hostGuest == HostGuest.Host) {
+				boomMonster [i].MonSterPatternUpdateConduct (normalMode);
 			}
+				//boomMonster [i].MonSterPatternUpdateConduct (normalMode);
+		}
 
 
-			for (int j = 0; j < shockWaveMonster.Length; j++) {
-				if (shockWaveMonster.Length != 0) {
-					shockWaveMonster [j].PlayerSearch ();
-					shockWaveMonster [j].MonsterSet (900,2);
-					shockWaveMonster [j].NormalMode = normalMode;
-					shockWaveMonster [j].NormalMonsterRealizePattern ();
-					shockWaveMonster [j].GateArrayNumber = mapNumber;
-					shockWaveMonster [j].MonsterArrayNumber = j;
-					if (hostGuest == HostGuest.Host) {
-						shockWaveMonster [j].MonSterPatternUpdateConduct (normalMode);
-					}
-					else if (hostGuest != HostGuest.Host) {
-						shockWaveMonster [j].GuestMonsterPatternChange ();
-					}
-				}
-			}
-
-			for (int k = 0; k < warriorMonster.Length; k++) {
-				if (warriorMonster.Length != 0) {
-					warriorMonster [k].PlayerSearch ();
-					warriorMonster [k].MonsterSet (900,2);
-					warriorMonster [k].NormalMode = normalMode;
-					warriorMonster [k].NormalMonsterRealizePattern ();
-					warriorMonster [k].GateArrayNumber = mapNumber;
-					warriorMonster [k].MonsterArrayNumber = k;
-					if (hostGuest == HostGuest.Host) {
-						warriorMonster [k].MonSterPatternUpdateConduct (normalMode);
-					}
-					else if (hostGuest != HostGuest.Host) {
-						warriorMonster [k].GuestMonsterPatternChange ();
-					}
-				}
-			}
-
-
-			if (bossMonster != null) {
-				bossMonster.PlayerSearch ();
-				bossMonster.BossMonsterSet (900, 2);
-				if (hostGuest == HostGuest.Host) {
-					bossMonster.BossMonsterPatternUpdateConduct ();
-				}
-				else if (hostGuest != HostGuest.Host) {
-					//bossMonster.
-					bossMonster.BossMonsterPatternUpdateConduct ();
-				}
-
+		for (int j = 0; j < shockWaveMonster.Length; j++) {
+			shockWaveMonster [j].player = players;
+			shockWaveMonster [j].MonsterSet (900, 2);
+			shockWaveMonster [j].NormalMonsterRealizePattern ();
+			shockWaveMonster [j].MonsterArrayNumber = j;
+			if (hostGuest == HostGuest.Host) {
+				shockWaveMonster [j].MonSterPatternUpdateConduct (normalMode);
+			} else if (hostGuest != HostGuest.Host) {
+				shockWaveMonster [j].GuestMonsterPatternChange ();
 			}
 		}
+
+		for (int k = 0; k < warriorMonster.Length; k++) {
+			warriorMonster [k].player = players;
+			warriorMonster [k].MonsterSet (900, 2);
+			warriorMonster [k].NormalMonsterRealizePattern ();
+			warriorMonster [k].MonsterArrayNumber = k;
+			if (hostGuest == HostGuest.Host) {
+				warriorMonster [k].MonSterPatternUpdateConduct (normalMode);
+			} else if (hostGuest != HostGuest.Host) {
+				warriorMonster [k].GuestMonsterPatternChange ();
+			}
+		}
+
+
+		if (bossMonster != null) {
+			bossMonster.player = players;
+			bossMonster.BossMonsterSet (900, 2);
+			if (hostGuest == HostGuest.Host) {
+				bossMonster.BossMonsterPatternUpdateConduct ();
+			}
+			else if (hostGuest != HostGuest.Host) {
+				//bossMonster.
+				bossMonster.BossMonsterPatternUpdateConduct ();
+			}
+
+		}
+	}
 
     
 

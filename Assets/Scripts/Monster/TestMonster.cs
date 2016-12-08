@@ -47,7 +47,6 @@ public class TestMonster : Monster
 		RunRange = 10;
 		attackRange = 8;
 		//MonsterSet ();
-		PlayerSearch ();
 		uiManager = GameObject.FindWithTag ("UIManager").GetComponent<UIManager> ();
 		secondAttack = false;
 		BoxCollider[] MonsterWeapon = new BoxCollider[2];
