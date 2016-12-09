@@ -207,10 +207,33 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0.3073456
+        functionName: AttackEffect
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 49494eaf77bde6e4a96a0fded9f18500,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.6608952
         functionName: CutOffMove
         data: 
-        objectReferenceParameter: {fileID: 11500000, guid: f571c7749b70cf74582caeb77568ff89,
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.89461607
+        functionName: AttackEffect
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 49494eaf77bde6e4a96a0fded9f18500,
+          type: 3}
+        floatParameter: 0
+        intParameter: 1
+        messageOptions: 0
+      - time: 0.92142856
+        functionName: CutoffStop
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 49494eaf77bde6e4a96a0fded9f18500,
           type: 3}
         floatParameter: 0
         intParameter: 0
@@ -218,16 +241,7 @@ ModelImporter:
       - time: 0.95722014
         functionName: AnimationEnd
         data: 
-        objectReferenceParameter: {fileID: 11500000, guid: f571c7749b70cf74582caeb77568ff89,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.92142856
-        functionName: CutoffStop
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 49494eaf77bde6e4a96a0fded9f18500,
-          type: 3}
+        objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

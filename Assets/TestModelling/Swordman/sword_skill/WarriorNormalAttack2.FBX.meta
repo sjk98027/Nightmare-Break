@@ -204,7 +204,7 @@ ModelImporter:
       curves: []
       events:
       - time: 0.27268684
-        functionName: NormalAttackEffect
+        functionName: AttackEffect
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 49494eaf77bde6e4a96a0fded9f18500,
           type: 3}
@@ -212,7 +212,7 @@ ModelImporter:
         intParameter: 0
         messageOptions: 0
       - time: 0.65228593
-        functionName: NormalAttackEffect
+        functionName: AttackEffect
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 49494eaf77bde6e4a96a0fded9f18500,
           type: 3}
