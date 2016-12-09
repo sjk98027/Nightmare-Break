@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        networkManager.DataHandler.DataHandle();
+
     }
 
     void InitializeManager()

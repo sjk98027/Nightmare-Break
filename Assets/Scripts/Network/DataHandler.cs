@@ -41,6 +41,8 @@ public class DataHandler : MonoBehaviour
 
         SetServerNotifier();
         SetUdpNotifier();
+
+        StartCoroutine(DataHandle());
     }
 
     public void SetCharacter(GameObject character)
@@ -74,53 +76,59 @@ public class DataHandler : MonoBehaviour
         p2p_notifier.Add((int)P2PPacketId.CharacterAction, CharacterAction);
     }
 
-    public void DataHandle()
+    public IEnumerator DataHandle()
     {
-        int readCount = receiveMsgs.Count;
-
-        for (int i = 0; i < readCount; i++)
+        while (true)
         {
-            //패킷을 Dequeue 한다
-            //패킷 : 메시지 타입 + 메시지 내용
-            DataPacket packet;
+            yield return new WaitForSeconds(0.016f);
 
-            //lock (receiveLock)
-            //{
+            int readCount = receiveMsgs.Count;
+
+            for (int i = 0; i < readCount; i++)
+            {
+                //패킷을 Dequeue 한다
+                //패킷 : 메시지 타입 + 메시지 내용
+                DataPacket packet;
+
+                //lock (receiveLock)
+                //{
                 packet = receiveMsgs.Dequeue();
-            //}
+                //}
 
-            HeaderData headerData = new HeaderData();
-            HeaderSerializer headerSerializer = new HeaderSerializer();
-            headerSerializer.SetDeserializedData(packet.msg);
+                HeaderData headerData = new HeaderData();
+                HeaderSerializer headerSerializer = new HeaderSerializer();
+                headerSerializer.SetDeserializedData(packet.msg);
 
-            if (packet.endPoint == null)
-            {
-                headerSerializer.Deserialize(ref headerData);
-                DataReceiver.ResizeByteArray(0, NetworkManager.packetSource + NetworkManager.packetId, ref packet.msg);
-
-                if (server_notifier.TryGetValue(headerData.id, out serverRecvNotifier))
+                if (packet.endPoint == null)
                 {
-                    serverRecvNotifier(packet);
+                    headerSerializer.Deserialize(ref headerData);
+                    DataReceiver.ResizeByteArray(0, NetworkManager.packetSource + NetworkManager.packetId, ref packet.msg);
+
+                    if (server_notifier.TryGetValue(headerData.id, out serverRecvNotifier))
+                    {
+                        serverRecvNotifier(packet);
+                    }
+                    else
+                    {
+                        Debug.Log("DataHandler::Server.TryGetValue 에러 " + headerData.id);
+                    }
                 }
                 else
                 {
-                    Debug.Log("DataHandler::Server.TryGetValue 에러 " + headerData.id);
-                }
-            }
-            else
-            {
-                headerSerializer.UdpDeserialize(ref headerData);
-                DataReceiver.ResizeByteArray(0, NetworkManager.packetSource + NetworkManager.packetId + NetworkManager.udpId, ref packet.msg);
+                    headerSerializer.UdpDeserialize(ref headerData);
+                    DataReceiver.ResizeByteArray(0, NetworkManager.packetSource + NetworkManager.packetId + NetworkManager.udpId, ref packet.msg);
 
-                if (p2p_notifier.TryGetValue(headerData.id, out p2pRecvNotifier))
-                {
-                    p2pRecvNotifier(packet, headerData.udpId);
-                }
-                else
-                {
-                    Debug.Log("DataHandler::P2P.TryGetValue 에러 " + headerData.id);
+                    if (p2p_notifier.TryGetValue(headerData.id, out p2pRecvNotifier))
+                    {
+                        p2pRecvNotifier(packet, headerData.udpId);
+                    }
+                    else
+                    {
+                        Debug.Log("DataHandler::P2P.TryGetValue 에러 " + headerData.id);
+                    }
                 }
             }
+
         }
     }
     
