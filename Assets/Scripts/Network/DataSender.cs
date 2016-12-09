@@ -46,6 +46,7 @@ public class DataSender : MonoBehaviour
         networkManager = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<NetworkManager>();
         sendMsgs = newSendMsgs;
         InitializeTcpSend(newTcpSock);
+        StartCoroutine(DataSend());
     }
 
     public void InitializeTcpSend(Socket newSocket)
@@ -59,23 +60,30 @@ public class DataSender : MonoBehaviour
     }
 
     //데이타를 전송하는 메소드. byte[] msg 를 newIPEndPoint로 전송한다.
-    public void DataSend()
+    public IEnumerator DataSend()
     {
-        while (sendMsgs.Count > 0)
+        while (true)
         {
-            DataPacket packet;
+            yield return new WaitForSeconds(0.016f);
 
-            packet = sendMsgs.Dequeue();
+            int readCount = sendMsgs.Count;
 
-            if (packet.endPoint != null)
+            for (int i = 0; i < readCount; i++)
             {
-                udpSock.BeginSendTo(packet.msg, 0, packet.msg.Length, SocketFlags.None, packet.endPoint, new AsyncCallback(SendData), null);
+                DataPacket packet;
+
+                packet = sendMsgs.Dequeue();
+
+                if (packet.endPoint != null)
+                {
+                    udpSock.BeginSendTo(packet.msg, 0, packet.msg.Length, SocketFlags.None, packet.endPoint, new AsyncCallback(SendData), null);
+                }
+                else if (packet.endPoint == null)
+                {
+                    tcpSock.Send(packet.msg, 0, packet.msg.Length, SocketFlags.None);
+                }
             }
-            else if (packet.endPoint == null)
-            {
-                tcpSock.Send(packet.msg, 0, packet.msg.Length, SocketFlags.None);
-            }
-        }
+        }        
     }
 
     //비동기 콜백 메소드
