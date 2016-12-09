@@ -156,13 +156,16 @@ public class ShockWaveMonster : Monster {
 		}
 	}
 
-	public override void NormalMonsterRealizePattern(){
-		StartCoroutine (MonsterNormalMoveAI ());
+	public override void MonsterMoveAI(bool _normalMode){
+		if (_normalMode) {
+			StartCoroutine (MonsterNormalMoveAI ());
+		} else if (!_normalMode) {
+
+		}
 	}
 
 	public IEnumerator MonsterNormalMoveAI(){
 		while (true) {
-
 			if(IsAlive){
 				if (targetPlayer != null) {
 					if (Mathf.Abs(targetPlayer.transform.position.z-transform.position.z) >8 || Mathf.Abs(targetPlayer.transform.position.x-this.gameObject.transform.position.x) > 0.6f )

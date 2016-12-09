@@ -58,7 +58,7 @@ public class DungeonManager : MonoBehaviour
 	{
 
 		//test
-		players = GameObject.FindGameObjectsWithTag ("Player");
+		//players = GameObject.FindGameObjectsWithTag ("Player");
 
 
 		DungeonConstruct();//mapNumber - > inspector define
@@ -66,7 +66,8 @@ public class DungeonManager : MonoBehaviour
 //		        ModeChange(n);//client get modeform and ingame play ;
 		//section = transform.GetComponentsInChildren<Section> ();
 		normalMode = true;
-		section = transform.GetComponentsInChildren<Section> ();
+
+		//section = GameObject.FindGameObjectsWithTag ("DefenceMonsterSection");
 		if(section.Length != 0){
 			SectionSet ();
 		}
@@ -233,7 +234,7 @@ public class DungeonManager : MonoBehaviour
 		for (int i = 0; i < boomMonster.Length; i++) {
 			boomMonster [i].player = players;
 			boomMonster [i].MonsterSet (900,2);
-			boomMonster [i].NormalMonsterRealizePattern ();
+			boomMonster [i].MonsterMoveAI (normalMode);
 			boomMonster [i].MonsterArrayNumber = i;
 
 			if (hostGuest != HostGuest.Host) {
@@ -248,7 +249,7 @@ public class DungeonManager : MonoBehaviour
 		for (int j = 0; j < shockWaveMonster.Length; j++) {
 			shockWaveMonster [j].player = players;
 			shockWaveMonster [j].MonsterSet (900, 2);
-			shockWaveMonster [j].NormalMonsterRealizePattern ();
+			shockWaveMonster [j].MonsterMoveAI (normalMode);
 			shockWaveMonster [j].MonsterArrayNumber = j;
 			if (hostGuest == HostGuest.Host) {
 				shockWaveMonster [j].MonSterPatternUpdateConduct (normalMode);
@@ -260,7 +261,7 @@ public class DungeonManager : MonoBehaviour
 		for (int k = 0; k < warriorMonster.Length; k++) {
 			warriorMonster [k].player = players;
 			warriorMonster [k].MonsterSet (900, 2);
-			warriorMonster [k].NormalMonsterRealizePattern ();
+			warriorMonster [k].MonsterMoveAI (normalMode);
 			warriorMonster [k].MonsterArrayNumber = k;
 			if (hostGuest == HostGuest.Host) {
 				warriorMonster [k].MonSterPatternUpdateConduct (normalMode);
