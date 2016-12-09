@@ -439,6 +439,12 @@ public class DataSender : MonoBehaviour
         }
     }
 
+    //유닛 위치 -> Client
+    public void UnitPositionSend()
+    {
+
+    }
+
     //캐릭터 움직임(공격, 점프, 스킬 등등) -> Client
     public void CharacterActionSend(int action)
     {
