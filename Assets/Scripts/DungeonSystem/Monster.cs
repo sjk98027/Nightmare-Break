@@ -63,6 +63,7 @@ public class Monster : MonoBehaviour {
 	 
 	public MonsterWeapon attackCollider;
 	public ShockWave shockWaveInstantiate;
+	//public CottomExplosion boomInstantiate;
 
 	[SerializeField]private float[]currentDisTanceArray;
 	protected Vector3 checkDirection; // monster chaseplayer and move variable;
@@ -122,9 +123,13 @@ public class Monster : MonoBehaviour {
 			shockWaveInstantiate.GetDamage (baseDamage, this.gameObject.GetComponent<ShockWaveMonster> ());
 		}
 		if(shockWaveInstantiate != null|| attackCollider !=null){
-			//NormalMonsterRealizePattern ();
-			//bossmonsterWeapon damageGet;
+//			NormalMonsterRealizePattern ();
+			//bossmonsterWeapon damageGet(basedamage);
 		}
+
+//		if(boomInstaniate != null){
+//			
+//		}
 	}
 
 	public virtual void MonsterMoveAI(bool normalMode){
@@ -256,11 +261,11 @@ public class Monster : MonoBehaviour {
 			attackCollider.AttackColliderOn ();
 		} else if (attackCollider == null) {
 			if (stateDirecion == StateDirecion.left) {
-				Instantiate (Resources.Load ("Effect/Monster_ShockWave"), new Vector3 (this.transform.position.x, this.transform.position.y + 0.75f, this.transform.position.z - 0.53f), this.transform.rotation);
+				Instantiate (Resources.Load ("Effect/Monster_ShockWave"), new Vector3 (this.transform.position.x, this.transform.position.y + 1.5f, this.transform.position.z - 0.53f), this.transform.rotation);
 
 			}
 			if (stateDirecion == StateDirecion.right) {
-				Instantiate (Resources.Load ("Effect/Monster_ShockWave"), new Vector3 (this.transform.position.x, this.transform.position.y + 0.75f, this.transform.position.z + 0.53f), this.transform.rotation);	
+				Instantiate (Resources.Load ("Effect/Monster_ShockWave"), new Vector3 (this.transform.position.x, this.transform.position.y + 1.5f, this.transform.position.z + 0.53f), this.transform.rotation);	
 			}
 		}
 

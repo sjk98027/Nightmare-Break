@@ -19,17 +19,17 @@ public class BoomMonster : Monster {
 	{
 		IsHited = true;
 		currentLife -= _Damage;
-		if(monsterState != StatePosition.Boom){
-			if (currentLife > 0) {
-				for (int i = 0; i < player.Length; i++) {
-					if (player [i] == attacker) {
-						playerToMonsterDamage [i] += _Damage;
-						targetPlayer = player [i];
-					}
-				}
-				Pattern (StatePosition.TakeDamage);
-			}
-		}
+//		if(monsterState != StatePosition.Boom){
+//			if (currentLife > 0) {
+//				for (int i = 0; i < player.Length; i++) {
+//					if (player [i] == attacker) {
+//						playerToMonsterDamage [i] += _Damage;
+//						targetPlayer = player [i];
+//					}
+//				}
+//				Pattern (StatePosition.TakeDamage);
+//			}
+//		}
 		if (currentLife <= 0) {
 			currentLife = 0;
 			IsAlive = false;
@@ -41,14 +41,13 @@ public class BoomMonster : Monster {
 
 	private Vector3 idlePoint = new Vector3(0,0,0);
 
-	//private Vector3 boomPoint = new Vector3(100,100,100);
+
 
 	public enum StatePosition
 	{
 		Idle=1,
 		Run,
 		Attack,
-		Boom,
 		TakeDamage,
 		Death
 	};
@@ -106,12 +105,12 @@ public class BoomMonster : Monster {
 				animator.SetInteger("State", 0);
 				break;
 			}
-		case StatePosition.Boom:
-			{
-				idlePoint = this.gameObject.transform.position;
-				IsAlive = false;
-				StartCoroutine("BoomCoroutine"); break;
-			} // animator boom -> setintter 4
+//		case StatePosition.Boom:
+//			{
+//				idlePoint = this.gameObject.transform.position;
+//				IsAlive = false;
+//				StartCoroutine("BoomCoroutine"); break;
+//			} // animator boom -> setintter 4
 		case StatePosition.Attack:
 			{
 				AttackProcess(isAttack);
@@ -131,19 +130,19 @@ public class BoomMonster : Monster {
 		case StatePosition.Death:
 			{
 				animator.SetTrigger ("Death");
-
 //				MonsterArrayEraser(this.gameObject);
 				break;
 			}
 		}
 	}
-	IEnumerator BoomCoroutine() {
-		AnimatorReset ();
-		transform.position = idlePoint;
-		yield return new WaitForSeconds (3f);
-		IsAlive = false;
-		animator.SetTrigger("Death");
 
+	public void BoomStart(){
+		StartCoroutine (BoomCoroutine ());
+	}
+	IEnumerator BoomCoroutine() {
+		//Instantiate (Resources.Load ("Effect/ !@"), transform.position);
+		IsAlive = false;
+		yield return new WaitForSeconds (3f);
 		StopCoroutine (BoomCoroutine());
 	}
 
@@ -392,6 +391,24 @@ public class BoomMonster : Monster {
 		}
 		ChasePlayer ();
     }
+
+	public void defenceMode(){
+		aniState = this.animator.GetCurrentAnimatorStateInfo (0);
+		if (aniState.IsName ("Run")) {
+			if (moveAble) {
+				this.transform.Translate (transitionVector * moveSpeed * Time.deltaTime);
+			}
+		}
+		if (aniState.IsName ("Attack")) {
+			LookAtPattern (StateDirecion.right);
+		}
+
+		if (transform.position.z > 60) {
+			Destroy (this.gameObject);
+		}
+
+	}
+
 	public void UpdateDefenceMode(){
 
 		aniState = this.animator.GetCurrentAnimatorStateInfo (0);

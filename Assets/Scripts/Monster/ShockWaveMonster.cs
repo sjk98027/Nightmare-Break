@@ -157,11 +157,7 @@ public class ShockWaveMonster : Monster {
 	}
 
 	public override void MonsterMoveAI(bool _normalMode){
-		if (_normalMode) {
-			StartCoroutine (MonsterNormalMoveAI ());
-		} else if (!_normalMode) {
-
-		}
+		StartCoroutine (MonsterNormalMoveAI ());
 	}
 
 	public IEnumerator MonsterNormalMoveAI(){
