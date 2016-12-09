@@ -112,10 +112,10 @@ public class DataReceiver : MonoBehaviour
 
             try
             {
-                lock (receiveLock)
-                {
+                //lock (receiveLock)
+                //{
                     msgs.Enqueue(packet);
-                }
+                //}
             }
             catch
             {
@@ -169,10 +169,10 @@ public class DataReceiver : MonoBehaviour
                 byte[] msg = ResizeByteArray(0, asyncData.msgSize, ref asyncData.msg);
                 DataPacket packet = new DataPacket(msg, asyncData.EP);
 
-                lock (receiveLock)
-                {
+                //lock (receiveLock)
+                //{
                     msgs.Enqueue(packet);
-                }
+                //}
             }
         }
 

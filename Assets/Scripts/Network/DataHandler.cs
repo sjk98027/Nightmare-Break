@@ -84,10 +84,10 @@ public class DataHandler : MonoBehaviour
             //패킷 : 메시지 타입 + 메시지 내용
             DataPacket packet;
 
-            lock (receiveLock)
-            {
+            //lock (receiveLock)
+            //{
                 packet = receiveMsgs.Dequeue();
-            }
+            //}
 
             HeaderData headerData = new HeaderData();
             HeaderSerializer headerSerializer = new HeaderSerializer();
