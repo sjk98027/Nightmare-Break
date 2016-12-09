@@ -38,7 +38,7 @@ public class CharWeapon : MonoBehaviour
             // charManager.UIManager.BattleUIManager.monsterHpBarCalculation(monster.gameObject.name, monster.MaxHP, monster.CurrentHP);
            // ComboSystem.instance.ComboProcess(++charManager.ComboCount);
            // StartCoroutine(charManager.ComboCheck(charManager.ComboCount));
-            
+
             Instantiate(Resources.Load<GameObject>("Effect/HitEffect"), new Vector3(coll.transform.position.x, coll.transform.position.y + 1.0f, coll.transform.position.z + 0.5f), Quaternion.identity);
             if (monster != null)
             {

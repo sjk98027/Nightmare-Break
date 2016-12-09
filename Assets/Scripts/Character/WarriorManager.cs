@@ -248,7 +248,7 @@ public class WarriorManager : CharacterManager
         }
     }
 
-    public void NormalAttackEffect(int _attack)
+    public void AttackEffect(int _attack)
 	{
         if(_attack == 0)
         {
