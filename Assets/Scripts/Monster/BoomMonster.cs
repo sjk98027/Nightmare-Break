@@ -175,8 +175,12 @@ public class BoomMonster : Monster {
 		}
 	}
 
-	public override void NormalMonsterRealizePattern(){
-		StartCoroutine (AttackAroundRun ());
+	public override void MonsterMoveAI(bool _normalMode){
+		if (_normalMode) {
+			StartCoroutine (AttackAroundRun ());
+		} else if (!_normalMode) {
+
+		}
 	}
 
 	public IEnumerator AttackAroundRun(){
@@ -284,7 +288,7 @@ public class BoomMonster : Monster {
 
 
 	public IEnumerator PatternNormalChange(){
-		while(IsAlive){
+		while (IsAlive) {
 			if (targetPlayer != null) {	
 				currentDisTance = Vector3.Distance (targetPlayer.transform.position, this.gameObject.transform.position);
 				checkDirection = targetPlayer.transform.position - this.gameObject.transform.position;
@@ -300,39 +304,26 @@ public class BoomMonster : Monster {
 
 					{
 						
-					if (currentDisTance > searchRange * 0.2f) {
-						moveAble = true;
-						isAttack = false;
-						monsterState = StatePosition.Run;
-						Pattern (monsterState);
-						SendMonsterState (monsterState, isAttack, moveAble, movePoint, targetPlayer);
-					}
-					if (currentDisTance <= searchRange * 0.3f) {
-						if (!isAttack) {
-							isAttack = true;
-							moveAble = false;
-						}
-						if (currentLife > maxLife * 0.3f) {
-							monsterState = StatePosition.Attack;
+						if (currentDisTance > searchRange * 0.2f) {
+							moveAble = true;
+							isAttack = false;
+							monsterState = StatePosition.Run;
 							Pattern (monsterState);
 							SendMonsterState (monsterState, isAttack, moveAble, movePoint, targetPlayer);
-							yield return new WaitForSeconds (0.5f);
-						} else if (currentLife < maxLife * 0.3) {
-								monsterState = StatePosition.Attack;
-								Pattern (monsterState);
-								yield return new WaitForSeconds (0.5f);
+						}
+						if (currentDisTance <= searchRange * 0.3f) {
+							if (!isAttack) {
+								isAttack = true;
+								moveAble = false;
 							}
+							monsterState = StatePosition.Attack;
+							Pattern (monsterState);
+							yield return new WaitForSeconds (0.5f);
 						}
 					}
 				}
-				yield return new WaitForSeconds(0.2f);}
-			else if(targetPlayer == null){
-				checkDirection = new Vector3(1,1,1);
-				yield return new WaitForSeconds(0.2f);
-				checkDirection = new Vector3(-1,-1,-1);
-				yield return new WaitForSeconds(0.2f);
 			}
-
+			yield return new WaitForSeconds (0.2f);
 		}
 	}
 	public IEnumerator PatternDefenceChange(){

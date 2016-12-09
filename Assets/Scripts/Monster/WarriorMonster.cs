@@ -160,8 +160,12 @@ public class WarriorMonster : Monster {
 		}
 	}
 
-	public override void NormalMonsterRealizePattern(){
-		StartCoroutine (AttackAroundRun ());
+	public override void MonsterMoveAI(bool _normalMode){
+		if (_normalMode) {
+			StartCoroutine (AttackAroundRun ());
+		} else if (!_normalMode) {
+		
+		}
 	}
 
 	public IEnumerator AttackAroundRun(){
@@ -284,17 +288,9 @@ public class WarriorMonster : Monster {
 							isAttack = true;
 							moveAble = false;
 						}
-						if (currentLife > maxLife * 0.3f) {
-							monsterState = StatePosition.Attack;
-							Pattern (monsterState);
-							yield return new WaitForSeconds (0.5f);
-						} else if (currentLife < maxLife * 0.3) {
-							
-								monsterState = StatePosition.Attack;
-								Pattern (monsterState);
-								yield return new WaitForSeconds (0.5f);
-							 
-						}
+						monsterState = StatePosition.Attack;
+						Pattern (monsterState);
+						yield return new WaitForSeconds (0.5f); 
 					}
 				}
 			}

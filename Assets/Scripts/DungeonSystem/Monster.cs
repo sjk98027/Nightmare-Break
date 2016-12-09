@@ -122,11 +122,12 @@ public class Monster : MonoBehaviour {
 			shockWaveInstantiate.GetDamage (baseDamage, this.gameObject.GetComponent<ShockWaveMonster> ());
 		}
 		if(shockWaveInstantiate != null|| attackCollider !=null){
-			NormalMonsterRealizePattern ();
+			//NormalMonsterRealizePattern ();
+			//bossmonsterWeapon damageGet;
 		}
 	}
 
-	public virtual void NormalMonsterRealizePattern(){
+	public virtual void MonsterMoveAI(bool normalMode){
 		
 	}
 
