@@ -1,46 +1,15 @@
 fileFormatVersion: 2
-guid: f605e19f238cd914fb47907db63c28d9
-timeCreated: 1481185557
+guid: e7e016a75cdcfd645bc0b407771b34a0
+timeCreated: 1481207550
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: Bone01
-    100002: Bone02
-    100004: Bone03
-    100006: Bone04
-    100008: Bone05
-    100010: Bone06
-    100012: //RootNode
-    100014: Object01
-    100016: Object02
-    100018: Object03
-    100020: Object04
-    400000: Bone01
-    400002: Bone02
-    400004: Bone03
-    400006: Bone04
-    400008: Bone05
-    400010: Bone06
-    400012: //RootNode
-    400014: Object01
-    400016: Object02
-    400018: Object03
-    400020: Object04
-    2300000: Object01
-    2300002: Object02
-    2300004: Object03
-    2300006: Object04
-    3300000: Object01
-    3300002: Object02
-    3300004: Object03
-    3300006: Object04
-    4300000: Object03
-    4300002: Object01
-    4300004: Object04
-    4300006: Object02
-    7400000: Take 001
-    9500000: //RootNode
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Plane02
   materials:
     importMaterials: 1
     materialName: 0
@@ -65,7 +34,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.5
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
@@ -99,7 +68,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

@@ -640,7 +640,7 @@ GameObject:
   - 4: {fileID: 4000013227215270}
   - 95: {fileID: 95000010559957184}
   m_Layer: 8
-  m_Name: MageUI
+  m_Name: MageWomanUI
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
