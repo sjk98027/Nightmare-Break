@@ -425,14 +425,18 @@ public class ShockWaveMonster : Monster {
 		{
 			if (moveAble) 
 			{
-				if (Mathf.Abs (transform.position.x + movePoint.x) <= 5 || Mathf.Abs (transform.position.z + movePoint.z) <= 30) {
-					this.transform.Translate (movePoint.normalized * moveSpeed * Time.deltaTime, 0);
-				}
-
+				//if (Mathf.Abs (transform.position.x + movePoint.x) <= 5 || Mathf.Abs (transform.position.z + movePoint.z) <= 30) {
+				this.transform.Translate (movePoint.normalized * moveSpeed * Time.deltaTime, 0);
+				//}/
+				//				if (Wall [0].transform.position.x - transform.position.x <= 0.2f || Wall [1].transform.position.x - transform.position.x >= 0.2f) {
+				//					this.transform.Translate ((movePoint - 2 * new Vector3(movePoint.x,0,0)).normalized * moveSpeed * Time.deltaTime, 0);
+				//				}
+				//				if (Wall [2].transform.position.z - transform.position.z >= 0.2f || Wall[3].transform.position.z - transform.position.z <= 0.2f) {
+				//					this.transform.Translate ((movePoint - 2 * new Vector3 (0, 0, movePoint.z)).normalized * moveSpeed * Time.deltaTime, 0);
+				//				}
 
 			}
 		}
-
 		ChasePlayer ();
 	}
 	public void UpdateDefenceMode(){
@@ -499,11 +503,25 @@ public class ShockWaveMonster : Monster {
 	public void RecibeMonsterState(StatePosition _state, bool _isAttack, bool _moveAble, Vector3 _movePoint, GameObject _Player){
 		if (_state == StatePosition.Run) {
 			movePoint = _movePoint;
+			monsterState = _state;
+		}
+
+		if (_state == StatePosition.Attack) {
+			monsterState = _state;
+		}
+		if (_state == StatePosition.TakeDamage) {
+			monsterState = _state;
+		}
+		if (_state == StatePosition.Idle) {
+			monsterState = _state;
+		}
+		if (monsterState == StatePosition.Death) {
+			monsterState = _state;
 		}
 		monsterState = _state;
 		isAttack = _isAttack;
 		moveAble = _moveAble;
-		Pattern (_state);
+		Pattern (monsterState);
 		if (_Player != null) {
 			targetPlayer = _Player;
 		}
