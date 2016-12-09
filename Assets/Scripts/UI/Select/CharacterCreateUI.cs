@@ -25,6 +25,7 @@ public class CharacterCreateUI : MonoBehaviour {
 
 	void Start()
 	{
+        currentGender = 0;
 	    btnPushCheck = new bool[2];
 		selectImage = new GameObject[maxClass];
 		for (int i = 0; i < maxClass; i++) {
@@ -74,12 +75,14 @@ public class CharacterCreateUI : MonoBehaviour {
 				classSkill [i].SetActive (false);
 			}
             classPrefeb[i].SetActive(false);
-		}
+        
+        }
 		if (!selectImage [_index].activeSelf) {
-			selectImage [_index].SetActive (true);
+            selectImage [_index].SetActive (true);
 			classSkill [_index].SetActive (true);
 			currentGender = 0;
-			currentPickClass = _index + _index;
+            genderBtn[currentGender].transform.parent.gameObject.SetActive(true);
+            currentPickClass = _index + _index;
 			classPrefeb[_index + _index].SetActive(true);
 			characterAnim = classPrefeb[_index + _index].GetComponent<Animator>();
             for(int i=0; i < rotateBtn.Length; i++)
@@ -96,13 +99,18 @@ public class CharacterCreateUI : MonoBehaviour {
 			return;
 		} else if (_genderindex == 0) {
 			classPrefeb [_genderindex + currentGender + currentPickClass].SetActive (false);
-			currentGender = _genderindex;
+            genderBtn[currentGender].transform.parent.gameObject.SetActive(false);
+            currentGender = _genderindex;
 			classPrefeb [currentGender].SetActive (true);
-			characterAnim = classPrefeb[currentGender].GetComponent<Animator>();
-		}else if  (_genderindex == 1) {
+            genderBtn[currentGender].transform.parent.gameObject.SetActive(true);
+            characterAnim = classPrefeb[currentGender].GetComponent<Animator>();
+        }
+        else if  (_genderindex == 1) {
 			classPrefeb [currentGender + currentPickClass].SetActive (false);
-			currentGender = _genderindex;
-			classPrefeb [currentGender + currentPickClass].SetActive (true);
+            genderBtn[currentGender].transform.parent.gameObject.SetActive(false);
+            currentGender = _genderindex;
+            genderBtn[currentGender].transform.parent.gameObject.SetActive(true);
+            classPrefeb [currentGender + currentPickClass].SetActive (true);
 			characterAnim = classPrefeb[currentGender + currentPickClass].GetComponent<Animator>();
 		}
 	}
