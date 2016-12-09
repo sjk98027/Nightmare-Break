@@ -43,6 +43,7 @@ public class TestMonster : Monster
 
 	public GameObject roar;
 
+
 	public enum insertImageState
 	{
 		Stop = 0,
@@ -78,7 +79,7 @@ public class TestMonster : Monster
 
 
 			stateInfo = this.animator.GetCurrentAnimatorStateInfo (0);
-			searchRange = Vector3.Distance (player [0].transform.position, transform.position);
+//			searchRange = Vector3.Distance (player [0].transform.position, transform.position);
 			AttackTime += Time.deltaTime;
 
 			if (AttackTime >= 1)
@@ -87,7 +88,7 @@ public class TestMonster : Monster
 			}
 			if (searchRange < attackRange)
 			{
-				if (true)
+				if (oneHandTime > 5)
 				{
 					SetStateDefault ();
 					BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossRoar);
@@ -179,12 +180,9 @@ public class TestMonster : Monster
 		}
 	}
 
-	public IEnumerator RoarHit()
+	public void RoarHit()
 	{
-		while (true)
-		{
-			
-		}
+		Instantiate (Resources.Load<GameObject> ("Effect/RoarEffect"), new Vector3(-3.55f, 0.15f , this.transform.position.z+10f) , Quaternion.Euler (0, 0, 0));
 	}
 
 
