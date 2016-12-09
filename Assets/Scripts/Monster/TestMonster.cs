@@ -13,19 +13,17 @@ public class TestMonster : Monster
 		BigBearBossOneHandAttack,
 		BigBearJumpAttack,
 		BigBearBossRoar,
-		BigBearBossDeath}
-
-	;
+		BigBearBossDeath};
 
 	public float searchRange;
 	public float moveSpeed;
-	bool secondAttack;
+
 	float AttackTime;
 	int shootNumber;
+	public const int bossPatternCount = 3;
 
 	public UIManager uiManager;
 	public BoxCollider[] MonsterWeapon;
-	public bool monsterAlive;
 	public BigBearBossPatternName BigBearBossState;
 	AnimatorStateInfo stateInfo;
 	bool monsterAttack;
@@ -33,16 +31,16 @@ public class TestMonster : Monster
 	public float imageSpeed = 1.0f;
 	public float imageLerpTime;
 
-	public float roarTime;
-	public float oneHandTime;
-	public float jumpAttackTime;
-
 	public GameObject handPos;
 	public GameObject handSphere;
 	public OneHandAttack handAttack;
 
+	public GameObject[] bossplayer;
+
+	public GameObject chasePlayer;
 	public GameObject roar;
 
+	public bool bossSkill;
 
 	public enum insertImageState
 	{
@@ -56,96 +54,74 @@ public class TestMonster : Monster
 	void Start ()
 	{
 		shootNumber = 6;
-		RunRange = 10;
-		attackRange = 8;
-		//MonsterSet ();
+		RunRange = 30;
+		attackRange = 3;
 //		uiManager = GameObject.FindWithTag ("UIManager").GetComponent<UIManager> ();
-		secondAttack = false;
+
+		bossplayer = GameObject.FindGameObjectsWithTag ("Player");
+		chasePlayer = null;
 		animator = GetComponent<Animator> ();
 		BoxCollider[] MonsterWeapon = new BoxCollider[2];
 		skillInsertImage = GameObject.Find ("InGameUICanvas").transform.Find ("BossDeadlyPatternImage").Find("BossDeadlyPattern").GetComponent<Image>();
 		//skillInsertImage = transform.Find("InGameUICanvas").gameObject;
-	}
 
+		StartCoroutine (SetTargetPlayer());
+		StartCoroutine (BossAI());
+	}
 
 	void Update ()
 	{
 
-		if (monsterAlive)
+		if (IsAlive)
 		{
-			roarTime += Time.deltaTime;
-			oneHandTime += Time.deltaTime;
-			jumpAttackTime += Time.deltaTime;
-
-
-			stateInfo = this.animator.GetCurrentAnimatorStateInfo (0);
-//			searchRange = Vector3.Distance (player [0].transform.position, transform.position);
-			AttackTime += Time.deltaTime;
-
-			if (AttackTime >= 1)
+			if (!bossSkill)
 			{
-				AttackTime = 0;
-			}
-			if (searchRange < attackRange)
-			{
-				if (oneHandTime > 5)
+				stateInfo = this.animator.GetCurrentAnimatorStateInfo (0);
+				searchRange = Vector3.Distance (chasePlayer.transform.position, transform.position);
+
+				if (searchRange < attackRange)
 				{
-					SetStateDefault ();
-					BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossRoar);
-					roarTime = 0;
+					BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossAttack);
 				}
-//				if (true)
-//				{
-//					SetStateDefault ();
-//					BigBearBossPattern ((int)BigBearBossPatternName.BigBearJumpAttack);
-//					jumpAttackTime = 0;
-//				}
-//				if (oneHandTime > 5)
-//				{
-//					SetStateDefault ();
-//					BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossOneHandAttack);
-//					oneHandTime = 0;
-//
-//				}
-			}
-			else if (searchRange > RunRange)
-			{
-				BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossIdle);
-				changeDirection ();
 
-			}
-			else if (searchRange <= RunRange && searchRange > attackRange)
-			{
-
-				BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossRun);
-				changeDirection ();
-				if (stateInfo.IsName ("BigBearBossRun"))
+				if (searchRange > RunRange)
 				{
+					BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossIdle);
+					if (stateInfo.IsName("BigBearBossIdle"))
+					{
+						changeDirection ();
 
-					//transform.LookAt(player[0].transform.position);
-					transform.Translate ((player [0].transform.position - transform.position) * moveSpeed * Time.deltaTime, 0);//반대로 걸어 가서 수정
-					//transform.position = Vector3.Lerp (transform.position, player [0].transform.position, Time.deltaTime * moveSpeed);
+					}
+
+				}
+				else if (searchRange <= RunRange && searchRange > attackRange)
+				{
+					BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossRun);
+
+					if (stateInfo.IsName ("BigBearBossRun"))
+					{
+						changeDirection ();
+						transform.Translate ((chasePlayer.transform.position - transform.position) * moveSpeed * Time.deltaTime, 0);//반대로 걸어 가서 수정
+					}
+				}
+
+				if (monsterAttack)
+				{
+					for (int i = 0; i < MonsterWeapon.Length; i++)
+					{
+						MonsterWeapon [i].enabled = true;
+					}
+				}
+				else if (!monsterAttack)
+				{
+					for (int i = 0; i < MonsterWeapon.Length; i++)
+					{
+						MonsterWeapon [i].enabled = false;
+					}
 				}
 			}
-
-			if (monsterAttack)
-			{
-				for (int i = 0; i < MonsterWeapon.Length; i++)
-				{
-					MonsterWeapon [i].enabled = true;
-				}
-			}
-			else if (!monsterAttack)
-			{
-				for (int i = 0; i < MonsterWeapon.Length; i++)
-				{
-					MonsterWeapon [i].enabled = false;
-				}
-			}
-
-
 		}
-		if (!monsterAlive)
+		else
 		{
 			Destroy (this.gameObject, 5);
 		}
@@ -159,8 +135,62 @@ public class TestMonster : Monster
 			animator = GetComponent<Animator> ();
 		}
 
-		animator.SetInteger ("state",0);
+		animator.SetTrigger ("IdleState");
 		//animator.SetBool ("Run", false);
+	}
+
+	public IEnumerator SetTargetPlayer()
+	{
+		while (IsAlive)
+		{
+			int chaseIndex = Random.Range (0, bossplayer.Length - 1);
+
+			chasePlayer = bossplayer [chaseIndex];
+
+			yield return new WaitForSeconds (15.0f);
+		}
+	}
+
+	public IEnumerator BossAI()
+	{
+		while (IsAlive)
+		{
+			yield return new WaitForSeconds (5f);
+
+			int pattern = Random.Range (0, bossPatternCount + 1);
+
+			Debug.Log (pattern);
+
+			bossSkill = true;
+			animator.SetBool ("BossSkill", true);
+
+			if (pattern == 0)
+			{
+				BigBearBossPattern ((int)BigBearBossPatternName.BigBearJumpAttack);			
+			}
+			else if (pattern == 1)
+			{
+				BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossRoar);
+			}
+			else if (pattern == 2)
+			{
+				BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossOneHandAttack);
+			}
+			else
+			{
+				SetStateDefault ();
+				BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossAttack);
+			}
+
+			yield return new WaitForSeconds (1.0f);
+
+			bossSkill = false;
+			animator.SetBool ("BossSkill", false);
+		}
+	}
+
+	public void AnimatorReSet()
+	{
 	}
 
 	public IEnumerator Shooting()
@@ -182,13 +212,13 @@ public class TestMonster : Monster
 
 	public void RoarHit()
 	{
-		Instantiate (Resources.Load<GameObject> ("Effect/RoarEffect"), new Vector3(-3.55f, 0.15f , this.transform.position.z+10f) , Quaternion.Euler (0, 0, 0));
+		Instantiate (Resources.Load<GameObject> ("Effect/WarningEffect"), new Vector3(-3.55f, 0.15f , this.transform.position.z+10f) , Quaternion.Euler (-90, 0, 0));
 	}
 
 
 	public void changeDirection ()
 	{//캐릭터 이동시 보스가 보는 방향을 정한다.
-		Vector3 vecLookPos = player [0].transform.position;
+		Vector3 vecLookPos =chasePlayer.transform.position;
 		vecLookPos.y = transform.position.y;
 		vecLookPos.x = transform.position.x;
 
@@ -201,7 +231,7 @@ public class TestMonster : Monster
 	{
 		stateInfo = this.animator.GetCurrentAnimatorStateInfo (0);
 
-		if (monsterAlive)
+		if (IsAlive)
 		{
 			maxLife -= _Damage;
 
@@ -215,7 +245,7 @@ public class TestMonster : Monster
 				if (!stateInfo.IsName ("BigBearBossDeath"))
 				{
 					BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossDeath);
-					monsterAlive = false;
+					IsAlive = false;
 					return;
 				}
 			}
