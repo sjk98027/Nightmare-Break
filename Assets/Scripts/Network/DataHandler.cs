@@ -374,13 +374,6 @@ public class DataHandler : MonoBehaviour
 
         SendData sendData = new SendData(udpId, packet.endPoint);
         networkManager.ReSendManager.RemoveReSendData(sendData);
-        try
-        {
-        }
-        catch
-        {
-            Debug.Log("DataHandler.ConnectionCheck::KeyValue 에러");
-        }
     }
 
     //Server - 던전 시작
@@ -408,8 +401,6 @@ public class DataHandler : MonoBehaviour
 
         int index = networkManager.GetUserIndex(packet.endPoint);
 
-        Debug.Log(index);
-
         dungeonManager.CreateUnit(createUnitData.ID, index, new Vector3(createUnitData.PosX, createUnitData.PosY, createUnitData.PosZ));
 
         DataSender.Instance.UdpAnswer(packet.endPoint, udpId);
@@ -418,13 +409,8 @@ public class DataHandler : MonoBehaviour
     //Client
     public void CharacterPosition(DataPacket packet, int udpId)
     {
-        Debug.Log(packet.endPoint.ToString() + "캐릭터 위치 수신");
-
         CharacterPositionPacket characterPositionPacket = new CharacterPositionPacket(packet.msg);
         CharacterPositionData characterPositionData = characterPositionPacket.GetData();
-
-        Debug.Log("캐릭터 위치 : " + characterPositionData.posX + ". " + characterPositionData.posY + ". " + characterPositionData.posZ);
-        Debug.Log("캐릭터 인덱스 : " + characterPositionData.userIndex);
 
         CharacterManager characterManager = dungeonManager.characters[characterPositionData.userIndex];
         characterManager.SetPosition(characterPositionData);
@@ -435,8 +421,6 @@ public class DataHandler : MonoBehaviour
     {
         CharacterActionPacket characterActionPacket = new CharacterActionPacket(packet.msg);
         CharacterActionData characterActionData = characterActionPacket.GetData();
-
-        Debug.Log("캐릭터 행동 수신" + characterActionData.action);
 
         CharacterManager characterManager = dungeonManager.characters[characterActionData.userNum];
         characterManager.CharState(characterActionData.action);
