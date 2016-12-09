@@ -58,7 +58,7 @@ public class DungeonManager : MonoBehaviour
 	{
 
 		//test
-		players = GameObject.FindGameObjectsWithTag ("Player");
+		//players = GameObject.FindGameObjectsWithTag ("Player");
 
 
 		DungeonConstruct();//mapNumber - > inspector define

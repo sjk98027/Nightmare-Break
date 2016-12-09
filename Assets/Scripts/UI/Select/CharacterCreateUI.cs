@@ -73,10 +73,9 @@ public class CharacterCreateUI : MonoBehaviour {
 			if (i < maxClass) {
 				selectImage [i].SetActive (false);
 				classSkill [i].SetActive (false);
-
 			}
             classPrefeb[i].SetActive(false);
-            genderBtn[currentGender].transform.parent.gameObject.SetActive(false);
+        
         }
 		if (!selectImage [_index].activeSelf) {
             selectImage [_index].SetActive (true);
