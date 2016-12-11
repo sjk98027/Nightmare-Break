@@ -131,10 +131,10 @@ public class MonsterBaseData
         monsterLevelData = new List<MonsterLevelData>();
     }
 
-    public MonsterBaseData(int _id, string _name)
+    public MonsterBaseData(int newId, string newName)
     {
-        id = _id;
-        name = _name;
+        id = newId;
+        name = newName;
         monsterLevelData = new List<MonsterLevelData>();
     }
 

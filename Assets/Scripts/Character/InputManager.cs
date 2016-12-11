@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
 public class InputManager : MonoBehaviour
 {
     public float vertical = 0;
     public float horizontal = 0;
-    Vector3 cameraDistance;
 
     public CharacterManager characterManager;
     

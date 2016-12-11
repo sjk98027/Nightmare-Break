@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class WaitUIManager
 {
+    public const int maxCharacterNum = 3;
     public const int maxRoomNum = 20;
     public const int maxPlayerNum = 4;
 
