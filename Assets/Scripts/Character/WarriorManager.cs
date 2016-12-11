@@ -45,7 +45,7 @@ public class WarriorManager : CharacterManager
         skillTime += Time.deltaTime;
         if (!wind)
         {
-        wind = Instantiate(Resources.Load<GameObject>("Effect/Wind"), new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z), Quaternion.identity) as GameObject;
+     	   wind = Instantiate(Resources.Load<GameObject>("Effect/Wind"), new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z), Quaternion.identity) as GameObject;
 			wind.transform.parent = this.gameObject.transform;
         }
 
@@ -252,10 +252,10 @@ public class WarriorManager : CharacterManager
 	{
         if(_attack == 0)
         {
-            trailRenderer.enabled = true;
+       //     trailRenderer.enabled = true;
         } else
         {
-            trailRenderer.enabled = false;
+//            trailRenderer.enabled = false;
         }
 	}
 
@@ -271,6 +271,36 @@ public class WarriorManager : CharacterManager
 				riseCooltime = 0;
 				rise = false;
 			}
+		}
+	}
+
+	public override void classSound()
+	{
+
+		attack1 =Resources.Load<AudioClip> ("Sound/Warriorattack1");
+		attack2 =Resources.Load<AudioClip> ("Sound/Warriorattack2");
+		attack3 =Resources.Load<AudioClip> ("Sound/Warriorattack3");
+
+		Skill1Sound=Resources.Load<AudioClip> ("Sound/MageDestroy");
+		Skill2Sound=Resources.Load<AudioClip> ("Sound/MageDestroy");
+		Skill3Sound=Resources.Load<AudioClip> ("Sound/MageDestroy");
+		Skill4Sound=Resources.Load<AudioClip> ("Sound/MageDestroy");
+
+	}
+
+	public void AttackSound()
+	{
+		if (runState.IsName ("Attack1"))
+		{
+			this.CharAudio.PlayOneShot (attack1);
+		}
+		else if (runState.IsName ("Attack2"))
+		{
+			this.CharAudio.PlayOneShot (attack2);
+		}
+		else if (runState.IsName ("Attack3"))
+		{
+			this.CharAudio.PlayOneShot (attack3);
 		}
 	}
 }

@@ -64,6 +64,7 @@ public class MageManager : CharacterManager
 			if (transform.rotation.y == 0)
 			{
 				frameDestroy = Instantiate (Resources.Load<GameObject> ("Effect/FireMagic"), new Vector3 (transform.position.x, transform.position.y + 10.0f, transform.position.z -3.0f), Quaternion.Euler (-135, 0, 0)) as GameObject;
+				
 			}
 			else
 			{
@@ -187,8 +188,18 @@ public class MageManager : CharacterManager
 
     public override void SetCharacterType()
     {
-        charStatus.HClass = CharacterStatus.CharClass.Warrior;
+		charStatus.HClass = CharacterStatus.CharClass.Mage;
+
     }
+
+	public override void classSound()
+	{
+		Skill1Sound=Resources.Load<AudioClip> ("Sound/MageDestroy");
+		Skill2Sound=Resources.Load<AudioClip> ("Sound/MageDestroy");
+		Skill3Sound=Resources.Load<AudioClip> ("Sound/MageDestroy");
+		Skill4Sound=Resources.Load<AudioClip> ("Sound/MageDestroy");
+
+	}
 
 
 
