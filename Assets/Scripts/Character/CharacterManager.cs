@@ -41,6 +41,15 @@ public class CharacterManager : MonoBehaviour
 
 	private int potionCount = 3;
     private int comboCount;
+	public  AudioSource CharAudio;
+
+	public AudioClip attack1;
+	public AudioClip attack2;
+	public AudioClip attack3;
+	public AudioClip Skill1Sound;
+	public AudioClip Skill2Sound;
+	public AudioClip Skill3Sound;
+	public AudioClip Skill4Sound;
 
 	public float skillTime;
 
@@ -73,6 +82,7 @@ public class CharacterManager : MonoBehaviour
 		SetCharacterStatus ();
 		//uiManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
 		animator = GetComponent<Animator> ();
+		this.CharAudio = this.gameObject.GetComponent<AudioSource> ();
 		state = CharacterState.Idle;
 		rigdbody = GetComponent<Rigidbody> ();
 		enermy = GameObject.FindGameObjectsWithTag ("Enermy");
@@ -82,6 +92,7 @@ public class CharacterManager : MonoBehaviour
 		jumpPower = 10;
         comboCount = 0;
 		SetClassObject ();
+
 	}
 
 	void Update ()
@@ -134,6 +145,7 @@ public class CharacterManager : MonoBehaviour
 	{
 		charStatus = GameObject.FindGameObjectWithTag ("CharStatus").GetComponent<CharacterStatus> ();
 		charStatus.SetCharacterStatus ();
+		classSound ();
 	}
 
     public void SetUserNum(int num)
@@ -392,6 +404,7 @@ public class CharacterManager : MonoBehaviour
 			case 2:
 				state = CharacterState.Attack;
 				animator.SetTrigger ("Attack");
+
 				break;
 
 			case 3:
@@ -403,12 +416,14 @@ public class CharacterManager : MonoBehaviour
 				state = CharacterState.Skill1;
 				animator.SetTrigger ("Skill1");
 				skillAttackState = true;
+				this.CharAudio.PlayOneShot (Skill1Sound);
 				break;
 
 			case 5:
 				state = CharacterState.Skill2;
 				animator.SetTrigger ("Skill2");
 				skillAttackState = true;
+				this.CharAudio.PlayOneShot (Skill2Sound);
                     //basicDamage = charstate.activeSkillSet [1].skillDamage
 				break;
 
@@ -416,6 +431,7 @@ public class CharacterManager : MonoBehaviour
 				state = CharacterState.Skill3;
 				animator.SetTrigger ("Skill3");
 				skillAttackState = true;
+				this.CharAudio.PlayOneShot (Skill3Sound);
                     //basicDamage = charstate.activeSkillSet [3].skillDamage;
 				break;
 
@@ -423,6 +439,7 @@ public class CharacterManager : MonoBehaviour
 				state = CharacterState.Skill4;
 				animator.SetTrigger ("Skill4");
 				skillAttackState = true;
+				this.CharAudio.PlayOneShot (Skill4Sound);
                     //basicDamage = charstate.activeSkillSet [2].skillDamage;
 				break;
 
@@ -484,10 +501,14 @@ public class CharacterManager : MonoBehaviour
 
 	public virtual void SetClassObject() {}
 
+	public virtual void classSound()
+	{}
+
 	public virtual void UsingMagicPoint(int SkillArray)
 	{
 		charStatus.DecreaseMagicPoint (SkillManager.instance.SkillData.GetSkill ((int)charStatus.HClass, SkillArray).ManaCost);
 	}
+
 
     public IEnumerator ComboCheck(int count)
     {
