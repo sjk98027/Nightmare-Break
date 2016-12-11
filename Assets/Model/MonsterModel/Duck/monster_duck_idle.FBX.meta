@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 81614206e13040d4798f3463078dd4fd
-timeCreated: 1479121424
+guid: 6f4dc3ba91b134f41b9d2bd673f341c3
+timeCreated: 1481266883
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -36,7 +36,7 @@ ModelImporter:
     100056: Bip01 Spine
     100058: Bone01
     100060: Bone03
-    100062: duck
+    100062: monster_duck
     100064: //RootNode
     400000: Bip01
     400002: Bip01 Footsteps
@@ -69,12 +69,12 @@ ModelImporter:
     400056: Bip01 Spine
     400058: Bone01
     400060: Bone03
-    400062: duck
+    400062: monster_duck
     400064: //RootNode
-    4300000: duck
+    4300000: monster_duck
     7400000: Idle
     9500000: //RootNode
-    13700000: duck
+    13700000: monster_duck
   materials:
     importMaterials: 1
     materialName: 0
@@ -100,7 +100,7 @@ ModelImporter:
       name: Idle
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 40
+      lastFrame: 60
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -197,7 +197,7 @@ ModelImporter:
       - path: Bip01/Bip01 Pelvis/Bip01 Spine/Bip01 R Thigh/Bip01 R Calf/Bip01 R Foot/Bip01
           R Toe0/Bip01 R Toe0Nub
         weight: 1
-      - path: duck
+      - path: monster_duck
         weight: 1
       maskType: 0
       maskSource: {instanceID: 0}

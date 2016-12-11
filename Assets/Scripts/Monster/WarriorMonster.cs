@@ -58,6 +58,8 @@ public class WarriorMonster : Monster {
 		set{pointVector = value; }
 	}
 
+	public Vector3[] TransitionVector;
+
 	public void pointVectorArrayGetting(Vector3[] _v3){
 		pointVector = new Vector3[_v3.Length];
 		for (int i=0; i < _v3.Length; i++) {
@@ -299,10 +301,26 @@ public class WarriorMonster : Monster {
 	}
 	public IEnumerator PatternDefenceChange(){
 		while(IsAlive){
+//			if(){
+//				
+//			}
+
+
+
+
+
+
+
+
+
 			if (!IsHited) {
-				transform.Translate (transitionVector * moveSpeed * 0.5f * Time.deltaTime);
+				
+
+				//transform.Translate (transitionVector * moveSpeed * 0.5f * Time.deltaTime);
 			}
 			if (IsHited) {
+				currentDisTance = Vector3.Distance(targetPlayer.transform.position, this.gameObject.transform.position);
+				checkDirection = targetPlayer.transform.position - this.gameObject.transform.position;
 
 				if (checkDirection.z > 0) {
 					LookAtPattern (StateDirecion.right);
@@ -310,9 +328,6 @@ public class WarriorMonster : Monster {
 				if (checkDirection.z <= 0) {
 					LookAtPattern (StateDirecion.left);
 				}
-
-				currentDisTance = Vector3.Distance(targetPlayer.transform.position, this.gameObject.transform.position);
-				checkDirection = targetPlayer.transform.position - this.gameObject.transform.position;
 
 
 
@@ -358,10 +373,15 @@ public class WarriorMonster : Monster {
 		{
 			if (moveAble) 
 			{
-				if (Mathf.Abs (transform.position.x + movePoint.x) <= 5 || Mathf.Abs (transform.position.z + movePoint.z) <= 30) {
-					this.transform.Translate (movePoint.normalized * moveSpeed * Time.deltaTime, 0);
-				}
-
+				//if (Mathf.Abs (transform.position.x + movePoint.x) <= 5 || Mathf.Abs (transform.position.z + movePoint.z) <= 30) {
+				this.transform.Translate (movePoint.normalized * moveSpeed * Time.deltaTime, 0);
+				//}/
+				//				if (Wall [0].transform.position.x - transform.position.x <= 0.2f || Wall [1].transform.position.x - transform.position.x >= 0.2f) {
+				//					this.transform.Translate ((movePoint - 2 * new Vector3(movePoint.x,0,0)).normalized * moveSpeed * Time.deltaTime, 0);
+				//				}
+				//				if (Wall [2].transform.position.z - transform.position.z >= 0.2f || Wall[3].transform.position.z - transform.position.z <= 0.2f) {
+				//					this.transform.Translate ((movePoint - 2 * new Vector3 (0, 0, movePoint.z)).normalized * moveSpeed * Time.deltaTime, 0);
+				//				}
 
 			}
 		}
@@ -427,11 +447,27 @@ public class WarriorMonster : Monster {
 	public void RecibeMonsterState(StatePosition _state, bool _isAttack, bool _moveAble, Vector3 _movePoint, GameObject _Player){
 		if (_state == StatePosition.Run) {
 			movePoint = _movePoint;
+			monsterState = _state;
 		}
+
+		if (_state == StatePosition.Attack) {
+			monsterState = _state;
+		}
+		if (_state == StatePosition.TakeDamage) {
+			monsterState = _state;
+		}
+		if (_state == StatePosition.Idle) {
+			monsterState = _state;
+		}
+		if (_state == StatePosition.Death) {
+			monsterState = _state;
+		}
+			
+
 		monsterState = _state;
 		isAttack = _isAttack;
 		moveAble = _moveAble;
-		Pattern (_state);
+		Pattern (monsterState);
 		if (_Player != null) {
 			targetPlayer = _Player;
 		}
