@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MiddleBoss : MonoBehaviour {
+public class MiddleBoss : Monster {
 	private BoomMonster[] boomObject;
 	public BoomMonster[] BoomObject{
 		get { return boomObject;}
@@ -24,9 +24,31 @@ public class MiddleBoss : MonoBehaviour {
 		
 	}
 
+	public void UpdateNormalMode(){
+		aniState = this.animator.GetCurrentAnimatorStateInfo (0);
+
+		if (aniState.IsName ("Run")) 
+		{
+			if (moveAble) 
+			{
+				//if (Mathf.Abs (transform.position.x + movePoint.x) <= 5 || Mathf.Abs (transform.position.z + movePoint.z) <= 30) {
+				this.transform.Translate (movePoint.normalized * moveSpeed * Time.deltaTime, 0);
+				//}/
+				//				if (Wall [0].transform.position.x - transform.position.x <= 0.2f || Wall [1].transform.position.x - transform.position.x >= 0.2f) {
+				//					this.transform.Translate ((movePoint - 2 * new Vector3(movePoint.x,0,0)).normalized * moveSpeed * Time.deltaTime, 0);
+				//				}
+				//				if (Wall [2].transform.position.z - transform.position.z >= 0.2f || Wall[3].transform.position.z - transform.position.z <= 0.2f) {
+				//					this.transform.Translate ((movePoint - 2 * new Vector3 (0, 0, movePoint.z)).normalized * moveSpeed * Time.deltaTime, 0);
+				//				}
+
+			}
+		}
+		ChasePlayer ();
+	}
+
 	public void UpdateConductDefenceMode(){
 		middleBoss.transform.Translate(addedVector *moveSpeed* Time.deltaTime);
-		centerpoint += new Vector3(0,0,1)* moveSpeed * Time.deltaTime;
+		centerpoint += addedVector* moveSpeed * Time.deltaTime;
 
 	}
 

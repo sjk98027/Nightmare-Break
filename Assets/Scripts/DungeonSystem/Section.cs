@@ -5,7 +5,11 @@ public class Section : MonoBehaviour {
 	public DungeonManager dungeonManager;
 	public BoomMonster[] boomMonster;
 	public WarriorMonster[] warriorMonster;
+	public ShockWaveMonster[] shockWaveMonster;
 	public MiddleBoss middleBoss;
+	public GameObject middleBoss1;
+
+	public GameObject goToTheBoss;
 
 	public Vector3[] boomMonsterPosition;
 
@@ -36,6 +40,7 @@ public class Section : MonoBehaviour {
 	};
 
 	public void MonsterSet(){
+		goToTheBoss = GameObject.Find ("GoToTheBoss");
 		dungeonManager = gameObject.transform.parent.GetComponent<DungeonManager>();
 		//boomMonster = gameObject.transform.GetComponentsInChildren<BoomMonster> ();
 		//monsterCount = (boomMonster.Length + warriorMonster.Length+1);
@@ -67,19 +72,22 @@ public class Section : MonoBehaviour {
 				Pattern (MonSterMovePosition.Middle);
 				boomMonster [i].pointVectorArrayGetting (pointVector);	
 			} else
-				Pattern (MonSterMovePosition.Up);
+				Pattern (MonSterMovePosition.Down);
 			boomMonster [i].pointVectorArrayGetting (pointVector);
 		}
 	}
 
 	public void UpdateConduct(){
-		for (int i = 0; i < boomMonster.Length; i++) {
-			boomMonster [i].UpdateDefenceMode ();
+		for (int boomMonsterLength = 0; boomMonsterLength < boomMonster.Length; boomMonsterLength++) {
+			boomMonster [boomMonsterLength].UpdateDefenceMode ();
+		}
+		for (int warriorMonsterLength = 0; warriorMonsterLength < warriorMonster.Length; warriorMonsterLength++) {
+			warriorMonster [warriorMonsterLength].UpdateDefenceMode ();
+		}
+		for (int shockWaveMonsterLength = 0; shockWaveMonsterLength < shockWaveMonster.Length; shockWaveMonsterLength++) {
+			shockWaveMonster [shockWaveMonsterLength].UpdateDefenceMode ();
 		}
 		middleBoss.UpdateConductDefenceMode();
-
-
-
 	}
 
 
@@ -104,7 +112,7 @@ public class Section : MonoBehaviour {
 			{
 				pointVector[0] = new Vector3(0,0,1);
 				pointVector[1] = new Vector3(1, 0, 1);
-				pointVector[2] = new Vector3(1,0,0);
+				pointVector[2] = new Vector3(1,0,1);
 				pointVector[3] = new Vector3(-1, 0, 1);
 				pointVector[4] = new Vector3(-1, 0, 1);
 				pointVector[5] = new Vector3(1, 0, 1);
