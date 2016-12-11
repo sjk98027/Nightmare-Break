@@ -58,6 +58,8 @@ public class WarriorMonster : Monster {
 		set{pointVector = value; }
 	}
 
+	public Vector3[] TransitionVector;
+
 	public void pointVectorArrayGetting(Vector3[] _v3){
 		pointVector = new Vector3[_v3.Length];
 		for (int i=0; i < _v3.Length; i++) {
@@ -299,10 +301,26 @@ public class WarriorMonster : Monster {
 	}
 	public IEnumerator PatternDefenceChange(){
 		while(IsAlive){
+//			if(){
+//				
+//			}
+
+
+
+
+
+
+
+
+
 			if (!IsHited) {
-				transform.Translate (transitionVector * moveSpeed * 0.5f * Time.deltaTime);
+				
+
+				//transform.Translate (transitionVector * moveSpeed * 0.5f * Time.deltaTime);
 			}
 			if (IsHited) {
+				currentDisTance = Vector3.Distance(targetPlayer.transform.position, this.gameObject.transform.position);
+				checkDirection = targetPlayer.transform.position - this.gameObject.transform.position;
 
 				if (checkDirection.z > 0) {
 					LookAtPattern (StateDirecion.right);
@@ -310,9 +328,6 @@ public class WarriorMonster : Monster {
 				if (checkDirection.z <= 0) {
 					LookAtPattern (StateDirecion.left);
 				}
-
-				currentDisTance = Vector3.Distance(targetPlayer.transform.position, this.gameObject.transform.position);
-				checkDirection = targetPlayer.transform.position - this.gameObject.transform.position;
 
 
 

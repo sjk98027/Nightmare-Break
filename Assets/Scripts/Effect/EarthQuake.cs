@@ -50,8 +50,9 @@ public class EarthQuake : MonoBehaviour
 	{
 		if (value)
 			currentState = "quake started";
-		else
+		else{
 			currentState = "quake stopped";
+		}
 		currentMagnitude = 0;
 		timeSinceStarted = 0;
 		running = value;
@@ -90,8 +91,10 @@ public class EarthQuake : MonoBehaviour
 		GetComponent<Rigidbody>().velocity = Vector3.zero;
 		if (running)
 			OnRunning();
-		if (forceRecenter)
+		if (forceRecenter) {
+		}
 		GetComponent<Rigidbody>().velocity += (startPosition - transform.position) * Time.deltaTime * 40;
+	
 	}
 
 	float my_rand()

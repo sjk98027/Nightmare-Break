@@ -56,10 +56,8 @@ public class BoomMonster : Monster {
 
 	[SerializeField]public Vector3[] pointVector;
 	[SerializeField]public Vector3 transitionVector;	
-	public Vector3[] PointVector{
-		get {return pointVector; }
-		set{pointVector = value; }
-	}
+
+
 
 	public void pointVectorArrayGetting(Vector3[] _v3){
 		pointVector = new Vector3[_v3.Length];
@@ -298,9 +296,7 @@ public class BoomMonster : Monster {
 				}
 				//if this object get Attackmotion pattern(stateposition.boom -> attack), and this monsterlife is 20%, boomPattern start;
 				else if (currentDisTance <= searchRange) {
-
 					//					movePoint = new Vector3(checkDirection.x,0,checkDirection.z);
-
 					{
 
 						if (currentDisTance > searchRange * 0.2f) {
@@ -425,6 +421,9 @@ public class BoomMonster : Monster {
 			}
 		}
 
+
+
+
 		if (!IsHited) {
 			transform.Translate (transitionVector * moveSpeed * 0.5f * Time.deltaTime);
 		}
@@ -510,11 +509,7 @@ public class BoomMonster : Monster {
 		{
 			if (moveAble) 
 			{
-				if (Mathf.Abs (transform.position.x + movePoint.x) <= 5 || Mathf.Abs (transform.position.z + movePoint.z) <= 30) {
-					this.transform.Translate (movePoint.normalized * moveSpeed * Time.deltaTime, 0);
-				}
-
-
+				this.transform.Translate (movePoint.normalized * moveSpeed * Time.deltaTime, 0);
 			}
 		}
 		ChasePlayer ();

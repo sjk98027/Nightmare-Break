@@ -439,6 +439,9 @@ public class ShockWaveMonster : Monster {
 		}
 		ChasePlayer ();
 	}
+
+
+
 	public void UpdateDefenceMode(){
 
 		aniState = this.animator.GetCurrentAnimatorStateInfo (0);
@@ -469,6 +472,7 @@ public class ShockWaveMonster : Monster {
 				if (currentDisTance >= searchRange * 0.2f)
 				{
 					if (moveAble) {
+						LookAtPattern (StateDirecion.right);
 						Pattern (StatePosition.Run);
 						Debug.Log ("Run");
 					}
@@ -477,10 +481,10 @@ public class ShockWaveMonster : Monster {
 				{
 					attackCycle += Time.deltaTime;
 					if (attackCycle > 5) {
-						attackCycle = 0;
 						if (!isAttack) {
 							isAttack = true;
 							Pattern (StatePosition.Attack);
+							attackCycle = 0;
 						}
 					}
 				}

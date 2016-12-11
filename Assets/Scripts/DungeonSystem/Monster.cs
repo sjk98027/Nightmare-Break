@@ -55,7 +55,7 @@ public class Monster : MonoBehaviour {
 
 	[SerializeField]private bool isAlive;
 	[SerializeField]protected bool isAttack;
-	private bool isHited;
+	[SerializeField]private bool isHited;
 
 	public float[] playerToMonsterDamage;
 	public float[] aggroRank; //playertoMonsterdamage/currentdistancePlayer;

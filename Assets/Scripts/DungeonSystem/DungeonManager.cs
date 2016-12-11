@@ -23,8 +23,7 @@ public class DungeonManager : MonoBehaviour
     private GameObject[] players;
     public CharacterManager[] characters;
     public GameObject[] Players { get { return players; } }
-    public SceneChangeObject nextSceneObject;
-    public SceneChangeObject beforeScneObject;
+    public SceneChangeObject[] sceneChangeObject;
 
     public int monsterCount;
     public BoomMonster[] boomMonster;
@@ -33,6 +32,7 @@ public class DungeonManager : MonoBehaviour
 	public BossMonsterKYW bossMonster;
 
 	public MonsterSpawnPoint spawnPoint;
+
 
     InputManager inputManager;
     UIManager uiManager;
@@ -58,7 +58,10 @@ public class DungeonManager : MonoBehaviour
 	{
 
 		//test
-		//players = GameObject.FindGameObjectsWithTag ("Player");
+//		players = GameObject.FindGameObjectsWithTag ("Player");
+
+		//Instantiate 스폰포인트 생성조건 - > mapNumber != 2;
+		mapNumber = 2;
 
 
 		DungeonConstruct();//mapNumber - > inspector define
@@ -159,8 +162,9 @@ public class DungeonManager : MonoBehaviour
 
     public void SceneChange()
     {
-        if (mapNumber < 3)
+        if (mapNumber < 4)
         {
+			mapNumber++;
             SceneManager.LoadScene(mapNumber + 1);// loadScene;
         }
         //mapNumber == 3 -> 2 player SceneChange
@@ -179,18 +183,36 @@ public class DungeonManager : MonoBehaviour
 
     void DungeonConstruct()
     {
-		if (spawnPoint != null) {
-			spawnPoint.SpawnMonsterGetting ();
 		
+		if(mapNumber != 2){
+			GameObject spawnpointInstantiate = (GameObject)Instantiate (Resources.Load ("Monster/MonsterSpawnPoint" + mapNumber.ToString()), this.transform.parent);
+			spawnPoint = spawnpointInstantiate.GetComponent<MonsterSpawnPoint>();
 
+			spawnPoint.SpawnMonsterGetting ();
 			boomMonster = new BoomMonster[spawnPoint.boomMonsterCount];
 			shockWaveMonster = new ShockWaveMonster[spawnPoint.shockWaveMonsterCount];
 			warriorMonster = new WarriorMonster[spawnPoint.warriorMonsterCount];
 			normalMode = true;
 			MonsterSet ();
 		}
+
+
+
+
+		if (mapNumber == 2) {
+			section = new Section[3];
+			GameObject SectionInstantiate0 = (GameObject)Instantiate (Resources.Load("Monster/Section"),transform.parent);
+			GameObject SectionInstantiate1 = (GameObject)Instantiate (Resources.Load("Monster/Section"),transform.parent);
+			GameObject SectionInstantiate2 = (GameObject)Instantiate (Resources.Load("Monster/Section"),transform.parent);
+			section [0] = SectionInstantiate0.GetComponent<Section> ();
+			section [1] = SectionInstantiate1.GetComponent<Section> ();
+			section [2] = SectionInstantiate2.GetComponent<Section> ();
+
+		}
+
+
         //if (mapNumber == 0) {
-        //	nextSceneObject.SceneChangeObjectSet (mapNumber+1);
+//        	nextSceneObject.SceneChangeObjectSet (mapNumber+1);
         //}
         //else if(mapNumber!= 0 || mapNumber!=4){
         //	nextSceneObject.SceneChangeObjectSet (mapNumber+1);
