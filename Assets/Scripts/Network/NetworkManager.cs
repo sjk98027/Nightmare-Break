@@ -128,9 +128,6 @@ public class NetworkManager : MonoBehaviour
     {
         for (int index = 0; index < userIndex.Count; index++)
         {
-            Debug.Log(userIndex[index].EndPoint + ". " + endPoint);
-            Debug.Log(userIndex[index].EndPoint.ToString() == endPoint.ToString());
-
             if (userIndex[index].EndPoint.ToString() == endPoint.ToString())
             {
                 return index;
