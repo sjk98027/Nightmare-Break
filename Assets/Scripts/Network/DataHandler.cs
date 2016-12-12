@@ -323,14 +323,14 @@ public class DataHandler : MonoBehaviour
     public void UdpConnection(DataPacket packet)
     {
         Debug.Log("연결 시작");
-        MatchDataPacket matchDataPacket = new MatchDataPacket(packet.msg);
-        MatchData matchData = matchDataPacket.GetData();
+        UDPConnectionPacket udpConnectionPacket = new UDPConnectionPacket(packet.msg);
+        UDPConnectionData udpConnectionData = udpConnectionPacket.GetData();
 
-        DataSender.Instance.udpId = new int[matchData.playerNum];
+        DataSender.Instance.udpId = new int[udpConnectionData.playerNum];
         
-        for (int userIndex = 0; userIndex < matchData.playerNum; userIndex++)
+        for (int userIndex = 0; userIndex < udpConnectionData.playerNum; userIndex++)
         {
-            string endPoint = matchData.endPoint[userIndex];
+            string endPoint = udpConnectionData.endPoint[userIndex];
 
             if (endPoint == networkManager.ServerSock.LocalEndPoint.ToString())
             {
@@ -339,12 +339,12 @@ public class DataHandler : MonoBehaviour
         }
 
         networkManager.InitializeUdpConnection();
-        networkManager.ReSendManager.Initialize(matchData.playerNum);
+        networkManager.ReSendManager.Initialize(udpConnectionData.playerNum);
         DataSender.Instance.InitializeUdpSend(networkManager.ClientSock);
 
-        for (int userIndex = 0; userIndex < matchData.playerNum; userIndex++)
+        for (int userIndex = 0; userIndex < udpConnectionData.playerNum; userIndex++)
         {
-            string endPoint = matchData.endPoint[userIndex];
+            string endPoint = udpConnectionData.endPoint[userIndex];
             string ip = endPoint.Substring(0, endPoint.IndexOf(":"));
 
             IPEndPoint newEndPoint = new IPEndPoint(IPAddress.Parse(ip), NetworkManager.clientPortNumber + userIndex);
