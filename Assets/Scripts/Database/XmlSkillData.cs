@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Xml.Serialization;
-using System.Xml;
+using jo
 
 public class XmlSkillData : MonoBehaviour {
 
