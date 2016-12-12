@@ -238,12 +238,12 @@ public class TestMonster : Monster
 
 	public void RoarHit()
 	{
-		Debug.Log (stateDirecion);
-		if (stateDirecion == StateDirecion.right)
+		Debug.Log (_StateDirecion);
+		if (_StateDirecion == StateDirecion.right)
 		{
 			Instantiate (Resources.Load<GameObject> ("Effect/WarningEffect"), new Vector3 (-3.55f, 0.15f, this.transform.position.z + 10f), Quaternion.Euler (-90, 0, 0));
 		}
-		else if (stateDirecion == StateDirecion.left)
+		else if (_StateDirecion == StateDirecion.left)
 		{
 			Instantiate (Resources.Load<GameObject> ("Effect/WarningEffect"), new Vector3 (3.55f, 0.15f, this.transform.position.z - 10f), Quaternion.Euler (-90, 0, 0));
 		} 
@@ -280,14 +280,14 @@ public class TestMonster : Monster
 
 		if (IsAlive)
 		{
-			maxLife -= _Damage;
+			MaxHP  -= _Damage;
 
 //			uiManager.bossHp.fillAmount = maxLife / currentLife;
-			if (maxLife > 0)
+			if (MaxHP > 0)
 			{
 				//hitanimation
 			}
-			else if (maxLife <= 0)
+			else if (MaxHP <= 0)
 			{
 				if (!stateInfo.IsName ("BigBearBossDeath"))
 				{

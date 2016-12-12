@@ -312,6 +312,11 @@ public class DataHandler : MonoBehaviour
         {
             Debug.Log("게임 시작");
             DataSender.Instance.RequestUdpConnection();
+
+            if (uiManager.WaitUIManager.UserNum == 0)
+            {
+                DataSender.Instance.RequestDungeonData();
+            }
         }
         else if (resultData.Result == (byte)Result.Fail)
         {
@@ -357,6 +362,17 @@ public class DataHandler : MonoBehaviour
                 networkManager.ConnectP2P(newEndPoint);
             }
         }
+    }
+
+    //Server - 던전 데이터 수신
+    public void DungeonData(DataPacket packet)
+    {
+        Debug.Log("던전 데이터 수신");
+
+        DungeonDataPacket dungeonDataPacket = new DungeonDataPacket(packet.msg);
+        DungeonData dungeonData = dungeonDataPacket.GetData();
+
+        dungeonManager.SpawnMonster();
     }
 
     //Client - 연결 확인 답장
@@ -412,7 +428,7 @@ public class DataHandler : MonoBehaviour
         CharacterPositionPacket characterPositionPacket = new CharacterPositionPacket(packet.msg);
         CharacterPositionData characterPositionData = characterPositionPacket.GetData();
 
-        CharacterManager characterManager = dungeonManager.characters[characterPositionData.userIndex];
+        CharacterManager characterManager = dungeonManager.CharacterData[characterPositionData.userIndex];
         characterManager.SetPosition(characterPositionData);
     }
 
@@ -422,7 +438,7 @@ public class DataHandler : MonoBehaviour
         CharacterActionPacket characterActionPacket = new CharacterActionPacket(packet.msg);
         CharacterActionData characterActionData = characterActionPacket.GetData();
 
-        CharacterManager characterManager = dungeonManager.characters[characterActionData.userNum];
+        CharacterManager characterManager = dungeonManager.CharacterData[characterActionData.userNum];
         characterManager.CharState(characterActionData.action);
     }
 }

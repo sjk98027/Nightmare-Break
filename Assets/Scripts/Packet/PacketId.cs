@@ -19,6 +19,7 @@
     ExitRoom,
     StartGame,
     RequestUdpConnection,
+    RequestDungeonData,
     UdpConnectComplete,
 }
 

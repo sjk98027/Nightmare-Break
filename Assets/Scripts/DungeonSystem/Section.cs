@@ -6,7 +6,6 @@ public class Section : MonoBehaviour {
 	public Frog[] Frog;
 	public Rabbit[] Rabbit;
 	public Duck[] shockWaveMonster;
-	public MiddleBoss middleBoss;
 	public GameObject middleBoss1;
 
 	public GameObject goToTheBoss;
@@ -45,7 +44,6 @@ public class Section : MonoBehaviour {
 
 		//Frog = gameObject.transform.GetComponentsInChildren<Frog> ();
 		//monsterCount = (Frog.Length + Rabbit.Length+1);
-		middleBoss = gameObject.transform.GetComponentInChildren<MiddleBoss>();
 
 		for (int i = 0; i < Frog.Length; i++) {
 //			Frog [i].PlayerSearch ();
@@ -94,9 +92,6 @@ public class Section : MonoBehaviour {
 		for (int shockWaveMonsterLength = 0; shockWaveMonsterLength < shockWaveMonster.Length; shockWaveMonsterLength++) {
 			shockWaveMonster [shockWaveMonsterLength].UpdateDefenceMode ();
 		}
-		if (middleBoss != null) {
-			middleBoss.UpdateConductDefenceMode ();
-		}
 	}
 
 	public void GuestUpdateConduct(){
@@ -108,11 +103,6 @@ public class Section : MonoBehaviour {
 		}
 		for (int shockWaveMonsterLength = 0; shockWaveMonsterLength < shockWaveMonster.Length; shockWaveMonsterLength++) {
 			shockWaveMonster [shockWaveMonsterLength].GuestMonsterUpdate ();
-		}
-
-
-		if (middleBoss != null) {
-			middleBoss.UpdateConductDefenceMode ();
 		}
 	}
 

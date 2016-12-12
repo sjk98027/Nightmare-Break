@@ -17,6 +17,7 @@ TagManager:
   - Enemy
   - UI
   - CharStatus
+  - MonsterSpawnPoint
   layers:
   - Default
   - TransparentFX

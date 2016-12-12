@@ -69,14 +69,14 @@ public class MiddleBossMonster : Monster {
 
 		if (IsAlive)
 		{
-			maxLife -= _Damage;
+			maxHP -= _Damage;
 
 			//			uiManager.bossHp.fillAmount = maxLife / currentLife;
-			if (maxLife > 0)
+			if (maxHP > 0)
 			{
 				//hitanimation
 			}
-			else if (maxLife <= 0)
+			else if (maxHP <= 0)
 			{
 				if (!stateInfo.IsName ("MiddleBossDeath"))
 				{

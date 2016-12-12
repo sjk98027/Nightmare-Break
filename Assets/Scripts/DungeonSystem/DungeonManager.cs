@@ -4,130 +4,109 @@ using System.Net;
 using System.Collections.Generic;
 using System.Collections;
 
+public enum UnitId
+{
+    ManWarrior = 0,
+    WomanWarrior,
+    ManMage,
+    WomanMage,
+    Frog,
+    Duck,
+    Rabbit,
+    BlackBear,
+    Bear,
+}
 
 //this class manage monsterStageLevel, sumon, player sumon, player death;
 public class DungeonManager : MonoBehaviour
 {
-	//need revise code;
+    GameObject[] playerSpawnPoints;
+    GameObject[] players;
+    [SerializeField]GameObject[] monsterSpawnPoints;
+    GameObject[] monsters;
+    CharacterManager[] characterData;
+    Monster[] monsterData;
 
-	public enum HostGuest
-	{
-		Host = 0,
-		SubHost,
-		Guest
-	}
-	;
-	public HostGuest hostGuest;
-    //MonsterController change-> DungeonManager;
-    //DungeonScene change -> DungeonManager;
-    [SerializeField]
-    private GameObject[] players;
-    public CharacterManager[] characters;
-    public GameObject[] Players { get { return players; } }
+    MonsterSpawnList monsterSpawnList;
+    DungeonData dungeonData;
+
     public SceneChangeObject[] sceneChangeObject;
-
-    public int monsterCount;
-	public Frog[] frogMonster;
-    public Rabbit[] rabbitMonster;
-	public Duck[] duckMonster;
 	public BossMonsterKYW bossMonster;
-
-	public MonsterSpawnPoint spawnPoint;
-
+    public Section[] section;
 
     InputManager inputManager;
     UIManager uiManager;
     NetworkManager networkManager;
     GameObject m_camera;
 
-    protected bool normalMode; //false  -> normalBattle, true -> Defence; 
-	public bool NormalMode
+    int mapNumber;
+
+    bool normalMode; //false  -> normalBattle, true -> Defence; 
+
+    public GameObject[] Players { get { return players; } }
+    public CharacterManager[] CharacterData { get { return characterData; } }
+
+    public bool NormalMode
     {
 		get { return normalMode; }
 		set { normalMode = value; }
-    }
-
-	public Vector3[] monsterTransForm;
-
-    public Section[] section;
-
-    [SerializeField]int mapNumber;
-
-
+    }   
 
 	void Start()
 	{
-
-		//test
-		players = GameObject.FindGameObjectsWithTag ("Player");
+        //test
+        if (GameObject.FindGameObjectWithTag("GameManager") == null)
+        {
+            players = GameObject.FindGameObjectsWithTag("Player");
+        }		
 
 		//Instantiate 스폰포인트 생성조건 - > mapNumber != 2;
 		mapNumber = 0;
 
 
-		DungeonConstruct();//mapNumber - > inspector define
-		//        modeForm = false;
-//		        ModeChange(n);//client get modeform and ingame play ;
-		//section = transform.GetComponentsInChildren<Section> ();
+		//DungeonConstruct();
 
+        if (GameObject.FindGameObjectWithTag("GameManager") == null)
+        {
+            InitializeMonsterSpawnPoint();
 
+            MonsterSpawnData[] monsterSpawnData = new MonsterSpawnData[3];
+            monsterSpawnData[0] = new MonsterSpawnData((int)UnitId.Frog, 5);
+            monsterSpawnData[1] = new MonsterSpawnData((int)UnitId.Duck, 1);
+            monsterSpawnData[2] = new MonsterSpawnData((int)UnitId.Rabbit, 3);
+            monsterSpawnList = new MonsterSpawnList(3, monsterSpawnData);
 
-	
+            MonsterBaseData[] monsterBaseData = new MonsterBaseData[3];
+            monsterBaseData[0] = new MonsterBaseData((int)MonsterId.Frog, "Frog");
+            monsterBaseData[0].AddLevelData(new MonsterLevelData(1, 2, 0, 30, 5));
+            monsterBaseData[1] = new MonsterBaseData((int)MonsterId.Duck, "Duck");
+            monsterBaseData[1].AddLevelData(new MonsterLevelData(1, 3, 0, 35, 4));
+            monsterBaseData[2] = new MonsterBaseData((int)MonsterId.Rabbit, "Rabbit");
+            monsterBaseData[2].AddLevelData(new MonsterLevelData(1, 50, 0, 75, 4));
+            dungeonData = new DungeonData(3, monsterBaseData);
 
-
-
-
-
+            SpawnMonster();
+            SetMonsterData();
+        }        
 	}
 
 	void Update()
 	{
 		if (normalMode)
 		{
-			for (int i = 0; i < frogMonster.Length; i++) {
-				if (hostGuest != HostGuest.Host) {
-					frogMonster [i].GuestMonsterUpdate ();	
-				}
-				if (hostGuest == HostGuest.Host) {
-					frogMonster [i].UpdateNormalMode ();
-				}
-			}
-			for (int j = 0; j < rabbitMonster.Length; j++) {
-				if (hostGuest != HostGuest.Host) {
-					rabbitMonster [j].GuestMonsterUpdate ();
-				}
-				if (hostGuest == HostGuest.Host) {
-					rabbitMonster [j].UpdateNormalMode ();
-				}
-				
-			}
-			for (int k = 0; k < duckMonster.Length; k++) {
-				if (hostGuest != HostGuest.Host) {
-					duckMonster [k].GuestMonsterUpdate ();
-						
-				}
-				if (hostGuest == HostGuest.Host) {
-					duckMonster [k].UpdateNormalMode ();
-				}
-			}
+            for (int i =0; i< monsters.Length; i++)
+            {
+                //monsterData[i].HostUpdateConduct();
+            }
 		}
 
-		if (!normalMode)
-		{
-			if (hostGuest == HostGuest.Host) {
-				for (int i = 0; i < section.Length; i++) {
-					section [i].HostUpdateConduct ();
-				}
-			}
-
-			if (hostGuest != HostGuest.Guest) {
-				for (int j = 0; j < section.Length; j++) {
-					section [j].GuestUpdateConduct ();
-				}
-			}
-		}
-
-
+        if (!normalMode)
+        {
+            for (int i = 0; i < section.Length; i++)
+            {
+                section[i].HostUpdateConduct();
+            }
+        }
 	}
 
     //각종 매니저 초기화
@@ -140,7 +119,12 @@ public class DungeonManager : MonoBehaviour
     public void InitializePlayer(int playerNum)
     {
         players = new GameObject[playerNum];
-        characters = new CharacterManager[playerNum];
+        characterData = new CharacterManager[playerNum];
+    }
+
+    public void InitializeMonsterSpawnPoint()
+    {
+        monsterSpawnPoints = GameObject.FindGameObjectsWithTag("MonsterSpawnPoint");
     }
 
     //defence mode, normal mode
@@ -185,18 +169,10 @@ public class DungeonManager : MonoBehaviour
 		
 		if(mapNumber != 2){
 			GameObject spawnpointInstantiate = (GameObject)Instantiate (Resources.Load ("Monster/MonsterSpawnPoint" + mapNumber.ToString()), this.transform.parent);
-			spawnPoint = spawnpointInstantiate.GetComponent<MonsterSpawnPoint>();
-
-			spawnPoint.SpawnMonsterGetting ();
-			frogMonster = new Frog[spawnPoint.FrogCount];
-			duckMonster = new Duck[spawnPoint.DuckCount];
-			rabbitMonster = new Rabbit[spawnPoint.RabbitCount];
+            //요고의 차일드를 받으세요
 			normalMode = true;
-			MonsterSet ();
+			//MonsterSet ();
 		}
-
-
-
 
 		if (mapNumber == 2) {
 			normalMode = false;
@@ -231,116 +207,189 @@ public class DungeonManager : MonoBehaviour
 
     }
 
-    public void MonsterSet()
+    public void SetMonsterSpawnData(DungeonData dungeonData)
     {
-		monsterCount = 0;
 
-		for (int i = 0; i < spawnPoint.FrogCount; i++) {
-			GameObject objfrogMonster = (GameObject)Instantiate (Resources.Load ("Monster/Frog"), spawnPoint.spawnVector[i] ,this.gameObject.transform.rotation);
-			objfrogMonster.transform.SetParent (this.transform);
-			frogMonster [i] = objfrogMonster.GetComponent<Frog> ();
-		}
-		for (int i = 0; i < spawnPoint.DuckCount; i++) {
-			GameObject objduckMonster= (GameObject)Instantiate (Resources.Load ("Monster/Duck"), spawnPoint.spawnVector[i+spawnPoint.FrogCount], this.transform.rotation);
-			objduckMonster.transform.SetParent (this.transform);
-			duckMonster [i] = objduckMonster.GetComponent<Duck> (); 
-		}
-		for (int i = 0; i < spawnPoint.RabbitCount; i++) {
-			GameObject objRabbit= (GameObject)Instantiate (Resources.Load ("Monster/Rabbit"), spawnPoint.spawnVector[i+spawnPoint.FrogCount+spawnPoint.DuckCount], this.transform.rotation);
-			objRabbit.transform.SetParent (this.transform);
-			rabbitMonster[i]= objRabbit.GetComponent<Rabbit> ();
-		}
+    }
 
-		if (bossMonster != null) {
-			GameObject objBossMonster = (GameObject)Instantiate (Resources.Load ("Monster/Bear"), new Vector3 (0, 0, 0), this.transform.rotation);
-			Debug.Log ("in boss");
-			bossMonster = objBossMonster.GetComponent<BossMonsterKYW> ();
-			monsterCount++;
-		}
+    public void SpawnMonster()
+    {
+        monsters = new GameObject[monsterSpawnList.MonsterNum];
+        monsterData = new Monster[monsterSpawnList.MonsterNum];
 
-		monsterCount += spawnPoint.sumMonsterCount;
+        int monsterIndex = 0;
 
-		for (int i = 0; i < frogMonster.Length; i++) {
-			frogMonster [i].player = players;
-			frogMonster [i].MonsterSet (900,2);
-			frogMonster [i].MonsterMoveAI (normalMode);
-			frogMonster [i].MonsterArrayNumber = i;
-
-			if (hostGuest != HostGuest.Host) {
-				frogMonster [i].GuestMonsterPatternChange ();
-			} else if (hostGuest == HostGuest.Host) {
-				frogMonster [i].MonSterPatternUpdateConduct (normalMode);
-			}
-				//frogMonster [i].MonSterPatternUpdateConduct (normalMode);
-		}
-
-
-		for (int j = 0; j < duckMonster.Length; j++) {
-			duckMonster [j].player = players;
-			duckMonster [j].MonsterSet (900, 2);
-			duckMonster [j].MonsterMoveAI (normalMode);
-			duckMonster [j].MonsterArrayNumber = j;
-			if (hostGuest == HostGuest.Host) {
-				duckMonster [j].MonSterPatternUpdateConduct (normalMode);
-			} else if (hostGuest != HostGuest.Host) {
-				duckMonster [j].GuestMonsterPatternChange ();
-			}
-		}
-
-		for (int k = 0; k < rabbitMonster.Length; k++) {
-			rabbitMonster [k].player = players;
-			rabbitMonster [k].MonsterSet (900, 2);
-			rabbitMonster [k].MonsterMoveAI (normalMode);
-			rabbitMonster [k].MonsterArrayNumber = k;
-			if (hostGuest == HostGuest.Host) {
-				rabbitMonster [k].MonSterPatternUpdateConduct (normalMode);
-			} else if (hostGuest != HostGuest.Host) {
-				rabbitMonster [k].GuestMonsterPatternChange ();
-			}
-		}
-
-
-		if (bossMonster != null) {
-			bossMonster.player = players;
-			bossMonster.BossMonsterSet (900, 2);
-			if (hostGuest == HostGuest.Host) {
-				bossMonster.BossMonsterPatternUpdateConduct ();
-			}
-			else if (hostGuest != HostGuest.Host) {
-				//bossMonster.
-				bossMonster.BossMonsterPatternUpdateConduct ();
-			}
-
-		}
+        for (int i = 0; i < monsterSpawnList.MonsterKind; i++)
+        {
+            for (int j = 0; j < monsterSpawnList.MonsterSpawnData[i].MonsterNum; j++)
+            {
+                monsters[monsterIndex] = CreateMonster(monsterSpawnList.MonsterSpawnData[i].MonsterId, monsterIndex, monsterSpawnPoints[monsterIndex].transform.position);
+                monsterData[monsterIndex].MonsterIndex = monsterIndex++;
+            }
+        }
 	}
 
-    
+    public void SetMonsterData()
+    {
+        for (int monsterIndex = 0; monsterIndex < dungeonData.MonsterNum; monsterIndex++)
+        {
+            monsterData[monsterIndex].player = players;
+            monsterData[monsterIndex].MonsterSet(dungeonData.MonsterData[monsterIndex]);
 
-	IEnumerator SectionSet(){
+            if (dungeonData.MonsterData[monsterIndex].Id < (int) UnitId.BlackBear)
+            {
+                monsterData[monsterIndex].MonsterMoveAI(normalMode);
+            }
+            else
+            {
+                monsterData[monsterIndex].GetComponent<BossMonsterKYW>().BossMonsterPatternUpdateConduct();
+            }
+        }
+
+        //for (int i = 0; i < frogMonster.Length; i++)
+        //{
+        //    frogMonster[i].player = players;
+        //    frogMonster[i].MonsterSet(900, 2);
+        //    frogMonster[i].MonsterMoveAI(normalMode);
+        //    frogMonster[i].MonsterArrayNumber = i;
+
+        //    if (hostGuest != HostGuest.Host)
+        //    {
+        //        frogMonster[i].GuestMonsterPatternChange();
+        //    }
+        //    else if (hostGuest == HostGuest.Host)
+        //    {
+        //        frogMonster[i].MonSterPatternUpdateConduct(normalMode);
+        //    }
+        //    //frogMonster [i].MonSterPatternUpdateConduct (normalMode);
+        //}
+
+
+        //for (int j = 0; j < duckMonster.Length; j++)
+        //{
+        //    duckMonster[j].player = players;
+        //    duckMonster[j].MonsterSet(900, 2);
+        //    duckMonster[j].MonsterMoveAI(normalMode);
+        //    duckMonster[j].MonsterArrayNumber = j;
+        //    if (hostGuest == HostGuest.Host)
+        //    {
+        //        duckMonster[j].MonSterPatternUpdateConduct(normalMode);
+        //    }
+        //    else if (hostGuest != HostGuest.Host)
+        //    {
+        //        duckMonster[j].GuestMonsterPatternChange();
+        //    }
+        //}
+
+        //for (int k = 0; k < rabbitMonster.Length; k++)
+        //{
+        //    rabbitMonster[k].player = players;
+        //    rabbitMonster[k].MonsterSet(900, 2);
+        //    rabbitMonster[k].MonsterMoveAI(normalMode);
+        //    rabbitMonster[k].MonsterArrayNumber = k;
+        //    if (hostGuest == HostGuest.Host)
+        //    {
+        //        rabbitMonster[k].MonSterPatternUpdateConduct(normalMode);
+        //    }
+        //    else if (hostGuest != HostGuest.Host)
+        //    {
+        //        rabbitMonster[k].GuestMonsterPatternChange();
+        //    }
+        //}
+
+
+        //if (bossMonster != null)
+        //{
+        //    bossMonster.player = players;
+        //    bossMonster.BossMonsterSet(900, 2);
+        //    if (hostGuest == HostGuest.Host)
+        //    {
+        //        bossMonster.BossMonsterPatternUpdateConduct();
+        //    }
+        //    else if (hostGuest != HostGuest.Host)
+        //    {
+        //        //bossMonster.
+        //        bossMonster.BossMonsterPatternUpdateConduct();
+        //    }
+
+        //}
+    }
+
+    public GameObject CreateMonster(int unitId, int unitIndex, Vector3 createPoint)
+    {
+        GameObject monster = null;
+
+        if (unitId == (int)UnitId.Frog)
+        {
+            monster = (GameObject)Instantiate(Resources.Load("Monster/Frog"), createPoint, gameObject.transform.rotation);
+            monster.transform.SetParent(transform);
+            monsterData[unitIndex] = monster.GetComponent<Monster>();
+        }
+        else if (unitId == (int)UnitId.Duck)
+        {
+            monster = (GameObject)Instantiate(Resources.Load("Monster/Duck"), createPoint, gameObject.transform.rotation);
+            monster.transform.SetParent(transform);
+            monsterData[unitIndex] = monster.GetComponent<Monster>();
+        }
+        else if (unitId == (int)UnitId.Rabbit)
+        {
+            monster = (GameObject)Instantiate(Resources.Load("Monster/Rabbit"), createPoint, gameObject.transform.rotation);
+            monster.transform.SetParent(transform);
+            monsterData[unitIndex] = monster.GetComponent<Monster>();
+        }
+        else if(unitId == (int)UnitId.Bear)
+        {
+            monster = (GameObject)Instantiate(Resources.Load("Monster/BlackBear"), createPoint, gameObject.transform.rotation);
+            monster.transform.SetParent(transform);
+            //bossMonster = monster.GetComponent<BlackBear>();
+        }
+        else if (unitId == (int)UnitId.BlackBear)
+        {
+            monster = (GameObject)Instantiate(Resources.Load("Monster/Bear"), createPoint, gameObject.transform.rotation);
+            monster.transform.SetParent(transform);
+            //bossMonster = monster.GetComponent<Bear>();
+        }
+
+        return monster;
+    }
+
+    IEnumerator SectionSet(){
 		for (int i = 0; i < section.Length; i++) {
 			section [i].SetTrue ();
 			new WaitForSeconds (10f);
 		}
 		return null;
-
-
 	}
 
-    public void RemoveMonsterArray()
+    public IEnumerator CheckMapClear()
     {
-        monsterCount -= 1;
-        if (monsterCount == 0)
+        while (true)
         {
-            SceneChange();
+            yield return null;
+
+            int count = 0;
+
+            for (int i = 0; i < monsters.Length; i++)
+            {
+                if (monsters[i] == null)
+                {
+                    count++;
+                }
+            }
+
+            if (count >= monsters.Length)
+            {
+                break;
+            }
         }
 
+        SceneChange();
     }
 
 	//monsterspawnPoint getting
-	public void GetMonsterTransForm(Vector3[] _monsterTransForm){
-		monsterTransForm = _monsterTransForm;
-	}
-
+	//public void GetMonsterTransForm(Vector3[] _monsterTransForm){
+	//	monsterTransForm = _monsterTransForm;
+	//}
 
     public GameObject CreatePlayer(int characterId)
     {
@@ -352,13 +401,11 @@ public class DungeonManager : MonoBehaviour
         player.tag = "Player";
         player.transform.position = Vector3.zero;
 
-        characters[networkManager.MyIndex] = player.GetComponent<CharacterManager>();
-        characters[networkManager.MyIndex].enabled = true;
-        characters[networkManager.MyIndex].SetUserNum(networkManager.MyIndex);
+        characterData[networkManager.MyIndex] = player.GetComponent<CharacterManager>();
+        characterData[networkManager.MyIndex].enabled = true;
+        characterData[networkManager.MyIndex].SetUserNum(networkManager.MyIndex);
 
         players[networkManager.MyIndex] = player;
-
-        Debug.Log("캐릭터 생성 번호 : " + networkManager.MyIndex);
 
         m_camera = GameObject.FindGameObjectWithTag("MainCamera");
         StartCoroutine(m_camera.GetComponent<CameraController>().CameraCtrl(player.transform));
@@ -385,26 +432,28 @@ public class DungeonManager : MonoBehaviour
         return player;
     }
 
-    public GameObject CreateUnit(int unitId, int unitIndex, Vector3 newPosition)
+    public void CreateUnit(int unitId, int unitIndex, Vector3 newPosition)
     {
-        //위와 같은 생성이지만 이곳에서는 다른 플레이어의 캐릭터를 생성한다.
-        //DataHandler 에서 데이타를 받아서 실행된다.
-        if (players[unitIndex] == null)
+        if (unitId <= (int)UnitId.WomanMage)
         {
-            GameObject unit = Instantiate(Resources.Load("Warrior")) as GameObject;
-            unit.transform.position = newPosition;
-            unit.name = "Warrior";
-            players[unitIndex] = unit;
+            if (players[unitIndex] == null)
+            {
+                GameObject unit = Instantiate(Resources.Load("Warrior")) as GameObject;
+                unit.transform.position = newPosition;
+                unit.name = "Warrior";
+                players[unitIndex] = unit;
 
-            characters[unitIndex] = unit.GetComponent<CharacterManager>();
-            characters[unitIndex].SetUserNum(unitIndex);
-
-            return unit;
+                characterData[unitIndex] = unit.GetComponent<CharacterManager>();
+                characterData[unitIndex].SetUserNum(unitIndex);
+            }
+            else
+            {
+                Debug.Log("이미 있는 캐릭터 인덱스");
+            }
         }
         else
         {
-            Debug.Log("이미 있는 캐릭터 인덱스");
-            return null;
-        }        
+            CreateMonster(unitId, unitIndex, monsterSpawnPoints[unitIndex].transform.position);
+        }
     }
 }

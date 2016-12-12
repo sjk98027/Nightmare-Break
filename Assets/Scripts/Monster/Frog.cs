@@ -4,7 +4,7 @@ using System.Collections;
 
 public class Frog : Monster {
 	private float searchRange = 8.0f;
-	private float moveSpeed = 4f;
+	//private float moveSpeed = 4f;
 
 	public float currentDisTance;
 	float middleBossToMonsterLimitDistanceMonsterToCenter = 6.0f;
@@ -18,9 +18,9 @@ public class Frog : Monster {
 	public override void HitDamage(int _Damage,GameObject attacker)
 	{
 		IsHited = true;
-		currentLife -= _Damage;
+		currentHP -= _Damage;
 		//		if(monsterState != StatePosition.Boom){
-		//			if (currentLife > 0) {
+		//			if (currentHP > 0) {
 		//				for (int i = 0; i < player.Length; i++) {
 		//					if (player [i] == attacker) {
 		//						playerToMonsterDamage [i] += _Damage;
@@ -30,8 +30,8 @@ public class Frog : Monster {
 		//				Pattern (StatePosition.TakeDamage);
 		//			}
 		//		}
-		if (currentLife <= 0) {
-			currentLife = 0;
+		if (currentHP <= 0) {
+			currentHP = 0;
 			IsAlive = false;
 			HittedBox.enabled = false;
 			monsterState = StatePosition.Death;
@@ -186,8 +186,8 @@ public class Frog : Monster {
 			if (IsAlive) {
 				//if(moveAble){
 				if (targetPlayer != null) {
-					MonsterRunAttackAround = Random.Range (0, 3);
-					if (MonsterRunAttackAround == 0) {
+					monsterRunAttackAround = Random.Range (0, 3);
+					if (monsterRunAttackAround == 0) {
 						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
 						yield return new WaitForSeconds (2f);
 						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
@@ -198,7 +198,7 @@ public class Frog : Monster {
 						yield return new WaitForSeconds (2f);
 					}
 
-					if (MonsterRunAttackAround == 1) {
+					if (monsterRunAttackAround == 1) {
 						int i = Random.Range (0, 2);
 						if (i == 0) {
 							if (checkDirection.z >= 0) {
@@ -242,7 +242,7 @@ public class Frog : Monster {
 							}
 						}
 					}
-					if (MonsterRunAttackAround == 2) {
+					if (monsterRunAttackAround == 2) {
 						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
 						int k = Random.Range (0, 1);
 						if (k == 0) {
@@ -508,20 +508,6 @@ public class Frog : Monster {
 			targetPlayer = _Player;
 		}
 	}
-
-	public void GuestMonsterUpdate(){
-		aniState = this.animator.GetCurrentAnimatorStateInfo (0);
-		if (aniState.IsName ("Run")) 
-		{
-			if (moveAble) 
-			{
-				this.transform.Translate (movePoint.normalized * moveSpeed * Time.deltaTime, 0);
-			}
-		}
-		ChasePlayer ();
-	}
-
-
 
 	public IEnumerator GuestMonsterPatternChange(){
 		while (IsAlive) {
