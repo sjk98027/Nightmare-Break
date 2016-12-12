@@ -5,9 +5,8 @@ using System.Xml;
 
 public class XmlSkillData : MonoBehaviour {
 
-	[XmlAttribute("name")]
-	public string name;
-
+    XmlDocument skillData = new XmlDocument();
+   // XmlElement myElement = skillData.CreateElement("Skill");
 
 
 }
