@@ -83,10 +83,10 @@ public class SkillData{
 		skillList[11].AddSkillLevelData(new SkillLevelData(3, 0.15f, 0.15f, "추가 마나 15%를 소모하고 15%의 스킬추가공격력을 가진다."));
 		skillList[11].AddSkillLevelData(new SkillLevelData(4, 0.2f, 0.2f, "추가 마나 20%를 소모하고 20%의 스킬추가공격력을 가진다."));
 
-		skillList[12].AddSkillLevelData(new SkillLevelData(1, 0.5f, "50% 추가 마나회복력을 얻는다."));
-		skillList[12].AddSkillLevelData(new SkillLevelData(2, 1.0f, "100% 추가 마나회복력을 얻는다."));
-		skillList[12].AddSkillLevelData(new SkillLevelData(3, 1.5f, "150% 추가 마나회복력을 얻는다."));
-		skillList[12].AddSkillLevelData(new SkillLevelData(4, 2.0f, "200% 추가 마나회복력을 얻는다."));
+		skillList[12].AddSkillLevelData(new SkillLevelData(1, 0.1f, "스킬 시전시 10% 확률로 슈퍼아머를 얻는다"));
+		skillList[12].AddSkillLevelData(new SkillLevelData(2, 0.2f, "스킬 시전시 20% 확률로 슈퍼아머를 얻는다"));
+		skillList[12].AddSkillLevelData(new SkillLevelData(3, 0.3f, "스킬 시전시 30% 확률로 슈퍼아머를 얻는다"));
+		skillList[12].AddSkillLevelData(new SkillLevelData(4, 0.4f, "스킬 시전시 40% 확률로 슈퍼아머를 얻는다"));
 
 		#endregion
     

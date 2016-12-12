@@ -235,6 +235,26 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 137000014194239414, guid: e112722b703b15f4f8abe6f5953747a2,
+        type: 2}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 137000010191092834, guid: e112722b703b15f4f8abe6f5953747a2,
+        type: 2}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 137000011501166558, guid: e112722b703b15f4f8abe6f5953747a2,
+        type: 2}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 137000012537185716, guid: e112722b703b15f4f8abe6f5953747a2,
+        type: 2}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e112722b703b15f4f8abe6f5953747a2, type: 2}
   m_IsPrefabParent: 0
@@ -398,6 +418,48 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1001 &201336920
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4000014123516952, guid: 677f5cba064a6ee4f904eebd96204075, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -8.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000014123516952, guid: 677f5cba064a6ee4f904eebd96204075, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000014123516952, guid: 677f5cba064a6ee4f904eebd96204075, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 7.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000014123516952, guid: 677f5cba064a6ee4f904eebd96204075, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000014123516952, guid: 677f5cba064a6ee4f904eebd96204075, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000014123516952, guid: 677f5cba064a6ee4f904eebd96204075, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000014123516952, guid: 677f5cba064a6ee4f904eebd96204075, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000014123516952, guid: 677f5cba064a6ee4f904eebd96204075, type: 2}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 677f5cba064a6ee4f904eebd96204075, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &298553164
 GameObject:
   m_ObjectHideFlags: 0
@@ -1345,6 +1407,26 @@ Prefab:
     - target: {fileID: 1000012643294426, guid: e112722b703b15f4f8abe6f5953747a2, type: 2}
       propertyPath: m_Name
       value: WarriorManUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 137000014194239414, guid: e112722b703b15f4f8abe6f5953747a2,
+        type: 2}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 137000010191092834, guid: e112722b703b15f4f8abe6f5953747a2,
+        type: 2}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 137000011501166558, guid: e112722b703b15f4f8abe6f5953747a2,
+        type: 2}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 137000012537185716, guid: e112722b703b15f4f8abe6f5953747a2,
+        type: 2}
+      propertyPath: m_ReceiveShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e112722b703b15f4f8abe6f5953747a2, type: 2}

@@ -3,15 +3,15 @@ using System.Collections;
 
 public class Section : MonoBehaviour {
 	public DungeonManager dungeonManager;
-	public BoomMonster[] boomMonster;
-	public WarriorMonster[] warriorMonster;
-	public ShockWaveMonster[] shockWaveMonster;
+	public Frog[] Frog;
+	public Rabbit[] Rabbit;
+	public Duck[] shockWaveMonster;
 	public MiddleBoss middleBoss;
 	public GameObject middleBoss1;
 
 	public GameObject goToTheBoss;
 
-	public Vector3[] boomMonsterPosition;
+	public Vector3[] FrogPosition;
 
 	public Vector3[] pointVector;
 
@@ -41,55 +41,80 @@ public class Section : MonoBehaviour {
 
 	public void MonsterSet(){
 		goToTheBoss = GameObject.Find ("GoToTheBoss");
-		dungeonManager = gameObject.transform.parent.GetComponent<DungeonManager>();
-		//boomMonster = gameObject.transform.GetComponentsInChildren<BoomMonster> ();
-		//monsterCount = (boomMonster.Length + warriorMonster.Length+1);
+//		dungeonManager = gameObject.transform.parent.GetComponent<DungeonManager>();
+
+		//Frog = gameObject.transform.GetComponentsInChildren<Frog> ();
+		//monsterCount = (Frog.Length + Rabbit.Length+1);
 		middleBoss = gameObject.transform.GetComponentInChildren<MiddleBoss>();
 
-		for (int i = 0; i < boomMonster.Length; i++) {
-//			boomMonster [i].PlayerSearch ();
-//			boomMonster [i].MonsterSet ();
-//			boomMonster [i].Mode = modeForm;
-//			boomMonster [i].GateArrayNumber = gateNumber;
-//			boomMonster [i].MonsterArrayNumber = i;
+		for (int i = 0; i < Frog.Length; i++) {
+//			Frog [i].PlayerSearch ();
+//			Frog [i].MonsterSet ();
+//			Frog [i].Mode = modeForm;
+//			Frog [i].GateArrayNumber = gateNumber;
+//			Frog [i].MonsterArrayNumber = i;
 		}
 
-		boomMonster = transform.GetComponentsInChildren<BoomMonster> ();
-		boomMonsterPosition = new Vector3[boomMonster.Length];
+		Frog = transform.GetComponentsInChildren<Frog> ();
+		FrogPosition = new Vector3[Frog.Length];
 		pointVector = new Vector3[7];
-		if (boomMonster == null) {
+		if (Frog == null) {
 			Debug.LogError ("중간보스 없음!!" + gameObject.name);
 		}
 
 
-		for (int i = 0; i < boomMonster.Length; i++)
+		for (int i = 0; i < Frog.Length; i++)
 		{
-			boomMonsterPosition[i] = boomMonster[i].transform.position;
+			FrogPosition[i] = Frog[i].transform.position;
 			if (i >= 6) {
 				Pattern (MonSterMovePosition.Up);
-				boomMonster [i].pointVectorArrayGetting (pointVector);	
+				Frog [i].pointVectorArrayGetting (pointVector);	
 			} else if (i >= 4) {
 				Pattern (MonSterMovePosition.Middle);
-				boomMonster [i].pointVectorArrayGetting (pointVector);	
+				Frog [i].pointVectorArrayGetting (pointVector);	
 			} else
 				Pattern (MonSterMovePosition.Down);
-			boomMonster [i].pointVectorArrayGetting (pointVector);
+			Frog [i].pointVectorArrayGetting (pointVector);
 		}
+
+
+
 	}
 
-	public void UpdateConduct(){
-		for (int boomMonsterLength = 0; boomMonsterLength < boomMonster.Length; boomMonsterLength++) {
-			boomMonster [boomMonsterLength].UpdateDefenceMode ();
+
+
+
+	public void HostUpdateConduct(){
+		for (int FrogLength = 0; FrogLength < Frog.Length; FrogLength++) {
+			Frog [FrogLength].UpdateDefenceMode ();
 		}
-		for (int warriorMonsterLength = 0; warriorMonsterLength < warriorMonster.Length; warriorMonsterLength++) {
-			warriorMonster [warriorMonsterLength].UpdateDefenceMode ();
+		for (int RabbitLength = 0; RabbitLength < Rabbit.Length; RabbitLength++) {
+			Rabbit [RabbitLength].UpdateDefenceMode ();
 		}
 		for (int shockWaveMonsterLength = 0; shockWaveMonsterLength < shockWaveMonster.Length; shockWaveMonsterLength++) {
 			shockWaveMonster [shockWaveMonsterLength].UpdateDefenceMode ();
 		}
-		middleBoss.UpdateConductDefenceMode();
+		if (middleBoss != null) {
+			middleBoss.UpdateConductDefenceMode ();
+		}
 	}
 
+	public void GuestUpdateConduct(){
+		for (int FrogLength = 0; FrogLength < Frog.Length; FrogLength++) {
+			Frog [FrogLength].GuestMonsterUpdate ();
+		}
+		for (int RabbitLength = 0; RabbitLength < Rabbit.Length; RabbitLength++) {
+			Rabbit [RabbitLength].GuestMonsterUpdate ();
+		}
+		for (int shockWaveMonsterLength = 0; shockWaveMonsterLength < shockWaveMonster.Length; shockWaveMonsterLength++) {
+			shockWaveMonster [shockWaveMonsterLength].GuestMonsterUpdate ();
+		}
+
+
+		if (middleBoss != null) {
+			middleBoss.UpdateConductDefenceMode ();
+		}
+	}
 
 
 
@@ -148,16 +173,18 @@ public class Section : MonoBehaviour {
 	public void SetFalse(){
 		this.gameObject.SetActive (false);
 	}
-
+	public void SetTrue(){
+		this.gameObject.SetActive (true);
+	}
 
 
 	public void RemoveMonsterArray(){
 		monsterCount -= 1;
-		if (monsterCount == 0) {
-			dungeonManager.SceneChange ();
-		}
 
 
+//		if (monsterCount == 0) {
+//			dungeonManager.SceneChange ();
+//		}
 	}
 
 

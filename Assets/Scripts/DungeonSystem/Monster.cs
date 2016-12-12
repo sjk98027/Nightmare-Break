@@ -120,7 +120,7 @@ public class Monster : MonoBehaviour {
 			attackCollider.MonsterWeaponSet ();
 		}
 		if (shockWaveInstantiate != null) {
-			shockWaveInstantiate.GetDamage (baseDamage, this.gameObject.GetComponent<ShockWaveMonster> ());
+			shockWaveInstantiate.GetDamage (baseDamage, this.gameObject.GetComponent<Duck> ());
 		}
 		if(shockWaveInstantiate != null|| attackCollider !=null){
 //			NormalMonsterRealizePattern ();

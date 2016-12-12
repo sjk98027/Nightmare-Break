@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using System.Net;
 using System.Collections.Generic;
+using System.Collections;
 
 
 //this class manage monsterStageLevel, sumon, player sumon, player death;
@@ -26,9 +27,9 @@ public class DungeonManager : MonoBehaviour
     public SceneChangeObject[] sceneChangeObject;
 
     public int monsterCount;
-    public BoomMonster[] boomMonster;
-    public WarriorMonster[] warriorMonster;
-	public ShockWaveMonster[] shockWaveMonster;
+	public Frog[] frogMonster;
+    public Rabbit[] rabbitMonster;
+	public Duck[] duckMonster;
 	public BossMonsterKYW bossMonster;
 
 	public MonsterSpawnPoint spawnPoint;
@@ -58,22 +59,20 @@ public class DungeonManager : MonoBehaviour
 	{
 
 		//test
-//		players = GameObject.FindGameObjectsWithTag ("Player");
+		players = GameObject.FindGameObjectsWithTag ("Player");
 
 		//Instantiate 스폰포인트 생성조건 - > mapNumber != 2;
-		mapNumber = 2;
+		mapNumber = 0;
 
 
 		DungeonConstruct();//mapNumber - > inspector define
 		//        modeForm = false;
 //		        ModeChange(n);//client get modeform and ingame play ;
 		//section = transform.GetComponentsInChildren<Section> ();
-		normalMode = true;
 
-		//section = GameObject.FindGameObjectsWithTag ("DefenceMonsterSection");
-		if(section.Length != 0){
-			SectionSet ();
-		}
+
+
+	
 
 
 
@@ -85,50 +84,50 @@ public class DungeonManager : MonoBehaviour
 	{
 		if (normalMode)
 		{
-			for (int i = 0; i < boomMonster.Length; i++) {
+			for (int i = 0; i < frogMonster.Length; i++) {
 				if (hostGuest != HostGuest.Host) {
-					boomMonster [i].GuestMonsterUpdate ();	
+					frogMonster [i].GuestMonsterUpdate ();	
 				}
 				if (hostGuest == HostGuest.Host) {
-					boomMonster [i].UpdateNormalMode ();
+					frogMonster [i].UpdateNormalMode ();
 				}
 			}
-			for (int j = 0; j < warriorMonster.Length; j++) {
+			for (int j = 0; j < rabbitMonster.Length; j++) {
 				if (hostGuest != HostGuest.Host) {
-					warriorMonster [j].GuestMonsterUpdate ();
+					rabbitMonster [j].GuestMonsterUpdate ();
 				}
 				if (hostGuest == HostGuest.Host) {
-					warriorMonster [j].UpdateNormalMode ();
+					rabbitMonster [j].UpdateNormalMode ();
 				}
 				
 			}
-			for (int k = 0; k < shockWaveMonster.Length; k++) {
+			for (int k = 0; k < duckMonster.Length; k++) {
 				if (hostGuest != HostGuest.Host) {
-					shockWaveMonster [k].GuestMonsterUpdate ();
+					duckMonster [k].GuestMonsterUpdate ();
 						
 				}
 				if (hostGuest == HostGuest.Host) {
-					shockWaveMonster [k].UpdateNormalMode ();
+					duckMonster [k].UpdateNormalMode ();
 				}
 			}
 		}
 
 		if (!normalMode)
 		{
-			for (int i = 0; i < section.Length; i++) {
-				section [i].UpdateConduct ();
+			if (hostGuest == HostGuest.Host) {
+				for (int i = 0; i < section.Length; i++) {
+					section [i].HostUpdateConduct ();
+				}
+			}
+
+			if (hostGuest != HostGuest.Guest) {
+				for (int j = 0; j < section.Length; j++) {
+					section [j].GuestUpdateConduct ();
+				}
 			}
 		}
 
-		if (bossMonster != null) {
-			if(hostGuest == HostGuest.Host){
-				bossMonster.BossMonsterUpdate ();
-			}
-			if(hostGuest != HostGuest.Host){
-				//shockWaveMonster [k].GuestMonsterUpdate ();
-				bossMonster.BossMonsterUpdate ();
-			}
-		}
+
 	}
 
     //각종 매니저 초기화
@@ -189,9 +188,9 @@ public class DungeonManager : MonoBehaviour
 			spawnPoint = spawnpointInstantiate.GetComponent<MonsterSpawnPoint>();
 
 			spawnPoint.SpawnMonsterGetting ();
-			boomMonster = new BoomMonster[spawnPoint.boomMonsterCount];
-			shockWaveMonster = new ShockWaveMonster[spawnPoint.shockWaveMonsterCount];
-			warriorMonster = new WarriorMonster[spawnPoint.warriorMonsterCount];
+			frogMonster = new Frog[spawnPoint.FrogCount];
+			duckMonster = new Duck[spawnPoint.DuckCount];
+			rabbitMonster = new Rabbit[spawnPoint.RabbitCount];
 			normalMode = true;
 			MonsterSet ();
 		}
@@ -200,6 +199,7 @@ public class DungeonManager : MonoBehaviour
 
 
 		if (mapNumber == 2) {
+			normalMode = false;
 			section = new Section[3];
 			GameObject SectionInstantiate0 = (GameObject)Instantiate (Resources.Load("Monster/Section"),transform.parent);
 			GameObject SectionInstantiate1 = (GameObject)Instantiate (Resources.Load("Monster/Section"),transform.parent);
@@ -208,6 +208,13 @@ public class DungeonManager : MonoBehaviour
 			section [1] = SectionInstantiate1.GetComponent<Section> ();
 			section [2] = SectionInstantiate2.GetComponent<Section> ();
 
+
+			for (int i = 0; i < section.Length; i++) {
+				section [i].MonsterSet ();
+				section [i].GateNumber = i;
+				section [i].SetFalse ();
+			}
+			//StartCoroutine (section ());
 		}
 
 
@@ -228,20 +235,20 @@ public class DungeonManager : MonoBehaviour
     {
 		monsterCount = 0;
 
-		for (int i = 0; i < spawnPoint.boomMonsterCount; i++) {
-			GameObject objBoomMonster = (GameObject)Instantiate (Resources.Load ("Monster/Frog"), spawnPoint.spawnVector[i] ,this.gameObject.transform.rotation);
-			objBoomMonster.transform.SetParent (this.transform);
-			boomMonster [i] = objBoomMonster.GetComponent<BoomMonster> ();
+		for (int i = 0; i < spawnPoint.FrogCount; i++) {
+			GameObject objfrogMonster = (GameObject)Instantiate (Resources.Load ("Monster/Frog"), spawnPoint.spawnVector[i] ,this.gameObject.transform.rotation);
+			objfrogMonster.transform.SetParent (this.transform);
+			frogMonster [i] = objfrogMonster.GetComponent<Frog> ();
 		}
-		for (int i = 0; i < spawnPoint.shockWaveMonsterCount; i++) {
-			GameObject objShockwaveMonster= (GameObject)Instantiate (Resources.Load ("Monster/Duck"), spawnPoint.spawnVector[i+spawnPoint.boomMonsterCount], this.transform.rotation);
-			objShockwaveMonster.transform.SetParent (this.transform);
-			shockWaveMonster [i] = objShockwaveMonster.GetComponent<ShockWaveMonster> (); 
+		for (int i = 0; i < spawnPoint.DuckCount; i++) {
+			GameObject objduckMonster= (GameObject)Instantiate (Resources.Load ("Monster/Duck"), spawnPoint.spawnVector[i+spawnPoint.FrogCount], this.transform.rotation);
+			objduckMonster.transform.SetParent (this.transform);
+			duckMonster [i] = objduckMonster.GetComponent<Duck> (); 
 		}
-		for (int i = 0; i < spawnPoint.warriorMonsterCount; i++) {
-			GameObject objWarriorMonster= (GameObject)Instantiate (Resources.Load ("Monster/Rabbit"), spawnPoint.spawnVector[i+spawnPoint.boomMonsterCount+spawnPoint.shockWaveMonsterCount], this.transform.rotation);
-			objWarriorMonster.transform.SetParent (this.transform);
-			warriorMonster[i]= objWarriorMonster.GetComponent<WarriorMonster> ();
+		for (int i = 0; i < spawnPoint.RabbitCount; i++) {
+			GameObject objRabbit= (GameObject)Instantiate (Resources.Load ("Monster/Rabbit"), spawnPoint.spawnVector[i+spawnPoint.FrogCount+spawnPoint.DuckCount], this.transform.rotation);
+			objRabbit.transform.SetParent (this.transform);
+			rabbitMonster[i]= objRabbit.GetComponent<Rabbit> ();
 		}
 
 		if (bossMonster != null) {
@@ -253,42 +260,42 @@ public class DungeonManager : MonoBehaviour
 
 		monsterCount += spawnPoint.sumMonsterCount;
 
-		for (int i = 0; i < boomMonster.Length; i++) {
-			boomMonster [i].player = players;
-			boomMonster [i].MonsterSet (900,2);
-			boomMonster [i].MonsterMoveAI (normalMode);
-			boomMonster [i].MonsterArrayNumber = i;
+		for (int i = 0; i < frogMonster.Length; i++) {
+			frogMonster [i].player = players;
+			frogMonster [i].MonsterSet (900,2);
+			frogMonster [i].MonsterMoveAI (normalMode);
+			frogMonster [i].MonsterArrayNumber = i;
 
 			if (hostGuest != HostGuest.Host) {
-				boomMonster [i].GuestMonsterPatternChange ();
+				frogMonster [i].GuestMonsterPatternChange ();
 			} else if (hostGuest == HostGuest.Host) {
-				boomMonster [i].MonSterPatternUpdateConduct (normalMode);
+				frogMonster [i].MonSterPatternUpdateConduct (normalMode);
 			}
-				//boomMonster [i].MonSterPatternUpdateConduct (normalMode);
+				//frogMonster [i].MonSterPatternUpdateConduct (normalMode);
 		}
 
 
-		for (int j = 0; j < shockWaveMonster.Length; j++) {
-			shockWaveMonster [j].player = players;
-			shockWaveMonster [j].MonsterSet (900, 2);
-			shockWaveMonster [j].MonsterMoveAI (normalMode);
-			shockWaveMonster [j].MonsterArrayNumber = j;
+		for (int j = 0; j < duckMonster.Length; j++) {
+			duckMonster [j].player = players;
+			duckMonster [j].MonsterSet (900, 2);
+			duckMonster [j].MonsterMoveAI (normalMode);
+			duckMonster [j].MonsterArrayNumber = j;
 			if (hostGuest == HostGuest.Host) {
-				shockWaveMonster [j].MonSterPatternUpdateConduct (normalMode);
+				duckMonster [j].MonSterPatternUpdateConduct (normalMode);
 			} else if (hostGuest != HostGuest.Host) {
-				shockWaveMonster [j].GuestMonsterPatternChange ();
+				duckMonster [j].GuestMonsterPatternChange ();
 			}
 		}
 
-		for (int k = 0; k < warriorMonster.Length; k++) {
-			warriorMonster [k].player = players;
-			warriorMonster [k].MonsterSet (900, 2);
-			warriorMonster [k].MonsterMoveAI (normalMode);
-			warriorMonster [k].MonsterArrayNumber = k;
+		for (int k = 0; k < rabbitMonster.Length; k++) {
+			rabbitMonster [k].player = players;
+			rabbitMonster [k].MonsterSet (900, 2);
+			rabbitMonster [k].MonsterMoveAI (normalMode);
+			rabbitMonster [k].MonsterArrayNumber = k;
 			if (hostGuest == HostGuest.Host) {
-				warriorMonster [k].MonSterPatternUpdateConduct (normalMode);
+				rabbitMonster [k].MonSterPatternUpdateConduct (normalMode);
 			} else if (hostGuest != HostGuest.Host) {
-				warriorMonster [k].GuestMonsterPatternChange ();
+				rabbitMonster [k].GuestMonsterPatternChange ();
 			}
 		}
 
@@ -309,12 +316,14 @@ public class DungeonManager : MonoBehaviour
 
     
 
-	public void SectionSet(){
-		
+	IEnumerator SectionSet(){
 		for (int i = 0; i < section.Length; i++) {
-			section [i].MonsterSet ();
-			section [i].GateNumber = i;
+			section [i].SetTrue ();
+			new WaitForSeconds (10f);
 		}
+		return null;
+
+
 	}
 
     public void RemoveMonsterArray()
