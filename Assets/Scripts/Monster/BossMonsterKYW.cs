@@ -19,7 +19,6 @@ public class BossMonsterKYW : Monster {
 	public int PatternRank;
 
 	public float searchRange = 10;
-	public float moveSpeed;
 	public int shoutCount;
 
 	public float currentDisTance;
@@ -51,8 +50,15 @@ public class BossMonsterKYW : Monster {
 	public void BossMonsterSet(int _maxlife, int _basedamage){
 		RunRange = 10;
 		attackRange = 4;
-		MonsterSet (_maxlife, _basedamage);
-//		uiManager = GameObject.FindWithTag ("UIManager").GetComponent<UIManager> ();
+
+        if (GameObject.FindWithTag("GameManager") == null)
+        {   //네트워크 없을 때 실행 함
+            MonsterBaseData baseData = new MonsterBaseData((int)UnitId.Bear, "Bear");
+            baseData.AddLevelData(new MonsterLevelData(1, 20, 0, 300, 5));
+            MonsterSet(baseData);
+            //uiManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
+        }
+
 		isAttack = false;
 		skillInsertImage = GameObject.Find ("InGameUICanvas").transform.Find ("BossDeadlyPatternImage").Find("BossDeadlyPattern").GetComponent<Image>();
 		//skillInsertImage = transform.Find("InGameUICanvas").gameObject;
@@ -135,44 +141,47 @@ public override void HitDamage (int _Damage, GameObject attacker)
 
 	if (IsAlive)
 	{
-		currentLife -= _Damage;
+		currentHP -= _Damage;
 		shoutCount +=1;
 
-//uiManager.bossHp.fillAmount = maxLife / currentLife;
-		if (currentLife > 0)
-		{
-			for (int i = 0; i < player.Length; i++) {
-				if (player [i] == attacker) {
-					playerToMonsterDamage [i] += _Damage;
-					targetPlayer = player [i];
-				}
-			}
-			if (targetPlayer != null) {
-				currentDisTance = Vector3.Distance (targetPlayer.transform.position, transform.position);		
-			}
-			if (currentDisTance <= RunRange && currentDisTance > attackRange) {//원거리 케릭터가 공격시 원거리 공격
-			    PatternReserveListCleanUp ((int)BigBearBossPatternName.BigBearBossOneHandAttack);
-			}
-			if (shoutCount >= 100) {//100회 이상 데미지를 받을 경우
-				PatternReserveListCleanUp ((int)BigBearBossPatternName.BigBearBossRoar);
-			}
-				//hitanimation
-		}
+            //uiManager.bossHp.fillAmount = maxLife / currentLife;
+            if (currentHP > 0)
+            {
+                for (int i = 0; i < player.Length; i++)
+                {
+                    if (player[i] == attacker)
+                    {
+                        playerToMonsterDamage[i] += _Damage;
+                        targetPlayer = player[i];
+                    }
+                }
+                if (targetPlayer != null)
+                {
+                    currentDisTance = Vector3.Distance(targetPlayer.transform.position, transform.position);
+                }
+                if (currentDisTance <= RunRange && currentDisTance > attackRange)
+                {//원거리 케릭터가 공격시 원거리 공격
+                    PatternReserveListCleanUp((int)BigBearBossPatternName.BigBearBossOneHandAttack);
+                }
+                if (shoutCount >= 100)
+                {//100회 이상 데미지를 받을 경우
+                    PatternReserveListCleanUp((int)BigBearBossPatternName.BigBearBossRoar);
+                }
+                //hitanimation
+            }
 
-		else if (currentLife <= 0)
-		{
-			currentLife = 0;
-			if (!stateInfo.IsName ("BigBearBossDeath"))
-			{
-				BigBearBossState = BigBearBossPatternName.BigBearBossDeath;
-				BigBearBossPattern ((int)BigBearBossState);
-				IsAlive = false;
-				HittedBox.enabled = false;
-				return;
-			}
-		}
-
-
+            else if (currentHP <= 0)
+            {
+                currentHP = 0;
+                if (!stateInfo.IsName("BigBearBossDeath"))
+                {
+                    BigBearBossState = BigBearBossPatternName.BigBearBossDeath;
+                    BigBearBossPattern((int)BigBearBossState);
+                    IsAlive = false;
+                    HittedBox.enabled = false;
+                    return;
+                }
+            }
 	}
 }
 

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Duck : Monster {
 	private float searchRange = 12.0f;
-	private float moveSpeed = 2.5f;
+	//moveSpeed = 2.5f;
 
 	public float currentDisTance;
 	float middleBossToMonsterLimitDistanceMonsterToCenter = 6.0f;
@@ -18,8 +18,8 @@ public class Duck : Monster {
 	public override void HitDamage(int _Damage,GameObject attacker)
 	{
 		IsHited = true;
-		currentLife -= _Damage;
-		if (currentLife > 0) {
+		currentHP -= _Damage;
+		if (currentHP > 0) {
 			for (int i = 0; i < player.Length; i++) {
 				if (player [i] == attacker) {
 					playerToMonsterDamage [i] += _Damage;
@@ -28,7 +28,7 @@ public class Duck : Monster {
 			}
 			Pattern (StatePosition.TakeDamage);
 		}
-		if (currentLife <= 0) {
+		if (currentHP <= 0) {
 			IsAlive = false;
 			HittedBox.enabled = false;
 			monsterState = StatePosition.Death;
@@ -530,20 +530,6 @@ public class Duck : Monster {
 			targetPlayer = _Player;
 		}
 	}
-
-	public void GuestMonsterUpdate(){
-		aniState = this.animator.GetCurrentAnimatorStateInfo (0);
-		if (aniState.IsName ("Run")) 
-		{
-			if (moveAble) 
-			{
-				this.transform.Translate (movePoint * moveSpeed * Time.deltaTime, 0);
-			}
-		}
-		ChasePlayer ();
-	}
-
-
 
 	public IEnumerator GuestMonsterPatternChange(){
 		while (IsAlive) {

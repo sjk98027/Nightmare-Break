@@ -412,7 +412,7 @@ public class DataHandler : MonoBehaviour
         CharacterPositionPacket characterPositionPacket = new CharacterPositionPacket(packet.msg);
         CharacterPositionData characterPositionData = characterPositionPacket.GetData();
 
-        CharacterManager characterManager = dungeonManager.characters[characterPositionData.userIndex];
+        CharacterManager characterManager = dungeonManager.CharacterData[characterPositionData.userIndex];
         characterManager.SetPosition(characterPositionData);
     }
 
@@ -422,7 +422,7 @@ public class DataHandler : MonoBehaviour
         CharacterActionPacket characterActionPacket = new CharacterActionPacket(packet.msg);
         CharacterActionData characterActionData = characterActionPacket.GetData();
 
-        CharacterManager characterManager = dungeonManager.characters[characterActionData.userNum];
+        CharacterManager characterManager = dungeonManager.CharacterData[characterActionData.userNum];
         characterManager.CharState(characterActionData.action);
     }
 }

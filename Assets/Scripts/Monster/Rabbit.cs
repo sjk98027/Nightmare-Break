@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 public class Rabbit : Monster {
 	private float searchRange = 8.0f;
-	private float moveSpeed = 3f;
+	//private float moveSpeed = 3f;
 
 	public float currentDisTance;
 	float middleBossToMonsterLimitDistanceMonsterToCenter = 6.0f;
@@ -17,8 +17,8 @@ public class Rabbit : Monster {
 	public override void HitDamage(int _Damage,GameObject attacker)
 	{
 		IsHited = true;
-		currentLife -= _Damage;
-		if (currentLife > 0) {
+		currentHP -= _Damage;
+		if (currentHP > 0) {
 			for (int i = 0; i < player.Length; i++) {
 				if (player [i] == attacker) {
 					playerToMonsterDamage [i] += _Damage;
@@ -27,8 +27,8 @@ public class Rabbit : Monster {
 			}
 			Pattern (StatePosition.TakeDamage);
 		}
-		if (currentLife <= 0) {
-			currentLife = 0;
+		if (currentHP <= 0) {
+			currentHP = 0;
 			IsAlive = false;
 			HittedBox.enabled = false;
 			monsterState = StatePosition.Death;
@@ -175,8 +175,8 @@ public class Rabbit : Monster {
 
 			if(IsAlive){
 				if (targetPlayer != null) {
-					MonsterRunAttackAround = Random.Range (0, 4);
-					if (MonsterRunAttackAround == 0 || MonsterRunAttackAround == 1) {
+					monsterRunAttackAround = Random.Range (0, 4);
+					if (monsterRunAttackAround == 0 || monsterRunAttackAround == 1) {
 						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
 						yield return new WaitForSeconds (2f);
 						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
@@ -187,7 +187,7 @@ public class Rabbit : Monster {
 						yield return new WaitForSeconds (2f);
 					}
 
-					if (MonsterRunAttackAround == 2) {
+					if (monsterRunAttackAround == 2) {
 						int i = Random.Range (0, 2);
 						if (i == 0) {
 							if (checkDirection.z >= 0) {
@@ -232,7 +232,7 @@ public class Rabbit : Monster {
 							}
 						}
 					}
-					if (MonsterRunAttackAround == 3) {
+					if (monsterRunAttackAround == 3) {
 						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
 						int k = Random.Range(0,1);
 						if(k == 0){
@@ -472,20 +472,6 @@ public class Rabbit : Monster {
 			targetPlayer = _Player;
 		}
 	}
-
-	public void GuestMonsterUpdate(){
-		aniState = this.animator.GetCurrentAnimatorStateInfo (0);
-		if (aniState.IsName ("Run")) 
-		{
-			if (moveAble) 
-			{
-				this.transform.Translate (movePoint * moveSpeed * Time.deltaTime, 0);
-			}
-		}
-		ChasePlayer ();
-	}
-
-
 
 	public IEnumerator GuestMonsterPatternChange(){
 		while (IsAlive) {

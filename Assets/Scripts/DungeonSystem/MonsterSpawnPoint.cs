@@ -8,18 +8,12 @@ public class MonsterSpawnPoint : MonoBehaviour {
 	public GameObject[] DuckSpawn;
 	public GameObject[] RabbitSpawn;
 
-
 	public int FrogCount;	
 	public int DuckCount;
 	public int RabbitCount;
 	public Vector3[] spawnVector;
 
-
-
 	public int sumMonsterCount;
-
-
-
 
 	public void RespawnPointSend(){
 		spawnVector = new Vector3[spawnVector.Length];

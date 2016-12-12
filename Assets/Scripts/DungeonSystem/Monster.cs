@@ -1,73 +1,70 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using System.Collections.Generic;
-using System;
+
 public class Monster : MonoBehaviour {
-	//public DungeonManager dungeonManager;
+    public enum StateDirecion
+    {
+        right = 0,
+        left
+    };
 
-	public GameObject[] player;//
-	public Animator animator;
-	public AnimatorStateInfo aniState;
+    protected Animator animator;
+    protected AnimatorStateInfo aniState;
+    protected BoxCollider HittedBox;
+    protected MonsterWeapon attackCollider;
+    protected ShockWave shockWaveInstantiate;
 
-	public GameObject targetPlayer;
-	private Vector3 leftVector3 = new Vector3(0,180,0);
-	private Vector3 rightVector3 = new Vector3(0,0,0);
+    public GameObject[] player;
+    protected GameObject targetPlayer;
+    protected Vector3 movePoint;
 
-	public BoxCollider HittedBox;
-	private int monsterRunAttackAround;
-	public int MonsterRunAttackAround;
+    protected int monsterRunAttackAround;
 
 	protected int randomStandby;
 	//public int RandomStandby;
 	//mode,gateArraynumber,monsterArraynumber
 	protected bool moveAble;
-	public bool MoveAble{
-		get{ return moveAble;}
-		set{ moveAble = value;}
-	}
 
-    [SerializeField]private int monsterArrayNumber;
-	public int MonsterArrayNumber{
-		set{ monsterArrayNumber = value;}
-	}
+    [SerializeField] protected int monsterIndex;
+    [SerializeField] protected string _name;
+    [SerializeField] protected int level;
+    [SerializeField] protected int currentHP;
+	[SerializeField] protected int maxHP;
+    [SerializeField] protected int attack;
+    [SerializeField] protected int defense;
+    [SerializeField] protected int moveSpeed;
 
-	public Vector3 movePoint;
+    //monster getting variable;
+    protected float RunRange;
+    protected float attackRange;
+    protected float attackCycle;
 
-	//server send to this class monsterinfomation;
-	protected int stageLevel;
-	[SerializeField]protected float currentLife;
-	[SerializeField]protected float maxLife;
+    //monster Speed variable;
 
-	//monster getting variable;
-	public float RunRange;// == perceive;
-	public float attackRange;
-	public float attackCycle;
-	protected float IdleRandomTime=0;
-
-	[SerializeField]private int baseDamage;
-	public int BaseDamage{
-		get{ return baseDamage;}
-		set{ baseDamage = value;}
-	}
-	//monster Speed variable;
-
-	[SerializeField]private bool isAlive;
+    StateDirecion stateDirecion;
+    [SerializeField]protected bool isAlive;
 	[SerializeField]protected bool isAttack;
-	[SerializeField]private bool isHited;
+	[SerializeField]protected bool isHited;
 
-	public float[] playerToMonsterDamage;
-	public float[] aggroRank; //playertoMonsterdamage/currentdistancePlayer;
-	public float changeTargetTime=0;
-	 
-	public MonsterWeapon attackCollider;
-	public ShockWave shockWaveInstantiate;
-	//public CottomExplosion boomInstantiate;
+    protected float[] playerToMonsterDamage;
+	private float[] aggroRank; //playertoMonsterdamage/currentdistancePlayer;
+    private float changeTargetTime=0;
 
 	[SerializeField]private float[]currentDisTanceArray;
 	protected Vector3 checkDirection; // monster chaseplayer and move variable;
-	public bool IsAttack{
+    
+    public int MonsterIndex
+    {
+        get { return monsterIndex; }
+        set { monsterIndex = value; }
+    }
+
+    public bool MoveAble
+    {
+        get { return moveAble; }
+        set { moveAble = value; }
+    }
+    public bool IsAttack{
 		get{ return isAttack;}
 		set{ isAttack = value;}
 	}
@@ -79,58 +76,55 @@ public class Monster : MonoBehaviour {
 		get{ return isHited;}
 		set{ isHited = value;}
 	}
-
-    public float MaxHP
+    public StateDirecion _StateDirecion { get { return stateDirecion; } }
+    public int MaxHP
     {
-        get { return maxLife; }
-        set { maxLife = value; }
+        get { return maxHP; }
+        set { maxHP = value; }
     }
     
-    public float CurrentHP
+    public int CurrentHP
     {
-        get { return currentLife; }
-        set { currentLife = value; }
+        get { return currentHP; }
+        set { currentHP = value; }
     }
-	public enum StateDirecion{
-		right,
-		left
-	};
-	public StateDirecion stateDirecion;
+    public int Attack { get { return attack; } }
 
-	public void MonsterSet(int _maxlife, int _baseDamage)
+	public void MonsterSet(MonsterBaseData monster)
 	{
-		isAlive = true;
-		isHited = false;
-		moveAble = true;
-		maxLife = _maxlife;
-		currentLife = maxLife;
-		baseDamage = _baseDamage;
+        animator = this.gameObject.GetComponent<Animator>();
+        HittedBox = this.gameObject.GetComponent<BoxCollider>();
 
-		currentDisTanceArray = new float[player.Length];
+        isAlive = true;
+        isHited = false;
+        moveAble = true;
+
+        _name = monster.Name;
+        level = monster.MonsterLevelData[0].Level;
+        attack = monster.MonsterLevelData[0].Attack;
+        defense = monster.MonsterLevelData[0].Defense;
+        currentHP = monster.MonsterLevelData[0].HealthPoint;
+        maxHP = monster.MonsterLevelData[0].HealthPoint;
+        moveSpeed = monster.MonsterLevelData[0].MoveSpeed;
+
+        currentDisTanceArray = new float[player.Length];
 		aggroRank = new float[player.Length];
 		playerToMonsterDamage = new float[player.Length];
-
-		animator = this.gameObject.GetComponent<Animator> ();
-		HittedBox = this.gameObject.GetComponent<BoxCollider> ();
-
-		StartCoroutine(LookatChange ());
-
+        
 		if (attackCollider != null) {
 			attackCollider = this.transform.GetComponentInChildren<MonsterWeapon> ();
 			attackCollider.MonsterWeaponSet ();
 		}
 		if (shockWaveInstantiate != null) {
-			shockWaveInstantiate.GetDamage (baseDamage, this.gameObject.GetComponent<Duck> ());
+			shockWaveInstantiate.GetDamage (attack, this.gameObject.GetComponent<Duck> ());
 		}
 		if(shockWaveInstantiate != null|| attackCollider !=null){
 //			NormalMonsterRealizePattern ();
 			//bossmonsterWeapon damageGet(basedamage);
 		}
-
-//		if(boomInstaniate != null){
-//			
-//		}
-	}
+        
+        StartCoroutine(LookatChange());
+    }
 
 	public virtual void MonsterMoveAI(bool normalMode){
 		
@@ -138,17 +132,22 @@ public class Monster : MonoBehaviour {
 
 
 
-	public void LookAtPattern(StateDirecion state)
-	{
-		switch(state){
-		case StateDirecion.right: 
-			{transform.rotation = Quaternion.Euler(rightVector3);
-				stateDirecion = StateDirecion.right;break;}
-		case StateDirecion.left:
-			{transform.rotation = Quaternion.Euler(leftVector3);
-				stateDirecion = StateDirecion.left;break;}
-		}
-	}
+    public void LookAtPattern(StateDirecion state)
+    {
+        switch (state)
+        {
+            case StateDirecion.right:
+                {
+                    transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                    stateDirecion = StateDirecion.right; break;
+                }
+            case StateDirecion.left:
+                {
+                    transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+                    stateDirecion = StateDirecion.left; break;
+                }
+        }
+    }
 
 	IEnumerator LookatChange(){
 		while (true) {
@@ -188,10 +187,21 @@ public class Monster : MonoBehaviour {
 		}
 	}
 
-    
+    public void GuestMonsterUpdate()
+    {
+        aniState = this.animator.GetCurrentAnimatorStateInfo(0);
+        if (aniState.IsName("Run"))
+        {
+            if (moveAble)
+            {
+                this.transform.Translate(movePoint * moveSpeed * Time.deltaTime, 0);
+            }
+        }
+        ChasePlayer();
+    }
 
-	//coutine need this method;
-	public void NormalchasePlayer()
+    //coutine need this method;
+    public void NormalchasePlayer()
 	{
 		for (int i = 0; i < player.Length; i++) {
 			currentDisTanceArray [i] = Vector3.Distance(player [i].transform.position, transform.position);		

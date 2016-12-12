@@ -128,6 +128,7 @@ public class ReSendManager : MonoBehaviour
 
                 if (!characterCreating)
                 {
+                    //여기서 몬스터 생성
                     StartCoroutine(DataSender.Instance.CharacterPositionSend());
                 }
             }
