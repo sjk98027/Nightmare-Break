@@ -445,7 +445,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000013876009936
 GameObject:
   m_ObjectHideFlags: 1
@@ -958,6 +958,7 @@ MonoBehaviour:
   baseDamage: 0
   isAlive: 0
   isAttack: 0
+  isHited: 0
   playerToMonsterDamage: []
   aggroRank: []
   changeTargetTime: 0
@@ -1089,7 +1090,7 @@ SkinnedMeshRenderer:
   m_GameObject: {fileID: 1000010085170624}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
