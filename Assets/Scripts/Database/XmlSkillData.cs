@@ -1,10 +1,15 @@
 ﻿using UnityEngine;
-
+using System.Collections;
+using System.Xml;
+using System;
 
 public class XmlSkillData : MonoBehaviour {
+    
+	public string fileName;
 
-   //mlDocument skillData = new XmlDocument();
-   // XmlElement myElement = skillData.CreateElement("Skill");
+    void XmlFileLoad()
+    {
 
+    }
 
 }

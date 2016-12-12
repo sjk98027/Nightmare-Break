@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SkillData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<info>
+		<SkillType>None</SkillType>
+		<SkillName>0</SkillName>
+		<SkillIndex>0</SkillIndex>
+		<SkillManaCost>0</SkillManaCost>
+		<SkillCoolTime>0</SkillCoolTime>
+		<SkillExplanation>0</SkillExplanation>
+	</info>
+	<info>
+		<SkillType>Active</SkillType>
+		<SkillName>소용돌이</SkillName>
+		<SkillIndex>1</SkillIndex>
+		<SkillManaCost>10</SkillManaCost>
+		<SkillCoolTime>5</SkillCoolTime>
+		<SkillExplanation>회전공격을 하며 주위 적들에게 광역공격을 한다.</SkillExplanation>
+	</info>
+	<info>
+		<SkillType>Active</SkillType>
+		<SkillName>섬단</SkillName>
+		<SkillIndex>2</SkillIndex>
+		<SkillManaCost>20</SkillManaCost>
+		<SkillCoolTime>3</SkillCoolTime>
+		<SkillExplanation>빠른속도로 전방의 적들을 베어버린다.</SkillExplanation>
+	</info>
+	<info>
+		<SkillType>Active</SkillType>
+		<SkillName>검무</SkillName>
+		<SkillIndex>3</SkillIndex>
+		<SkillManaCost>30</SkillManaCost>
+		<SkillCoolTime>3</SkillCoolTime>
+		<SkillExplanation>검으로 근접한 적들을 도륙하는 공격을한다.</SkillExplanation>
+	</info>
+	<info>
+		<SkillType>Active</SkillType>
+		<SkillName>기간틱소드</SkillName>
+		<SkillIndex>4</SkillIndex>
+		<SkillManaCost>60</SkillManaCost>
+		<SkillCoolTime>4</SkillCoolTime>
+		<SkillExplanation>전방에 거대한 검을 소환하여 적들을 섬멸한다.</SkillExplanation>
+	</info>
+	<info>
+		<SkillType>Passive</SkillType>
+		<SkillName>흡혈공격</SkillName>
+		<SkillIndex>5</SkillIndex>
+		<SkillExplanation>일반 공격시 준 데미지의 일정량을 체력으로 회복한다.</SkillExplanation>
+	</info>
+	<info>
+		<SkillType>Passive</SkillType>
+		<SkillName>극의</SkillName>
+		<SkillIndex>6</SkillIndex>
+		<SkillExplanation>무기 공격력의 일정량의 추가 방어력을 얻는다.</SkillExplanation>
+	</info>
+</SkillData>
