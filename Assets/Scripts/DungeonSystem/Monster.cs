@@ -26,6 +26,7 @@ public class Monster : MonoBehaviour {
 	protected bool moveAble;
 
     [SerializeField] protected int monsterIndex;
+    [SerializeField] protected UnitId monsterId;
     [SerializeField] protected string _name;
     [SerializeField] protected int level;
     [SerializeField] protected int currentHP;
@@ -88,9 +89,11 @@ public class Monster : MonoBehaviour {
         get { return currentHP; }
         set { currentHP = value; }
     }
-    public int Attack { get { return attack; } }
 
-	public void MonsterSet(MonsterBaseData monster)
+    public int Attack { get { return attack; } }
+    public UnitId MonsterId { get { return monsterId; } set { monsterId = value; } }
+
+    public void MonsterSet(MonsterBaseData monster)
 	{
         animator = this.gameObject.GetComponent<Animator>();
         HittedBox = this.gameObject.GetComponent<BoxCollider>();

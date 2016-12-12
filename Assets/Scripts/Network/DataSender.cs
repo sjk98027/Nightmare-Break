@@ -343,6 +343,20 @@ public class DataSender : MonoBehaviour
         sendMsgs.Enqueue(packet);
     }
 
+    //던전 몬스터 소환 데이터 요청 -> Server
+    public void RequestSpawnMonsterList()
+    {
+        Debug.Log("몬스터 소환 데이터 요청");
+
+        ResultData resultData = new ResultData();
+        ResultPacket resultPacket = new ResultPacket(resultData);
+        resultPacket.SetPacketId((int)ClientPacketId.RequestSpawnMonsterList);
+
+        DataPacket packet = new DataPacket(CreatePacket(resultPacket), null);
+
+        sendMsgs.Enqueue(packet);
+    }
+
     //던전 데이터 요청 -> Server
     public void RequestDungeonData()
     {

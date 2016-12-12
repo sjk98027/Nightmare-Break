@@ -86,6 +86,8 @@ public class WaitUIManager
     public void OnClickStartGameButton()
     {
         DataSender.Instance.StartGame();
+        DataSender.Instance.RequestSpawnMonsterList();
+        DataSender.Instance.RequestDungeonData();
     }
 }
 public class Room

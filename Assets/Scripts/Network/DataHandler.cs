@@ -364,6 +364,17 @@ public class DataHandler : MonoBehaviour
         }
     }
 
+    //Server - 던전 몬스터 소환 데이터 수신
+    public void SpawnMonsterData(DataPacket packet)
+    {
+        Debug.Log("던전 몬스터 소환 데이터 수신");
+
+        MonsterSpawnListPacket monsterSpawnListPacket = new MonsterSpawnListPacket(packet.msg);
+        MonsterSpawnList monsterSpawnList = monsterSpawnListPacket.GetData();
+
+        dungeonManager.SetMonsterSpawnList(monsterSpawnList);
+    }
+
     //Server - 던전 데이터 수신
     public void DungeonData(DataPacket packet)
     {
@@ -372,7 +383,7 @@ public class DataHandler : MonoBehaviour
         DungeonDataPacket dungeonDataPacket = new DungeonDataPacket(packet.msg);
         DungeonData dungeonData = dungeonDataPacket.GetData();
 
-        dungeonManager.SpawnMonster();
+        dungeonManager.SetMonsterData(dungeonData);
     }
 
     //Client - 연결 확인 답장

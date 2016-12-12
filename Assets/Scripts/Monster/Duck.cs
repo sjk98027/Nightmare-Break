@@ -305,7 +305,6 @@ public class Duck : Monster {
 						yield return new WaitForSeconds (2f);
 					}
 				} else
-					Debug.Log ("a");
 				yield return new WaitForSeconds (3f);
 		}
 			else if(!IsAlive){
