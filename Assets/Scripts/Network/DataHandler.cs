@@ -312,6 +312,11 @@ public class DataHandler : MonoBehaviour
         {
             Debug.Log("게임 시작");
             DataSender.Instance.RequestUdpConnection();
+
+            if (uiManager.WaitUIManager.UserNum == 0)
+            {
+                DataSender.Instance.RequestDungeonData();
+            }
         }
         else if (resultData.Result == (byte)Result.Fail)
         {
@@ -357,6 +362,17 @@ public class DataHandler : MonoBehaviour
                 networkManager.ConnectP2P(newEndPoint);
             }
         }
+    }
+
+    //Server - 던전 데이터 수신
+    public void DungeonData(DataPacket packet)
+    {
+        Debug.Log("던전 데이터 수신");
+
+        DungeonDataPacket dungeonDataPacket = new DungeonDataPacket(packet.msg);
+        DungeonData dungeonData = dungeonDataPacket.GetData();
+
+        dungeonManager.SpawnMonster();
     }
 
     //Client - 연결 확인 답장

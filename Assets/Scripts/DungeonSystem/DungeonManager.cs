@@ -20,16 +20,15 @@ public enum UnitId
 //this class manage monsterStageLevel, sumon, player sumon, player death;
 public class DungeonManager : MonoBehaviour
 {
-
     GameObject[] playerSpawnPoints;
     GameObject[] players;
-    GameObject[] monsterSpawnPoints;
+    [SerializeField]GameObject[] monsterSpawnPoints;
     GameObject[] monsters;
     CharacterManager[] characterData;
     Monster[] monsterData;
 
     MonsterSpawnList monsterSpawnList;
-    MonsterDataList monsterDataList;
+    DungeonData dungeonData;
 
     public SceneChangeObject[] sceneChangeObject;
 	public BossMonsterKYW bossMonster;
@@ -65,11 +64,30 @@ public class DungeonManager : MonoBehaviour
 		mapNumber = 0;
 
 
-		DungeonConstruct();
-        //mapNumber - > inspector define
-		//        modeForm = false;
-//		        ModeChange(n);//client get modeform and ingame play ;
-		//section = transform.GetComponentsInChildren<Section> ();
+		//DungeonConstruct();
+
+        if (GameObject.FindGameObjectWithTag("GameManager") == null)
+        {
+            InitializeMonsterSpawnPoint();
+
+            MonsterSpawnData[] monsterSpawnData = new MonsterSpawnData[3];
+            monsterSpawnData[0] = new MonsterSpawnData((int)UnitId.Frog, 5);
+            monsterSpawnData[1] = new MonsterSpawnData((int)UnitId.Duck, 1);
+            monsterSpawnData[2] = new MonsterSpawnData((int)UnitId.Rabbit, 3);
+            monsterSpawnList = new MonsterSpawnList(3, monsterSpawnData);
+
+            MonsterBaseData[] monsterBaseData = new MonsterBaseData[3];
+            monsterBaseData[0] = new MonsterBaseData((int)MonsterId.Frog, "Frog");
+            monsterBaseData[0].AddLevelData(new MonsterLevelData(1, 2, 0, 30, 5));
+            monsterBaseData[1] = new MonsterBaseData((int)MonsterId.Duck, "Duck");
+            monsterBaseData[1].AddLevelData(new MonsterLevelData(1, 3, 0, 35, 4));
+            monsterBaseData[2] = new MonsterBaseData((int)MonsterId.Rabbit, "Rabbit");
+            monsterBaseData[2].AddLevelData(new MonsterLevelData(1, 50, 0, 75, 4));
+            dungeonData = new DungeonData(3, monsterBaseData);
+
+            SpawnMonster();
+            SetMonsterData();
+        }        
 	}
 
 	void Update()
@@ -189,25 +207,36 @@ public class DungeonManager : MonoBehaviour
 
     }
 
+    public void SetMonsterSpawnData(DungeonData dungeonData)
+    {
+
+    }
+
     public void SpawnMonster()
     {
         monsters = new GameObject[monsterSpawnList.MonsterNum];
+        monsterData = new Monster[monsterSpawnList.MonsterNum];
 
-        for (int monsterIndex = 0; monsterIndex < monsterSpawnList.MonsterNum; monsterIndex++)
+        int monsterIndex = 0;
+
+        for (int i = 0; i < monsterSpawnList.MonsterKind; i++)
         {
-            monsters[monsterIndex] = CreateMonster(monsterSpawnList.MonsterSpawnData[monsterIndex].MonsterId, monsterIndex, monsterSpawnPoints[monsterIndex].transform.position);
-            monsterData[monsterIndex].MonsterIndex = monsterIndex;
+            for (int j = 0; j < monsterSpawnList.MonsterSpawnData[i].MonsterNum; j++)
+            {
+                monsters[monsterIndex] = CreateMonster(monsterSpawnList.MonsterSpawnData[i].MonsterId, monsterIndex, monsterSpawnPoints[monsterIndex].transform.position);
+                monsterData[monsterIndex].MonsterIndex = monsterIndex++;
+            }
         }
 	}
 
-    public void SetMonsterData(MonsterDataList monsterDataList)
+    public void SetMonsterData()
     {
-        for (int monsterIndex = 0; monsterIndex < monsterDataList.MonsterNum; monsterIndex++)
+        for (int monsterIndex = 0; monsterIndex < dungeonData.MonsterNum; monsterIndex++)
         {
             monsterData[monsterIndex].player = players;
-            monsterData[monsterIndex].MonsterSet(monsterDataList.MonsterBaseData[monsterIndex]);
+            monsterData[monsterIndex].MonsterSet(dungeonData.MonsterData[monsterIndex]);
 
-            if (monsterDataList.MonsterBaseData[monsterIndex].Id < (int) UnitId.BlackBear)
+            if (dungeonData.MonsterData[monsterIndex].Id < (int) UnitId.BlackBear)
             {
                 monsterData[monsterIndex].MonsterMoveAI(normalMode);
             }
