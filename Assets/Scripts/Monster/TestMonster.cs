@@ -42,6 +42,7 @@ public class TestMonster : Monster
 	public GameObject roar;
 
 	public bool bossSkill;
+	public bool notMove;
 
 	private AudioSource bossAudio;
 	public AudioClip bossStartSound;
@@ -51,6 +52,8 @@ public class TestMonster : Monster
 	public AudioClip bossDeath;
 	public AudioClip oneHandAttack;
 	public AudioClip normalAttack;
+
+	int pattern;
 
 	public enum insertImageState
 	{
@@ -105,17 +108,22 @@ public class TestMonster : Monster
 				stateInfo = this.animator.GetCurrentAnimatorStateInfo (0);
 				searchRange = Vector3.Distance (chasePlayer.transform.position, transform.position);
 			
+
+				if (searchRange < attackRange)
+				{
+					BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossAttack);
+				}
+
 				if (searchRange > RunRange)
 				{
 					BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossIdle);
 					if (stateInfo.IsName("BigBearBossIdle"))
 					{
 						changeDirection ();
-
 					}
 
 				}
-				else if (searchRange <= RunRange && searchRange > attackRange)
+				else if (searchRange <= RunRange && searchRange > attackRange && !notMove)
 				{
 					BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossRun);
 
@@ -180,8 +188,8 @@ public class TestMonster : Monster
 		{
 			yield return new WaitForSeconds (5f);
 
-			//int pattern = Random.Range (0, bossPatternCount + 1);
-			int pattern = 1;
+			pattern = Random.Range (0, bossPatternCount + 1);
+			// pattern = 1;
 			bossSkill = true;
 			animator.SetBool ("BossSkill", true);
 
@@ -198,16 +206,7 @@ public class TestMonster : Monster
 			{
 				BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossOneHandAttack);
 			}
-			else
-			{
-				SetStateDefault ();
 
-
-				if (searchRange < attackRange)
-				{
-					BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossAttack);
-				}
-			}
 
 			yield return new WaitForSeconds (1.0f);
 
@@ -239,19 +238,39 @@ public class TestMonster : Monster
 
 	public void RoarHit()
 	{
-		Instantiate (Resources.Load<GameObject> ("Effect/WarningEffect"), new Vector3(-3.55f, 0.15f , this.transform.position.z+10f) , Quaternion.Euler (-90, 0, 0));
-		GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<RedRenderImage> ().enabled = true;
+		Debug.Log (stateDirecion);
+		if (stateDirecion == StateDirecion.right)
+		{
+			Instantiate (Resources.Load<GameObject> ("Effect/WarningEffect"), new Vector3 (-3.55f, 0.15f, this.transform.position.z + 10f), Quaternion.Euler (-90, 0, 0));
+		}
+		else if (stateDirecion == StateDirecion.left)
+		{
+			Instantiate (Resources.Load<GameObject> ("Effect/WarningEffect"), new Vector3 (3.55f, 0.15f, this.transform.position.z - 10f), Quaternion.Euler (-90, 0, 0));
+		} 
+
+		//GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<RedRenderImage> ().enabled = true;
 	}
 
 
 	public void changeDirection ()
-	{//캐릭터 이동시 보스가 보는 방향을 정한다.
+	{
+		//캐릭터 이동시 보스가 보는 방향을 정한다.
 		Vector3 vecLookPos =chasePlayer.transform.position;
 		vecLookPos.y = transform.position.y;
 		vecLookPos.x = transform.position.x;
 
-		transform.LookAt (vecLookPos);
+		checkDirection = chasePlayer.transform.position - this.gameObject.transform.position;
 
+		if (checkDirection.z > 0) 
+		{
+			LookAtPattern (StateDirecion.right);
+		}
+		else if (checkDirection.z < 0) 
+		{
+			LookAtPattern (StateDirecion.left);
+		}
+
+		transform.LookAt (vecLookPos);
 	}
 
 
@@ -302,7 +321,6 @@ public class TestMonster : Monster
 			monsterAttack = true;
 			this.bossAudio.PlayOneShot (normalAttack);
 			this.bossAudio.loop = false;
-
 			break;
 
 		case 3:

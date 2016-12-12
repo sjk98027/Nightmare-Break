@@ -10,6 +10,7 @@ public class MageManager : CharacterManager
 	public GameObject mageRing;
 	public Armageddon ArmageddonDamage;
 	public bool howling;
+	public bool poweroverwhelming;
 
 	public override void ProcessSkill1 ()
 	{
@@ -119,7 +120,6 @@ public class MageManager : CharacterManager
 			ArmageddonDamage = armageddon.GetComponent<Armageddon> ();
 
 		ArmageddonDamage.armageddonDamage = 100;
-		
 	}
 	public void HowlingForce()
 	{
@@ -128,61 +128,75 @@ public class MageManager : CharacterManager
 
 	public override void HitDamage (int _damage)
 	{
-		if (CharStatus.SkillLevel [5] < 4)
+		if (!poweroverwhelming)
 		{
-			if (charAlive)
+			if (CharStatus.SkillLevel [5] < 4)
 			{
-				int chance = (CharStatus.SkillLevel [4]) * 25;
-				int superArmor;
-				superArmor = Random.Range (0, 100);
-
-				if (CharStatus.HealthPoint > 0)
+				if (charAlive)
 				{
-					CharStatus.DecreaseHealthPoint (_damage);
+					int chance = (CharStatus.SkillLevel [4]) * 25;
+					int superArmor;
+					superArmor = Random.Range (0, 100);
 
-					if (chance > superArmor)
+					if (CharStatus.HealthPoint > 0)
 					{
+						CharStatus.DecreaseHealthPoint (_damage);
+
+						if (chance > superArmor)
+						{
+							if (State != CharacterState.Skill1 && State != CharacterState.Skill2 && State != CharacterState.Skill3 && State != CharacterState.Skill4)
+							{
+								CharState ((int)CharacterState.HitDamage);
+							}
+							else
+							{
+								//ArmorEffect
+							}
+						}
+					}
+					else if (CharStatus.HealthPoint <= 0)
+					{
+						CharState ((int)CharacterState.Death);
+						charAlive = false;
+					}
+				}
+
+			}
+			else if (CharStatus.SkillLevel [5] == 4)
+			{
+				Debug.Log (CharStatus.HealthPoint);
+				if (charAlive)
+				{
+					if (CharStatus.HealthPoint > 0)
+					{
+						CharStatus.DecreaseHealthPoint (_damage);
+
+						CharState ((int)CharacterState.HitDamage);
+
 						if (State != CharacterState.Skill1 && State != CharacterState.Skill2 && State != CharacterState.Skill3 && State != CharacterState.Skill4)
 						{
 							CharState ((int)CharacterState.HitDamage);
 						}
-						else
-						{
-							//ArmorEffect
-						}
 					}
-				}
-				else if (CharStatus.HealthPoint <= 0)
-				{
-					CharState ((int)CharacterState.Death);
-					charAlive = false;
-				}
-			}
-
-		}
-		else if (CharStatus.SkillLevel [5] == 4)
-		{
-			Debug.Log (CharStatus.HealthPoint );
-			if (charAlive)
-			{
-				if (CharStatus.HealthPoint > 0)
-				{
-					CharStatus.DecreaseHealthPoint (_damage);
-
-					CharState ((int)CharacterState.HitDamage);
-
-					if (State != CharacterState.Skill1 && State != CharacterState.Skill2 && State != CharacterState.Skill3 && State != CharacterState.Skill4)
+					else if (CharStatus.HealthPoint <= 0)
 					{
-						CharState ((int)CharacterState.HitDamage);
+						CharState ((int)CharacterState.Death);
+						charAlive = false;
 					}
-				}
-				else if (CharStatus.HealthPoint <= 0)
-				{
-					CharState ((int)CharacterState.Death);
-					charAlive = false;
 				}
 			}
 		}
+
+	}
+
+	IEnumerator unbeatableCall()
+	{
+		poweroverwhelming = true;
+
+		//무적시간
+		yield return new WaitForSeconds (1f);
+
+		poweroverwhelming = false;
 	}
 
 

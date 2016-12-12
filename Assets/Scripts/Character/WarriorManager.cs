@@ -17,6 +17,7 @@ public class WarriorManager : CharacterManager
     private TrailRenderer trailRenderer;
     private GameObject[] attackEffect;
 	int skillLv;
+	public bool poweroverwhelming;
 
 	public override void NormalAttack ()
 	{
@@ -151,82 +152,96 @@ public class WarriorManager : CharacterManager
 
 	public override void HitDamage (int _damage)
 	{
-		if (CharStatus.SkillLevel [5] < 4)
+		if (!poweroverwhelming)
 		{
-			if (charAlive)
+			
+			if (CharStatus.SkillLevel [5] < 4)
 			{
+				if (charAlive)
+				{
+					if (charAlive)
+					{
+						if (CharStatus.HealthPoint > 0)
+						{
+							int deFendDamage;
+							deFendDamage = _damage - (CharStatus.SkillLevel [5] * 1);
+							Debug.Log (deFendDamage);
+							if (deFendDamage < 0)
+							{
+								deFendDamage = 0;
+							}
+							CharStatus.DecreaseHealthPoint (deFendDamage);
+
+							if (State != CharacterState.Skill1 && State != CharacterState.Skill2 && State != CharacterState.Skill3 && State != CharacterState.Skill4)
+							{
+								CharState ((int)CharacterState.HitDamage);
+							}
+						}
+						if (CharStatus.HealthPoint <= 0)
+						{
+							CharState ((int)CharacterState.Death);
+							charAlive = false;
+						}
+					}
+				}
+			}
+			else if (CharStatus.SkillLevel [5] == 4)
+			{
+				Debug.Log (CharStatus.HealthPoint);
 				if (charAlive)
 				{
 					if (CharStatus.HealthPoint > 0)
 					{
 						int deFendDamage;
 						deFendDamage = _damage - (CharStatus.SkillLevel [5] * 1);
-						Debug.Log (deFendDamage);
+
 						if (deFendDamage < 0)
 						{
 							deFendDamage = 0;
 						}
 						CharStatus.DecreaseHealthPoint (deFendDamage);
+	
+						CharState ((int)CharacterState.HitDamage);
 
 						if (State != CharacterState.Skill1 && State != CharacterState.Skill2 && State != CharacterState.Skill3 && State != CharacterState.Skill4)
 						{
 							CharState ((int)CharacterState.HitDamage);
 						}
 					}
-					if (CharStatus.HealthPoint <= 0)
+					else if (CharStatus.HealthPoint <= 0)
 					{
+					
 						CharState ((int)CharacterState.Death);
+
 						charAlive = false;
+
+						if (!rise)
+						{
+							rise = true;
+							charAlive = true;
+							animator.SetBool ("Rise", false);
+							StartCoroutine (colltimeCheck ());
+							CharStatus.DecreaseHealthPoint ((-100));
+					
+						}
+						else if (rise)
+						{
+							animator.SetBool ("Rise", true);
+						}
 					}
 				}
 			}
 		}
-		else if (CharStatus.SkillLevel [5] == 4)
-		{
-			Debug.Log (CharStatus.HealthPoint );
-			if (charAlive)
-			{
-				if (CharStatus.HealthPoint > 0)
-				{
-					int deFendDamage;
-					deFendDamage = _damage - (CharStatus.SkillLevel [5] * 1);
+	}
 
-					if (deFendDamage < 0)
-					{
-						deFendDamage = 0;
-					}
-					CharStatus.DecreaseHealthPoint (deFendDamage);
-	
-					CharState ((int)CharacterState.HitDamage);
+	IEnumerator unbeatableCall()
+	{
+		poweroverwhelming = true;
 
-					if (State != CharacterState.Skill1 && State != CharacterState.Skill2 && State != CharacterState.Skill3 && State != CharacterState.Skill4)
-					{
-						CharState ((int)CharacterState.HitDamage);
-					}
-				}
-				else if (CharStatus.HealthPoint <= 0)
-				{
-					
-					CharState ((int)CharacterState.Death);
+		//무적시간
+		yield return new WaitForSeconds (1f);
 
-					charAlive = false;
-
-					if (!rise)
-					{
-						rise = true;
-						charAlive = true;
-						animator.SetBool ("Rise", false);
-						StartCoroutine (colltimeCheck());
-						CharStatus.DecreaseHealthPoint ((-100));
-					
-					}
-					else if (rise)
-					{
-						animator.SetBool ("Rise", true);
-					}
-				}
-			}
-		}
+		poweroverwhelming = false;
 	}
 
     public void NormalAttackEffect2(int _attackNum)
