@@ -5,11 +5,17 @@ public class MonsterWeapon : MonoBehaviour {
 	
 	public Monster monster;
 	public BoxCollider AttackCollider;
-	public int damage;
+	public int damage = 10;
+
+	void Start()
+	{
+		damage = 10;
+		MonsterWeaponSet ();
+	}
 
 	public void MonsterWeaponSet(){
 		monster = this.GetComponentInParent<Monster> ();
-		damage = monster.BaseDamage;
+		//damage = monster.BaseDamage;
 		AttackCollider = this.GetComponent<BoxCollider> ();
 		AttackColliderOff ();
 	}
@@ -26,7 +32,9 @@ public class MonsterWeapon : MonoBehaviour {
 	{
 		if (coll.gameObject.layer == LayerMask.NameToLayer ("Player"))
 		{
+			
 			CharacterManager CharObject = coll.gameObject.GetComponent<CharacterManager> ();
+			Debug.Log (damage);
 			if (damage != 0)
 			{
 				CharObject.HitDamage (damage);

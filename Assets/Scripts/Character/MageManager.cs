@@ -11,6 +11,7 @@ public class MageManager : CharacterManager
 	public Armageddon ArmageddonDamage;
 	public bool howling;
 	public bool poweroverwhelming;
+	public GameObject superArmorEffect;
 
 	public override void ProcessSkill1 ()
 	{
@@ -128,12 +129,15 @@ public class MageManager : CharacterManager
 
 	public override void HitDamage (int _damage)
 	{
+		
 		if (!poweroverwhelming)
 		{
+			Debug.Log (CharStatus.HealthPoint);
 			if (CharStatus.SkillLevel [5] < 4)
 			{
 				if (charAlive)
-				{
+				{	
+					CharStatus.SkillLevel [4] = 3;
 					int chance = (CharStatus.SkillLevel [4]) * 25;
 					int superArmor;
 					superArmor = Random.Range (0, 100);
@@ -151,7 +155,14 @@ public class MageManager : CharacterManager
 							else
 							{
 								//ArmorEffect
+								Debug.Log ("in superA");
+								superArmorEffect = Instantiate (Resources.Load<GameObject> ("Effect/MagicionPassive2"), new Vector3 (transform.position.x, transform.position.y + 1.0f, transform.position.z), Quaternion.Euler (90, 0, 90))as GameObject;
+								Destroy (superArmorEffect, 0.5f);
 							}
+						}
+						else
+						{
+							CharState ((int)CharacterState.HitDamage);
 						}
 					}
 					else if (CharStatus.HealthPoint <= 0)
@@ -186,7 +197,6 @@ public class MageManager : CharacterManager
 				}
 			}
 		}
-
 	}
 
 	IEnumerator unbeatableCall()

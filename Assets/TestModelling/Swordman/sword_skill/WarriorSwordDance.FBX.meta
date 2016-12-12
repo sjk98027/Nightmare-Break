@@ -203,7 +203,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.0094457455
+      - time: 0.004048583
         functionName: AttackEffect
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 49494eaf77bde6e4a96a0fded9f18500,
@@ -211,18 +211,11 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.78123987
-        functionName: SwordDanceBoxSummon
+      - time: 0.7716245
+        functionName: SwordDanceFinishSound
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 49494eaf77bde6e4a96a0fded9f18500,
           type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.8866191
-        functionName: AnimationEnd
-        data: 
-        objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
@@ -232,6 +225,20 @@ ModelImporter:
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 1
+        messageOptions: 0
+      - time: 0.8866191
+        functionName: AnimationEnd
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0
+        functionName: SwordDanceSound
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
         messageOptions: 0
       transformMask:
       - path: 

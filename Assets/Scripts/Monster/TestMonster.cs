@@ -17,8 +17,8 @@ public class TestMonster : Monster
 
 	public float searchRange;
 	public float moveSpeed;
-
-
+	public AudioClip bossStartSound;
+	private AudioSource bossAudio;
 	float AttackTime;
 	int shootNumber;
 	public const int bossPatternCount = 3;
@@ -44,14 +44,10 @@ public class TestMonster : Monster
 	public bool bossSkill;
 	public bool notMove;
 
-	private AudioSource bossAudio;
-	public AudioClip bossStartSound;
-	public AudioClip bossHowling;
-	public AudioClip bossWait;
-	public AudioClip jumpAttack;
-	public AudioClip bossDeath;
-	public AudioClip oneHandAttack;
-	public AudioClip normalAttack;
+	public int ChaseCount = 0;
+	public bool normalAttackCycle;
+
+	public SoundManager sound;
 
 	int pattern;
 
@@ -71,30 +67,20 @@ public class TestMonster : Monster
 		attackRange = 3;
 //		uiManager = GameObject.FindWithTag ("UIManager").GetComponent<UIManager> ();
 
+
 		this.bossAudio = this.gameObject.GetComponent<AudioSource> ();
-
 		bossStartSound = Resources.Load<AudioClip> ("Sound/BossStart");
-		bossHowling = Resources.Load<AudioClip> ("Sound/Howling");
-		bossWait =  Resources.Load<AudioClip> ("Sound/bossWait");
-		jumpAttack = Resources.Load<AudioClip> ("Sound/JumpAttack");
-		bossDeath = Resources.Load<AudioClip> ("Sound/BossDeath");
-		oneHandAttack =  Resources.Load<AudioClip> ("Sound/OneHandAttack");
-		normalAttack = Resources.Load<AudioClip> ("Sound/NormalAttack");
-
-		this.bossAudio.clip = this.bossStartSound;
-		this.bossAudio.loop = false;
-
 		bossplayer = GameObject.FindGameObjectsWithTag ("Player");
 		chasePlayer = null;
 		animator = GetComponent<Animator> ();
 		BoxCollider[] MonsterWeapon = new BoxCollider[2];
 		skillInsertImage = GameObject.Find ("InGameUICanvas").transform.Find ("BossDeadlyPatternImage").Find("BossDeadlyPattern").GetComponent<Image>();
 		//skillInsertImage = transform.Find("InGameUICanvas").gameObject;
-
+		//sound = GameObject.Find("SoundManager").GetComponent<SoundManager>();
 		StartCoroutine (SetTargetPlayer());
 		StartCoroutine (BossAI());
+		StartCoroutine (CoChasePlayer());
 
-		this.bossAudio.PlayOneShot (bossStartSound);
 	}
 
 	void Update ()
@@ -109,9 +95,10 @@ public class TestMonster : Monster
 				searchRange = Vector3.Distance (chasePlayer.transform.position, transform.position);
 			
 
-				if (searchRange < attackRange)
+				if (searchRange < attackRange && normalAttackCycle)
 				{
 					BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossAttack);
+					normalAttackCycle = false;
 				}
 
 				if (searchRange > RunRange)
@@ -134,14 +121,14 @@ public class TestMonster : Monster
 					}
 				}
 
-				if (monsterAttack)
+				if (stateInfo.IsName ("BigBearBossAttack"))
 				{
 					for (int i = 0; i < MonsterWeapon.Length; i++)
 					{
 						MonsterWeapon [i].enabled = true;
 					}
 				}
-				else if (!monsterAttack)
+				else if (!stateInfo.IsName ("BigBearBossAttack"))
 				{
 					for (int i = 0; i < MonsterWeapon.Length; i++)
 					{
@@ -186,9 +173,9 @@ public class TestMonster : Monster
 
 		while (IsAlive)
 		{
-			yield return new WaitForSeconds (5f);
+			yield return new WaitForSeconds (10f);
 
-			pattern = Random.Range (0, bossPatternCount + 1);
+			pattern = Random.Range (0, bossPatternCount);
 			// pattern = 1;
 			bossSkill = true;
 			animator.SetBool ("BossSkill", true);
@@ -214,6 +201,15 @@ public class TestMonster : Monster
 			animator.SetBool ("BossSkill", false);
 		}
 	}
+	IEnumerator CoChasePlayer()
+	{ 
+		while (IsAlive) 
+		{
+			normalAttackCycle = true;
+			
+			yield return new WaitForSeconds (3.0f);
+		}
+	}
 
 	public void AnimatorReSet()
 	{
@@ -230,7 +226,7 @@ public class TestMonster : Monster
 			int xPos = Random.Range (-2, 2);
 			int zPos = Random.Range (-2, 2);
 
-			Instantiate (Resources.Load<GameObject> ("Effect/OneHandSphere"), handPos.transform.position + (Vector3.right * xPos) + (Vector3.forward * zPos), Quaternion.Euler (0, 0, 0));
+			Instantiate (Resources.Load<GameObject> ("Effect/BossDarkSphere"), handPos.transform.position + (Vector3.right * xPos) + (Vector3.forward * zPos), Quaternion.Euler (0, 0, 0));
 
 			shootNum++;
 		}
@@ -301,7 +297,7 @@ public class TestMonster : Monster
 
 	public void BigBearBossPattern (int bossState)
 	{
-		monsterAttack = false;
+		
 		switch (bossState)
 		{
 
@@ -319,38 +315,39 @@ public class TestMonster : Monster
 			BigBearBossState = BigBearBossPatternName.BigBearBossAttack;
 			animator.SetInteger ("state", 2);
 			monsterAttack = true;
-			this.bossAudio.PlayOneShot (normalAttack);
-			this.bossAudio.loop = false;
+//			sound.BossSound (1,searchRange);
+			//this.bossAudio.PlayOneShot (normalAttack);
+			//this.bossAudio.loop = false;
 			break;
 
 		case 3:
 			BigBearBossState = BigBearBossPatternName.BigBearBossOneHandAttack;
 			animator.SetInteger ("state", 3);
-			monsterAttack = true;
-			this.bossAudio.PlayOneShot (oneHandAttack);
-			this.bossAudio.loop = false;
+
+			//this.bossAudio.PlayOneShot (oneHandAttack);
+			//this.bossAudio.loop = false;
 
 			break;
 
 		case 4:
 			BigBearBossState = BigBearBossPatternName.BigBearJumpAttack;
 			animator.SetInteger ("state", 4);
-			this.bossAudio.PlayOneShot (jumpAttack);
-			this.bossAudio.loop = false;
+			//this.bossAudio.PlayOneShot (jumpAttack);
+			//this.bossAudio.loop = false;
 			break;
 
 		case 5:
 			BigBearBossState = BigBearBossPatternName.BigBearBossRoar;
 			animator.SetInteger ("state", 5);
-			this.bossAudio.PlayOneShot (bossHowling);
-			this.bossAudio.loop = false;
+			//this.bossAudio.PlayOneShot (bossHowling);
+			//this.bossAudio.loop = false;
 			break;
 
 		case 6:
 			BigBearBossState = BigBearBossPatternName.BigBearBossDeath;
 			animator.SetTrigger ("BigBearBossDeath");
-			this.bossAudio.PlayOneShot (bossDeath);
-			this.bossAudio.loop = false;
+			//this.bossAudio.PlayOneShot (bossDeath);
+			//this.bossAudio.loop = false;
 			break;
 		}
 	}
@@ -429,8 +426,8 @@ public class TestMonster : Monster
 		}
 	}
 
-
-
-
-
+	public void TestSound()
+	{
+		this.bossAudio.PlayOneShot (bossStartSound);
+	}
 }

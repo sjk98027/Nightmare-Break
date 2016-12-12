@@ -24,8 +24,7 @@ public class OneHandAttack : MonoBehaviour
 		chase = false;
 
 	}
-	
-	// Update is called once per frame
+
 
 	IEnumerator SpherePosUp()
 	{
@@ -53,6 +52,7 @@ public class OneHandAttack : MonoBehaviour
 		}
 	}
 
+	// Update is called once per frame
 	void Update()
 	{
 //		transform.Translate (playerpos*(sphereSpeed-5)*Time.deltaTime));

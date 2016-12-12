@@ -5,7 +5,7 @@ public class EspadaSwordEffect : MonoBehaviour
 {
     ParticleSystem myParticle;
 	GameObject giganticSword;
-	Renderer rend;
+	public Renderer rend;
 	public bool count;
 	public CharacterStatus charStatus;
 	public CharacterManager charManager;
@@ -16,20 +16,20 @@ public class EspadaSwordEffect : MonoBehaviour
     void Start()
     {
 		count = true;
-        myParticle = transform.GetChild(0).GetComponent<ParticleSystem>();
+       // myParticle = transform.GetChild(0).GetComponent<ParticleSystem>();
 		character = GameObject.FindWithTag ("Player");
 
 		charManager = character.GetComponent<CharacterManager> ();
         charStatus = charManager.CharStatus;
 		giganticSword = this.gameObject;
 
-		rend = this.gameObject.GetComponent<Renderer> ();
+		rend = GetComponent<Renderer> ();
 		StartCoroutine(EffectMove());
 	}
 	void Update()
 	{
-        charStatus.SkillLevel [5] = 3;
-		swordDamage = charStatus.SkillLevel [5] * charStatus.Attack;
+       // charStatus.SkillLevel [5] = 3;
+//		swordDamage = charStatus.SkillLevel [5] * charStatus.Attack;
 		if (!count)
 		{
 			giganticSwordAliveTime += Time.deltaTime;
@@ -58,6 +58,7 @@ public class EspadaSwordEffect : MonoBehaviour
 
     void OnCollisionEnter(Collision coll)
     {
+		Debug.Log ("in f");
         if (coll.gameObject.layer == LayerMask.NameToLayer("Map"))
         {
             Instantiate(Resources.Load<GameObject>("Effect/Explosion"), transform.position, Quaternion.identity);
