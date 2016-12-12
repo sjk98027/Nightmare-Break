@@ -5,17 +5,11 @@ public class MonsterWeapon : MonoBehaviour {
 	
 	public Monster monster;
 	public BoxCollider AttackCollider;
-	public int damage = 10;
-
-	void Start()
-	{
-		damage = 10;
-		MonsterWeaponSet ();
-	}
+	public int damage;
 
 	public void MonsterWeaponSet(){
 		monster = this.GetComponentInParent<Monster> ();
-		//damage = monster.BaseDamage;
+		damage = monster.BaseDamage;
 		AttackCollider = this.GetComponent<BoxCollider> ();
 		AttackColliderOff ();
 	}
