@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class MiddleBoss : Monster {
-	private BoomMonster[] boomObject;
-	public BoomMonster[] BoomObject{
+	private Frog[] boomObject;
+	public Frog[] BoomObject{
 		get { return boomObject;}
 	}
 	public GameObject middleBoss;

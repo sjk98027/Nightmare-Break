@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ShockWaveMonster : Monster {
+public class Duck : Monster {
 	private float searchRange = 12.0f;
 	private float moveSpeed = 2.5f;
 

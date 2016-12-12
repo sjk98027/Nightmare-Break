@@ -247,7 +247,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010437855930}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.7250004, y: -0.09999988, z: -15.73}
+  m_LocalPosition: {x: 3.9192514, y: -0.039999884, z: -5.674358}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -312,20 +312,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4488e55c5b00d6e4eb569657d5ea70e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BoomMonsterSpawn:
+  FrogSpawn:
   - {fileID: 1000010813328226}
   - {fileID: 1000013231218340}
   - {fileID: 1000011644000390}
-  ShockwaveMonsterSpawn:
+  DuckSpawn:
   - {fileID: 1000011852138632}
   - {fileID: 1000014057066820}
   - {fileID: 1000012761351988}
-  WarriorMonsterSpawn:
+  RabbitSpawn:
   - {fileID: 1000012856205384}
   - {fileID: 1000014294781568}
   - {fileID: 1000010609769308}
-  boomMonsterCount: 0
-  shockWaveMonsterCount: 0
-  warriorMonsterCount: 0
+  FrogCount: 0
+  DuckCount: 0
+  RabbitCount: 0
   spawnVector: []
   sumMonsterCount: 0
