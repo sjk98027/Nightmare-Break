@@ -13,8 +13,6 @@ public enum StatePosition
 	BossRoar,
 }
 
-
-
 public class Monster : MonoBehaviour {
     public enum StateDirecion
     {
@@ -220,24 +218,18 @@ public class Monster : MonoBehaviour {
 							if (randomStandby == 0) {
 								//for 문 -> Fuck go;
 								if (checkDirection.z>0) {
-									movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z-3f);
-									yield return new WaitForSeconds (2f);
-									movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z-3f);
-									yield return new WaitForSeconds (2f);
-									movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z-3f);
-									yield return new WaitForSeconds (2f);
-									movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z-3f);
-									yield return new WaitForSeconds (2f);
-								}
+                                    for (int i = 0; i < 4; i++)
+                                    {
+                                        movePoint = new Vector3(checkDirection.x, 0, checkDirection.z - 3f);
+                                        yield return new WaitForSeconds(2f);
+                                    }
+                                }
 								if (checkDirection.z<0) {
-									movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z+3f);
-									yield return new WaitForSeconds (2f);
-									movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z+3f);
-									yield return new WaitForSeconds (2f);
-									movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z+3f);
-									yield return new WaitForSeconds (2f);
-									movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z+3f);
-									yield return new WaitForSeconds (2f);
+                                    for (int i = 0; i < 4; i++)
+                                    {
+                                        movePoint = new Vector3(checkDirection.x, 0, checkDirection.z + 3f);
+                                        yield return new WaitForSeconds(2f);
+                                    }									
 								}
 							}
 

@@ -79,15 +79,15 @@ public class DungeonManager : MonoBehaviour
 
 	void Update()
 	{
-		//if (normalMode)
-		//{
-  //          for (int i =0; i< monsters.Length; i++)
-  //          {
-		//		monsterData [i].GuestMonsterUpdate ();
+        if (normalMode)
+        {
+            for (int i = 0; i < monsters.Length; i++)
+            {
+                monsterData[i].GuestMonsterUpdate();
 
-		//		//monsterData[i].HostUpdateConduct();
-  //          }
-		//}
+                //monsterData[i].HostUpdateConduct();
+            }
+        }
 
         if (!normalMode)
         {
