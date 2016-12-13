@@ -168,34 +168,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: []
-  animator: {fileID: 0}
-  targetPlayer: {fileID: 0}
   HittedBox: {fileID: 0}
-  MonsterRunAttackAround: 0
-  monsterArrayNumber: 0
-  movePoint: {x: 0, y: 0, z: 0}
-  currentLife: 0
-  maxLife: 0
-  RunRange: 0
-  attackRange: 0
-  attackCycle: 0
-  baseDamage: 0
-  isAlive: 0
-  isAttack: 0
-  isHited: 0
-  playerToMonsterDamage: []
-  aggroRank: []
-  changeTargetTime: 0
   attackCollider: {fileID: 0}
   shockWaveInstantiate: {fileID: 0}
-  currentDisTanceArray: []
-  stateDirecion: 0
+  player: []
+  targetPlayer: {fileID: 0}
+  monsterIndex: 0
+  monsterId: 0
+  _name: 
+  level: 0
+  currentHP: 0
+  maxHP: 0
+  attack: 0
+  defense: 0
+  moveSpeed: 0
   currentDisTance: 0
+  currentDisTanceArray: []
   middleboss: {fileID: 0}
   monsterState: 0
-  pointVector: []
-  transitionVector: {x: 0, y: 0, z: 0}
 --- !u!65 &5500389
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4325,7 +4315,6 @@ MonoBehaviour:
   Frog: []
   Rabbit: []
   shockWaveMonster: []
-  middleBoss: {fileID: 0}
   middleBoss1: {fileID: 0}
   goToTheBoss: {fileID: 0}
   FrogPosition: []
@@ -5007,34 +4996,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: []
-  animator: {fileID: 0}
-  targetPlayer: {fileID: 0}
   HittedBox: {fileID: 0}
-  MonsterRunAttackAround: 0
-  monsterArrayNumber: 0
-  movePoint: {x: 0, y: 0, z: 0}
-  currentLife: 0
-  maxLife: 0
-  RunRange: 0
-  attackRange: 0
-  attackCycle: 0
-  baseDamage: 0
-  isAlive: 0
-  isAttack: 0
-  isHited: 0
-  playerToMonsterDamage: []
-  aggroRank: []
-  changeTargetTime: 0
   attackCollider: {fileID: 0}
   shockWaveInstantiate: {fileID: 0}
-  currentDisTanceArray: []
-  stateDirecion: 0
+  player: []
+  targetPlayer: {fileID: 0}
+  monsterIndex: 0
+  monsterId: 0
+  _name: 
+  level: 0
+  currentHP: 0
+  maxHP: 0
+  attack: 0
+  defense: 0
+  moveSpeed: 0
   currentDisTance: 0
+  currentDisTanceArray: []
   middleboss: {fileID: 0}
   monsterState: 0
-  pointVector: []
-  transitionVector: {x: 0, y: 0, z: 0}
 --- !u!65 &366621111
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5884,34 +5863,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: []
-  animator: {fileID: 0}
-  targetPlayer: {fileID: 0}
   HittedBox: {fileID: 0}
-  MonsterRunAttackAround: 0
-  monsterArrayNumber: 0
-  movePoint: {x: 0, y: 0, z: 0}
-  currentLife: 0
-  maxLife: 0
-  RunRange: 0
-  attackRange: 0
-  attackCycle: 0
-  baseDamage: 0
-  isAlive: 0
-  isAttack: 0
-  isHited: 0
-  playerToMonsterDamage: []
-  aggroRank: []
-  changeTargetTime: 0
   attackCollider: {fileID: 0}
   shockWaveInstantiate: {fileID: 0}
-  currentDisTanceArray: []
-  stateDirecion: 0
+  player: []
+  targetPlayer: {fileID: 0}
+  monsterIndex: 0
+  monsterId: 0
+  _name: 
+  level: 0
+  currentHP: 0
+  maxHP: 0
+  attack: 0
+  defense: 0
+  moveSpeed: 0
   currentDisTance: 0
+  currentDisTanceArray: []
   middleboss: {fileID: 0}
   monsterState: 0
-  pointVector: []
-  transitionVector: {x: 0, y: 0, z: 0}
 --- !u!65 &415268784
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6564,34 +6533,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d29c9c80e3af91b4aa1922b026dfb9d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: []
-  animator: {fileID: 455764881}
-  targetPlayer: {fileID: 0}
   HittedBox: {fileID: 455764880}
-  MonsterRunAttackAround: 0
-  monsterArrayNumber: 0
-  movePoint: {x: 0, y: 0, z: 0}
-  currentLife: 0
-  maxLife: 0
-  RunRange: 0
-  attackRange: 0
-  attackCycle: 0
-  baseDamage: 0
-  isAlive: 0
-  isAttack: 0
-  isHited: 0
-  playerToMonsterDamage: []
-  aggroRank: []
-  changeTargetTime: 0
   attackCollider: {fileID: 877203097}
   shockWaveInstantiate: {fileID: 0}
-  currentDisTanceArray: []
-  stateDirecion: 0
+  player: []
+  targetPlayer: {fileID: 0}
+  monsterIndex: 0
+  monsterId: 0
+  _name: 
+  level: 0
+  currentHP: 0
+  maxHP: 0
+  attack: 0
+  defense: 0
+  moveSpeed: 0
   currentDisTance: 0
+  currentDisTanceArray: []
   middleboss: {fileID: 0}
   monsterState: 0
-  pointVector: []
-  transitionVector: {x: 0, y: 0, z: 0}
   TransitionVector: []
 --- !u!65 &455764880
 BoxCollider:
@@ -9839,34 +9798,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: []
-  animator: {fileID: 723040211}
-  targetPlayer: {fileID: 0}
   HittedBox: {fileID: 723040209}
-  MonsterRunAttackAround: 0
-  monsterArrayNumber: 0
-  movePoint: {x: 0, y: 0, z: 0}
-  currentLife: 0
-  maxLife: 0
-  RunRange: 0
-  attackRange: 0
-  attackCycle: 0
-  baseDamage: 0
-  isAlive: 0
-  isAttack: 0
-  isHited: 0
-  playerToMonsterDamage: []
-  aggroRank: []
-  changeTargetTime: 0
   attackCollider: {fileID: 789529446}
   shockWaveInstantiate: {fileID: 0}
-  currentDisTanceArray: []
-  stateDirecion: 0
+  player: []
+  targetPlayer: {fileID: 0}
+  monsterIndex: 0
+  monsterId: 0
+  _name: 
+  level: 0
+  currentHP: 0
+  maxHP: 0
+  attack: 0
+  defense: 0
+  moveSpeed: 0
   currentDisTance: 0
+  currentDisTanceArray: []
   middleboss: {fileID: 0}
   monsterState: 0
-  pointVector: []
-  transitionVector: {x: 0, y: 0, z: 0}
 --- !u!95 &723040211
 Animator:
   serializedVersion: 3
@@ -10033,7 +9982,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &739589851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10046,23 +9995,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b55df912c131d44d8c71db0893ecdc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hostGuest: 0
   players:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  characters: []
+  monsterSpawnPoints: []
+  monsterData: []
   sceneChangeObject: []
-  monsterCount: 8
-  frogMonster: []
-  rabbitMonster: []
-  duckMonster: []
   bossMonster: {fileID: 0}
-  spawnPoint: {fileID: 0}
-  monsterTransForm: []
   section: []
-  mapNumber: 0
 --- !u!4 &739589852
 Transform:
   m_ObjectHideFlags: 0
@@ -10882,34 +10824,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: []
-  animator: {fileID: 0}
-  targetPlayer: {fileID: 0}
   HittedBox: {fileID: 0}
-  MonsterRunAttackAround: 0
-  monsterArrayNumber: 0
-  movePoint: {x: 0, y: 0, z: 0}
-  currentLife: 0
-  maxLife: 0
-  RunRange: 0
-  attackRange: 0
-  attackCycle: 0
-  baseDamage: 0
-  isAlive: 0
-  isAttack: 0
-  isHited: 0
-  playerToMonsterDamage: []
-  aggroRank: []
-  changeTargetTime: 0
   attackCollider: {fileID: 0}
   shockWaveInstantiate: {fileID: 0}
-  currentDisTanceArray: []
-  stateDirecion: 0
+  player: []
+  targetPlayer: {fileID: 0}
+  monsterIndex: 0
+  monsterId: 0
+  _name: 
+  level: 0
+  currentHP: 0
+  maxHP: 0
+  attack: 0
+  defense: 0
+  moveSpeed: 0
   currentDisTance: 0
+  currentDisTanceArray: []
   middleboss: {fileID: 0}
   monsterState: 0
-  pointVector: []
-  transitionVector: {x: 0, y: 0, z: 0}
 --- !u!65 &824976641
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12700,34 +12632,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: []
-  animator: {fileID: 958054541}
-  targetPlayer: {fileID: 0}
   HittedBox: {fileID: 958054539}
-  MonsterRunAttackAround: 0
-  monsterArrayNumber: 0
-  movePoint: {x: 0, y: 0, z: 0}
-  currentLife: 0
-  maxLife: 0
-  RunRange: 0
-  attackRange: 0
-  attackCycle: 0
-  baseDamage: 0
-  isAlive: 0
-  isAttack: 0
-  isHited: 0
-  playerToMonsterDamage: []
-  aggroRank: []
-  changeTargetTime: 0
   attackCollider: {fileID: 825418796}
   shockWaveInstantiate: {fileID: 0}
-  currentDisTanceArray: []
-  stateDirecion: 0
+  player: []
+  targetPlayer: {fileID: 0}
+  monsterIndex: 0
+  monsterId: 0
+  _name: 
+  level: 0
+  currentHP: 0
+  maxHP: 0
+  attack: 0
+  defense: 0
+  moveSpeed: 0
   currentDisTance: 0
+  currentDisTanceArray: []
   middleboss: {fileID: 0}
   monsterState: 0
-  pointVector: []
-  transitionVector: {x: 0, y: 0, z: 0}
 --- !u!95 &958054541
 Animator:
   serializedVersion: 3
@@ -13213,34 +13135,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: []
-  animator: {fileID: 0}
-  targetPlayer: {fileID: 0}
   HittedBox: {fileID: 0}
-  MonsterRunAttackAround: 0
-  monsterArrayNumber: 0
-  movePoint: {x: 0, y: 0, z: 0}
-  currentLife: 0
-  maxLife: 0
-  RunRange: 0
-  attackRange: 0
-  attackCycle: 0
-  baseDamage: 0
-  isAlive: 0
-  isAttack: 0
-  isHited: 0
-  playerToMonsterDamage: []
-  aggroRank: []
-  changeTargetTime: 0
   attackCollider: {fileID: 0}
   shockWaveInstantiate: {fileID: 0}
-  currentDisTanceArray: []
-  stateDirecion: 0
+  player: []
+  targetPlayer: {fileID: 0}
+  monsterIndex: 0
+  monsterId: 0
+  _name: 
+  level: 0
+  currentHP: 0
+  maxHP: 0
+  attack: 0
+  defense: 0
+  moveSpeed: 0
   currentDisTance: 0
+  currentDisTanceArray: []
   middleboss: {fileID: 0}
   monsterState: 0
-  pointVector: []
-  transitionVector: {x: 0, y: 0, z: 0}
 --- !u!65 &1008506878
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16086,34 +15998,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: []
-  animator: {fileID: 0}
-  targetPlayer: {fileID: 0}
   HittedBox: {fileID: 0}
-  MonsterRunAttackAround: 0
-  monsterArrayNumber: 0
-  movePoint: {x: 0, y: 0, z: 0}
-  currentLife: 0
-  maxLife: 0
-  RunRange: 0
-  attackRange: 0
-  attackCycle: 0
-  baseDamage: 0
-  isAlive: 0
-  isAttack: 0
-  isHited: 0
-  playerToMonsterDamage: []
-  aggroRank: []
-  changeTargetTime: 0
   attackCollider: {fileID: 0}
   shockWaveInstantiate: {fileID: 0}
-  currentDisTanceArray: []
-  stateDirecion: 0
+  player: []
+  targetPlayer: {fileID: 0}
+  monsterIndex: 0
+  monsterId: 0
+  _name: 
+  level: 0
+  currentHP: 0
+  maxHP: 0
+  attack: 0
+  defense: 0
+  moveSpeed: 0
   currentDisTance: 0
+  currentDisTanceArray: []
   middleboss: {fileID: 0}
   monsterState: 0
-  pointVector: []
-  transitionVector: {x: 0, y: 0, z: 0}
 --- !u!65 &1230060371
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16917,34 +16819,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: []
-  animator: {fileID: 0}
-  targetPlayer: {fileID: 0}
   HittedBox: {fileID: 0}
-  MonsterRunAttackAround: 0
-  monsterArrayNumber: 0
-  movePoint: {x: 0, y: 0, z: 0}
-  currentLife: 0
-  maxLife: 0
-  RunRange: 0
-  attackRange: 0
-  attackCycle: 0
-  baseDamage: 0
-  isAlive: 0
-  isAttack: 0
-  isHited: 0
-  playerToMonsterDamage: []
-  aggroRank: []
-  changeTargetTime: 0
   attackCollider: {fileID: 0}
   shockWaveInstantiate: {fileID: 0}
-  currentDisTanceArray: []
-  stateDirecion: 0
+  player: []
+  targetPlayer: {fileID: 0}
+  monsterIndex: 0
+  monsterId: 0
+  _name: 
+  level: 0
+  currentHP: 0
+  maxHP: 0
+  attack: 0
+  defense: 0
+  moveSpeed: 0
   currentDisTance: 0
+  currentDisTanceArray: []
   middleboss: {fileID: 0}
   monsterState: 0
-  pointVector: []
-  transitionVector: {x: 0, y: 0, z: 0}
 --- !u!4 &1275355246
 Transform:
   m_ObjectHideFlags: 0
@@ -17352,34 +17244,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: []
-  animator: {fileID: 1284810405}
-  targetPlayer: {fileID: 0}
   HittedBox: {fileID: 1284810403}
-  MonsterRunAttackAround: 0
-  monsterArrayNumber: 0
-  movePoint: {x: 0, y: 0, z: 0}
-  currentLife: 0
-  maxLife: 0
-  RunRange: 0
-  attackRange: 0
-  attackCycle: 0
-  baseDamage: 0
-  isAlive: 0
-  isAttack: 0
-  isHited: 0
-  playerToMonsterDamage: []
-  aggroRank: []
-  changeTargetTime: 0
   attackCollider: {fileID: 159653027}
   shockWaveInstantiate: {fileID: 0}
-  currentDisTanceArray: []
-  stateDirecion: 0
+  player: []
+  targetPlayer: {fileID: 0}
+  monsterIndex: 0
+  monsterId: 0
+  _name: 
+  level: 0
+  currentHP: 0
+  maxHP: 0
+  attack: 0
+  defense: 0
+  moveSpeed: 0
   currentDisTance: 0
+  currentDisTanceArray: []
   middleboss: {fileID: 0}
   monsterState: 0
-  pointVector: []
-  transitionVector: {x: 0, y: 0, z: 0}
 --- !u!95 &1284810405
 Animator:
   serializedVersion: 3
@@ -17695,7 +17577,6 @@ MonoBehaviour:
   Frog: []
   Rabbit: []
   shockWaveMonster: []
-  middleBoss: {fileID: 0}
   middleBoss1: {fileID: 0}
   goToTheBoss: {fileID: 0}
   FrogPosition: []
@@ -19151,7 +19032,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100086, guid: 4fb2dbab40afc084994dc3a1095f5565, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4fb2dbab40afc084994dc3a1095f5565, type: 3}
@@ -19701,34 +19582,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: []
-  animator: {fileID: 1447598222}
-  targetPlayer: {fileID: 0}
   HittedBox: {fileID: 1447598220}
-  MonsterRunAttackAround: 0
-  monsterArrayNumber: 0
-  movePoint: {x: 0, y: 0, z: 0}
-  currentLife: 0
-  maxLife: 0
-  RunRange: 0
-  attackRange: 0
-  attackCycle: 0
-  baseDamage: 0
-  isAlive: 0
-  isAttack: 0
-  isHited: 0
-  playerToMonsterDamage: []
-  aggroRank: []
-  changeTargetTime: 0
   attackCollider: {fileID: 1958231650}
   shockWaveInstantiate: {fileID: 0}
-  currentDisTanceArray: []
-  stateDirecion: 0
+  player: []
+  targetPlayer: {fileID: 0}
+  monsterIndex: 0
+  monsterId: 0
+  _name: 
+  level: 0
+  currentHP: 0
+  maxHP: 0
+  attack: 0
+  defense: 0
+  moveSpeed: 0
   currentDisTance: 0
+  currentDisTanceArray: []
   middleboss: {fileID: 0}
   monsterState: 0
-  pointVector: []
-  transitionVector: {x: 0, y: 0, z: 0}
 --- !u!95 &1447598222
 Animator:
   serializedVersion: 3
@@ -20338,43 +20209,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff60e76e302548641bddaa9327ad9b7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: []
-  animator: {fileID: 0}
-  targetPlayer: {fileID: 0}
-  HittedBox: {fileID: 0}
-  MonsterRunAttackAround: 0
-  monsterArrayNumber: 0
-  movePoint: {x: 0, y: 0, z: 0}
-  currentLife: 0
-  maxLife: 0
-  RunRange: 0
-  attackRange: 0
-  attackCycle: 0
-  baseDamage: 0
-  isAlive: 0
-  isAttack: 0
-  isHited: 0
-  playerToMonsterDamage: []
-  aggroRank: []
-  changeTargetTime: 0
-  attackCollider: {fileID: 0}
-  shockWaveInstantiate: {fileID: 0}
-  currentDisTanceArray: []
-  stateDirecion: 0
-  middleBoss: {fileID: 1479816984}
-  boomObjectPosition: []
-  addedVector: {x: 0, y: 0, z: 0}
-  currentDistanceMonsterToCenter:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
 --- !u!1 &1493978651
 GameObject:
   m_ObjectHideFlags: 0
@@ -20730,34 +20564,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: []
-  animator: {fileID: 0}
-  targetPlayer: {fileID: 0}
   HittedBox: {fileID: 0}
-  MonsterRunAttackAround: 0
-  monsterArrayNumber: 0
-  movePoint: {x: 0, y: 0, z: 0}
-  currentLife: 0
-  maxLife: 0
-  RunRange: 0
-  attackRange: 0
-  attackCycle: 0
-  baseDamage: 0
-  isAlive: 0
-  isAttack: 0
-  isHited: 0
-  playerToMonsterDamage: []
-  aggroRank: []
-  changeTargetTime: 0
   attackCollider: {fileID: 0}
   shockWaveInstantiate: {fileID: 0}
-  currentDisTanceArray: []
-  stateDirecion: 0
+  player: []
+  targetPlayer: {fileID: 0}
+  monsterIndex: 0
+  monsterId: 0
+  _name: 
+  level: 0
+  currentHP: 0
+  maxHP: 0
+  attack: 0
+  defense: 0
+  moveSpeed: 0
   currentDisTance: 0
+  currentDisTanceArray: []
   middleboss: {fileID: 0}
   monsterState: 0
-  pointVector: []
-  transitionVector: {x: 0, y: 0, z: 0}
 --- !u!65 &1529843242
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20849,34 +20673,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: []
-  animator: {fileID: 1533228486}
-  targetPlayer: {fileID: 0}
   HittedBox: {fileID: 1533228484}
-  MonsterRunAttackAround: 0
-  monsterArrayNumber: 0
-  movePoint: {x: 0, y: 0, z: 0}
-  currentLife: 0
-  maxLife: 0
-  RunRange: 0
-  attackRange: 0
-  attackCycle: 0
-  baseDamage: 0
-  isAlive: 0
-  isAttack: 0
-  isHited: 0
-  playerToMonsterDamage: []
-  aggroRank: []
-  changeTargetTime: 0
   attackCollider: {fileID: 544767573}
   shockWaveInstantiate: {fileID: 0}
-  currentDisTanceArray: []
-  stateDirecion: 0
+  player: []
+  targetPlayer: {fileID: 0}
+  monsterIndex: 0
+  monsterId: 0
+  _name: 
+  level: 0
+  currentHP: 0
+  maxHP: 0
+  attack: 0
+  defense: 0
+  moveSpeed: 0
   currentDisTance: 0
+  currentDisTanceArray: []
   middleboss: {fileID: 0}
   monsterState: 0
-  pointVector: []
-  transitionVector: {x: 0, y: 0, z: 0}
 --- !u!95 &1533228486
 Animator:
   serializedVersion: 3
@@ -22045,34 +21859,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: []
-  animator: {fileID: 0}
-  targetPlayer: {fileID: 0}
   HittedBox: {fileID: 0}
-  MonsterRunAttackAround: 0
-  monsterArrayNumber: 0
-  movePoint: {x: 0, y: 0, z: 0}
-  currentLife: 0
-  maxLife: 0
-  RunRange: 0
-  attackRange: 0
-  attackCycle: 0
-  baseDamage: 0
-  isAlive: 0
-  isAttack: 0
-  isHited: 0
-  playerToMonsterDamage: []
-  aggroRank: []
-  changeTargetTime: 0
   attackCollider: {fileID: 0}
   shockWaveInstantiate: {fileID: 0}
-  currentDisTanceArray: []
-  stateDirecion: 0
+  player: []
+  targetPlayer: {fileID: 0}
+  monsterIndex: 0
+  monsterId: 0
+  _name: 
+  level: 0
+  currentHP: 0
+  maxHP: 0
+  attack: 0
+  defense: 0
+  moveSpeed: 0
   currentDisTance: 0
+  currentDisTanceArray: []
   middleboss: {fileID: 0}
   monsterState: 0
-  pointVector: []
-  transitionVector: {x: 0, y: 0, z: 0}
 --- !u!65 &1624110510
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -23373,29 +23177,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03d6bf8e6a2538c4eb6a25cc15af3f76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: []
-  animator: {fileID: 0}
-  targetPlayer: {fileID: 0}
   HittedBox: {fileID: 0}
-  MonsterRunAttackAround: 0
-  monsterArrayNumber: 0
-  movePoint: {x: 0, y: 0, z: 0}
-  currentLife: 0
-  maxLife: 0
-  RunRange: 0
-  attackRange: 0
-  attackCycle: 0
-  baseDamage: 0
-  isAlive: 1
-  isAttack: 0
-  isHited: 0
-  playerToMonsterDamage: []
-  aggroRank: []
-  changeTargetTime: 0
   attackCollider: {fileID: 0}
   shockWaveInstantiate: {fileID: 0}
+  player:
+  - {fileID: 0}
+  - {fileID: 0}
+  targetPlayer: {fileID: 0}
+  monsterIndex: 0
+  monsterId: 0
+  _name: 
+  level: 0
+  currentHP: 0
+  maxHP: 0
+  attack: 0
+  defense: 0
+  moveSpeed: 1
+  currentDisTance: 0
   currentDisTanceArray: []
-  stateDirecion: 0
   searchRange: 0
   moveSpeed: 1
   bossStartSound: {fileID: 0}
@@ -23407,7 +23206,7 @@ MonoBehaviour:
   skillInsertImage: {fileID: 0}
   imageSpeed: 1
   imageLerpTime: 0
-  handPos: {fileID: 649453333}
+  handPos: {fileID: 0}
   handSphere: {fileID: 0}
   handAttack: {fileID: 0}
   bossplayer: []
@@ -23601,7 +23400,6 @@ MonoBehaviour:
   Frog: []
   Rabbit: []
   shockWaveMonster: []
-  middleBoss: {fileID: 0}
   middleBoss1: {fileID: 0}
   goToTheBoss: {fileID: 0}
   FrogPosition: []
@@ -23670,7 +23468,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1000013826282598, guid: 73a432ae968f3454bb6c503c5eeee40e, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 73a432ae968f3454bb6c503c5eeee40e, type: 2}
@@ -24896,34 +24694,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: []
-  animator: {fileID: 0}
-  targetPlayer: {fileID: 0}
   HittedBox: {fileID: 0}
-  MonsterRunAttackAround: 0
-  monsterArrayNumber: 0
-  movePoint: {x: 0, y: 0, z: 0}
-  currentLife: 20
-  maxLife: 100
-  RunRange: 0
-  attackRange: 0
-  attackCycle: 0
-  baseDamage: 0
-  isAlive: 0
-  isAttack: 0
-  isHited: 0
-  playerToMonsterDamage: []
-  aggroRank: []
-  changeTargetTime: 0
   attackCollider: {fileID: 0}
   shockWaveInstantiate: {fileID: 0}
-  currentDisTanceArray: []
-  stateDirecion: 0
+  player: []
+  targetPlayer: {fileID: 0}
+  monsterIndex: 0
+  monsterId: 0
+  _name: 
+  level: 0
+  currentHP: 0
+  maxHP: 0
+  attack: 0
+  defense: 0
+  moveSpeed: 0
   currentDisTance: 0
+  currentDisTanceArray: []
   middleboss: {fileID: 0}
   monsterState: 0
-  pointVector: []
-  transitionVector: {x: 0, y: 0, z: 0}
 --- !u!64 &1786780987
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -25105,25 +24893,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b55df912c131d44d8c71db0893ecdc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hostGuest: 0
   players:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  characters: []
+  monsterSpawnPoints: []
+  monsterData: []
   sceneChangeObject: []
-  monsterCount: 0
-  frogMonster: []
-  rabbitMonster: []
-  duckMonster: []
   bossMonster: {fileID: 0}
-  spawnPoint: {fileID: 0}
-  monsterTransForm: []
   section:
   - {fileID: 1699044387}
   - {fileID: 289901748}
-  mapNumber: 0
 --- !u!4 &1797509691
 Transform:
   m_ObjectHideFlags: 0
@@ -29819,34 +29600,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: []
-  animator: {fileID: 0}
-  targetPlayer: {fileID: 0}
   HittedBox: {fileID: 0}
-  MonsterRunAttackAround: 0
-  monsterArrayNumber: 0
-  movePoint: {x: 0, y: 0, z: 0}
-  currentLife: 0
-  maxLife: 0
-  RunRange: 0
-  attackRange: 0
-  attackCycle: 0
-  baseDamage: 0
-  isAlive: 0
-  isAttack: 0
-  isHited: 0
-  playerToMonsterDamage: []
-  aggroRank: []
-  changeTargetTime: 0
   attackCollider: {fileID: 0}
   shockWaveInstantiate: {fileID: 0}
-  currentDisTanceArray: []
-  stateDirecion: 0
+  player: []
+  targetPlayer: {fileID: 0}
+  monsterIndex: 0
+  monsterId: 0
+  _name: 
+  level: 0
+  currentHP: 0
+  maxHP: 0
+  attack: 0
+  defense: 0
+  moveSpeed: 0
   currentDisTance: 0
+  currentDisTanceArray: []
   middleboss: {fileID: 0}
   monsterState: 0
-  pointVector: []
-  transitionVector: {x: 0, y: 0, z: 0}
 --- !u!65 &2085449910
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30028,34 +29799,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: []
-  animator: {fileID: 2089734050}
-  targetPlayer: {fileID: 0}
   HittedBox: {fileID: 2089734048}
-  MonsterRunAttackAround: 0
-  monsterArrayNumber: 0
-  movePoint: {x: 0, y: 0, z: 0}
-  currentLife: 0
-  maxLife: 0
-  RunRange: 0
-  attackRange: 0
-  attackCycle: 0
-  baseDamage: 0
-  isAlive: 0
-  isAttack: 0
-  isHited: 0
-  playerToMonsterDamage: []
-  aggroRank: []
-  changeTargetTime: 0
   attackCollider: {fileID: 67537720}
   shockWaveInstantiate: {fileID: 0}
-  currentDisTanceArray: []
-  stateDirecion: 0
+  player: []
+  targetPlayer: {fileID: 0}
+  monsterIndex: 0
+  monsterId: 0
+  _name: 
+  level: 0
+  currentHP: 0
+  maxHP: 0
+  attack: 0
+  defense: 0
+  moveSpeed: 0
   currentDisTance: 0
+  currentDisTanceArray: []
   middleboss: {fileID: 0}
   monsterState: 0
-  pointVector: []
-  transitionVector: {x: 0, y: 0, z: 0}
 --- !u!95 &2089734050
 Animator:
   serializedVersion: 3
