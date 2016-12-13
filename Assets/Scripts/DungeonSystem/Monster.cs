@@ -13,6 +13,8 @@ public enum StatePosition
 	BossRoar,
 }
 
+
+
 public class Monster : MonoBehaviour {
     public enum StateDirecion
     {
@@ -38,7 +40,7 @@ public class Monster : MonoBehaviour {
 	protected bool moveAble;
 
     [SerializeField] protected int monsterIndex;
-    [SerializeField] protected UnitId monsterId;
+	[SerializeField] protected MonsterId monsterId;
     [SerializeField] protected string _name;
     [SerializeField] protected int level;
     [SerializeField] protected int currentHP;
@@ -52,7 +54,7 @@ public class Monster : MonoBehaviour {
     protected float attackRange;
     protected float attackCycle;
 	[SerializeField]protected float currentDisTance;
-	protected float searchRange;
+	[SerializeField]protected float searchRange;
 
     //monster Speed variable;
 
@@ -109,7 +111,7 @@ public class Monster : MonoBehaviour {
     }
 
     public int Attack { get { return attack; } }
-    public UnitId MonsterId { get { return monsterId; } set { monsterId = value; } }
+	public MonsterId MonsterId { get { return monsterId; } set { monsterId = value; } }
 
     public void MonsterSet(MonsterBaseData monster)
 	{
@@ -129,7 +131,23 @@ public class Monster : MonoBehaviour {
         currentHP = monster.MonsterLevelData[0].HealthPoint;
         maxHP = monster.MonsterLevelData[0].HealthPoint;
         moveSpeed = monster.MonsterLevelData[0].MoveSpeed;
-		searchRange = 12;
+
+
+		if (monster.Id == (int)MonsterId.Rabbit || monster.Id == (int)MonsterId.Frog) {
+			searchRange = 8;
+			attackCollider = this.transform.GetComponentInChildren<MonsterWeapon> ();
+			attackCollider.MonsterWeaponSet ();
+		}
+
+
+		if(monster.Id == (int)MonsterId.Duck){
+			//GameObject obj = Instantiate (Resources.Load("Effect/Monster_ShockWave"));
+			searchRange = 12;
+			//shockWaveInstantiate
+		}
+
+
+		//searchRange = 12;
 
 		//test
 		DungeonManager dungeonManager = GameObject.Find("DungeonManager").GetComponent<DungeonManager>();
