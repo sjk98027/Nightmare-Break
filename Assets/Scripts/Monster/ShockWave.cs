@@ -4,12 +4,13 @@ using System.Collections;
 
 public class ShockWave : MonoBehaviour
 {
-	public Duck AttackMonster;
+	public Monster AttackMonster;
+
 	public int damage;
 	[SerializeField] GameObject checkTempData;
 	[SerializeField] CharacterManager tempData;
 
-	public void GetDamage (int _damage, Duck _AttackMonster)
+	public void SetDamage (int _damage, Monster _AttackMonster)
 	{
 		AttackMonster = _AttackMonster;
 		damage = _damage;

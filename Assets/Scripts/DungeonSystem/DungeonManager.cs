@@ -28,7 +28,7 @@ public class DungeonManager : MonoBehaviour
 	[SerializeField]Monster[] monsterData;
 
     MonsterSpawnList monsterSpawnList;
-    DungeonData dungeonData;
+    MonsterStatusData dungeonData;
 
     public SceneChangeObject[] sceneChangeObject;
 	public BossMonsterKYW bossMonster;
@@ -83,7 +83,7 @@ public class DungeonManager : MonoBehaviour
             monsterBaseData[1].AddLevelData(new MonsterLevelData(1, 3, 0, 35, 4));
             monsterBaseData[2] = new MonsterBaseData((int)MonsterId.Rabbit, "Rabbit");
             monsterBaseData[2].AddLevelData(new MonsterLevelData(1, 5, 0, 75, 4));
-            dungeonData = new DungeonData(3, monsterBaseData);
+            dungeonData = new MonsterStatusData(3, monsterBaseData);
 
             SpawnMonster();
             SetMonsterStatus();
@@ -232,7 +232,7 @@ public class DungeonManager : MonoBehaviour
         }
 	}
 
-    public void SetMonsterData(DungeonData newDungeonData)
+    public void SetMonsterData(MonsterStatusData newDungeonData)
     {
         dungeonData = newDungeonData;
     }

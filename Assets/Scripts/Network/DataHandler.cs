@@ -55,6 +55,7 @@ public class DataHandler : MonoBehaviour
         server_notifier.Add((int)ServerPacketId.CreateAccountResult, CreateAccountResult);
         server_notifier.Add((int)ServerPacketId.DeleteAccountResult, DeleteAccountResult);
         server_notifier.Add((int)ServerPacketId.LoginResult, LoginResult);
+        server_notifier.Add((int)ServerPacketId.CharacterList, CharacterList);
         server_notifier.Add((int)ServerPacketId.CreateCharacterResult, CreateCharacterResult);
         server_notifier.Add((int)ServerPacketId.DeleteChracterResult, DeleteCharacterResult);
         server_notifier.Add((int)ServerPacketId.SelectCharacterResult, SelectCharacterResult);
@@ -142,6 +143,7 @@ public class DataHandler : MonoBehaviour
         if(resultData.Result == (byte)Result.Success)
         {
             StartCoroutine(uiManager.Dialog(1.0f, "가입 성공"));
+            uiManager.LoginUIManager.CreateAccountSuccess();
         }
         else if (resultData.Result == (byte)Result.Fail)
         {
@@ -177,11 +179,32 @@ public class DataHandler : MonoBehaviour
         if (resultData.Result == (byte)Result.Success)
         {
             StartCoroutine(uiManager.Dialog(1.0f, "로그인 성공"));
+            SceneChanger.Instance.SceneChange(SceneChanger.SceneName.SelectScene, true);
         }
         else if (resultData.Result == (byte)Result.Fail)
         {
             StartCoroutine(uiManager.Dialog(1.0f, "로그인 실패"));
         }
+    }
+
+    //Server - 캐릭터 리스트 수신
+    public void CharacterList(DataPacket packet)
+    {
+        Debug.Log("캐릭터 리스트 수신");
+
+        CharacterListPacket characterListPacket = new CharacterListPacket(packet.msg);
+        CharacterList characterList = characterListPacket.GetData();
+
+        uiManager.SelectUIManager.CharacterList = characterList;
+
+        if (SceneChanger.Instance.CurrentScene == SceneChanger.SceneName.LoadingScene)
+        {
+            SceneChanger.Instance.LoadingCheck[(int)SceneChanger.SelectLoadingData.CharacterList] = true;
+        }
+        else
+        {
+            uiManager.SelectUIManager.SetCharacter();
+        }        
     }
 
     //Server - 캐릭터 생성 결과
@@ -195,6 +218,8 @@ public class DataHandler : MonoBehaviour
         if (resultData.Result == (byte)Result.Success)
         {
             StartCoroutine(uiManager.Dialog(1.0f, "캐릭터 생성 성공"));
+            SceneChanger.Instance.SceneChange(SceneChanger.SceneName.SelectScene, false);
+            DataSender.Instance.RequestCharacterList();
         }
         else if (resultData.Result == (byte)Result.Fail)
         {
@@ -380,8 +405,8 @@ public class DataHandler : MonoBehaviour
     {
         Debug.Log("던전 데이터 수신");
 
-        DungeonDataPacket dungeonDataPacket = new DungeonDataPacket(packet.msg);
-        DungeonData dungeonData = dungeonDataPacket.GetData();
+        MonsterStatusPacket dungeonDataPacket = new MonsterStatusPacket (packet.msg);
+        MonsterStatusData dungeonData = dungeonDataPacket.GetData();
 
         dungeonManager.SetMonsterData(dungeonData);
     }

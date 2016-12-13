@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Net;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,9 +9,7 @@ public class GameManager : MonoBehaviour
     UIManager uiManager;
     CharacterStatus characterStatus;
     
-    [SerializeField]
-    string myIP;
-    
+    string myIP;    
     public string MyIP
     {
         get
@@ -21,6 +20,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        myIP = Dns.GetHostAddresses(Dns.GetHostName())[1].ToString();
         InitializeManager();
     }
 
@@ -41,21 +41,15 @@ public class GameManager : MonoBehaviour
         uiManager = (Instantiate(Resources.Load("Manager/UIManager")) as GameObject).GetComponent<UIManager>();
         uiManager.name = "UIManager";
         uiManager.tag = "UIManager";
-        uiManager.SetDialog();
+        //uiManager.SetDialog();
 
         networkManager.InitializeManager();
+        
+        uiManager.SetLoginUIManager();
 
-        SetManagerInWait();
-
-        try
-        {
-            uiManager.SetLoginUIManager();
-            uiManager.SetWaitUIManager();
-        }
-        catch
-        {
-
-        }
+        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(networkManager);
+        DontDestroyOnLoad(uiManager);
     }
 
     public void SetManagerInWait()

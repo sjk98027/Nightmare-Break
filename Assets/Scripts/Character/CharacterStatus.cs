@@ -12,7 +12,8 @@ public class CharacterStatus : MonoBehaviour
 
     public enum CharClass
     {
-        Warrior = 0,
+        None = 0,
+        Warrior,
         Mage,
         ShildWarrior,
         Gunner

@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class BattleUIManager        
+public class BattleUIManager : MonoBehaviour
 {
 	private const float checkTime = 0.1f;
 	private const float mouseOverUI_xPos = 125f;

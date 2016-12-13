@@ -1,30 +1,20 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class LoginUIManager
+public class LoginUIManager : MonoBehaviour
 {
+    GameObject loginPanel;
     GameObject createAccountPanel;
     GameObject deleteAccountPanel;
-    GameObject characterPanel;
-    GameObject createCharacterPanel;
 
     Button loginButton;
     Button createAccountButton;
     Button deleteAccountButton;
-    Button createAccountCancelButton;
-    Button deleteAccountCancelButton;
-    Button createCharacterButton;
-    Button deleteCharacterButton;
-    Button selectCharacterButton;
-    Button returnToMainButton;
-    Button maleButton;
-    Button femaleButton;
-    Button warriorButton;
-    Button mageButton;
-    Button gunnerButton;
-    Button shieldWarriorButton;
-    Button createCharacterYesButton;
-    Button createCharacterNoButton;
+    Button createAccountYesButton;
+    Button createAccountNoButton;
+    Button deleteAccountYesButton;
+    Button deleteAccountNoButton;
+    Button exitButton;
     
     Text loginId;
     Text loginPw;
@@ -32,61 +22,57 @@ public class LoginUIManager
     Text createPw;
     Text deleteId;
     Text deletePw;
-    Text character1Name;
-    Text character2Name;
-    Text character3Name;
-    Text character4Name;
-    Text createCharacterName;
-
-    int currentCharacter;
-    CharacterStatus.Gender gender;
-    CharacterStatus.CharClass charClass;
 
     public void ManagerInitialize()
     {
         SetUIObject();
         InitializeAddListener();
-        currentCharacter = 0;
+        createAccountPanel.SetActive(false);
     }
 
     public void SetUIObject()
     {
+        loginPanel = GameObject.Find("LoginPanel");
+        createAccountPanel = GameObject.Find("CreateAccountPanel");
+
         loginButton = GameObject.Find("LoginButton").GetComponent<Button>();
         createAccountButton = GameObject.Find("CreateAccountButton").GetComponent<Button>();
-        deleteAccountButton = GameObject.Find("DeleteAccountButton").GetComponent<Button>();
+        createAccountYesButton = GameObject.Find("CreateAccountYesButton").GetComponent<Button>();
+        createAccountNoButton = GameObject.Find("CreateAccountNoButton").GetComponent<Button>();
+        exitButton = GameObject.Find("ExitButton").GetComponent<Button>();
 
-        createCharacterButton = GameObject.Find("CreateCharacterButton").GetComponent<Button>();
-        deleteCharacterButton = GameObject.Find("DeleteCharacterButton").GetComponent<Button>();
-        selectCharacterButton = GameObject.Find("SelectCharacterButton").GetComponent<Button>();
-        maleButton = GameObject.Find("MaleButton").GetComponent<Button>();
-        femaleButton = GameObject.Find("FeMaleButton").GetComponent<Button>();
-        warriorButton = GameObject.Find("WarriorButton").GetComponent<Button>();
-        mageButton = GameObject.Find("MageButton").GetComponent<Button>();
-        gunnerButton = GameObject.Find("GunnerButton").GetComponent<Button>();
-        shieldWarriorButton = GameObject.Find("ShieldWarriorButton").GetComponent<Button>();
+        //deleteAccountButton = GameObject.Find("DeleteAccountButton").GetComponent<Button>();
 
         loginId = GameObject.Find("LoginId").GetComponent<Text>();
         loginPw = GameObject.Find("LoginPw").GetComponent<Text>();
-        createId = GameObject.Find("LoginId").GetComponent<Text>();
-        createPw = GameObject.Find("LoginPw").GetComponent<Text>();
-        deleteId = GameObject.Find("LoginId").GetComponent<Text>();
-        deletePw = GameObject.Find("LoginPw").GetComponent<Text>();
+        createId = GameObject.Find("CreateId").GetComponent<Text>();
+        createPw = GameObject.Find("CreatePw").GetComponent<Text>();
 
-        createCharacterName = GameObject.Find("CreateCharacterName").GetComponent<Text>();
+        //deleteId = GameObject.Find("LoginId").GetComponent<Text>();
+        //deletePw = GameObject.Find("LoginPw").GetComponent<Text>();
     }
 
     public void InitializeAddListener()
     {
         loginButton.onClick.AddListener(() => OnClickLoginButton());
         createAccountButton.onClick.AddListener(() => OnClickCreateAccountButton());
-        deleteAccountButton.onClick.AddListener(() => OnClickDeleteAccountButton());
+        createAccountYesButton.onClick.AddListener(() => OnClickCreateAccountYesButton());
+        createAccountNoButton.onClick.AddListener(() => OnClickCreateAccountNoButton());
+        exitButton.onClick.AddListener(() => OnClickExitButton());
+        //deleteAccountButton.onClick.AddListener(() => OnClickDeleteAccountButton());
 
-        createCharacterButton.onClick.AddListener(() => OnClickCreateCharacterButton());
-        deleteCharacterButton.onClick.AddListener(() => OnClickDeleteCharacterButton());
-        selectCharacterButton.onClick.AddListener(() => OnClickSelectCharacterButton());
+        //createCharacterButton.onClick.AddListener(() => OnClickCreateCharacterButton());
+        //deleteCharacterButton.onClick.AddListener(() => OnClickDeleteCharacterButton());
+        //selectCharacterButton.onClick.AddListener(() => OnClickSelectCharacterButton());
     }
 
     public void OnClickCreateAccountButton()
+    {
+        loginPanel.SetActive(false);
+        createAccountPanel.SetActive(true);
+    }
+
+    public void OnClickCreateAccountYesButton()
     {
         if (createId.text.Length >= 4 && createPw.text.Length >= 6)
         {
@@ -96,6 +82,24 @@ public class LoginUIManager
         {
             Debug.Log("아이디 4글자 이상, 비밀번호 6글자 이상 입력하세요");
         }
+    }
+
+    public void OnClickCreateAccountNoButton()
+    {
+        createId.text = "";
+        createPw.text = "";
+
+        createAccountPanel.SetActive(false);
+        loginPanel.SetActive(true);
+    }
+
+    public void CreateAccountSuccess()
+    {
+        createId.text = "";
+        createPw.text = "";
+
+        createAccountPanel.SetActive(false);
+        loginPanel.SetActive(true);
     }
 
     public void OnClickDeleteAccountButton()
@@ -122,55 +126,9 @@ public class LoginUIManager
         }
     }
 
-    public void OnClickMaleButton()
+    public void OnClickExitButton()
     {
-        gender = CharacterStatus.Gender.Male;
+        Application.Quit();
     }
 
-    public void OnClickFeMaleButton()
-    {
-        gender = CharacterStatus.Gender.FeMale;
-    }
-
-    public void OnClickWarriorButton()
-    {
-        charClass = CharacterStatus.CharClass.Warrior;
-    }
-
-    public void OnClickMageButton()
-    {
-        charClass = CharacterStatus.CharClass.Mage;
-    }
-
-    public void OnClickGunnerButton()
-    {
-        charClass = CharacterStatus.CharClass.Gunner;
-    }
-
-    public void OnClickShildWarriorButton()
-    {
-        charClass = CharacterStatus.CharClass.ShildWarrior;
-    }
-
-    public void OnClickCreateCharacterButton()
-    {
-        if (createCharacterName.text.Length < 1)
-        {
-            Debug.Log("캐릭터 이름을 1글자 이상 입력하세요");
-        }
-        else
-        {
-            DataSender.Instance.CreateCharacter((int)gender, (int)charClass, createCharacterName.text);
-        }
-    }
-
-    public void OnClickDeleteCharacterButton()
-    {
-        DataSender.Instance.DeleteCharacter(currentCharacter);
-    }
-
-    public void OnClickSelectCharacterButton()
-    {
-        DataSender.Instance.SelectCharacter(currentCharacter);
-    }
 }

@@ -175,6 +175,20 @@ public class DataSender : MonoBehaviour
         }
     }
 
+    //캐릭터 리스트 요청 -> Server
+    public void RequestCharacterList()
+    {
+        Debug.Log("캐릭터 리스트 요청");
+
+        ResultData resultData = new ResultData();
+        ResultPacket resultPacket = new ResultPacket(resultData);
+        resultPacket.SetPacketId((int)ClientPacketId.RequestCharacterList);
+
+        DataPacket packet = new DataPacket(CreatePacket(resultPacket), null);
+
+        sendMsgs.Enqueue(packet);
+    }
+
     //캐릭터 생성 -> Server
     public void CreateCharacter(int gender, int hClass, string name)
     {
