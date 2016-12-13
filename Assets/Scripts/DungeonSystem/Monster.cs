@@ -38,7 +38,7 @@ public class Monster : MonoBehaviour {
 	protected bool moveAble;
 
     [SerializeField] protected int monsterIndex;
-    [SerializeField] protected UnitId monsterId;
+    [SerializeField] protected MonsterId monsterId;
     [SerializeField] protected string _name;
     [SerializeField] protected int level;
     [SerializeField] protected int currentHP;
@@ -109,7 +109,7 @@ public class Monster : MonoBehaviour {
     }
 
     public int Attack { get { return attack; } }
-    public UnitId MonsterId { get { return monsterId; } set { monsterId = value; } }
+    public MonsterId MonsterId { get { return monsterId; } set { monsterId = value; } }
 
     public void MonsterSet(MonsterBaseData monster)
 	{

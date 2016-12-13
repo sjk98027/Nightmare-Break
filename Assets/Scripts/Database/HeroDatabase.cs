@@ -5,8 +5,10 @@ using UnityEngine;
 public enum HeroId
 {
     None = 0,
-    Warrior,
-    Mage,
+    ManWarrior,
+    ManMage,
+    WomanWarrior,
+    WomanMage,
 }
 
 public class HeroDatabase
@@ -33,30 +35,52 @@ public class HeroDatabase
         heroData = new List<HeroBaseData>();
 
         AddBaseData(new HeroBaseData((int)HeroId.None, "None"));
-        AddBaseData(new HeroBaseData((int)HeroId.Warrior, "Warrior"));
-        AddBaseData(new HeroBaseData((int)HeroId.Mage, "Mage"));
+        AddBaseData(new HeroBaseData((int)HeroId.ManWarrior, "Warrior"));
+        AddBaseData(new HeroBaseData((int)HeroId.ManMage, "ManMage"));
 
-        GetBaseData((int)HeroId.Warrior).AddLevelData(new HeroLevelData(1, 10, 0, 150, 100, 1, 1, 7, 100));
-        GetBaseData((int)HeroId.Warrior).AddLevelData(new HeroLevelData(2, 7, 1, 220, 130, 1, 1, 7, 250));
-        GetBaseData((int)HeroId.Warrior).AddLevelData(new HeroLevelData(3, 9, 2, 300, 170, 2, 1, 7, 450));
-        GetBaseData((int)HeroId.Warrior).AddLevelData(new HeroLevelData(4, 12, 3, 390, 220, 2, 1, 7, 750));
-        GetBaseData((int)HeroId.Warrior).AddLevelData(new HeroLevelData(5, 15, 5, 490, 280, 3, 2, 7, 1250));
-        GetBaseData((int)HeroId.Warrior).AddLevelData(new HeroLevelData(6, 18, 7, 600, 350, 3, 2, 7, 2000));
-        GetBaseData((int)HeroId.Warrior).AddLevelData(new HeroLevelData(7, 21, 9, 720, 430, 4, 2, 7, 3000));
-        GetBaseData((int)HeroId.Warrior).AddLevelData(new HeroLevelData(8, 25, 11, 850, 520, 4, 2, 7, 4500));
-        GetBaseData((int)HeroId.Warrior).AddLevelData(new HeroLevelData(9, 29, 13, 990, 620, 5, 3, 7, 7000));
-        GetBaseData((int)HeroId.Warrior).AddLevelData(new HeroLevelData(10, 33, 15, 1240, 730, 5, 3, 7, 14000));
+        GetBaseData((int)HeroId.ManWarrior).AddLevelData(new HeroLevelData(1, 10, 0, 150, 100, 1, 1, 7, 100));
+        GetBaseData((int)HeroId.ManWarrior).AddLevelData(new HeroLevelData(2, 7, 1, 220, 130, 1, 1, 7, 250));
+        GetBaseData((int)HeroId.ManWarrior).AddLevelData(new HeroLevelData(3, 9, 2, 300, 170, 2, 1, 7, 450));
+        GetBaseData((int)HeroId.ManWarrior).AddLevelData(new HeroLevelData(4, 12, 3, 390, 220, 2, 1, 7, 750));
+        GetBaseData((int)HeroId.ManWarrior).AddLevelData(new HeroLevelData(5, 15, 5, 490, 280, 3, 2, 7, 1250));
+        GetBaseData((int)HeroId.ManWarrior).AddLevelData(new HeroLevelData(6, 18, 7, 600, 350, 3, 2, 7, 2000));
+        GetBaseData((int)HeroId.ManWarrior).AddLevelData(new HeroLevelData(7, 21, 9, 720, 430, 4, 2, 7, 3000));
+        GetBaseData((int)HeroId.ManWarrior).AddLevelData(new HeroLevelData(8, 25, 11, 850, 520, 4, 2, 7, 4500));
+        GetBaseData((int)HeroId.ManWarrior).AddLevelData(new HeroLevelData(9, 29, 13, 990, 620, 5, 3, 7, 7000));
+        GetBaseData((int)HeroId.ManWarrior).AddLevelData(new HeroLevelData(10, 33, 15, 1240, 730, 5, 3, 7, 14000));
 
-        GetBaseData((int)HeroId.Mage).AddLevelData(new HeroLevelData(1, 12, 0, 120, 150, 1, 1, 7, 100));
-        GetBaseData((int)HeroId.Mage).AddLevelData(new HeroLevelData(2, 15, 0, 170, 190, 1, 1, 7, 250));
-        GetBaseData((int)HeroId.Mage).AddLevelData(new HeroLevelData(3, 19, 0, 230, 240, 1, 2, 7, 450));
-        GetBaseData((int)HeroId.Mage).AddLevelData(new HeroLevelData(4, 24, 0, 300, 300, 1, 2, 7, 750));
-        GetBaseData((int)HeroId.Mage).AddLevelData(new HeroLevelData(5, 30, 1, 380, 370, 1, 3, 7, 1250));
-        GetBaseData((int)HeroId.Mage).AddLevelData(new HeroLevelData(6, 37, 2, 470, 450, 1, 3, 7, 2000));
-        GetBaseData((int)HeroId.Mage).AddLevelData(new HeroLevelData(7, 45, 3, 570, 540, 2, 4, 7, 3000));
-        GetBaseData((int)HeroId.Mage).AddLevelData(new HeroLevelData(8, 54, 4, 680, 640, 2, 4, 7, 4500));
-        GetBaseData((int)HeroId.Mage).AddLevelData(new HeroLevelData(9, 64, 5, 800, 750, 2, 5, 7, 7000));
-        GetBaseData((int)HeroId.Mage).AddLevelData(new HeroLevelData(10, 75, 6, 930, 870, 2, 6, 7, 14000));
+        GetBaseData((int)HeroId.ManMage).AddLevelData(new HeroLevelData(1, 12, 0, 120, 150, 1, 1, 7, 100));
+        GetBaseData((int)HeroId.ManMage).AddLevelData(new HeroLevelData(2, 15, 0, 170, 190, 1, 1, 7, 250));
+        GetBaseData((int)HeroId.ManMage).AddLevelData(new HeroLevelData(3, 19, 0, 230, 240, 1, 2, 7, 450));
+        GetBaseData((int)HeroId.ManMage).AddLevelData(new HeroLevelData(4, 24, 0, 300, 300, 1, 2, 7, 750));
+        GetBaseData((int)HeroId.ManMage).AddLevelData(new HeroLevelData(5, 30, 1, 380, 370, 1, 3, 7, 1250));
+        GetBaseData((int)HeroId.ManMage).AddLevelData(new HeroLevelData(6, 37, 2, 470, 450, 1, 3, 7, 2000));
+        GetBaseData((int)HeroId.ManMage).AddLevelData(new HeroLevelData(7, 45, 3, 570, 540, 2, 4, 7, 3000));
+        GetBaseData((int)HeroId.ManMage).AddLevelData(new HeroLevelData(8, 54, 4, 680, 640, 2, 4, 7, 4500));
+        GetBaseData((int)HeroId.ManMage).AddLevelData(new HeroLevelData(9, 64, 5, 800, 750, 2, 5, 7, 7000));
+        GetBaseData((int)HeroId.ManMage).AddLevelData(new HeroLevelData(10, 75, 6, 930, 870, 2, 6, 7, 14000));
+
+        GetBaseData((int)HeroId.WomanWarrior).AddLevelData(new HeroLevelData(1, 10, 0, 150, 100, 1, 1, 7, 100));
+        GetBaseData((int)HeroId.WomanWarrior).AddLevelData(new HeroLevelData(2, 7, 1, 220, 130, 1, 1, 7, 250));
+        GetBaseData((int)HeroId.WomanWarrior).AddLevelData(new HeroLevelData(3, 9, 2, 300, 170, 2, 1, 7, 450));
+        GetBaseData((int)HeroId.WomanWarrior).AddLevelData(new HeroLevelData(4, 12, 3, 390, 220, 2, 1, 7, 750));
+        GetBaseData((int)HeroId.WomanWarrior).AddLevelData(new HeroLevelData(5, 15, 5, 490, 280, 3, 2, 7, 1250));
+        GetBaseData((int)HeroId.WomanWarrior).AddLevelData(new HeroLevelData(6, 18, 7, 600, 350, 3, 2, 7, 2000));
+        GetBaseData((int)HeroId.WomanWarrior).AddLevelData(new HeroLevelData(7, 21, 9, 720, 430, 4, 2, 7, 3000));
+        GetBaseData((int)HeroId.WomanWarrior).AddLevelData(new HeroLevelData(8, 25, 11, 850, 520, 4, 2, 7, 4500));
+        GetBaseData((int)HeroId.WomanWarrior).AddLevelData(new HeroLevelData(9, 29, 13, 990, 620, 5, 3, 7, 7000));
+        GetBaseData((int)HeroId.WomanWarrior).AddLevelData(new HeroLevelData(10, 33, 15, 1240, 730, 5, 3, 7, 14000));
+
+        GetBaseData((int)HeroId.WomanMage).AddLevelData(new HeroLevelData(1, 12, 0, 120, 150, 1, 1, 7, 100));
+        GetBaseData((int)HeroId.WomanMage).AddLevelData(new HeroLevelData(2, 15, 0, 170, 190, 1, 1, 7, 250));
+        GetBaseData((int)HeroId.WomanMage).AddLevelData(new HeroLevelData(3, 19, 0, 230, 240, 1, 2, 7, 450));
+        GetBaseData((int)HeroId.WomanMage).AddLevelData(new HeroLevelData(4, 24, 0, 300, 300, 1, 2, 7, 750));
+        GetBaseData((int)HeroId.WomanMage).AddLevelData(new HeroLevelData(5, 30, 1, 380, 370, 1, 3, 7, 1250));
+        GetBaseData((int)HeroId.WomanMage).AddLevelData(new HeroLevelData(6, 37, 2, 470, 450, 1, 3, 7, 2000));
+        GetBaseData((int)HeroId.WomanMage).AddLevelData(new HeroLevelData(7, 45, 3, 570, 540, 2, 4, 7, 3000));
+        GetBaseData((int)HeroId.WomanMage).AddLevelData(new HeroLevelData(8, 54, 4, 680, 640, 2, 4, 7, 4500));
+        GetBaseData((int)HeroId.WomanMage).AddLevelData(new HeroLevelData(9, 64, 5, 800, 750, 2, 5, 7, 7000));
+        GetBaseData((int)HeroId.WomanMage).AddLevelData(new HeroLevelData(10, 75, 6, 930, 870, 2, 6, 7, 14000));
     }
 
     public bool AddBaseData(HeroBaseData newHeroData)
