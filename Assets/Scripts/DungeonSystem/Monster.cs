@@ -13,6 +13,15 @@ public enum StatePosition
 	BossRoar,
 }
 
+public enum DefenseMoveDirectionArray
+{
+	Up = 1,
+	Down,
+	Middle,
+	case4,
+	Comback
+}
+
 public class Monster : MonoBehaviour {
     public enum StateDirecion
     {
@@ -24,7 +33,7 @@ public class Monster : MonoBehaviour {
     protected AnimatorStateInfo aniState;
 	[SerializeField]protected BoxCollider HittedBox;
 	[SerializeField]protected MonsterWeapon attackCollider;
-	[SerializeField]protected ShockWave shockWaveInstantiate;
+	[SerializeField]protected GameObject shockWaveInstantiate;
 
     public GameObject[] player;
 	[SerializeField]protected GameObject targetPlayer;
@@ -47,15 +56,13 @@ public class Monster : MonoBehaviour {
     [SerializeField] protected int defense;
     [SerializeField] protected int moveSpeed;
 
+
     //monster getting variable;
     protected float RunRange;
     protected float attackRange;
     protected float attackCycle;
 	[SerializeField]protected float currentDisTance;
 	[SerializeField]protected float searchRange;
-
-    //monster Speed variable;
-
     StateDirecion stateDirecion;
 	StatePosition statePosition;
     protected bool isAlive;
@@ -68,8 +75,7 @@ public class Monster : MonoBehaviour {
 
 	[SerializeField]private float[]currentDisTanceArray;
 	protected Vector3 checkDirection; // monster chaseplayer and move variable;
-	protected Vector3[] pointVector;
-	protected Vector3 transitionVector;
+	[SerializeField]protected Vector3[] pointVector;
     
     public int MonsterIndex
     {
@@ -139,13 +145,16 @@ public class Monster : MonoBehaviour {
 
 
 		if(monster.Id == (int)MonsterId.Duck){
-			//GameObject obj = Instantiate (Resources.Load("Effect/Monster_ShockWave"));
+			shockWaveInstantiate = Resources.Load<GameObject>("Effect/Monster_ShockWave");
+
 			searchRange = 12;
+			//Debug.Log (shockWaveInstantiate.AttackMonster);
 			//shockWaveInstantiate
 		}
 
-
-		//searchRange = 12;
+		if (monster.Id == (int)MonsterId.Bear || monster.Id == (int)MonsterId.BlackBear) {
+			searchRange = 12;
+		}
 
 		//test
 		DungeonManager dungeonManager = GameObject.Find("DungeonManager").GetComponent<DungeonManager>();
@@ -154,15 +163,7 @@ public class Monster : MonoBehaviour {
         currentDisTanceArray = new float[player.Length];
 		aggroRank = new float[player.Length];
 		playerToMonsterDamage = new float[player.Length];
-        
-		//if(monsterId == UnitId.Frog || monsterId == UnitId.Rabbit){ // change
-		if (attackCollider != null) {
-			attackCollider = this.transform.GetComponentInChildren<MonsterWeapon> ();
-			attackCollider.MonsterWeaponSet ();
-		}
-		if (shockWaveInstantiate != null) {
-			shockWaveInstantiate.GetDamage (attack, this.gameObject.GetComponent<Duck> ());
-		}
+
 		if(shockWaveInstantiate != null|| attackCollider !=null){
 //			NormalMonsterRealizePattern ();
 			//bossmonsterWeapon damageGet(basedamage);
@@ -172,66 +173,51 @@ public class Monster : MonoBehaviour {
     }
 
 	public void MonsterMoveAI(bool _normalMode){//moveAI->StartAI , 
-		_normalMode =true;
+		_normalMode =false;
+		if (!_normalMode) {
+			if (monsterIndex > 6) {
+				DefenseMoveSet (DefenseMoveDirectionArray.Up);
+			} else if (monsterIndex > 3) {
+				DefenseMoveSet (DefenseMoveDirectionArray.Middle);
+			} else if (monsterIndex >= 0) {
+				DefenseMoveSet (DefenseMoveDirectionArray.Down);
+			}
+		}
 		StartCoroutine(MonsterMoveAIStart (_normalMode));
 		StartCoroutine(MonsterActAI (_normalMode));
 
 //		if (monsterId == UnitId.Frog || monsterId == UnitId.Rabbit || monsterId == UnitId.Duck ||monsterId == UnitId.ManWarrior) {
 //			
 //		}
-//		if (!_normalMode) {
-//			StartCoroutine(DefencePointVectorChange ());
-//		}
 	}
 
-	IEnumerator DefencePointVectorChange(){
-		while (true)
-		{
-			for (int i = 0; i < pointVector.Length; i++)
-			{
-				if (i > 0 && i < pointVector.Length - 1)
-				{
-					transitionVector = pointVector[i];
-					pointVector[i] = pointVector[i + 1];
-					pointVector[i + 1] = transitionVector;
-				}
 
-				if (i == pointVector.Length - 1)
-				{
-					transitionVector = pointVector[i];
-					pointVector[i] = pointVector[0];
-					pointVector[0] = transitionVector;
-				}
-			}
-			yield return new WaitForSeconds(0.5f);
-		}
-	}
 
 	IEnumerator MonsterMoveAIStart(bool _normalMode){
 		while (IsAlive) {
 			//if (monsterId == UnitId.Frog || monsterId == UnitId.Rabbit || monsterId == UnitId.Duck) {
 			if(_normalMode){
-					if (targetPlayer != null) {
-						if (Mathf.Abs(targetPlayer.transform.position.z-transform.position.z) >8 || Mathf.Abs(targetPlayer.transform.position.x-this.gameObject.transform.position.x) > 0.6f )
-							if (currentDisTance > searchRange * 0.3f){
-							randomStandby = Random.Range(0,3);
-							if (randomStandby == 0) {
-								//for 문 -> Fuck go;
-								if (checkDirection.z>0) {
-                                    for (int i = 0; i < 4; i++)
-                                    {
-                                        movePoint = new Vector3(checkDirection.x, 0, checkDirection.z - 3f);
-                                        yield return new WaitForSeconds(2f);
-                                    }
+				if (targetPlayer != null) {
+					if (Mathf.Abs(targetPlayer.transform.position.z-transform.position.z) >8 || Mathf.Abs(targetPlayer.transform.position.x-this.gameObject.transform.position.x) > 0.6f )
+						if (currentDisTance > searchRange * 0.3f){
+						randomStandby = Random.Range(0,3);
+						if (randomStandby == 0) {
+							//for 문 -> Fuck go;
+							if (checkDirection.z>0) {
+                                for (int i = 0; i < 4; i++)
+                                {
+                                    movePoint = new Vector3(checkDirection.x, 0, checkDirection.z - 3f);
+                                    yield return new WaitForSeconds(2f);
                                 }
-								if (checkDirection.z<0) {
-                                    for (int i = 0; i < 4; i++)
-                                    {
-                                        movePoint = new Vector3(checkDirection.x, 0, checkDirection.z + 3f);
-                                        yield return new WaitForSeconds(2f);
-                                    }									
-								}
+                            }
+							if (checkDirection.z<0) {
+                                for (int i = 0; i < 4; i++)
+                                {
+                                    movePoint = new Vector3(checkDirection.x, 0, checkDirection.z + 3f);
+                                    yield return new WaitForSeconds(2f);
+                                }									
 							}
+						}
 
 							if (randomStandby == 1) {
 
@@ -358,11 +344,29 @@ public class Monster : MonoBehaviour {
 
 
 			while (!_normalMode) {
-				
-				}
+				if (isAlive) {
+					for (int i = 0; i < pointVector.Length; i++) {
+						if (i > 0 && i < pointVector.Length - 1) {
+							movePoint = pointVector [i];
+							pointVector [i] = pointVector [i + 1];
+							pointVector [i + 1] = movePoint;
+						}
+
+						if (i == pointVector.Length - 1) {
+							movePoint = pointVector [i];
+							pointVector [i] = pointVector [0];
+							pointVector [0] = movePoint;
+						}
+					}
+					yield return new WaitForSeconds (0.2f);
+				} else
+					break;
+			}
 			yield return new WaitForSeconds (0.2f);
 		}
 	}
+
+
 	
 	public void Pattern(StatePosition state){
 		switch (state)
@@ -444,6 +448,62 @@ public class Monster : MonoBehaviour {
 				yield return new WaitForSeconds (0.2f);
 		}
 		while (!_normalMode) {
+			
+			if (targetPlayer != null) {
+				currentDisTance = Vector3.Distance (targetPlayer.transform.position, this.gameObject.transform.position);
+				checkDirection = targetPlayer.transform.position - this.gameObject.transform.position;
+
+				if (checkDirection.z > 0) {
+					LookAtPattern (StateDirecion.right);
+				}
+				if (checkDirection.z <= 0) {
+					LookAtPattern (StateDirecion.left);
+				}
+			}
+			attackCycle += 0.2f;
+			if (attackCycle > 5) {
+				attackCycle = 0;
+				moveAble = false;
+				isAttack = true;
+				statePosition = StatePosition.Attack;
+				Pattern (statePosition);
+				yield return new WaitForSeconds (15f);
+			} 
+			if (attackCycle < 5) {
+				moveAble = true;
+				isAttack = false;
+				statePosition = StatePosition.Run;
+				Pattern (statePosition);
+			}
+
+//			if (currentDisTance < middleBossToMonsterLimitDistanceMonsterToCenter*1.5f) {
+//				movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
+//				transform.Translate(movePoint.normalized * moveSpeed * Time.deltaTime, 0);
+//				if (currentDisTance >= searchRange * 0.2f)
+//				{
+//					if (moveAble) {
+//						Pattern (StatePosition.Run);
+//						Debug.Log ("Run");
+//					}
+//				}
+//				if (currentDisTance < searchRange * 0.2f)
+//				{
+//					attackCycle += Time.deltaTime;
+//					if (attackCycle > 5) {
+//						attackCycle = 0;
+//						if (!isAttack) {
+//							isAttack = true;
+//							Pattern (StatePosition.Attack);
+//						}
+//					}
+//				}
+//			}
+//			if (currentDisTance >= middleBossToMonsterLimitDistanceMonsterToCenter*1.5f) {
+//				LookAtPattern (StateDirecion.right);
+//				IsHited = false;
+//				targetPlayer = null;
+//				//transform.Translate (boomObjectPosition*Time.deltaTime);
+//			}
 			yield return new WaitForSeconds (0.2f);
 		}
 	}
@@ -511,10 +571,6 @@ public class Monster : MonoBehaviour {
             }
         }
         ChasePlayer();
-//		if (targetPlayer != null) {
-//			currentDisTance= (Vector3.Distance (targetPlayer.transform.position, transform.position));
-//		}
-
     }
 
 	public void ChasePlayer(){
@@ -567,8 +623,53 @@ public class Monster : MonoBehaviour {
 		}
 	}
 
+	public void DefenceMoveGetting(Vector3[] _v3){
+		pointVector = new Vector3[_v3.Length];
+		for (int i = 0; i < _v3.Length; i++) {
+			pointVector [i] = _v3 [i];
+		}
+	}
 
+	public void DefenseMoveSet(DefenseMoveDirectionArray defenseMoveDirectionArray)
+	{
+		pointVector = new Vector3[7];
+		switch (defenseMoveDirectionArray) {
+		case DefenseMoveDirectionArray.Up:
+			{
+				pointVector [0] = new Vector3 (1, 0, 1);
+				pointVector [1] = new Vector3 (0, 0, 1);
+				pointVector [2] = new Vector3 (-1, 0, 1);
+				pointVector [3] = new Vector3 (-1, 0, 1);
+				pointVector [4] = new Vector3 (0, 0, 1);
+				pointVector [5] = new Vector3 (1, 0, 1);
+				pointVector [6] = new Vector3 (0, 0, 1);
+				break;
+			}
+		case DefenseMoveDirectionArray.Down:
+			{
+				pointVector [0] = new Vector3 (0, 0, 1);
+				pointVector [1] = new Vector3 (1, 0, 1);
+				pointVector [2] = new Vector3 (1, 0, 1);
+				pointVector [3] = new Vector3 (-1, 0, 1);
+				pointVector [4] = new Vector3 (-1, 0, 1);
+				pointVector [5] = new Vector3 (1, 0, 1);
+				pointVector [6] = new Vector3 (0, 0, 1);
+				break;
+			}
+		case DefenseMoveDirectionArray.Middle:
+			{
+				pointVector [0] = new Vector3 (-1, 0, 1);
+				pointVector [1] = new Vector3 (0, 0, 1);
+				pointVector [2] = new Vector3 (1, 0, 1);
+				pointVector [3] = new Vector3 (1, 0, 1);
+				pointVector [4] = new Vector3 (0, 0, 1);
+				pointVector [5] = new Vector3 (-1, 0, 1);
+				pointVector [6] = new Vector3 (0, 0, 1);
+				break;
+			}
 
+		}
+	}
 
 	public void MonsterArrayEraser(GameObject thisGameObject)
 	{
@@ -592,25 +693,26 @@ public class Monster : MonoBehaviour {
 
 
 	}
-	public virtual void AttackStart(){
+	public void AttackStart(){
 		moveAble = false;
 		isAttack = true;
 		StopCoroutine (LookatChange ());
 	}
-	public virtual void AnimatorReset(){
+	public void AnimatorReset(){
 		animator.SetInteger ("State", 0);
 	}
-	public virtual void AttackBlitz()
+	public void AttackBlitz()
 	{
 		if (attackCollider != null) {
 			attackCollider.AttackColliderOn ();
 		} else if (attackCollider == null) {
 			if (stateDirecion == StateDirecion.left) {
-				Instantiate (Resources.Load ("Effect/Monster_ShockWave"), new Vector3 (this.transform.position.x, this.transform.position.y + 1.5f, this.transform.position.z - 0.53f), this.transform.rotation);
-
+				GameObject objShockWave = (GameObject)Instantiate (shockWaveInstantiate, new Vector3 (this.transform.position.x, this.transform.position.y + 1.5f, this.transform.position.z - 0.53f), this.transform.rotation);
+				objShockWave.GetComponent<ShockWave>().SetDamage(attack,this);
 			}
 			if (stateDirecion == StateDirecion.right) {
-				Instantiate (Resources.Load ("Effect/Monster_ShockWave"), new Vector3 (this.transform.position.x, this.transform.position.y + 1.5f, this.transform.position.z + 0.53f), this.transform.rotation);	
+				GameObject objShockWave = (GameObject)Instantiate (shockWaveInstantiate, new Vector3 (this.transform.position.x, this.transform.position.y + 1.5f, this.transform.position.z + 0.53f), this.transform.rotation);	
+				objShockWave.GetComponent<ShockWave>().SetDamage(attack,this);
 			}
 		}
 

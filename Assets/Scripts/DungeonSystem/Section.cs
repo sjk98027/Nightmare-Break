@@ -66,13 +66,13 @@ public class Section : MonoBehaviour {
 			FrogPosition[i] = Frog[i].transform.position;
 			if (i >= 6) {
 				Pattern (MonSterMovePosition.Up);
-				Frog [i].pointVectorArrayGetting (pointVector);	
+				//Frog [i].pointVectorArrayGetting (pointVector);	
 			} else if (i >= 4) {
 				Pattern (MonSterMovePosition.Middle);
-				Frog [i].pointVectorArrayGetting (pointVector);	
+				//Frog [i].pointVectorArrayGetting (pointVector);	
 			} else
 				Pattern (MonSterMovePosition.Down);
-			Frog [i].pointVectorArrayGetting (pointVector);
+			//Frog [i].pointVectorArrayGetting (pointVector);
 		}
 
 

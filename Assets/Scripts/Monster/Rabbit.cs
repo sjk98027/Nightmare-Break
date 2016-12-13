@@ -39,14 +39,7 @@ public class Rabbit : Monster {
 
 	//private Vector3 boomPoint = new Vector3(100,100,100);
 
-	public enum StatePosition
-	{
-		Idle=1,
-		Run,
-		Attack,
-		TakeDamage,
-		Death
-	};
+
 
 	public StatePosition monsterState;
 
@@ -58,13 +51,7 @@ public class Rabbit : Monster {
 
 	public Vector3[] TransitionVector;
 
-	public void pointVectorArrayGetting(Vector3[] _v3){
-		pointVector = new Vector3[_v3.Length];
-		for (int i=0; i < _v3.Length; i++) {
-			pointVector [i] = _v3 [i];
-		}
-		StartCoroutine (pointVectorchange ());
-	}
+
 
 	public IEnumerator pointVectorchange()
 	{
@@ -74,16 +61,16 @@ public class Rabbit : Monster {
 			{
 				if (i > 0 && i < pointVector.Length - 1)
 				{
-					transitionVector = pointVector[i];
+					//transitionVector = pointVector[i];
 					pointVector[i] = pointVector[i + 1];
-					pointVector[i + 1] = transitionVector;
+					//pointVector[i + 1] = transitionVector;
 				}
 
 				if (i == pointVector.Length - 1)
 				{
-					transitionVector = pointVector[i];
+					//transitionVector = pointVector[i];
 					pointVector[i] = pointVector[0];
-					pointVector[0] = transitionVector;
+					//pointVector[0] = transitionVector;
 				}
 			}
 			yield return new WaitForSeconds(0.5f);
@@ -92,59 +79,59 @@ public class Rabbit : Monster {
 
 
 	//animation Set; move;
-	public void Pattern(StatePosition state)
-	{
-		switch (state)
-		{
-		case StatePosition.Idle:
-			{
-				this.transform.Translate(idlePoint * Time.deltaTime, 0);
-				animator.SetInteger("State", 0);
-				break;
-			}
-		
-		case StatePosition.Attack:
-			{
-				AttackProcess(isAttack);
-				break;
-			}
-		case StatePosition.Run:
-			{
-				AnimatorReset();
-
-				animator.SetInteger("State", 2);
-
-				break;
-			}
-		case StatePosition.TakeDamage:
-			{
-				animator.SetTrigger ("TakeDamage");
-				break;
-			}
-		case StatePosition.Death:
-			{
-				animator.SetTrigger ("Death");
-				MonsterArrayEraser(this.gameObject);
-				break;
-			}
-		}
-	}
-
-
-	public void AttackProcess(bool isAttack){
-		if (isAttack) {
-
-			if(animator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Run")){
-				animator.SetInteger ("State", 0);
-			}
-			if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Base Layer.Idle")) {
-				animator.SetInteger ("State", 3);
-			}
-			if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Base Layer.Attak")) {
-				moveAble = false;
-			}
-		}
-	}
+//	public void Pattern(StatePosition state)
+//	{
+//		switch (state)
+//		{
+//		case StatePosition.Idle:
+//			{
+//				this.transform.Translate(idlePoint * Time.deltaTime, 0);
+//				animator.SetInteger("State", 0);
+//				break;
+//			}
+//		
+//		case StatePosition.Attack:
+//			{
+//				AttackProcess(isAttack);
+//				break;
+//			}
+//		case StatePosition.Run:
+//			{
+//				AnimatorReset();
+//
+//				animator.SetInteger("State", 2);
+//
+//				break;
+//			}
+//		case StatePosition.TakeDamage:
+//			{
+//				animator.SetTrigger ("TakeDamage");
+//				break;
+//			}
+//		case StatePosition.Death:
+//			{
+//				animator.SetTrigger ("Death");
+//				MonsterArrayEraser(this.gameObject);
+//				break;
+//			}
+//		}
+//	}
+//
+//
+//	public void AttackProcess(bool isAttack){
+//		if (isAttack) {
+//
+//			if(animator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Run")){
+//				animator.SetInteger ("State", 0);
+//			}
+//			if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Base Layer.Idle")) {
+//				animator.SetInteger ("State", 3);
+//			}
+//			if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Base Layer.Attak")) {
+//				moveAble = false;
+//			}
+//		}
+//	}
 
 	public void middleBossPositionGetting(Vector3 _Position){
 		//boomObjectPosition = _Position;
@@ -387,7 +374,7 @@ public class Rabbit : Monster {
 	}
 	public void UpdateDefenceMode(){
 		if (!IsHited) {
-			transform.Translate (transitionVector * moveSpeed * 0.5f * Time.deltaTime);
+			//transform.Translate (transitionVector * moveSpeed * 0.5f * Time.deltaTime);
 		}
 		if (IsHited) {
 
