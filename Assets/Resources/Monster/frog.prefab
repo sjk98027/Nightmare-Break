@@ -372,8 +372,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000011928711132}
   - 95: {fileID: 95000011394082880}
-  - 114: {fileID: 114000011794516460}
   - 65: {fileID: 65000010380416406}
+  - 114: {fileID: 114000013922086144}
   m_Layer: 9
   m_Name: frog
   m_TagString: Untagged
@@ -694,7 +694,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013499179378}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.368752, y: -0.039999884, z: -15.924761}
+  m_LocalPosition: {x: 2.9158125, y: -0.039999884, z: 7.2178535}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -932,45 +932,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &114000011794516460
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013499179378}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: []
-  animator: {fileID: 95000011394082880}
-  targetPlayer: {fileID: 0}
-  HittedBox: {fileID: 65000010380416406}
-  MonsterRunAttackAround: 0
-  monsterArrayNumber: 0
-  movePoint: {x: 0, y: 0, z: 0}
-  currentLife: 0
-  maxLife: 0
-  RunRange: 0
-  attackRange: 0
-  attackCycle: 0
-  baseDamage: 0
-  isAlive: 0
-  isAttack: 0
-  isHited: 0
-  playerToMonsterDamage: []
-  aggroRank: []
-  changeTargetTime: 0
-  attackCollider: {fileID: 114000013928030922}
-  shockWaveInstantiate: {fileID: 0}
-  currentDisTanceArray: []
-  stateDirecion: 0
-  currentDisTance: 0
-  middleboss: {fileID: 0}
-  monsterState: 0
-  pointVector: []
-  transitionVector: {x: 0, y: 0, z: 0}
 --- !u!114 &114000012258278464
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1068,6 +1029,33 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &114000013922086144
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013499179378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f4445226db14946a625617aba881f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HittedBox: {fileID: 65000010380416406}
+  attackCollider: {fileID: 114000013928030922}
+  player: []
+  monsterIndex: 0
+  monsterId: 0
+  _name: 
+  level: 0
+  currentHP: 0
+  maxHP: 0
+  attack: 0
+  defense: 0
+  moveSpeed: 0
+  isAlive: 0
+  isAttack: 0
+  isHited: 0
+  currentDisTanceArray: []
 --- !u!114 &114000013928030922
 MonoBehaviour:
   m_ObjectHideFlags: 1

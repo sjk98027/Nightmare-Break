@@ -114,6 +114,11 @@ public class DungeonData
     public DungeonData(byte newMonsterNum, MonsterBaseData[] newMonsterData)
     {
         monsterNum = newMonsterNum;
-        monsterData = newMonsterData;
+        monsterData = new MonsterBaseData[monsterNum];
+
+        for (int i = 0; i < monsterNum; i++)
+        {
+            monsterData[i] = newMonsterData[i];
+        }
     }
 }

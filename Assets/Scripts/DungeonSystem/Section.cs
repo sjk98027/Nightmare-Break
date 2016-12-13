@@ -6,7 +6,6 @@ public class Section : MonoBehaviour {
 	public Frog[] Frog;
 	public Rabbit[] Rabbit;
 	public Duck[] shockWaveMonster;
-	public MiddleBoss middleBoss;
 	public GameObject middleBoss1;
 
 	public GameObject goToTheBoss;
@@ -45,7 +44,6 @@ public class Section : MonoBehaviour {
 
 		//Frog = gameObject.transform.GetComponentsInChildren<Frog> ();
 		//monsterCount = (Frog.Length + Rabbit.Length+1);
-		middleBoss = gameObject.transform.GetComponentInChildren<MiddleBoss>();
 
 		for (int i = 0; i < Frog.Length; i++) {
 //			Frog [i].PlayerSearch ();
@@ -94,25 +92,17 @@ public class Section : MonoBehaviour {
 		for (int shockWaveMonsterLength = 0; shockWaveMonsterLength < shockWaveMonster.Length; shockWaveMonsterLength++) {
 			shockWaveMonster [shockWaveMonsterLength].UpdateDefenceMode ();
 		}
-		if (middleBoss != null) {
-			middleBoss.UpdateConductDefenceMode ();
-		}
 	}
 
 	public void GuestUpdateConduct(){
 		for (int FrogLength = 0; FrogLength < Frog.Length; FrogLength++) {
-			Frog [FrogLength].GuestMonsterUpdate ();
+			//Frog [FrogLength].GuestMonsterUpdate ();
 		}
 		for (int RabbitLength = 0; RabbitLength < Rabbit.Length; RabbitLength++) {
-			Rabbit [RabbitLength].GuestMonsterUpdate ();
+			//Rabbit [RabbitLength].GuestMonsterUpdate ();
 		}
 		for (int shockWaveMonsterLength = 0; shockWaveMonsterLength < shockWaveMonster.Length; shockWaveMonsterLength++) {
-			shockWaveMonster [shockWaveMonsterLength].GuestMonsterUpdate ();
-		}
-
-
-		if (middleBoss != null) {
-			middleBoss.UpdateConductDefenceMode ();
+			//shockWaveMonster [shockWaveMonsterLength].GuestMonsterUpdate ();
 		}
 	}
 
@@ -120,52 +110,41 @@ public class Section : MonoBehaviour {
 
 	public void Pattern(MonSterMovePosition state)
 	{
-		switch (state)
-		{
+		switch (state) {
 		case MonSterMovePosition.Up:
 			{
-				pointVector[0] = new Vector3(1, 0, 1);
-				pointVector[1] = new Vector3(0,0,1);
-				pointVector[2] = new Vector3(-1, 0, 1);
-				pointVector[3] = new Vector3(-1, 0, 1);
-				pointVector[4] = new Vector3(0,0,1);
-				pointVector[5] = new Vector3(1, 0, 1);
-				pointVector[6] = new Vector3(0,0,1);
+				pointVector [0] = new Vector3 (1, 0, 1);
+				pointVector [1] = new Vector3 (0, 0, 1);
+				pointVector [2] = new Vector3 (-1, 0, 1);
+				pointVector [3] = new Vector3 (-1, 0, 1);
+				pointVector [4] = new Vector3 (0, 0, 1);
+				pointVector [5] = new Vector3 (1, 0, 1);
+				pointVector [6] = new Vector3 (0, 0, 1);
 				break;
 			}
 		case MonSterMovePosition.Down:
 			{
-				pointVector[0] = new Vector3(0,0,1);
-				pointVector[1] = new Vector3(1, 0, 1);
-				pointVector[2] = new Vector3(1,0,1);
-				pointVector[3] = new Vector3(-1, 0, 1);
-				pointVector[4] = new Vector3(-1, 0, 1);
-				pointVector[5] = new Vector3(1, 0, 1);
-				pointVector[6] = new Vector3(0,0,1);
+				pointVector [0] = new Vector3 (0, 0, 1);
+				pointVector [1] = new Vector3 (1, 0, 1);
+				pointVector [2] = new Vector3 (1, 0, 1);
+				pointVector [3] = new Vector3 (-1, 0, 1);
+				pointVector [4] = new Vector3 (-1, 0, 1);
+				pointVector [5] = new Vector3 (1, 0, 1);
+				pointVector [6] = new Vector3 (0, 0, 1);
 				break;
 			}
 		case MonSterMovePosition.Middle:
 			{
-				pointVector[0] = new Vector3(-1, 0, 1);
-				pointVector[1] = new Vector3(0,0,1);
-				pointVector[2] = new Vector3(1, 0, 1);
-				pointVector[3] = new Vector3(1, 0, 1);
-				pointVector[4] = new Vector3(0,0,1);
-				pointVector[5] = new Vector3(-1, 0, 1);
-				pointVector[6] = new Vector3(0,0,1);
+				pointVector [0] = new Vector3 (-1, 0, 1);
+				pointVector [1] = new Vector3 (0, 0, 1);
+				pointVector [2] = new Vector3 (1, 0, 1);
+				pointVector [3] = new Vector3 (1, 0, 1);
+				pointVector [4] = new Vector3 (0, 0, 1);
+				pointVector [5] = new Vector3 (-1, 0, 1);
+				pointVector [6] = new Vector3 (0, 0, 1);
 				break;
 			}
-		case MonSterMovePosition.case4:
-			{
-
-				break;
-			}
-
-		case MonSterMovePosition.Comback:
-			{
-				break;
-			}
-
+		
 		}
 	}
 

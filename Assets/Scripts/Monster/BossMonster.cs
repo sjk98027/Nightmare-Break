@@ -8,9 +8,6 @@ public class BossMonster : Monster {
 
 	private float currentDistance;
 	private float perceive = 20.0f;
-	private float moveSpeed = 0.3f;
-
-	private Vector3 movePoint;
 
 	public enum MonsterState {Idle = 1 , Run, Walk, BigSmash, TwoHandSmash, Roar, UPSmash, DownSmash, Death };//콤보 state
 
@@ -44,9 +41,9 @@ public class BossMonster : Monster {
 		
 	}
 	void FuzzyHPValue(){
-		criticalValue = critical.Evaluate (currentLife);
-		hurtValue = hurt.Evaluate (currentLife);
-		healthyValue = healthy.Evaluate (currentLife);
+		criticalValue = critical.Evaluate (currentHP);
+		hurtValue = hurt.Evaluate (currentHP);
+		healthyValue = healthy.Evaluate (currentHP);
 	}
 	IEnumerator CheckMonsterState(){
 		while (IsAlive) 

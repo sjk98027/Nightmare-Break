@@ -8,7 +8,8 @@ public enum MonsterId
     Duck,
     Frog,
     Rabbit,
-    Bear
+    BlackBear,
+    Bear,
 }
 
 public class MonsterDatabase

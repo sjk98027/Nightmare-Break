@@ -19,6 +19,8 @@
     ExitRoom,
     StartGame,
     RequestUdpConnection,
+    RequestSpawnMonsterList,
+    RequestDungeonData,
     UdpConnectComplete,
 }
 
