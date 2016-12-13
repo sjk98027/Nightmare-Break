@@ -26,7 +26,9 @@ public class MonsterWeapon : MonoBehaviour {
 	{
 		if (coll.gameObject.layer == LayerMask.NameToLayer ("Player"))
 		{
+			
 			CharacterManager CharObject = coll.gameObject.GetComponent<CharacterManager> ();
+			Debug.Log (damage);
 			if (damage != 0)
 			{
 				CharObject.HitDamage (damage);

@@ -17,6 +17,8 @@ public class WarriorManager : CharacterManager
     private TrailRenderer trailRenderer;
     private GameObject[] attackEffect;
 	int skillLv;
+	public AudioClip swordFinishSound;
+	public AudioClip giganticSwordFinishSound;
 	public bool poweroverwhelming;
 
 	public override void NormalAttack ()
@@ -146,7 +148,7 @@ public class WarriorManager : CharacterManager
 			giganticSwordPos = -10.0f;
 		}
 
-		giganticSwordTemp = Instantiate (Resources.Load<GameObject> ("GiganticSword"), transform.position + new Vector3 (0.0f, 10.0f, giganticSwordPos), Quaternion.Euler (new Vector3 (-90.0f, 90.0f, -180.0f))) as GameObject;
+		giganticSwordTemp = Instantiate (Resources.Load<GameObject> ("GiganticSword"), transform.position + new Vector3 (0.0f, 10.0f, giganticSwordPos), Quaternion.Euler (new Vector3 (90.0f, 90.0f, -180.0f))) as GameObject;
 		giganticSwordTemp.gameObject.GetComponent<Rigidbody> ().AddForce (-Vector3.up * giganticSwordSpeed, ForceMode.Impulse);
 	}
 
@@ -292,30 +294,92 @@ public class WarriorManager : CharacterManager
 	public override void classSound()
 	{
 
-		attack1 =Resources.Load<AudioClip> ("Sound/Warriorattack1");
-		attack2 =Resources.Load<AudioClip> ("Sound/Warriorattack2");
-		attack3 =Resources.Load<AudioClip> ("Sound/Warriorattack3");
+		attack1 =Resources.Load<AudioClip> ("Sound/ManWarriorattack1");
+		attack2 =Resources.Load<AudioClip> ("Sound/ManWarriorattack2");
+		attack3 =Resources.Load<AudioClip> ("Sound/ManWarriorattack3");
 
-		Skill1Sound=Resources.Load<AudioClip> ("Sound/MageDestroy");
-		Skill2Sound=Resources.Load<AudioClip> ("Sound/MageDestroy");
-		Skill3Sound=Resources.Load<AudioClip> ("Sound/MageDestroy");
-		Skill4Sound=Resources.Load<AudioClip> ("Sound/MageDestroy");
+		Skill1Sound=Resources.Load<AudioClip> ("Sound/ManMealStrom");
+		Skill2Sound=Resources.Load<AudioClip> ("Sound/ManCutOff");
+		Skill3Sound=Resources.Load<AudioClip> ("Sound/ManSwordDance");
+		Skill4Sound=Resources.Load<AudioClip> ("Sound/ManGiganticSwordStart");
+		giganticSwordFinishSound = Resources.Load<AudioClip> ("Sound/ManGiganticSwordFinish");
+		swordFinishSound = Resources.Load<AudioClip> ("Sound/ManSwordDanceFinish");
 
 	}
 
-	public void AttackSound()
+	public void AttackSound1()
 	{
-		if (runState.IsName ("Attack1"))
+		if (charStatus.HGender == 0)
 		{
-			this.CharAudio.PlayOneShot (attack1);
+			CharAudio.PlayOneShot (attack1);
 		}
-		else if (runState.IsName ("Attack2"))
+	}
+
+	public void AttackSound2()
+	{
+		if (charStatus.HGender == 0)
 		{
-			this.CharAudio.PlayOneShot (attack2);
+			CharAudio.PlayOneShot (attack2);
 		}
-		else if (runState.IsName ("Attack3"))
+	}
+
+	public void AttackSound3()
+	{
+		if (charStatus.HGender == 0)
 		{
-			this.CharAudio.PlayOneShot (attack3);
+			CharAudio.PlayOneShot (attack3);
+		}
+	}
+	public void SwordDanceSound()
+	{
+		if (charStatus.HGender == 0)
+		{
+			CharAudio.PlayOneShot (Skill3Sound);
+		}
+		
+	}
+	public void MealStromSound()
+	{
+		if (charStatus.HGender == 0)
+		{
+			CharAudio.PlayOneShot (Skill1Sound);
+		}
+
+	}
+
+	public void CutOffSound()
+	{
+		if (charStatus.HGender == 0)
+		{
+			CharAudio.PlayOneShot (Skill2Sound);
+		}
+
+	}
+	public void SwordDanceFinishSound()
+	{
+		if (charStatus.HGender == 0)
+		{
+			Debug.Log ("in");
+			CharAudio.PlayOneShot (swordFinishSound);
+		}
+
+	}
+	public void GiganticSwordSoundStart()
+	{
+		if (charStatus.HGender == 0)
+		{
+			Debug.Log ("in");
+			CharAudio.PlayOneShot (Skill4Sound);
+		}
+	}
+
+
+	public void GiganticSwordSoundFinish()
+	{
+		if (charStatus.HGender == 0)
+		{
+			Debug.Log ("in");
+			CharAudio.PlayOneShot (giganticSwordFinishSound);
 		}
 	}
 }

@@ -416,14 +416,14 @@ public class CharacterManager : MonoBehaviour
 				state = CharacterState.Skill1;
 				animator.SetTrigger ("Skill1");
 				skillAttackState = true;
-				this.CharAudio.PlayOneShot (Skill1Sound);
+			
 				break;
 
 			case 5:
 				state = CharacterState.Skill2;
 				animator.SetTrigger ("Skill2");
 				skillAttackState = true;
-				this.CharAudio.PlayOneShot (Skill2Sound);
+
                     //basicDamage = charstate.activeSkillSet [1].skillDamage
 				break;
 
@@ -431,7 +431,7 @@ public class CharacterManager : MonoBehaviour
 				state = CharacterState.Skill3;
 				animator.SetTrigger ("Skill3");
 				skillAttackState = true;
-				this.CharAudio.PlayOneShot (Skill3Sound);
+
                     //basicDamage = charstate.activeSkillSet [3].skillDamage;
 				break;
 
@@ -439,7 +439,7 @@ public class CharacterManager : MonoBehaviour
 				state = CharacterState.Skill4;
 				animator.SetTrigger ("Skill4");
 				skillAttackState = true;
-				this.CharAudio.PlayOneShot (Skill4Sound);
+
                     //basicDamage = charstate.activeSkillSet [2].skillDamage;
 				break;
 
