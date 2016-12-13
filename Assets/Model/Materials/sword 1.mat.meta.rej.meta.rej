@@ -1,0 +1,10 @@
+diff a/Assets/Model/Materials/sword 1.mat.meta.rej.meta b/Assets/Model/Materials/sword 1.mat.meta.rej.meta	(rejected hunks)
+@@ -0,0 +1,8 @@
++fileFormatVersion: 2
++guid: 31b787f59aa3b7e48b1a5d94ba787b9e
++timeCreated: 1481597636
++licenseType: Free
++DefaultImporter:
++  userData: 
++  assetBundleName: 
++  assetBundleVariant: 
