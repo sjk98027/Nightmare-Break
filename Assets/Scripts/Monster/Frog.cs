@@ -43,14 +43,7 @@ public class Frog : Monster {
 
 
 
-	public enum StatePosition
-	{
-		Idle=1,
-		Run,
-		Attack,
-		TakeDamage,
-		Death
-	};
+
 
 	public StatePosition monsterState;
 
@@ -59,80 +52,12 @@ public class Frog : Monster {
 
 
 
-	public void pointVectorArrayGetting(Vector3[] _v3){
-		pointVector = new Vector3[_v3.Length];
-		for (int i=0; i < _v3.Length; i++) {
-			pointVector [i] = _v3 [i];
-		}
-		//StartCoroutine (pointVectorchange ());
-	}
 
-	//	public IEnumerator pointVectorchange()
-	//	{
-	//		while (true)
-	//		{
-	//			for (int i = 0; i < pointVector.Length; i++)
-	//			{
-	//				if (i > 0 && i < pointVector.Length - 1)
-	//				{
-	//					transitionVector = pointVector[i];
-	//					pointVector[i] = pointVector[i + 1];
-	//					pointVector[i + 1] = transitionVector;
-	//				}
-	//
-	//				if (i == pointVector.Length - 1)
-	//				{
-	//					transitionVector = pointVector[i];
-	//					pointVector[i] = pointVector[0];
-	//					pointVector[0] = transitionVector;
-	//				}
-	//			}
-	//			yield return new WaitForSeconds(0.5f);
-	//		}
-	//	}
+
 
 
 	//animation Set; move;
-	public void Pattern(StatePosition state)
-	{
-		switch (state)
-		{
-		case StatePosition.Idle:
-			{
-				this.transform.Translate(idlePoint * Time.deltaTime, 0);
-				animator.SetInteger("State", 0);
-				break;
-			}
-			//		case StatePosition.Boom:
-			//			{
-			//				idlePoint = this.gameObject.transform.position;
-			//				IsAlive = false;
-			//				StartCoroutine("BoomCoroutine"); break;
-			//			} // animator boom -> setintter 4
-		case StatePosition.Attack:
-			{
-				AttackProcess(isAttack);
-				break;
-			}
-		case StatePosition.Run:
-			{
-				AnimatorReset();
-				animator.SetInteger("State", 2);
-				break;
-			}
-		case StatePosition.TakeDamage:
-			{
-				animator.SetTrigger ("TakeDamage");
-				break;
-			}
-		case StatePosition.Death:
-			{
-				animator.SetTrigger ("Death");
-				//				MonsterArrayEraser(this.gameObject);
-				break;
-			}
-		}
-	}
+
 
 	public void BoomStart(){
 		StartCoroutine (BoomCoroutine ());
@@ -349,7 +274,7 @@ public class Frog : Monster {
 	public IEnumerator PatternDefenceChange(){
 		while(IsAlive){
 			if (!IsHited) {
-				transform.Translate (transitionVector * moveSpeed * 0.5f * Time.deltaTime);
+				//transform.Translate (transitionVector * moveSpeed * 0.5f * Time.deltaTime);
 			}
 			if (IsHited) {
 
@@ -399,7 +324,7 @@ public class Frog : Monster {
 		if (aniState.IsName ("Run")) {
 			if (moveAble) {
 				if (!IsHited) {
-					this.transform.Translate (transitionVector * moveSpeed * Time.deltaTime,0);
+					//this.transform.Translate (transitionVector * moveSpeed * Time.deltaTime,0);
 				}
 				if (IsHited) {
 					this.transform.Translate (movePoint.normalized * moveSpeed * Time.deltaTime,0);
@@ -423,7 +348,7 @@ public class Frog : Monster {
 		if (aniState.IsName ("Run")) {
 			if (moveAble) {
 				LookAtPattern (StateDirecion.right);
-				this.transform.Translate (transitionVector * moveSpeed * 0.5f * Time.deltaTime);
+				//this.transform.Translate (transitionVector * moveSpeed * 0.5f * Time.deltaTime);
 			}
 		}
 		//Pattern (monsterState);
