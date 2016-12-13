@@ -453,7 +453,7 @@ public class DungeonManager : MonoBehaviour
         {
             if (players[unitIndex] == null)
             {
-                GameObject unit = Instantiate(Resources.Load("Warrior")) as GameObject;
+                GameObject unit = Instantiate(Resources.Load("ManWarrior")) as GameObject;
                 unit.transform.position = newPosition;
                 unit.name = "Warrior";
                 players[unitIndex] = unit;
