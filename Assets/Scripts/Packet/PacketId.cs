@@ -43,6 +43,8 @@ public enum ServerPacketId
     RoomUserData,
     ExitRoomResult,
     StartGame,
+    SpawnMonsterList,
+    DungeonData,
     UdpConnection,
     StartDungeon,
 }

@@ -5,27 +5,22 @@ using UnityEngine.UI;
 
 public class TestMonster : Monster
 {
-	public enum BigBearBossPatternName
-	{
-		BigBearBossIdle = 0,
-		BigBearBossRun,
-		BigBearBossAttack,
-		BigBearBossOneHandAttack,
-		BigBearJumpAttack,
-		BigBearBossRoar,
-		BigBearBossDeath};
+    public enum BigBearBossPatternName
+    {
+        BigBearBossIdle = 0,
+        BigBearBossRun,
+        BigBearBossAttack,
+        BigBearBossOneHandAttack,
+        BigBearJumpAttack,
+        BigBearBossRoar,
+        BigBearBossDeath
+    };
 
-<<<<<<< HEAD
 	public float searchRange;
 	public float moveSpeed;
 	public AudioClip bossStartSound;
 	private AudioSource bossAudio;
-=======
 	//public float searchRange;
-
-
-
->>>>>>> fc38bea11bd59aee7b783bd3f66032d8ba816dd4
 	float AttackTime;
 	int shootNumber;
 	public const int bossPatternCount = 3;
