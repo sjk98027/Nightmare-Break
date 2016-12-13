@@ -3517,6 +3517,8 @@ MonoBehaviour:
   bloodingWeapon: {fileID: 0}
   riseCooltime: 0
   trailRenderer: {fileID: 0}
+  swordFinishSound: {fileID: 0}
+  giganticSwordFinishSound: {fileID: 0}
   poweroverwhelming: 0
 --- !u!65 &742567224
 BoxCollider:
@@ -5857,12 +5859,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HittedBox: {fileID: 0}
   attackCollider: {fileID: 0}
   shockWaveInstantiate: {fileID: 0}
   player: []
   targetPlayer: {fileID: 0}
   monsterIndex: 0
-  unitId: 0
+  monsterId: 0
   _name: 
   level: 0
   currentHP: 0
@@ -5870,15 +5873,11 @@ MonoBehaviour:
   attack: 0
   defense: 0
   moveSpeed: 0
-  isAlive: 0
-  isAttack: 0
-  isHited: 0
-  currentDisTanceArray: []
   currentDisTance: 0
+  searchRange: 0
+  currentDisTanceArray: []
   middleboss: {fileID: 0}
   monsterState: 0
-  pointVector: []
-  transitionVector: {x: 0, y: 0, z: 0}
 --- !u!4 &1275355246
 Transform:
   m_ObjectHideFlags: 0
@@ -8450,12 +8449,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HittedBox: {fileID: 0}
   attackCollider: {fileID: 0}
   shockWaveInstantiate: {fileID: 0}
   player: []
   targetPlayer: {fileID: 0}
   monsterIndex: 0
-  unitId: 0
+  monsterId: 0
   _name: 
   level: 0
   currentHP: 0
@@ -8463,15 +8463,11 @@ MonoBehaviour:
   attack: 0
   defense: 0
   moveSpeed: 0
-  isAlive: 0
-  isAttack: 0
-  isHited: 0
-  currentDisTanceArray: []
   currentDisTance: 0
+  searchRange: 0
+  currentDisTanceArray: []
   middleboss: {fileID: 0}
   monsterState: 0
-  pointVector: []
-  transitionVector: {x: 0, y: 0, z: 0}
 --- !u!64 &1786780987
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -8620,7 +8616,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b55df912c131d44d8c71db0893ecdc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  players: []
   monsterSpawnPoints: []
+  monsterData: []
   sceneChangeObject: []
   bossMonster: {fileID: 0}
   section:
@@ -10197,6 +10195,15 @@ Prefab:
     - target: {fileID: 4000012137473344, guid: 34c8938255606b14698ffbdf692a35df, type: 2}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000011652895958, guid: 34c8938255606b14698ffbdf692a35df,
+        type: 2}
+      propertyPath: monsterId
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000012217331354, guid: 34c8938255606b14698ffbdf692a35df, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 34c8938255606b14698ffbdf692a35df, type: 2}

@@ -1151,6 +1151,7 @@ MonoBehaviour:
   shockWaveInstantiate: {fileID: 114000012395617532, guid: 1849101d47e5f1d4489ef638a5b516ee,
     type: 2}
   player: []
+  targetPlayer: {fileID: 0}
   monsterIndex: 0
   monsterId: 0
   _name: 
@@ -1160,9 +1161,8 @@ MonoBehaviour:
   attack: 0
   defense: 0
   moveSpeed: 0
-  isAlive: 0
-  isAttack: 0
-  isHited: 0
+  currentDisTance: 0
+  searchRange: 0
   currentDisTanceArray: []
 --- !u!114 &114000012621242782
 MonoBehaviour:
