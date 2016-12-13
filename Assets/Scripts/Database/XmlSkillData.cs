@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Xml;
-using System;
+using System.Xml.Serialization;
 
 public class XmlSkillData : MonoBehaviour {
     
@@ -9,6 +9,9 @@ public class XmlSkillData : MonoBehaviour {
 
     void XmlFileLoad()
     {
+        TextAsset baseSkillTextAsset = Resources.Load("Xml" + fileName) as TextAsset;
+        XmlDocument xmlSkillData = new XmlDocument();
+        xmlSkillData.LoadXml(baseSkillTextAsset.text);
 
     }
 

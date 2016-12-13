@@ -6,39 +6,62 @@ public class CharacterCreateUI : MonoBehaviour {
 
 	private const int maxClass = 4;
     private const int rotateValue = 30;
+    private const int minClass = 2;
+    private const int maxRotateBtn = 2;
 	private string nickName; 
-	private bool input;
 	private int currentPickClass;
     private int currentGender; //0은 남자, 1은 여자
     private bool[] btnPushCheck;
     private Animator characterAnim;
 	private GameObject[] selectImage;
-	public GameObject[] genderSelectImage;
-	public Transform characterPos;
-	public GameObject[] classPrefeb;
-	public InputField nickNameInputField;
-	public Button characterCreateBtn;
-	public Button[] rotateBtn;
-	public Button cancleBtn;
-	public Button[] genderBtn;
-	public GameObject[] classSkill;
+	private GameObject[] genderSelectImage;
+	private Transform characterPos;
+    [SerializeField]
+	private GameObject[] classPrefeb;
+	private InputField nickNameInputField;
+	private Button characterCreateBtn;
+	private Button[] rotateBtn;
+	private Button cancleBtn;
+	private Button[] genderBtn;
+	private GameObject[] classSkill;
 
 	void Start()
 	{
         currentGender = 0;
-	    btnPushCheck = new bool[2];
+        rotateBtn = new Button[maxRotateBtn];
+        btnPushCheck = new bool[maxRotateBtn];
+        genderSelectImage = new GameObject[minClass];
+        genderBtn = new Button[minClass];
+        classSkill = new GameObject[minClass];
 		selectImage = new GameObject[maxClass];
-		for (int i = 0; i < maxClass; i++) {
-           // classPrefeb[i] = Resources.Load<GameObject>("Class" + (i + 1));
+        classPrefeb = new GameObject[maxClass];
+
+        characterPos = GameObject.Find("CharacterPrefebPos").transform;
+        nickNameInputField = GameObject.Find("NickNameInput").GetComponent<InputField>();
+        characterCreateBtn = GameObject.Find("CharacterCreateBtn").GetComponent<Button>();
+        cancleBtn = GameObject.Find("CancleBtn").GetComponent<Button>();
+
+        for (int i = 0; i < maxClass; i++) {
 			selectImage [i] = GameObject.Find ("Select" + (i + 1));
 			selectImage [i].SetActive (false);
 		}
 
+        for(int i = 0; i < genderSelectImage.Length; i++)
+        {
+            rotateBtn[i] = GameObject.Find("RotateArrow" + i).GetComponent<Button>();
+            classSkill[i] = GameObject.Find("SkillUI" + i);
+            genderSelectImage[i] = GameObject.Find("Gender" + i).transform.GetChild(0).gameObject;
+            genderBtn[i] = GameObject.Find("Gender" + i).transform.GetChild(1).gameObject.GetComponent<Button>();
+            classSkill[i].SetActive(false);
+            genderSelectImage[i].SetActive(false);
+        }
+
 		for (int i = 0; i < classPrefeb.Length; i++)
 		{
-			classPrefeb [i].transform.position = characterPos.position;
+            classPrefeb[i] = Instantiate(Resources.Load<GameObject>("UI/Class" + i), characterPos.transform) as GameObject; 
+			classPrefeb[i].transform.position = characterPos.position;
 		}
-	}
+    }
 
 	public void PrefebRotate(int _index)
 	{
@@ -46,7 +69,7 @@ public class CharacterCreateUI : MonoBehaviour {
         StartCoroutine(CharacterRotate(_index));
 	}
 
-    public void PushCheckOut(int _index)
+    public void RotateCheck(int _index)
     {
         btnPushCheck[_index] = false;
     }
@@ -67,28 +90,28 @@ public class CharacterCreateUI : MonoBehaviour {
 		characterCreateBtn.interactable = true;
 	}
 
-	public void ClassSelect(int _index)
+	public void ClassSelect(int index)
 	{
-		for (int i = 0; i < maxClass * genderBtn.Length; i++) {
+		for (int i = 0; i < maxClass * minClass; i++) {
 			if (i < maxClass) {
 				selectImage [i].SetActive (false);
-				classSkill [i].SetActive (false);
-			}
+                classPrefeb [i].SetActive(false);
+            }
+
 			if (i < genderSelectImage.Length) {
 				genderSelectImage [i].SetActive (false);
-			}
-            classPrefeb[i].SetActive(false);
-
+                classSkill[i].SetActive(false);
+            }
         }
-		if (!selectImage [_index].activeSelf) {
-            selectImage [_index].SetActive (true);
-			classSkill [_index].SetActive (true);
+		if (!selectImage [index].activeSelf) {
+            selectImage [index].SetActive (true);
+			classSkill [index].SetActive (true);
 			currentGender = 0;
 			genderSelectImage [currentGender].SetActive (true);
-            currentPickClass = _index + _index;
-			classPrefeb[_index + _index].SetActive(true);
-			characterAnim = classPrefeb[_index + _index].GetComponent<Animator>();
-            for(int i=0; i < rotateBtn.Length; i++)
+            currentPickClass = index + index;
+			classPrefeb[index + index].SetActive(true);
+			characterAnim = classPrefeb[index + index].GetComponent<Animator>();
+            for(int i=0; i < minClass; i++)
             {
 				genderBtn[i].interactable = true;
                 rotateBtn[i].interactable = true;
@@ -104,7 +127,7 @@ public class CharacterCreateUI : MonoBehaviour {
 			classPrefeb [_genderindex + currentGender + currentPickClass].SetActive (false);
 			genderSelectImage[currentGender].SetActive(false);
             currentGender = _genderindex;
-			classPrefeb [currentGender].SetActive (true);
+			classPrefeb [currentGender + currentPickClass].SetActive (true);
 			genderSelectImage[currentGender].SetActive(true);
             characterAnim = classPrefeb[currentGender].GetComponent<Animator>();
         }
