@@ -357,7 +357,7 @@ GameObject:
   - 4: {fileID: 4000012137473344}
   - 95: {fileID: 95000010729959576}
   - 65: {fileID: 65000014097948880}
-  - 114: {fileID: 114000010962362116}
+  - 114: {fileID: 114000011652895958}
   m_Layer: 9
   m_Name: Duck
   m_TagString: Enermy
@@ -697,7 +697,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012217331354}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.62023354, y: -0.039999884, z: -15.909998}
+  m_LocalPosition: {x: 1.3295653, y: -0.039999884, z: 6.011009}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -1108,46 +1108,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &114000010962362116
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000012217331354}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd8fc76bfbdaf8f48a9a08094ad174c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: []
-  animator: {fileID: 95000010729959576}
-  targetPlayer: {fileID: 0}
-  HittedBox: {fileID: 65000014097948880}
-  MonsterRunAttackAround: 0
-  monsterArrayNumber: 0
-  movePoint: {x: 0, y: 0, z: 0}
-  currentLife: 0
-  maxLife: 0
-  RunRange: 0
-  attackRange: 0
-  attackCycle: 0
-  baseDamage: 0
-  isAlive: 0
-  isAttack: 0
-  isHited: 0
-  playerToMonsterDamage: []
-  aggroRank: []
-  changeTargetTime: 0
-  attackCollider: {fileID: 0}
-  shockWaveInstantiate: {fileID: 114000012395617532, guid: 1849101d47e5f1d4489ef638a5b516ee,
-    type: 2}
-  currentDisTanceArray: []
-  stateDirecion: 0
-  currentDisTance: 0
-  middleboss: {fileID: 0}
-  monsterState: 0
-  pointVector: []
-  transitionVector: {x: 0, y: 0, z: 0}
 --- !u!114 &114000011329022118
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1175,6 +1135,35 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114000011652895958
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012217331354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f4445226db14946a625617aba881f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HittedBox: {fileID: 65000014097948880}
+  attackCollider: {fileID: 0}
+  shockWaveInstantiate: {fileID: 114000012395617532, guid: 1849101d47e5f1d4489ef638a5b516ee,
+    type: 2}
+  player: []
+  monsterIndex: 0
+  monsterId: 0
+  _name: 
+  level: 0
+  currentHP: 0
+  maxHP: 0
+  attack: 0
+  defense: 0
+  moveSpeed: 0
+  isAlive: 0
+  isAttack: 0
+  isHited: 0
+  currentDisTanceArray: []
 --- !u!114 &114000012621242782
 MonoBehaviour:
   m_ObjectHideFlags: 1

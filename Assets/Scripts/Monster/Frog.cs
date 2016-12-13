@@ -3,10 +3,10 @@ using System.Collections;
 
 
 public class Frog : Monster {
-	private float searchRange = 8.0f;
-	//private float moveSpeed = 4f;
+//	private float searchRange = 8.0f;
 
-	public float currentDisTance;
+
+//	public float currentDisTance;
 	float middleBossToMonsterLimitDistanceMonsterToCenter = 6.0f;
 	private float middleBossToMonsterMinDistance = 1.5f;
 
@@ -54,8 +54,8 @@ public class Frog : Monster {
 
 	public StatePosition monsterState;
 
-	[SerializeField]public Vector3[] pointVector;
-	[SerializeField]public Vector3 transitionVector;	
+//	[SerializeField]public Vector3[] pointVector;
+//	[SerializeField]public Vector3 transitionVector;	
 
 
 
@@ -144,20 +144,20 @@ public class Frog : Monster {
 		StopCoroutine (BoomCoroutine());
 	}
 
-	public void AttackProcess(bool isAttack){
-		if (isAttack) {
-
-			if(animator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Run")){
-				animator.SetInteger ("State", 0);
-			}
-			if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Base Layer.Idle")) {
-				animator.SetInteger ("State", 3);
-			}
-			if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Base Layer.Attack")) {
-				moveAble = false;
-			}
-		}
-	}
+//	public void AttackProcess(bool isAttack){
+//		if (isAttack) {
+//
+//			if(animator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Run")){
+//				animator.SetInteger ("State", 0);
+//			}
+//			if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Base Layer.Idle")) {
+//				animator.SetInteger ("State", 3);
+//			}
+//			if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Base Layer.Attack")) {
+//				moveAble = false;
+//			}
+//		}
+//	}
 
 	public void middleBossPositionGetting(Vector3 _Position){
 		middleBossAroundPosition = _Position;
@@ -172,13 +172,13 @@ public class Frog : Monster {
 		}
 	}
 
-	public override void MonsterMoveAI(bool _normalMode){
-		if (_normalMode) {
-			StartCoroutine (AttackAroundRun ());
-		} else if (!_normalMode) {
-
-		}
-	}
+//	public override void MonsterMoveAI(bool _normalMode){
+//		if (_normalMode) {
+//			StartCoroutine (AttackAroundRun ());
+//		} else if (!_normalMode) {
+//
+//		}
+//	}
 
 	public IEnumerator AttackAroundRun(){
 		while (true) {

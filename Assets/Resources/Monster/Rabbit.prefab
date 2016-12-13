@@ -233,7 +233,7 @@ GameObject:
   - 4: {fileID: 4000012307590346}
   - 95: {fileID: 95000011276642370}
   - 65: {fileID: 65000012686334526}
-  - 114: {fileID: 114000012802654222}
+  - 114: {fileID: 114000011133703998}
   m_Layer: 9
   m_Name: Rabbit
   m_TagString: Enermy
@@ -781,7 +781,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011541733988}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.549416, y: -0.039999884, z: 0.25027856}
+  m_LocalPosition: {x: 1.6781158, y: -0.039999884, z: 8.44211}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -1047,6 +1047,33 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+--- !u!114 &114000011133703998
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011541733988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f4445226db14946a625617aba881f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HittedBox: {fileID: 65000012686334526}
+  attackCollider: {fileID: 114000011537116976}
+  player: []
+  monsterIndex: 0
+  monsterId: 0
+  _name: 
+  level: 0
+  currentHP: 0
+  maxHP: 0
+  attack: 0
+  defense: 0
+  moveSpeed: 0
+  isAlive: 0
+  isAttack: 0
+  isHited: 0
+  currentDisTanceArray: []
 --- !u!114 &114000011177505994
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1104,46 +1131,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &114000012802654222
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000011541733988}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d29c9c80e3af91b4aa1922b026dfb9d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: []
-  animator: {fileID: 95000011276642370}
-  targetPlayer: {fileID: 0}
-  HittedBox: {fileID: 65000012686334526}
-  MonsterRunAttackAround: 0
-  monsterArrayNumber: 0
-  movePoint: {x: 0, y: 0, z: 0}
-  currentLife: 0
-  maxLife: 0
-  RunRange: 0
-  attackRange: 0
-  attackCycle: 0
-  baseDamage: 0
-  isAlive: 0
-  isAttack: 0
-  isHited: 0
-  playerToMonsterDamage: []
-  aggroRank: []
-  changeTargetTime: 0
-  attackCollider: {fileID: 114000011537116976}
-  shockWaveInstantiate: {fileID: 0}
-  currentDisTanceArray: []
-  stateDirecion: 0
-  currentDisTance: 0
-  middleboss: {fileID: 0}
-  monsterState: 0
-  pointVector: []
-  transitionVector: {x: 0, y: 0, z: 0}
-  TransitionVector: []
 --- !u!114 &114000013655215896
 MonoBehaviour:
   m_ObjectHideFlags: 1

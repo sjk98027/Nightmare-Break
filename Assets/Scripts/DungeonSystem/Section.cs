@@ -96,13 +96,13 @@ public class Section : MonoBehaviour {
 
 	public void GuestUpdateConduct(){
 		for (int FrogLength = 0; FrogLength < Frog.Length; FrogLength++) {
-			Frog [FrogLength].GuestMonsterUpdate ();
+			//Frog [FrogLength].GuestMonsterUpdate ();
 		}
 		for (int RabbitLength = 0; RabbitLength < Rabbit.Length; RabbitLength++) {
-			Rabbit [RabbitLength].GuestMonsterUpdate ();
+			//Rabbit [RabbitLength].GuestMonsterUpdate ();
 		}
 		for (int shockWaveMonsterLength = 0; shockWaveMonsterLength < shockWaveMonster.Length; shockWaveMonsterLength++) {
-			shockWaveMonster [shockWaveMonsterLength].GuestMonsterUpdate ();
+			//shockWaveMonster [shockWaveMonsterLength].GuestMonsterUpdate ();
 		}
 	}
 
@@ -110,52 +110,41 @@ public class Section : MonoBehaviour {
 
 	public void Pattern(MonSterMovePosition state)
 	{
-		switch (state)
-		{
+		switch (state) {
 		case MonSterMovePosition.Up:
 			{
-				pointVector[0] = new Vector3(1, 0, 1);
-				pointVector[1] = new Vector3(0,0,1);
-				pointVector[2] = new Vector3(-1, 0, 1);
-				pointVector[3] = new Vector3(-1, 0, 1);
-				pointVector[4] = new Vector3(0,0,1);
-				pointVector[5] = new Vector3(1, 0, 1);
-				pointVector[6] = new Vector3(0,0,1);
+				pointVector [0] = new Vector3 (1, 0, 1);
+				pointVector [1] = new Vector3 (0, 0, 1);
+				pointVector [2] = new Vector3 (-1, 0, 1);
+				pointVector [3] = new Vector3 (-1, 0, 1);
+				pointVector [4] = new Vector3 (0, 0, 1);
+				pointVector [5] = new Vector3 (1, 0, 1);
+				pointVector [6] = new Vector3 (0, 0, 1);
 				break;
 			}
 		case MonSterMovePosition.Down:
 			{
-				pointVector[0] = new Vector3(0,0,1);
-				pointVector[1] = new Vector3(1, 0, 1);
-				pointVector[2] = new Vector3(1,0,1);
-				pointVector[3] = new Vector3(-1, 0, 1);
-				pointVector[4] = new Vector3(-1, 0, 1);
-				pointVector[5] = new Vector3(1, 0, 1);
-				pointVector[6] = new Vector3(0,0,1);
+				pointVector [0] = new Vector3 (0, 0, 1);
+				pointVector [1] = new Vector3 (1, 0, 1);
+				pointVector [2] = new Vector3 (1, 0, 1);
+				pointVector [3] = new Vector3 (-1, 0, 1);
+				pointVector [4] = new Vector3 (-1, 0, 1);
+				pointVector [5] = new Vector3 (1, 0, 1);
+				pointVector [6] = new Vector3 (0, 0, 1);
 				break;
 			}
 		case MonSterMovePosition.Middle:
 			{
-				pointVector[0] = new Vector3(-1, 0, 1);
-				pointVector[1] = new Vector3(0,0,1);
-				pointVector[2] = new Vector3(1, 0, 1);
-				pointVector[3] = new Vector3(1, 0, 1);
-				pointVector[4] = new Vector3(0,0,1);
-				pointVector[5] = new Vector3(-1, 0, 1);
-				pointVector[6] = new Vector3(0,0,1);
+				pointVector [0] = new Vector3 (-1, 0, 1);
+				pointVector [1] = new Vector3 (0, 0, 1);
+				pointVector [2] = new Vector3 (1, 0, 1);
+				pointVector [3] = new Vector3 (1, 0, 1);
+				pointVector [4] = new Vector3 (0, 0, 1);
+				pointVector [5] = new Vector3 (-1, 0, 1);
+				pointVector [6] = new Vector3 (0, 0, 1);
 				break;
 			}
-		case MonSterMovePosition.case4:
-			{
-
-				break;
-			}
-
-		case MonSterMovePosition.Comback:
-			{
-				break;
-			}
-
+		
 		}
 	}
 

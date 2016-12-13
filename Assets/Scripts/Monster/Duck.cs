@@ -2,10 +2,10 @@
 using System.Collections;
 
 public class Duck : Monster {
-	private float searchRange = 12.0f;
-	//moveSpeed = 2.5f;
+//	private float searchRange = 12.0f;
 
-	public float currentDisTance;
+
+//	public float currentDisTance;
 	float middleBossToMonsterLimitDistanceMonsterToCenter = 6.0f;
 	private float middleBossToMonsterMinDistance = 1.5f;
 
@@ -50,8 +50,8 @@ public class Duck : Monster {
 
 	public StatePosition monsterState;
 
-	[SerializeField]public Vector3[] pointVector;
-	[SerializeField]public Vector3 transitionVector;	
+//	[SerializeField]public Vector3[] pointVector;
+//	[SerializeField]public Vector3 transitionVector;	
 	public Vector3[] PointVector{
 		get {return pointVector; }
 		set{pointVector = value; }
@@ -156,9 +156,9 @@ public class Duck : Monster {
 		}
 	}
 
-	public override void MonsterMoveAI(bool _normalMode){
-		StartCoroutine (MonsterNormalMoveAI ());
-	}
+//	public override void MonsterMoveAI(bool _normalMode){
+//		StartCoroutine (MonsterNormalMoveAI ());
+//	}
 
 	public IEnumerator MonsterNormalMoveAI(){
 		while (true) {
