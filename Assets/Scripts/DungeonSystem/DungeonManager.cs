@@ -4,6 +4,19 @@ using System.Net;
 using System.Collections.Generic;
 using System.Collections;
 
+public enum UnitId
+{
+    ManWarrior = 0,
+    WomanWarrior,
+    ManMage,
+    WomanMage,
+    Frog,
+    Duck,
+    Rabbit,
+    BlackBear,
+    Bear,
+}
+
 //this class manage monsterStageLevel, sumon, player sumon, player death;
 public class DungeonManager : MonoBehaviour
 {
@@ -240,7 +253,7 @@ public class DungeonManager : MonoBehaviour
                 }
             }
 
-            if (monsterData[monsterIndex].MonsterId < MonsterId.BlackBear)
+            if (monsterData[monsterIndex].MonsterId < UnitId.BlackBear)
             {
                 monsterData[monsterIndex].MonsterMoveAI(normalMode);
             }
@@ -350,7 +363,7 @@ public class DungeonManager : MonoBehaviour
 
         monster.transform.SetParent(transform);
         monsterData[unitIndex] = monster.GetComponent<Monster>();
-        monsterData[unitIndex].MonsterId = (MonsterId)unitId;
+        monsterData[unitIndex].MonsterId = (UnitId)unitId;
 
         return monster;
     }
@@ -436,7 +449,7 @@ public class DungeonManager : MonoBehaviour
 
     public void CreateUnit(int unitId, int unitIndex, Vector3 newPosition)
     {
-        if (unitId <= (int)HeroId.WomanMage)
+        if (unitId <= (int)UnitId.WomanMage)
         {
             if (players[unitIndex] == null)
             {
