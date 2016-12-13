@@ -253,7 +253,7 @@ public class DungeonManager : MonoBehaviour
                 }
             }
 
-            if (monsterData[monsterIndex].MonsterId < UnitId.BlackBear)
+            if (monsterData[monsterIndex].MonsterId < MonsterId.BlackBear)
             {
                 monsterData[monsterIndex].MonsterMoveAI(normalMode);
             }
@@ -363,7 +363,7 @@ public class DungeonManager : MonoBehaviour
 
         monster.transform.SetParent(transform);
         monsterData[unitIndex] = monster.GetComponent<Monster>();
-        monsterData[unitIndex].MonsterId = (UnitId)unitId;
+        monsterData[unitIndex].MonsterId = (MonsterId)unitId;
 
         return monster;
     }

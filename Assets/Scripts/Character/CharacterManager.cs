@@ -454,10 +454,13 @@ public class CharacterManager : MonoBehaviour
 				break;
 			}
 
-            if (userNum == networkManager.MyIndex)
+            if (GameObject.FindGameObjectWithTag("GameManager") != null)
             {
-                DataSender.Instance.CharacterActionSend(Inputstate);
-            }
+                if (userNum == networkManager.MyIndex)
+                {
+                    DataSender.Instance.CharacterActionSend(Inputstate);
+                }
+            }            
         }
     }
 
