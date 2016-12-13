@@ -92,15 +92,15 @@ public class DungeonManager : MonoBehaviour
 
 	void Update()
 	{
-		if (normalMode)
-		{
-            for (int i =0; i< monsters.Length; i++)
-            {
-				monsterData [i].GuestMonsterUpdate ();
+		//if (normalMode)
+		//{
+  //          for (int i =0; i< monsters.Length; i++)
+  //          {
+		//		monsterData [i].GuestMonsterUpdate ();
 
-				//monsterData[i].HostUpdateConduct();
-            }
-		}
+		//		//monsterData[i].HostUpdateConduct();
+  //          }
+		//}
 
         if (!normalMode)
         {
@@ -411,8 +411,8 @@ public class DungeonManager : MonoBehaviour
         //여기서는 플레이어 캐릭터 딕셔너리 -> 각 직업에 따른 플레이어 스탯과 능력치, 스킬, 이름을 가지고 있음
         //딕셔너리를 사용하여 그에 맞는 캐릭터를 소환해야 하지만 Prototype 진행 시에는 고정된 플레이어를 소환하도록 함.
 
-        GameObject player = Instantiate(Resources.Load("Warrior")) as GameObject;
-        player.name = "Warrior";
+        GameObject player = Instantiate(Resources.Load("ManWarrior")) as GameObject;
+        player.name = "ManWarrior";
         player.tag = "Player";
         player.transform.position = Vector3.zero;
 
