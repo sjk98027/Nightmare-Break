@@ -37,7 +37,7 @@ GameObject:
   - 4: {fileID: 4000014273322978}
   m_Layer: 9
   m_Name: Rabbit
-  m_TagString: Untagged
+  m_TagString: MonsterSpawnPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52,7 +52,7 @@ GameObject:
   - 4: {fileID: 4000011368402100}
   m_Layer: 9
   m_Name: Frog
-  m_TagString: Untagged
+  m_TagString: MonsterSpawnPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67,7 +67,7 @@ GameObject:
   - 4: {fileID: 4000010685144644}
   m_Layer: 9
   m_Name: Frog
-  m_TagString: Untagged
+  m_TagString: MonsterSpawnPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -82,7 +82,7 @@ GameObject:
   - 4: {fileID: 4000014289736840}
   m_Layer: 9
   m_Name: Duck
-  m_TagString: Untagged
+  m_TagString: MonsterSpawnPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,7 +97,7 @@ GameObject:
   - 4: {fileID: 4000012606479842}
   m_Layer: 9
   m_Name: Duck
-  m_TagString: Untagged
+  m_TagString: MonsterSpawnPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -112,7 +112,7 @@ GameObject:
   - 4: {fileID: 4000012559361852}
   m_Layer: 9
   m_Name: Rabbit
-  m_TagString: Untagged
+  m_TagString: MonsterSpawnPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,7 +127,7 @@ GameObject:
   - 4: {fileID: 4000012133421776}
   m_Layer: 9
   m_Name: Frog
-  m_TagString: Untagged
+  m_TagString: MonsterSpawnPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -142,7 +142,7 @@ GameObject:
   - 4: {fileID: 4000013793085078}
   m_Layer: 9
   m_Name: Duck
-  m_TagString: Untagged
+  m_TagString: MonsterSpawnPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -157,7 +157,7 @@ GameObject:
   - 4: {fileID: 4000012058789898}
   m_Layer: 9
   m_Name: Rabbit
-  m_TagString: Untagged
+  m_TagString: MonsterSpawnPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -247,7 +247,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010437855930}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.9192514, y: -0.039999884, z: -5.674358}
+  m_LocalPosition: {x: 1.7250004, y: -0.09999988, z: -15.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:

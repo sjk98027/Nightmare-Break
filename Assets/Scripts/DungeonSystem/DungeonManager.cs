@@ -21,11 +21,11 @@ public enum UnitId
 public class DungeonManager : MonoBehaviour
 {
     GameObject[] playerSpawnPoints;
-    GameObject[] players;
+	[SerializeField]GameObject[] players;
     [SerializeField]GameObject[] monsterSpawnPoints;
     GameObject[] monsters;
     CharacterManager[] characterData;
-    Monster[] monsterData;
+	[SerializeField]Monster[] monsterData;
 
     MonsterSpawnList monsterSpawnList;
     DungeonData dungeonData;
@@ -62,7 +62,7 @@ public class DungeonManager : MonoBehaviour
 
 		//Instantiate 스폰포인트 생성조건 - > mapNumber != 2;
 		mapNumber = 0;
-
+		normalMode = true;
 
 		//DungeonConstruct();
 
@@ -96,7 +96,9 @@ public class DungeonManager : MonoBehaviour
 		{
             for (int i =0; i< monsters.Length; i++)
             {
-                //monsterData[i].HostUpdateConduct();
+				monsterData [i].GuestMonsterUpdate ();
+
+				//monsterData[i].HostUpdateConduct();
             }
 		}
 
@@ -225,6 +227,7 @@ public class DungeonManager : MonoBehaviour
             {
                 monsters[monsterIndex] = CreateMonster(monsterSpawnList.MonsterSpawnData[i].MonsterId, monsterIndex, monsterSpawnPoints[monsterIndex].transform.position);
                 monsterData[monsterIndex].MonsterIndex = monsterIndex++;
+
             }
         }
 	}

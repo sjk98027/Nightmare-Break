@@ -15,8 +15,8 @@ public class TestMonster : Monster
 		BigBearBossRoar,
 		BigBearBossDeath};
 
-	public float searchRange;
-	public float moveSpeed;
+	//public float searchRange;
+
 
 
 	float AttackTime;

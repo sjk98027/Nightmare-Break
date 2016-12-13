@@ -3,10 +3,9 @@ using System.Collections;
 using UnityEngine.EventSystems;
 
 public class Rabbit : Monster {
-	private float searchRange = 8.0f;
-	//private float moveSpeed = 3f;
+//	private float searchRange = 8.0f;
 
-	public float currentDisTance;
+//	public float currentDisTance;
 	float middleBossToMonsterLimitDistanceMonsterToCenter = 6.0f;
 	private float middleBossToMonsterMinDistance = 1.5f;
 
@@ -38,7 +37,7 @@ public class Rabbit : Monster {
 
 	private Vector3 idlePoint = new Vector3(0,0,0);
 
-	private Vector3 boomPoint = new Vector3(100,100,100);
+	//private Vector3 boomPoint = new Vector3(100,100,100);
 
 	public enum StatePosition
 	{
@@ -51,8 +50,7 @@ public class Rabbit : Monster {
 
 	public StatePosition monsterState;
 
-	[SerializeField]public Vector3[] pointVector;
-	[SerializeField]public Vector3 transitionVector;	
+
 	public Vector3[] PointVector{
 		get {return pointVector; }
 		set{pointVector = value; }
@@ -162,13 +160,13 @@ public class Rabbit : Monster {
 		}
 	}
 
-	public override void MonsterMoveAI(bool _normalMode){
-		if (_normalMode) {
-			StartCoroutine (AttackAroundRun ());
-		} else if (!_normalMode) {
-		
-		}
-	}
+//	public override void MonsterMoveAI(bool _normalMode){
+//		if (_normalMode) {
+//			StartCoroutine (AttackAroundRun ());
+//		} else if (!_normalMode) {
+//		
+//		}
+//	}
 
 	public IEnumerator AttackAroundRun(){
 		while (true) {
