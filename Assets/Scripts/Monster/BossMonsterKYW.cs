@@ -53,7 +53,7 @@ public class BossMonsterKYW : Monster {
 
         if (GameObject.FindWithTag("GameManager") == null)
         {   //네트워크 없을 때 실행 함
-            MonsterBaseData baseData = new MonsterBaseData((int)UnitId.Bear, "Bear");
+            MonsterBaseData baseData = new MonsterBaseData((int)MonsterId.Bear, "Bear");
             baseData.AddLevelData(new MonsterLevelData(1, 20, 0, 300, 5));
             MonsterSet(baseData);
             //uiManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
