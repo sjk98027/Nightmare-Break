@@ -50,6 +50,8 @@ public class CharacterManager : MonoBehaviour
 	public AudioClip Skill2Sound;
 	public AudioClip Skill3Sound;
 	public AudioClip Skill4Sound;
+	public AudioClip DieSound;
+	public AudioClip HitSound;
 
 	public float skillTime;
 
@@ -502,7 +504,25 @@ public class CharacterManager : MonoBehaviour
 	public virtual void SetClassObject() {}
 
 	public virtual void classSound()
-	{}
+	{
+		if (false)
+		{
+			attack1 = Resources.Load<AudioClip> ("Sound/ManWarriorattack1");
+			attack2 = Resources.Load<AudioClip> ("Sound/ManWarriorattack2");
+			attack3 = Resources.Load<AudioClip> ("Sound/ManWarriorattack3");
+			DieSound = Resources.Load<AudioClip> ("Sound/ManDie");
+			HitSound = Resources.Load<AudioClip> ("Sound/ManHit");
+		}
+		else if (true)
+		{
+			attack1 = Resources.Load<AudioClip> ("Sound/WoManattack1");
+			attack2 = Resources.Load<AudioClip> ("Sound/WoManattack2");
+			attack3 = Resources.Load<AudioClip> ("Sound/WoManattack3");
+			DieSound = Resources.Load<AudioClip> ("Sound/WoManDie");
+			HitSound = Resources.Load<AudioClip> ("Sound/WoManHit");
+		}
+
+	}
 
 	public virtual void UsingMagicPoint(int SkillArray)
 	{

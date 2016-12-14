@@ -13,6 +13,9 @@ public class EspadaSwordEffect : MonoBehaviour
 	public GameObject character;
 	public int swordDamage;
 
+	public Rigidbody giganticSwordRigd;
+	public float swordSpeed;
+
     void Start()
     {
 		count = true;
@@ -20,6 +23,10 @@ public class EspadaSwordEffect : MonoBehaviour
 		character = GameObject.FindWithTag ("Player");
 
 		charManager = character.GetComponent<CharacterManager> ();
+		giganticSwordRigd = GetComponent<Rigidbody> ();
+		swordSpeed = 40;
+		giganticSwordRigd.velocity = (transform.forward* swordSpeed);
+
         charStatus = charManager.CharStatus;
 		giganticSword = this.gameObject;
 
@@ -58,7 +65,7 @@ public class EspadaSwordEffect : MonoBehaviour
 
     void OnCollisionEnter(Collision coll)
     {
-		Debug.Log ("in f");
+		
         if (coll.gameObject.layer == LayerMask.NameToLayer("Map"))
         {
             Instantiate(Resources.Load<GameObject>("Effect/Explosion"), transform.position, Quaternion.identity);

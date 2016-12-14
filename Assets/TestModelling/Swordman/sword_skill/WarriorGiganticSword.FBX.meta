@@ -200,14 +200,6 @@ ModelImporter:
       curves: []
       events:
       - time: 0
-        functionName: AttackEffect
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 49494eaf77bde6e4a96a0fded9f18500,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0
         functionName: GiganticSwordSoundStart
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 49494eaf77bde6e4a96a0fded9f18500,
@@ -215,14 +207,22 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.14361905
+      - time: 0
+        functionName: AttackEffect
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 49494eaf77bde6e4a96a0fded9f18500,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.6334975
         functionName: GiganticSwordSummon
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.73882276
+      - time: 0.74691993
         functionName: GiganticSwordSoundFinish
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 49494eaf77bde6e4a96a0fded9f18500,

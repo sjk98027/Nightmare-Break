@@ -188,8 +188,8 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.89874023
-        functionName: AnimationEnd
+      - time: 0.08007516
+        functionName: HowlingSound
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 3e68f10eba9c99b4493f5859a0165efc,
           type: 3}
@@ -198,6 +198,14 @@ ModelImporter:
         messageOptions: 0
       - time: 0.55285794
         functionName: HowlingForce
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 3e68f10eba9c99b4493f5859a0165efc,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.89874023
+        functionName: AnimationEnd
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 3e68f10eba9c99b4493f5859a0165efc,
           type: 3}

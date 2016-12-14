@@ -12,6 +12,8 @@ public class MageManager : CharacterManager
 	public bool howling;
 	public bool poweroverwhelming;
 	public GameObject superArmorEffect;
+	public Armageddon armaDestroy;
+	public AudioClip ArmageddonFinishSound;
 
 	public override void ProcessSkill1 ()
 	{
@@ -92,11 +94,16 @@ public class MageManager : CharacterManager
 			{
 				for (int i = 0; i < enermy.Length; i++)
 				{
-					howlingDistance = Vector3.Distance (this.transform.position, enermy [i].transform.position);
-
-					if (howlingDistance < 10)
+					if (enermy [i] != null)
 					{
-						enermy [i].transform.Translate ((enermy [i].transform.position - this.transform.position) * howlingSpeed * Time.deltaTime, Space.World);
+						howlingDistance = Vector3.Distance (this.transform.position, enermy [i].transform.position);
+					
+
+						if (howlingDistance < 10)
+						{
+							enermy [i].transform.Translate ((new Vector3(enermy [i].transform.position.x,0,enermy [i].transform.position.z) - new Vector3(this.transform.position.x,0,this.transform.position.z)) * howlingSpeed * Time.deltaTime, Space.World);
+							//enermy [i].transform.Translate (new Vector3(enermy [i].transform.position.x,0,enermy [i].transform.position.z)  - new Vector3(this.transform.position.x,0,this.transform.position.z) * howlingSpeed * Time.deltaTime, Space.World);
+						}
 					}
 				}
 			}
@@ -104,6 +111,7 @@ public class MageManager : CharacterManager
 			{
 				skillTime = 0;
 				howling = false;
+				Debug.Log ("in");
 				Destroy (mageRing, 0);
 			}
 		}
@@ -112,11 +120,11 @@ public class MageManager : CharacterManager
 	{
 		if (transform.rotation.y == 0) 
 		{
-			armageddon = Instantiate (Resources.Load<GameObject> ("Effect/Armageddon"), new Vector3 (transform.position.x, transform.position.y+3.0f, transform.position.z + 2.0f), Quaternion.Euler (0, 0, 0)) as GameObject;
+			armageddon = Instantiate (Resources.Load<GameObject> ("Effect/Armageddon"), new Vector3 (transform.position.x, transform.position.y+7.0f, transform.position.z), Quaternion.Euler (0, 0, 0)) as GameObject;
 		}
 		else 
 		{
-			armageddon = Instantiate (Resources.Load<GameObject> ("Effect/Armageddon"), new Vector3 (transform.position.x, transform.position.y+3.0f, transform.position.z - 2.0f), Quaternion.Euler (0, 180, 0)) as GameObject;
+			armageddon = Instantiate (Resources.Load<GameObject> ("Effect/Armageddon"), new Vector3 (transform.position.x, transform.position.y+7.0f, transform.position.z), Quaternion.Euler (0, 180, 0)) as GameObject;
 		}
 			ArmageddonDamage = armageddon.GetComponent<Armageddon> ();
 
@@ -125,6 +133,11 @@ public class MageManager : CharacterManager
 	public void HowlingForce()
 	{
 		howling = true;
+	}
+	public void Destroy()
+	{
+		armaDestroy = armageddon.GetComponent<Armageddon> ();
+		armaDestroy.Destroy ();
 	}
 
 	public override void HitDamage (int _damage)
@@ -216,15 +229,6 @@ public class MageManager : CharacterManager
 
     }
 
-	public override void classSound()
-	{
-		Skill1Sound=Resources.Load<AudioClip> ("Sound/MageDestroy");
-		Skill2Sound=Resources.Load<AudioClip> ("Sound/MageDestroy");
-		Skill3Sound=Resources.Load<AudioClip> ("Sound/MageDestroy");
-		Skill4Sound=Resources.Load<AudioClip> ("Sound/MageDestroy");
-
-	}
-
 
 
 	public override void UsingMagicPoint(int SkillArray)
@@ -233,4 +237,72 @@ public class MageManager : CharacterManager
 		charStatus.DecreaseMagicPoint ((int)((float)(SkillManager.instance.SkillData.GetSkill ((int)charStatus.HClass, SkillArray).ManaCost)* manaFury));
 	}
 
+
+	public override void classSound()
+	{
+
+		base.classSound ();
+
+		if (false)
+		{
+			Skill1Sound = Resources.Load<AudioClip> ("Sound/ManMageFireBall");
+			Skill2Sound = Resources.Load<AudioClip> ("Sound/ManMageDestroy");
+			Skill3Sound = Resources.Load<AudioClip> ("Sound/ManMageHowling");
+			Skill4Sound = Resources.Load<AudioClip> ("Sound/ManMageArmageddon");
+		}
+		else if (true)
+		{
+			Skill1Sound = Resources.Load<AudioClip> ("Sound/WoManMageFireBall");
+			Skill2Sound = Resources.Load<AudioClip> ("Sound/WoManMageDestroy");
+			Skill3Sound = Resources.Load<AudioClip> ("Sound/WoManMageHowling");
+			Skill4Sound = Resources.Load<AudioClip> ("Sound/WoManMageArmageddonStart");
+			ArmageddonFinishSound = Resources.Load<AudioClip> ("Sound/WoManMageArmageddonFinish");
+
+		}
+	}
+
+
+	public void AttackSound1()
+	{
+		CharAudio.PlayOneShot (attack1);
+	}
+
+	public void AttackSound2()
+	{
+		CharAudio.PlayOneShot (attack2);
+	}
+
+	public void AttackSound3 ()
+	{
+		CharAudio.PlayOneShot (attack3);
+	}
+
+	public void FireBallSound()
+	{
+		CharAudio.PlayOneShot (Skill1Sound);
+	}
+
+	public void MeteorStrikeSound()
+	{
+		CharAudio.PlayOneShot (Skill2Sound);
+	}		
+
+	public void HowlingSound()
+	{
+		CharAudio.PlayOneShot (Skill3Sound);
+	}
+
+	public void ArmageddonSound()
+	{
+		CharAudio.PlayOneShot (Skill4Sound);
+	}
+
+	public void ManDie()
+	{
+		CharAudio.PlayOneShot (attack3);
+	}
+	public void ArmageddonDestroySound()
+	{
+		CharAudio.PlayOneShot (ArmageddonFinishSound);
+	}
 }
