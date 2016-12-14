@@ -59,6 +59,9 @@ public class CreateUIManager : MonoBehaviour {
 
         for (int i = 0; i < genderSelectImage.Length; i++)
         {
+            exitEvent[i] = new EventTrigger.Entry();
+            downEvent[i] = new EventTrigger.Entry();
+            upEvent[i] = new EventTrigger.Entry();
 			exitEvent [i].eventID = EventTriggerType.PointerExit;
 			downEvent [i].eventID = EventTriggerType.PointerDown;
 			upEvent [i].eventID = EventTriggerType.PointerUp;
@@ -67,7 +70,7 @@ public class CreateUIManager : MonoBehaviour {
 			rotateBtn [i].GetComponent<EventTrigger> ().triggers.Add (downEvent [i]);
 			rotateBtn [i].GetComponent<EventTrigger> ().triggers.Add (upEvent [i]);
             classSkill[i] = GameObject.Find("SkillUI" + i);
-        //  genderSelectImage[i] = GameObject.Find("Gender" + i).transform.GetChild(0).gameObject;
+            genderSelectImage[i] = GameObject.Find("Gender" + i).transform.GetChild(0).gameObject;
             genderBtn[i] = GameObject.Find("Gender" + i).transform.GetChild(1).gameObject.GetComponent<Button>();
 			genderBtn [i].onClick.AddListener (() => GenderChange (i));
             classSkill[i].SetActive(false);

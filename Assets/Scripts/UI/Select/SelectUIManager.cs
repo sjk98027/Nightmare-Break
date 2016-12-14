@@ -33,6 +33,7 @@ public class SelectUIManager : MonoBehaviour {
 
     void Start()
     {
+
     }
 
     public void SetUIObject()

@@ -1,8 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using System;
 
 public class UIManager : MonoBehaviour
 {
@@ -36,12 +34,28 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void InitializeUIManager()
+    {
+        if (loginUIManager != null) Destroy(loginUIManager);
+        if (selectUIManager != null) Destroy(selectUIManager);
+        if (createUIManager != null) Destroy(createUIManager);
+        if (waitUIManager != null) Destroy(waitUIManager);
+        if (battleUIManager != null) Destroy(battleUIManager);
+    }
+
     public void SetLoginUIManager()
     {
-        loginUIManager = GetComponent<LoginUIManager>();
-        loginUIManager.ManagerInitialize();
+        InitializeUIManager();
 
-        selectUIManager = GetComponent<SelectUIManager>();
+        loginUIManager = gameObject.AddComponent<LoginUIManager>();
+        loginUIManager.ManagerInitialize();
+    }
+
+    public void CreateSelectUIManager()
+    {
+        InitializeUIManager();
+
+        selectUIManager = gameObject.AddComponent<SelectUIManager>();
     }
 
     public void SetSelectUIManager()
@@ -51,15 +65,25 @@ public class UIManager : MonoBehaviour
         selectUIManager.SetCharacter();
     }
 
+    public void CreateCreateUIManager()
+    {
+        InitializeUIManager();
+
+        createUIManager = gameObject.AddComponent<CreateUIManager>();
+    }
+
     public void SetCreateUIManager()
     {
-        createUIManager = GetComponent<CreateUIManager>();
+        InitializeUIManager();
+
         createUIManager.SetUIObject();
         createUIManager.InitializeAddListner();
     }
 
     public void SetBattleUIManager()
     {
+        InitializeUIManager();
+
         charManager = GameObject.FindWithTag("Player").GetComponent<CharacterManager>();
         battleUIManager = GetComponent<BattleUIManager>();
         battleUIManager.SetUIObject();
@@ -67,6 +91,8 @@ public class UIManager : MonoBehaviour
 
     public void SetWaitUIManager()
     {
+        InitializeUIManager();
+
         waitUIManager = GetComponent<WaitUIManager>();
         waitUIManager.ManagerInitialize();
     }
@@ -107,9 +133,6 @@ public class UIManager : MonoBehaviour
 	{
 		battleUIManager.MouseOverUI.gameObject.transform.parent.gameObject.SetActive (false);
 	}
-
-    
-
 }
 
     

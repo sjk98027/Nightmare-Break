@@ -67,6 +67,7 @@ public class SceneChanger : MonoBehaviour
 
             if (sceneIndex == (int)SceneName.SelectScene)
             {
+                UIManager.Instance.CreateSelectUIManager();
                 DataSender.Instance.RequestCharacterList();
             }
 
@@ -77,15 +78,17 @@ public class SceneChanger : MonoBehaviour
             if(currentScene == SceneName.LoadingScene)
             {
                 StartCoroutine(FadeIn());
-            }            
-
+            }
+            
             currentScene = SceneName.SelectScene;
+
             UIManager.Instance.SetSelectUIManager();
         }
         else if (scene.name == "CreateScene")
         {
             currentScene = SceneName.CreateScene;
 
+            UIManager.Instance.CreateCreateUIManager();
             UIManager.Instance.SetCreateUIManager();
         }
     }
