@@ -46,24 +46,20 @@ public class SelectUIManager : MonoBehaviour {
         characterPos = new GameObject[maxCharacterNum];
         characterAnim = new Animator[maxCharacterNum];
         clickEvent = new EventTrigger.Entry[maxCharacterNum];
-        alphaChange[0] = new Color(0, 0, 0, 0);
-        alphaChange[1] = new Color(0, 0, 0, 1);
-
+        alphaChange = new Color[2];
+       
         for (int i = 0; i < maxCharacterNum; i++)
         {
+            if(i < alphaChange.Length)
+            {
+                alphaChange[i] = new Color(0, 0, 0, i);
+            }
             clickEvent[i]= new EventTrigger.Entry();
             clickEvent[i].eventID = EventTriggerType.PointerClick; 
             backImage[i] = GameObject.Find("BackImage" + (i + 1)).GetComponent<Image>();
             backImage[i].GetComponent<EventTrigger>().triggers.Add(clickEvent[i]);
             selectImage[i] = GameObject.Find("SelectEdge" + (i + 1));
             characterPos[i] = GameObject.Find("Pos" + (i + 1));
-
-            //if (characterPos[i].transform.GetChild(1))
-            //{
-            //    characterAnim[i] = characterPos[i].transform.GetChild(1).GetComponent<Animator>();
-            //    characterAnim[i].speed = 0;
-            //}
-
             selectImage[i].SetActive(false);
         }
     }
