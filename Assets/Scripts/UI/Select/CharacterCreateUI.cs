@@ -24,6 +24,7 @@ public class CharacterCreateUI : MonoBehaviour {
 	private Button cancleBtn;
 	private Button[] genderBtn;
 	private GameObject[] classSkill;
+	private Button[] classBtn;
 
 	void Start()
 	{
@@ -35,6 +36,7 @@ public class CharacterCreateUI : MonoBehaviour {
         classSkill = new GameObject[minClass];
 		selectImage = new GameObject[maxClass];
         classPrefeb = new GameObject[maxClass];
+		classBtn = new Button[maxClass];
 
         characterPos = GameObject.Find("CharacterPrefebPos").transform;
         nickNameInputField = GameObject.Find("NickNameInput").GetComponent<InputField>();
@@ -42,8 +44,10 @@ public class CharacterCreateUI : MonoBehaviour {
         cancleBtn = GameObject.Find("CancleBtn").GetComponent<Button>();
 
         for (int i = 0; i < maxClass; i++) {
-			selectImage [i] = GameObject.Find ("Select" + (i + 1));
-			selectImage [i].SetActive (false);
+			classBtn[i] = GameObject.Find ("ClassBtn"+(i + 1)).GetComponent<Button> ();
+			classBtn[i].onClick.AddListener (() => ClassSelect (i));
+			selectImage[i] = GameObject.Find("Select" + (i + 1));
+			selectImage[i].SetActive(false);
 		}
 
         for(int i = 0; i < genderSelectImage.Length; i++)
@@ -76,12 +80,12 @@ public class CharacterCreateUI : MonoBehaviour {
 
 	public void CreateCharacter()
 	{
-        SceneChanger.Instance.SceneChange(SceneChanger.SceneName.TitleScene);
+		SceneChanger.Instance.SceneChange(SceneChanger.SceneName.SelectScene, false);
 	}
 
 	public void Cancle()
 	{
-        SceneChanger.Instance.SceneChange(SceneChanger.SceneName.TitleScene);
+		SceneChanger.Instance.SceneChange(SceneChanger.SceneName.SelectScene, false);
     }
 
 	public void InputFinish()

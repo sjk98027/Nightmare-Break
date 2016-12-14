@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class CreateUIManager : MonoBehaviour {
 
 	private const int maxClass = 4;
     private const int rotateValue = 30;
-    private const int minClass = 2;
+    private const int currentMaxClass = 2;
     private const int maxRotateBtn = 2;
 	private int currentClass;
     private int currentGender; //0은 남자, 1은 여자
@@ -23,35 +24,52 @@ public class CreateUIManager : MonoBehaviour {
 	private Button cancleBtn;
 	private Button[] genderBtn;
 	private GameObject[] classSkill;
+	private Button[] classBtn;
+	private EventTrigger.Entry[] exitEvent;
+	private EventTrigger.Entry[] downEvent;
+	private EventTrigger.Entry[] upEvent;
 
     public void SetUIObject()
     {
         currentGender = 0;
         rotateBtn = new Button[maxRotateBtn];
         btnPushCheck = new bool[maxRotateBtn];
-        genderSelectImage = new GameObject[minClass];
-        genderBtn = new Button[minClass];
-        classSkill = new GameObject[minClass];
+        genderSelectImage = new GameObject[currentMaxClass];
+        genderBtn = new Button[currentMaxClass];
+        classSkill = new GameObject[currentMaxClass];
         selectImage = new GameObject[maxClass];
         classPrefeb = new GameObject[maxClass];
+		classBtn = new Button[maxClass];
 
         characterPos = GameObject.Find("CharacterPrefebPos").transform;
         nickName = GameObject.Find("NickName").GetComponent<Text>();
         characterCreateBtn = GameObject.Find("CharacterCreateBtn").GetComponent<Button>();
         cancleBtn = GameObject.Find("CancleBtn").GetComponent<Button>();
 
+		exitEvent = new EventTrigger.Entry[rotateBtn.Length];
+		downEvent = new EventTrigger.Entry[rotateBtn.Length];
+		upEvent = new EventTrigger.Entry[rotateBtn.Length];
+
         for (int i = 0; i < maxClass; i++)
         {
+			classBtn[i] = GameObject.Find ("ClassBtn"+(i + 1)).GetComponent<Button> ();
             selectImage[i] = GameObject.Find("Select" + (i + 1));
             selectImage[i].SetActive(false);
         }
 
         for (int i = 0; i < genderSelectImage.Length; i++)
         {
+			exitEvent [i].eventID = EventTriggerType.PointerExit;
+			downEvent [i].eventID = EventTriggerType.PointerDown;
+			upEvent [i].eventID = EventTriggerType.PointerUp;
             rotateBtn[i] = GameObject.Find("RotateArrow" + i).GetComponent<Button>();
+			rotateBtn [i].GetComponent<EventTrigger> ().triggers.Add (exitEvent [i]);
+			rotateBtn [i].GetComponent<EventTrigger> ().triggers.Add (downEvent [i]);
+			rotateBtn [i].GetComponent<EventTrigger> ().triggers.Add (upEvent [i]);
             classSkill[i] = GameObject.Find("SkillUI" + i);
-            genderSelectImage[i] = GameObject.Find("Gender" + i).transform.GetChild(0).gameObject;
+        //  genderSelectImage[i] = GameObject.Find("Gender" + i).transform.GetChild(0).gameObject;
             genderBtn[i] = GameObject.Find("Gender" + i).transform.GetChild(1).gameObject.GetComponent<Button>();
+			genderBtn [i].onClick.AddListener (() => GenderChange (i));
             classSkill[i].SetActive(false);
             genderSelectImage[i].SetActive(false);
         }
@@ -68,6 +86,18 @@ public class CreateUIManager : MonoBehaviour {
     {
         characterCreateBtn.onClick.AddListener(() => OnClickCreateCharacterButton());
         cancleBtn.onClick.AddListener(() => Cancle());
+		genderBtn [0].onClick.AddListener (() => GenderChange (0));
+		genderBtn [1].onClick.AddListener (() => GenderChange (1));
+		classBtn [0].onClick.AddListener (() => ClassSelect (0));
+		classBtn [1].onClick.AddListener (() => ClassSelect (1));
+		classBtn [2].onClick.AddListener (() => ClassSelect (2));
+		classBtn [3].onClick.AddListener (() => ClassSelect (3));
+		exitEvent[0].callback.AddListener((data)=> RotateCheckOut(0));
+		exitEvent[1].callback.AddListener((data)=> RotateCheckOut(1));
+		downEvent[0].callback.AddListener((data)=> PrefebRotate(0));
+		downEvent[1].callback.AddListener((data)=> PrefebRotate(1));
+		upEvent[0].callback.AddListener((data)=> RotateCheckOut(0));
+		upEvent[1].callback.AddListener((data)=> RotateCheckOut(1));
     }
 
 	public void PrefebRotate(int _index)
@@ -76,7 +106,7 @@ public class CreateUIManager : MonoBehaviour {
         StartCoroutine(CharacterRotate(_index));
 	}
 
-    public void RotateCheck(int _index)
+    public void RotateCheckOut(int _index)
     {
         btnPushCheck[_index] = false;
     }
@@ -98,7 +128,7 @@ public class CreateUIManager : MonoBehaviour {
 
 	public void ClassSelect(int index)
 	{
-		for (int i = 0; i < maxClass * minClass; i++) {
+		for (int i = 0; i < maxClass * currentMaxClass; i++) {
 			if (i < maxClass) {
 				selectImage [i].SetActive (false);
                 classPrefeb [i].SetActive(false);
@@ -117,7 +147,7 @@ public class CreateUIManager : MonoBehaviour {
             currentClass = index + index;
 			classPrefeb[index + index].SetActive(true);
 			characterAnim = classPrefeb[index + index].GetComponent<Animator>();
-            for(int i=0; i < minClass; i++)
+            for(int i=0; i < currentMaxClass; i++)
             {
 				genderBtn[i].interactable = true;
                 rotateBtn[i].interactable = true;
