@@ -11,26 +11,26 @@ public class Duck : Monster {
 
 
 
-	public override void HitDamage(int _Damage,GameObject attacker)
-	{
-		IsHited = true;
-		currentHP -= _Damage;
-		if (currentHP > 0) {
-			for (int i = 0; i < player.Length; i++) {
-				if (player [i] == attacker) {
-					playerToMonsterDamage [i] += _Damage;
-					targetPlayer = player [i];
-				}
-			}
-			Pattern (StatePosition.TakeDamage);
-		}
-		if (currentHP <= 0) {
-			IsAlive = false;
-			HittedBox.enabled = false;
-			monsterState = StatePosition.Death;
-			Pattern (monsterState);
-		}
-	}
+//	public override void HitDamage(int _Damage,GameObject attacker)
+//	{
+//		IsHited = true;
+//		currentHP -= _Damage;
+//		if (currentHP > 0) {
+//			for (int i = 0; i < player.Length; i++) {
+//				if (player [i] == attacker) {
+//					playerToMonsterDamage [i] += _Damage;
+//					targetPlayer = player [i];
+//				}
+//			}
+//			Pattern (StatePosition.TakeDamage);
+//		}
+//		if (currentHP <= 0) {
+//			IsAlive = false;
+//			HittedBox.enabled = false;
+//			monsterState = StatePosition.Death;
+//			Pattern (monsterState);
+//		}
+//	}
 	private Vector3 idlePoint = new Vector3(0,0,0);
 
 	//private Vector3 boomPoint = new Vector3(100,100,100);
@@ -44,6 +44,51 @@ public class Duck : Monster {
 	public Vector3[] PointVector{
 		get {return pointVector; }
 		set{pointVector = value; }
+	}public void Pattern(StatePosition state){
+		switch (state)
+		{
+		case StatePosition.Idle:
+			{
+				//this.transform.Translate(idlePoint * Time.deltaTime, 0);
+				animator.SetInteger("State", 0);
+				break;
+			}
+
+		case StatePosition.Attack:
+			{
+				AttackProcess(isAttack);
+				break;
+			}
+		case StatePosition.Run:
+			{
+				AnimatorReset();
+				animator.SetInteger("State", 2);
+				break;
+			}
+		case StatePosition.TakeDamage:
+			{
+				animator.SetTrigger ("TakeDamage");
+				break;
+			}
+		case StatePosition.Death:
+			{
+				animator.SetTrigger ("Death");
+
+				//				MonsterArrayEraser(this.gameObject);
+				break;
+			}
+		case StatePosition.BossOneHandAttack:
+			{
+				animator.SetInteger ("State",3);
+				break;
+			}
+		case StatePosition.BossJumpAttack:
+			{
+				animator.SetInteger ("State",4);
+				break;
+			}
+
+		}
 	}
 
 
