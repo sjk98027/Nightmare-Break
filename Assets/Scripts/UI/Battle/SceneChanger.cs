@@ -23,10 +23,10 @@ public class SceneChanger : MonoBehaviour
 
     private const float fadeValue = 0.4f;
     private float fadeTime;
-    private int sceneIndex;
     private Image fadePanel;
     private LoadingSceneUI loadingScene;
     private SceneName currentScene;
+    private int nextScene;
 
     private bool[] loadingCheck;
 
@@ -57,33 +57,55 @@ public class SceneChanger : MonoBehaviour
 
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        #region 타이틀 씬 초기화
         if (scene.name == "TitleScene")
         {
             currentScene = SceneName.TitleScene;
         }
+        #endregion
+
+        #region 로딩 씬 초기화
         else if (scene.name == "LoadingScene")
         {
             currentScene = SceneName.LoadingScene;
 
-            if (sceneIndex == (int)SceneName.SelectScene)
+            if (nextScene == (int)SceneName.SelectScene)
             {
                 UIManager.Instance.CreateSelectUIManager();
                 DataSender.Instance.RequestCharacterList();
-            }
 
-            StartCoroutine(CheckLoading());
+                StartCoroutine(CheckLoading());
+            }
+            else if (nextScene == (int)SceneName.TitleScene)
+            {
+                DataSender.Instance.Logout();
+                Destroy(GameManager.Instance.gameObject);
+                SceneManager.LoadScene(nextScene);
+            }
         }
+        #endregion
+
+        #region 캐릭터 선택 씬 초기화
         else if (scene.name == "SelectScene")
         {
-            if(currentScene == SceneName.LoadingScene)
+            if (currentScene == SceneName.LoadingScene)
             {
+                UIManager.Instance.SetSelectUIManager();
+                UIManager.Instance.SelectUIManager.SetCharacter();
                 StartCoroutine(FadeIn());
             }
-            
-            currentScene = SceneName.SelectScene;
+            else if (currentScene == SceneName.CreateScene)
+            {
+                UIManager.Instance.CreateSelectUIManager();
+                DataSender.Instance.RequestCharacterList();
+                UIManager.Instance.SetSelectUIManager();
+            }
 
-            UIManager.Instance.SetSelectUIManager();
+            currentScene = SceneName.SelectScene;
         }
+        #endregion
+
+        #region 캐릭터 생성 씬 초기화
         else if (scene.name == "CreateScene")
         {
             currentScene = SceneName.CreateScene;
@@ -91,11 +113,12 @@ public class SceneChanger : MonoBehaviour
             UIManager.Instance.CreateCreateUIManager();
             UIManager.Instance.SetCreateUIManager();
         }
+        #endregion
     }
 
     public void SceneChange(SceneName sceneName, bool needLoadingScene)
     {
-        sceneIndex = (int)sceneName;
+        nextScene = (int)sceneName;
 
         if (needLoadingScene)
         {
@@ -143,7 +166,7 @@ public class SceneChanger : MonoBehaviour
 
     private IEnumerator CheckLoading()
     {
-        if(sceneIndex == (int)SceneName.SelectScene)
+        if(nextScene == (int)SceneName.SelectScene)
         {
             loadingCheck = new bool[1];
         }
@@ -168,6 +191,6 @@ public class SceneChanger : MonoBehaviour
             }
         }
 
-        SceneManager.LoadScene(sceneIndex);
+        SceneManager.LoadScene(nextScene);
     }
 }

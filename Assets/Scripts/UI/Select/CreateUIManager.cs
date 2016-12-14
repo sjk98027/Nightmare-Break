@@ -3,31 +3,46 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class CreateUIManager : MonoBehaviour {
-
+public class CreateUIManager : MonoBehaviour
+{
 	private const int maxClass = 4;
     private const int rotateValue = 30;
     private const int currentMaxClass = 2;
     private const int maxRotateBtn = 2;
-	private int currentClass;
-    private int currentGender; //0은 남자, 1은 여자
-    private bool[] btnPushCheck;
+    private const int maxGender = 2;
+
+    private GameObject[] classPrefeb;
+    private Transform characterPos;
     private Animator characterAnim;
+
+    private int currentClass;
+    private int currentGender; //0은 남자, 1은 여자
+    private int currentCharacter
+    {
+        get
+        {
+            return (currentClass * maxGender) + currentGender;
+        }
+    }
+
+    private bool[] btnPushCheck;
+
 	private GameObject[] selectImage;
 	private GameObject[] genderSelectImage;
-	private Transform characterPos;
-    [SerializeField]
-	private GameObject[] classPrefeb;
-	private Text nickName;
-	private Button characterCreateBtn;
-	private Button[] rotateBtn;
-	private Button cancleBtn;
-	private Button[] genderBtn;
-	private GameObject[] classSkill;
-	private Button[] classBtn;
-	private EventTrigger.Entry[] exitEvent;
+    private GameObject[] classSkill;
+
+    private Text nickName;
+
+    private Button[] classBtn;
+    private Button[] rotateBtn;
+    private Button[] genderBtn;
+    private Button characterCreateBtn;
+    private Button cancleBtn;
+
+    private EventTrigger.Entry[] exitEvent;
 	private EventTrigger.Entry[] downEvent;
 	private EventTrigger.Entry[] upEvent;
+ 
 
     public void SetUIObject()
     {
@@ -114,27 +129,29 @@ public class CreateUIManager : MonoBehaviour {
         btnPushCheck[_index] = false;
     }
 
-	public void CreateCharacter()
-	{
-        SceneChanger.Instance.SceneChange(SceneChanger.SceneName.SelectScene, false);
-	}
+    public void CreateCharacterResult(bool result)
+    {
+        if (result)
+        {
+            Debug.Log("캐릭터 생성 성공");
+            SceneChanger.Instance.SceneChange(SceneChanger.SceneName.SelectScene, false);
+        }
+        else
+        {
+            Debug.Log("캐릭터 생성 실패");
+        }
+    }
 
 	public void Cancle()
 	{
         SceneChanger.Instance.SceneChange(SceneChanger.SceneName.SelectScene, false);
     }
 
-	public void InputFinish()
-	{
-		characterCreateBtn.interactable = true;
-	}
-
 	public void ClassSelect(int index)
 	{
 		for (int i = 0; i < maxClass * currentMaxClass; i++) {
 			if (i < maxClass) {
 				selectImage [i].SetActive (false);
-                classPrefeb [i].SetActive(false);
             }
 
 			if (i < genderSelectImage.Length) {
@@ -142,43 +159,61 @@ public class CreateUIManager : MonoBehaviour {
                 classSkill[i].SetActive(false);
             }
         }
+
 		if (!selectImage [index].activeSelf) {
             selectImage [index].SetActive (true);
 			classSkill [index].SetActive (true);
 			currentGender = 0;
 			genderSelectImage [currentGender].SetActive (true);
-            currentClass = index + index;
-			classPrefeb[index + index].SetActive(true);
-			characterAnim = classPrefeb[index + index].GetComponent<Animator>();
+            currentClass = index;
+			
             for(int i=0; i < currentMaxClass; i++)
             {
 				genderBtn[i].interactable = true;
                 rotateBtn[i].interactable = true;
             }
         }
-	}
+
+        SetCharacterImage();
+
+        characterAnim = classPrefeb[currentCharacter].GetComponent<Animator>();
+    }
 
 	public void GenderChange(int _genderindex)
 	{
 		if (currentGender == _genderindex) {
 			return;
 		} else if (_genderindex == 0) {
-			classPrefeb [_genderindex + currentGender + currentClass].SetActive (false);
 			genderSelectImage[currentGender].SetActive(false);
             currentGender = _genderindex;
-			classPrefeb [currentGender + currentClass].SetActive (true);
 			genderSelectImage[currentGender].SetActive(true);
             characterAnim = classPrefeb[currentGender].GetComponent<Animator>();
         }
         else if  (_genderindex == 1) {
-			classPrefeb [currentGender + currentClass].SetActive (false);
 			genderSelectImage[currentGender].SetActive(false);
             currentGender = _genderindex;
 			genderSelectImage[currentGender].SetActive(true);
-            classPrefeb [currentGender + currentClass].SetActive (true);
 			characterAnim = classPrefeb[currentGender + currentClass].GetComponent<Animator>();
-		}
-	}
+        }
+
+        SetCharacterImage();
+    }
+
+    public void SetCharacterImage()
+    {
+        for (int classIndex = 0; classIndex < currentMaxClass; classIndex++)
+        {
+            for (int genderIndex = 0; genderIndex < maxGender; genderIndex++)
+            {
+                if (classPrefeb[(classIndex * maxGender) + genderIndex].activeSelf)
+                {
+                    classPrefeb[(classIndex * maxGender) + genderIndex].SetActive(false);
+                }
+            }
+        }
+
+        classPrefeb[currentCharacter].SetActive(true);
+    }
 
 	public void StartSkillAnim(int _skillNum)
 	{
@@ -214,14 +249,4 @@ public class CreateUIManager : MonoBehaviour {
             DataSender.Instance.CreateCharacter(currentGender, currentClass, nickName.text);
         }
     }
-
-    //public void OnClickDeleteCharacterButton()
-    //{
-    //    DataSender.Instance.DeleteCharacter(currentCharacter);
-    //}
-
-    //public void OnClickSelectCharacterButton()
-    //{
-    //    DataSender.Instance.SelectCharacter(currentCharacter);
-    //}
 }

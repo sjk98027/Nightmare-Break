@@ -62,7 +62,6 @@ public class UIManager : MonoBehaviour
     {
         selectUIManager.SetUIObject();
         selectUIManager.InitializeAddListener();
-        selectUIManager.SetCharacter();
     }
 
     public void CreateCreateUIManager()
@@ -74,8 +73,6 @@ public class UIManager : MonoBehaviour
 
     public void SetCreateUIManager()
     {
-        InitializeUIManager();
-
         createUIManager.SetUIObject();
         createUIManager.InitializeAddListner();
     }

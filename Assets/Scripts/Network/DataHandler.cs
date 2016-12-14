@@ -55,6 +55,7 @@ public class DataHandler : MonoBehaviour
         server_notifier.Add((int)ServerPacketId.CreateAccountResult, CreateAccountResult);
         server_notifier.Add((int)ServerPacketId.DeleteAccountResult, DeleteAccountResult);
         server_notifier.Add((int)ServerPacketId.LoginResult, LoginResult);
+        server_notifier.Add((int)ServerPacketId.LogoutResult, LogoutResult);
         server_notifier.Add((int)ServerPacketId.CharacterList, CharacterList);
         server_notifier.Add((int)ServerPacketId.CreateCharacterResult, CreateCharacterResult);
         server_notifier.Add((int)ServerPacketId.DeleteChracterResult, DeleteCharacterResult);
@@ -187,6 +188,12 @@ public class DataHandler : MonoBehaviour
         }
     }
 
+    //Server - 로그아웃결과
+    public void LogoutResult(DataPacket packet)
+    {
+
+    }
+
     //Server - 캐릭터 리스트 수신
     public void CharacterList(DataPacket packet)
     {
@@ -219,7 +226,6 @@ public class DataHandler : MonoBehaviour
         {
             StartCoroutine(uiManager.Dialog(1.0f, "캐릭터 생성 성공"));
             SceneChanger.Instance.SceneChange(SceneChanger.SceneName.SelectScene, false);
-            DataSender.Instance.RequestCharacterList();
         }
         else if (resultData.Result == (byte)Result.Fail)
         {

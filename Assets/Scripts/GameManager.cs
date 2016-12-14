@@ -17,6 +17,20 @@ public class GameManager : MonoBehaviour
             return myIP;
         }
     }
+    
+    private static GameManager instance = null;
+    public static GameManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+            }
+
+            return instance;
+        }
+    }
 
     void Start()
     {
@@ -33,23 +47,37 @@ public class GameManager : MonoBehaviour
     {
         name = "GameManager";
         tag = "GameManager";
-
-        networkManager = (Instantiate(Resources.Load("Manager/NetworkManager")) as GameObject).GetComponent<NetworkManager>();
-        networkManager.name = "NetworkManager";
-        networkManager.tag = "NetworkManager";
-
-        uiManager = (Instantiate(Resources.Load("Manager/UIManager")) as GameObject).GetComponent<UIManager>();
-        uiManager.name = "UIManager";
-        uiManager.tag = "UIManager";
-        //uiManager.SetDialog();
-
-        networkManager.InitializeManager();
         
-        uiManager.SetLoginUIManager();
+        if (GameObject.FindWithTag("UIManager") == null)
+        {
+            uiManager = (Instantiate(Resources.Load("Manager/UIManager")) as GameObject).GetComponent<UIManager>();
+            uiManager.name = "UIManager";
+            uiManager.tag = "UIManager";
+            //uiManager.SetDialog();
+
+            uiManager.SetLoginUIManager();
+            DontDestroyOnLoad(uiManager);
+        }
+        else
+        {
+            uiManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
+        }
+
+        if (GameObject.FindWithTag("NetworkManager") == null)
+        {
+            networkManager = (Instantiate(Resources.Load("Manager/NetworkManager")) as GameObject).GetComponent<NetworkManager>();
+            networkManager.name = "NetworkManager";
+            networkManager.tag = "NetworkManager";
+
+            networkManager.InitializeManager();
+            DontDestroyOnLoad(networkManager);
+        }
+        else
+        {
+            networkManager = GameObject.FindWithTag("NetworkManager").GetComponent<NetworkManager>();
+        }
 
         DontDestroyOnLoad(gameObject);
-        DontDestroyOnLoad(networkManager);
-        DontDestroyOnLoad(uiManager);
     }
 
     public void SetManagerInWait()
