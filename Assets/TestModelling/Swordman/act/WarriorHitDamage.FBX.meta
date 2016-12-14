@@ -218,6 +218,14 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0
+        functionName: HitDamageSound
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: fdb525b02f4d10b45beafc22a321eb9f,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1

@@ -59,11 +59,14 @@ public class WarriorManager : CharacterManager
 		{
 			for (int i = 0; i < enermy.Length; i++)
 			{
-				maelstromDistance = Vector3.Distance (this.transform.position, enermy [i].transform.position);
-                
-				if (maelstromDistance < 10)
+				if (enermy [i] != null)
 				{
-					enermy [i].transform.Translate ((this.transform.position - enermy [i].transform.position) * maelstromSpeed * Time.deltaTime, Space.World);
+					maelstromDistance = Vector3.Distance (this.transform.position, enermy [i].transform.position);
+                
+					if (maelstromDistance < 10)
+					{
+						enermy [i].transform.Translate ((this.transform.position - enermy [i].transform.position) * maelstromSpeed * Time.deltaTime, Space.World);
+					}
 				}
 			}
 		}
@@ -296,7 +299,7 @@ public class WarriorManager : CharacterManager
 	{
 		base.classSound ();
 
-		if (false)
+		if (true)
 		{
 			Skill1Sound = Resources.Load<AudioClip> ("Sound/ManMealStrom");
 			Skill2Sound = Resources.Load<AudioClip> ("Sound/ManCutOff");
@@ -305,88 +308,53 @@ public class WarriorManager : CharacterManager
 			giganticSwordFinishSound = Resources.Load<AudioClip> ("Sound/ManGiganticSwordFinish");
 			swordFinishSound = Resources.Load<AudioClip> ("Sound/ManSwordDanceFinish");
 		}
-		else if (true)
+		else if (false)
 		{
-			Skill1Sound = Resources.Load<AudioClip> ("Sound/WoManMealStrom");
-			Skill2Sound = Resources.Load<AudioClip> ("Sound/WoManCutOff");
-			Skill3Sound = Resources.Load<AudioClip> ("Sound/WoManSwordDance");
-			Skill4Sound = Resources.Load<AudioClip> ("Sound/WoManGiganticSwordStart");
+			Skill1Sound = Resources.Load<AudioClip> ("Sound/WomanMealStrom");
+			Skill2Sound = Resources.Load<AudioClip> ("Sound/WomanCutOff");
+			Skill3Sound = Resources.Load<AudioClip> ("Sound/WomanSwordDance");
+			Skill4Sound = Resources.Load<AudioClip> ("Sound/WomanGiganticSwordStart");
 			giganticSwordFinishSound = Resources.Load<AudioClip> ("Sound/WoManGiganticSwordFinish");
-			swordFinishSound = Resources.Load<AudioClip> ("Sound/WoManSwordDanceFinish");
+
+			swordFinishSound = Resources.Load<AudioClip> ("Sound/WomanSwordDanceFinish");
 		}
 
 	}
 
 	public void AttackSound1()
 	{
-		if (charStatus.HGender == 0)
-		{
 			CharAudio.PlayOneShot (attack1);
-		}
 	}
-
 	public void AttackSound2()
 	{
-		if (charStatus.HGender == 0)
-		{
-			CharAudio.PlayOneShot (attack2);
-		}
+		CharAudio.PlayOneShot (attack2);
 	}
-
 	public void AttackSound3()
 	{
-		if (charStatus.HGender == 0)
-		{
-			CharAudio.PlayOneShot (attack3);
-		}
+		CharAudio.PlayOneShot (attack3);
 	}
 	public void SwordDanceSound()
 	{
-		if (charStatus.HGender == 0)
-		{
 			CharAudio.PlayOneShot (Skill3Sound);
-		}
-		
 	}
 	public void MealStromSound()
 	{
-		if (charStatus.HGender == 0)
-		{
 			CharAudio.PlayOneShot (Skill1Sound);
-		}
-
 	}
-
 	public void CutOffSound()
 	{
-		if (charStatus.HGender == 0)
-		{
-			CharAudio.PlayOneShot (Skill2Sound);
-		}
-
+		CharAudio.PlayOneShot (Skill2Sound);
 	}
 	public void SwordDanceFinishSound()
 	{
-		if (charStatus.HGender == 0)
-		{
-			CharAudio.PlayOneShot (swordFinishSound);
-		}
-
+		CharAudio.PlayOneShot (swordFinishSound);
 	}
 	public void GiganticSwordSoundStart()
 	{
-		if (charStatus.HGender == 0)
-		{
-			CharAudio.PlayOneShot (Skill4Sound);
-		}
+		CharAudio.PlayOneShot (Skill4Sound);
 	}
-
-
 	public void GiganticSwordSoundFinish()
 	{
-		if (charStatus.HGender == 0)
-		{
-			CharAudio.PlayOneShot (giganticSwordFinishSound);
-		}
+		CharAudio.PlayOneShot (giganticSwordFinishSound);
 	}
 }
