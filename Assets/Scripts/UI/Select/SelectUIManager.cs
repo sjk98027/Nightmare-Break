@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class SelectUIManager : MonoBehaviour {
-    private int checkNum;
+    private int currentCharacterIndex;
     private const int maxCharacterNum = 3;
     GameObject characterPanel;
     GameObject createCharacterPanel;
@@ -31,11 +31,17 @@ public class SelectUIManager : MonoBehaviour {
 
     CharacterList characterList;
     
+    public int CurrentCharacterIndex { get { return currentCharacterIndex; } }
     public CharacterList CharacterList { get { return characterList; } set { characterList = value; } }
 
-    public void SetUIObject()
+    public void ManagerInitialize()
     {
-      
+        SetUIObject();
+        InitializeAddListener();
+    }
+
+    public void SetUIObject()
+    {      
         createCharacterButton = GameObject.Find("CreateCharacterButton").GetComponent<Button>();
         deleteCharacterButton = GameObject.Find("DeleteCharacterButton").GetComponent<Button>();
         startButton = GameObject.Find("StartButton").GetComponent<Button>();
@@ -68,6 +74,7 @@ public class SelectUIManager : MonoBehaviour {
     {
         createCharacterButton.onClick.AddListener(() => OnClickCreateCharacterButton());
         returnToMainButton.onClick.AddListener(() => OnClickReturnToMainButton());
+        startButton.onClick.AddListener(() => OnClickStartButton());
         clickEvent[0].callback.AddListener((data) => Select(0));
         clickEvent[1].callback.AddListener((data) => Select(1));
         clickEvent[2].callback.AddListener((data) => Select(2));
@@ -75,28 +82,32 @@ public class SelectUIManager : MonoBehaviour {
 
     public void Select(int _imageindex)
     {
-        checkNum = _imageindex;
-        for(int i = 0; i < maxCharacterNum; i++)
+        if (CharacterList.CharacterData[_imageindex].Level != 0)
         {
-            if (selectImage[i].activeSelf)
+            currentCharacterIndex = _imageindex;
+            for (int i = 0; i < maxCharacterNum; i++)
             {
-                selectImage[i].SetActive(false);
-                backImage[i].color = alphaChange[1];
-                characterAnim[i].speed = 0;
+                if (selectImage[i].activeSelf)
+                {
+                    selectImage[i].SetActive(false);
+                    backImage[i].color = alphaChange[1];
+                    characterAnim[i].speed = 0;
+                }
             }
-        }
-        if(!selectImage[_imageindex].activeSelf)
-        {
-            backImage[_imageindex].color = alphaChange[0];
-            characterPos[_imageindex].SetActive(true);
-            selectImage[_imageindex].SetActive(true);
-            characterAnim[_imageindex].speed = 1;
-            startButton.interactable = true;
-            deleteCharacterButton.interactable = true;
-        } else
-        {
-            return;
-        }
+            if (!selectImage[_imageindex].activeSelf)
+            {
+                backImage[_imageindex].color = alphaChange[0];
+                characterPos[_imageindex].SetActive(true);
+                selectImage[_imageindex].SetActive(true);
+                characterAnim[_imageindex].speed = 1;
+                startButton.interactable = true;
+                deleteCharacterButton.interactable = true;
+            }
+            else
+            {
+                return;
+            }
+        }        
     }
 
     public void SetCharacter()
@@ -151,5 +162,10 @@ public class SelectUIManager : MonoBehaviour {
     public void OnClickReturnToMainButton()
     {
         SceneChanger.Instance.SceneChange(SceneChanger.SceneName.TitleScene, true);
+    }
+
+    public void OnClickStartButton()
+    {
+        SceneChanger.Instance.SceneChange(SceneChanger.SceneName.WaitingScene, true);
     }
 }

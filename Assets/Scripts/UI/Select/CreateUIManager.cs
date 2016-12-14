@@ -45,6 +45,11 @@ public class CreateUIManager : MonoBehaviour
 	private EventTrigger.Entry[] downEvent;
 	private EventTrigger.Entry[] upEvent;
  
+    public void ManagerInitialize()
+    {
+        SetUIObject();
+        InitializeAddListner();
+    }
 
     public void SetUIObject()
     {
@@ -57,6 +62,8 @@ public class CreateUIManager : MonoBehaviour
         selectImage = new GameObject[maxClass];
         classPrefeb = new GameObject[maxClass];
 		classBtn = new Button[maxClass];
+        warriorSkillBtn = new Button[maxClass];
+        mageSkillBtn = new Button[maxClass];
 
         characterPos = GameObject.Find("CharacterPrefebPos").transform;
         nickName = GameObject.Find("NickName").GetComponent<Text>();

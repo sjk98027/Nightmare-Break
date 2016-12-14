@@ -79,7 +79,7 @@ public class CharacterList
 
     public CharacterList()
     {
-        characterData = new CharacterData[WaitUIManager.maxCharacterNum];
+        characterData = new CharacterData[WaitingUIManager.maxCharacterNum];
 
         for (int i = 0; i < characterData.Length; i++)
         {

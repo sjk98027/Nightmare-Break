@@ -8,14 +8,14 @@ public class RoomListPacket : Packet<RoomListData>
         {
             bool ret = true;
 
-            for (int i = 0; i < WaitUIManager.maxRoomNum; i++)
+            for (int i = 0; i < WaitingUIManager.maxRoomNum; i++)
             {
                 ret &= Serialize((byte)Encoding.Unicode.GetBytes(data.Rooms[i].RoomName).Length);
                 ret &= Serialize(data.Rooms[i].RoomName);
                 ret &= Serialize(data.Rooms[i].DungeonId);
                 ret &= Serialize(data.Rooms[i].DungeonLevel);
 
-                for (int j = 0; j < WaitUIManager.maxPlayerNum; j++)
+                for (int j = 0; j < WaitingUIManager.maxPlayerNum; j++)
                 {
                     ret &= Serialize((byte)Encoding.Unicode.GetBytes(data.Rooms[i].UserName[j]).Length);
                     ret &= Serialize(data.Rooms[i].UserName[j]);
@@ -42,20 +42,20 @@ public class RoomListPacket : Packet<RoomListData>
             string roomName;
             byte dungeonId = 0;
             byte dungeonLevel = 0;
-            byte[] userNameLength = new byte[WaitUIManager.maxPlayerNum];
-            string[] userName = new string[ WaitUIManager.maxPlayerNum];
-            byte[] userGender = new byte[WaitUIManager.maxPlayerNum];
-            byte[] userClass = new byte[WaitUIManager.maxPlayerNum];
-            byte[] userLevel = new byte[WaitUIManager.maxPlayerNum];
+            byte[] userNameLength = new byte[WaitingUIManager.maxPlayerNum];
+            string[] userName = new string[WaitingUIManager.maxPlayerNum];
+            byte[] userGender = new byte[WaitingUIManager.maxPlayerNum];
+            byte[] userClass = new byte[WaitingUIManager.maxPlayerNum];
+            byte[] userLevel = new byte[WaitingUIManager.maxPlayerNum];
 
-            for (int i = 0; i < WaitUIManager.maxRoomNum; i++)
+            for (int i = 0; i < WaitingUIManager.maxRoomNum; i++)
             {
                 ret &= Deserialize(ref roomNameLength);
                 ret &= Deserialize(out roomName, roomNameLength);
                 ret &= Deserialize(ref dungeonId);
                 ret &= Deserialize(ref dungeonLevel);
 
-                for (int j = 0; j< WaitUIManager.maxPlayerNum; j++)
+                for (int j = 0; j < WaitingUIManager.maxPlayerNum; j++)
                 {
                     ret &= Deserialize(ref userNameLength[j]);
                     ret &= Deserialize(out userName[j], userNameLength[j]);
@@ -100,9 +100,9 @@ public class RoomListData
 
     public RoomListData()
     {
-        rooms = new Room[WaitUIManager.maxRoomNum];
+        rooms = new Room[WaitingUIManager.maxRoomNum];
 
-        for (int i =0; i< WaitUIManager.maxRoomNum; i++)
+        for (int i =0; i< WaitingUIManager.maxRoomNum; i++)
         {
             rooms[i] = new Room();
         }

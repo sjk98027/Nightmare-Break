@@ -45,9 +45,9 @@ public class DataHandler : MonoBehaviour
         StartCoroutine(DataHandle());
     }
 
-    public void SetCharacter(GameObject character)
+    public void SetCharacterStatus()
     {
-        characterStatus = character.GetComponent<CharacterStatus>();
+        characterStatus = GameObject.FindWithTag("CharStatus").GetComponent<CharacterStatus>();
     }
 
     public void SetServerNotifier()
@@ -59,8 +59,8 @@ public class DataHandler : MonoBehaviour
         server_notifier.Add((int)ServerPacketId.CharacterList, CharacterList);
         server_notifier.Add((int)ServerPacketId.CreateCharacterResult, CreateCharacterResult);
         server_notifier.Add((int)ServerPacketId.DeleteChracterResult, DeleteCharacterResult);
-        server_notifier.Add((int)ServerPacketId.SelectCharacterResult, SelectCharacterResult);
         server_notifier.Add((int)ServerPacketId.RoomList, RoomList);
+        server_notifier.Add((int)ServerPacketId.CharacterStatus, CharacterStatus);
         server_notifier.Add((int)ServerPacketId.CreateRoomResult, CreateRoomResult);
         server_notifier.Add((int)ServerPacketId.EnterRoomResult, EnterRoomResult);
         server_notifier.Add((int)ServerPacketId.ExitRoomResult, ExitRoomResult);
@@ -276,17 +276,27 @@ public class DataHandler : MonoBehaviour
         RoomListPacket roomListPacket = new RoomListPacket(packet.msg);
         RoomListData roomListData = roomListPacket.GetData();
 
-        uiManager.WaitUIManager.SetRoom(roomListData);
+        uiManager.WaitingUIManager.SetRoom(roomListData);
+
+        if (SceneChanger.Instance.CurrentScene == SceneChanger.SceneName.LoadingScene)
+        {
+            SceneChanger.Instance.LoadingCheck[0] = true;
+        }
     }
 
     //Server - 캐릭터 정보 수신
-    public void CharacterData(DataPacket packet)
+    public void CharacterStatus(DataPacket packet)
     {
         Debug.Log("캐릭터 정보 수신");
         CharacterStatusPacket characterStatusPacket = new CharacterStatusPacket(packet.msg);
         CharacterStatusData characterStatusData = characterStatusPacket.GetData();
 
         characterStatus.SetCharacterStatus(characterStatusData);
+
+        if (SceneChanger.Instance.CurrentScene == SceneChanger.SceneName.LoadingScene)
+        {
+            SceneChanger.Instance.LoadingCheck[1] = true;
+        }
     }
 
     //Server - 방 생성 결과 수신
@@ -300,10 +310,10 @@ public class DataHandler : MonoBehaviour
         {
             StartCoroutine(uiManager.Dialog(1.0f, "방 생성 실패"));
         }
-        else if (resultData.RoomNum <= WaitUIManager.maxRoomNum)
+        else if (resultData.RoomNum <= WaitingUIManager.maxRoomNum)
         {
             StartCoroutine(uiManager.Dialog(1.0f, "방 생성 성공"));
-            uiManager.WaitUIManager.CreateRoom(resultData.RoomNum - 1);
+            uiManager.WaitingUIManager.CreateRoom(resultData.RoomNum - 1);
         }
     }
 
@@ -318,10 +328,10 @@ public class DataHandler : MonoBehaviour
         {
             StartCoroutine(uiManager.Dialog(1.0f, "방 입장 실패"));
         }
-        else if (resultData.RoomNum <= WaitUIManager.maxPlayerNum)
+        else if (resultData.RoomNum <= WaitingUIManager.maxPlayerNum)
         {
             StartCoroutine(uiManager.Dialog(1.0f, "방 입장 성공"));
-            uiManager.WaitUIManager.SetUserNum(resultData.RoomNum);
+            uiManager.WaitingUIManager.SetUserNum(resultData.RoomNum);
         }
     }
 
@@ -344,7 +354,7 @@ public class DataHandler : MonoBehaviour
             Debug.Log("게임 시작");
             DataSender.Instance.RequestUdpConnection();
 
-            if (uiManager.WaitUIManager.UserNum == 0)
+            if (uiManager.WaitingUIManager.UserNum == 0)
             {
                 DataSender.Instance.RequestDungeonData();
             }

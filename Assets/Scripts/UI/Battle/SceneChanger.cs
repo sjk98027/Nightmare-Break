@@ -60,18 +60,22 @@ public class SceneChanger : MonoBehaviour
         #region 타이틀 씬 초기화
         if (scene.name == "TitleScene")
         {
-            currentScene = SceneName.TitleScene;
+            if (currentScene == SceneName.LoadingScene)
+            {
+                UIManager.Instance.SetUIManager(UIManagerIndex.Login);
+                UIManager.Instance.LoginUIManager.ManagerInitialize();
+            }
+
+            currentScene = SceneName.TitleScene;            
         }
         #endregion
 
         #region 로딩 씬 초기화
         else if (scene.name == "LoadingScene")
         {
-            currentScene = SceneName.LoadingScene;
-
             if (nextScene == (int)SceneName.SelectScene)
             {
-                UIManager.Instance.CreateSelectUIManager();
+                UIManager.Instance.SetUIManager(UIManagerIndex.Select);
                 DataSender.Instance.RequestCharacterList();
 
                 StartCoroutine(CheckLoading());
@@ -82,6 +86,17 @@ public class SceneChanger : MonoBehaviour
                 Destroy(GameManager.Instance.gameObject);
                 SceneManager.LoadScene(nextScene);
             }
+            else if (nextScene == (int)SceneName.WaitingScene)
+            {
+                DataSender.Instance.RequestCharacterStatus();
+                DataSender.Instance.RequestRoomList();
+                UIManager.Instance.SetUIManager(UIManagerIndex.Waiting);
+                GameManager.Instance.SetManagerInWait();
+
+                StartCoroutine(CheckLoading());
+            }
+
+            currentScene = SceneName.LoadingScene;
         }
         #endregion
 
@@ -90,15 +105,15 @@ public class SceneChanger : MonoBehaviour
         {
             if (currentScene == SceneName.LoadingScene)
             {
-                UIManager.Instance.SetSelectUIManager();
+                UIManager.Instance.SelectUIManager.ManagerInitialize();
                 UIManager.Instance.SelectUIManager.SetCharacter();
                 StartCoroutine(FadeIn());
             }
             else if (currentScene == SceneName.CreateScene)
             {
-                UIManager.Instance.CreateSelectUIManager();
+                UIManager.Instance.SetUIManager(UIManagerIndex.Select);
                 DataSender.Instance.RequestCharacterList();
-                UIManager.Instance.SetSelectUIManager();
+                UIManager.Instance.SelectUIManager.ManagerInitialize();
             }
 
             currentScene = SceneName.SelectScene;
@@ -110,8 +125,18 @@ public class SceneChanger : MonoBehaviour
         {
             currentScene = SceneName.CreateScene;
 
-            UIManager.Instance.CreateCreateUIManager();
-            UIManager.Instance.SetCreateUIManager();
+            UIManager.Instance.SetUIManager(UIManagerIndex.Create);
+            UIManager.Instance.CreateUIManager.ManagerInitialize();
+        }
+        #endregion
+
+        #region 대기 씬 초기화
+        else if (scene.name == "WaitScene")
+        {
+            currentScene = SceneName.WaitingScene;
+
+            UIManager.Instance.SetUIManager(UIManagerIndex.Waiting);
+            UIManager.Instance.WaitingUIManager.ManagerInitialize();
         }
         #endregion
     }
@@ -132,19 +157,17 @@ public class SceneChanger : MonoBehaviour
 
     private IEnumerator FadeOut()
     {
+        GameObject fadeCanvas = Instantiate(Resources.Load<GameObject>("UI/FadeCanvas"));
+        fadePanel = fadeCanvas.transform.GetChild(0).GetComponent<Image>();
+        fadeTime = Time.deltaTime;
+        while (fadePanel.color.a < 1)
         {
-            GameObject fadeCanvas = Instantiate(Resources.Load<GameObject>("UI/FadeCanvas"));
-            fadePanel = fadeCanvas.transform.GetChild(0).GetComponent<Image>();
-            fadeTime = Time.deltaTime;
-            while (fadePanel.color.a < 1)
-            {
-                fadePanel.color += new Color(0, 0, 0, (float)fadeValue * fadeTime);
-                yield return null;
-            }
-            fadeTime = 0;
-            fadePanel = null;
-            SceneManager.LoadScene((int)SceneName.LoadingScene);
+            fadePanel.color += new Color(0, 0, 0, (float)fadeValue * fadeTime);
+            yield return null;
         }
+        fadeTime = 0;
+        fadePanel = null;
+        SceneManager.LoadScene((int)SceneName.LoadingScene);
     }
 
     private IEnumerator FadeIn()
@@ -169,6 +192,10 @@ public class SceneChanger : MonoBehaviour
         if(nextScene == (int)SceneName.SelectScene)
         {
             loadingCheck = new bool[1];
+        }
+        else if (nextScene == (int)SceneName.WaitingScene)
+        {
+            loadingCheck = new bool[2];
         }
 
         bool checkComplete = false;

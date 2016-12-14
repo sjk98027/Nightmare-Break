@@ -55,7 +55,8 @@ public class GameManager : MonoBehaviour
             uiManager.tag = "UIManager";
             //uiManager.SetDialog();
 
-            uiManager.SetLoginUIManager();
+            uiManager.SetUIManager(UIManagerIndex.Login);
+            uiManager.LoginUIManager.ManagerInitialize();
             DontDestroyOnLoad(uiManager);
         }
         else
@@ -85,6 +86,8 @@ public class GameManager : MonoBehaviour
         characterStatus = (Instantiate(Resources.Load("Manager/CharacterStatus")) as GameObject).GetComponent<CharacterStatus>();
         characterStatus.name = "CharacterStatus";
         characterStatus.tag = "CharStatus";
+
+        networkManager.DataHandler.SetCharacterStatus();
     }
 
     public void SetManagerInDungeon()

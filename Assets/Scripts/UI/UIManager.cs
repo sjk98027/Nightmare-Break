@@ -2,19 +2,28 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum UIManagerIndex
+{
+    Login = 0,
+    Select,
+    Create,
+    Waiting,
+    Battle,
+}
+
 public class UIManager : MonoBehaviour
 {
 	CharacterManager charManager;
     LoginUIManager loginUIManager;
     SelectUIManager selectUIManager;
     CreateUIManager createUIManager;
-    WaitUIManager waitUIManager;
+    WaitingUIManager waitingUIManager;
     BattleUIManager battleUIManager;
 
     public LoginUIManager LoginUIManager { get { return loginUIManager; } }
     public SelectUIManager SelectUIManager { get { return selectUIManager; } }
     public CreateUIManager CreateUIManager { get { return createUIManager; } }
-    public WaitUIManager WaitUIManager { get { return waitUIManager; } }
+    public WaitingUIManager WaitingUIManager { get { return waitingUIManager; } }
     public BattleUIManager BattleUIManager { get { return battleUIManager; } }
 
     public GameObject dialogPanel;
@@ -39,42 +48,32 @@ public class UIManager : MonoBehaviour
         if (loginUIManager != null) Destroy(loginUIManager);
         if (selectUIManager != null) Destroy(selectUIManager);
         if (createUIManager != null) Destroy(createUIManager);
-        if (waitUIManager != null) Destroy(waitUIManager);
+        if (waitingUIManager != null) Destroy(waitingUIManager);
         if (battleUIManager != null) Destroy(battleUIManager);
     }
 
-    public void SetLoginUIManager()
+    public void SetUIManager(UIManagerIndex index)
     {
         InitializeUIManager();
 
-        loginUIManager = gameObject.AddComponent<LoginUIManager>();
-        loginUIManager.ManagerInitialize();
-    }
-
-    public void CreateSelectUIManager()
-    {
-        InitializeUIManager();
-
-        selectUIManager = gameObject.AddComponent<SelectUIManager>();
-    }
-
-    public void SetSelectUIManager()
-    {
-        selectUIManager.SetUIObject();
-        selectUIManager.InitializeAddListener();
-    }
-
-    public void CreateCreateUIManager()
-    {
-        InitializeUIManager();
-
-        createUIManager = gameObject.AddComponent<CreateUIManager>();
-    }
-
-    public void SetCreateUIManager()
-    {
-        createUIManager.SetUIObject();
-        createUIManager.InitializeAddListner();
+        switch (index)
+        {
+            case UIManagerIndex.Login:
+                loginUIManager = gameObject.AddComponent<LoginUIManager>();
+                break;
+            case UIManagerIndex.Select:
+                selectUIManager = gameObject.AddComponent<SelectUIManager>();
+                break;
+            case UIManagerIndex.Create:
+                createUIManager = gameObject.AddComponent<CreateUIManager>();
+                break;
+            case UIManagerIndex.Waiting:
+                waitingUIManager = gameObject.AddComponent<WaitingUIManager>();
+                break;
+            case UIManagerIndex.Battle:
+                battleUIManager = gameObject.AddComponent<BattleUIManager>();
+                break;
+        }
     }
 
     public void SetBattleUIManager()
@@ -84,14 +83,6 @@ public class UIManager : MonoBehaviour
         charManager = GameObject.FindWithTag("Player").GetComponent<CharacterManager>();
         battleUIManager = GetComponent<BattleUIManager>();
         battleUIManager.SetUIObject();
-    }
-
-    public void SetWaitUIManager()
-    {
-        InitializeUIManager();
-
-        waitUIManager = GetComponent<WaitUIManager>();
-        waitUIManager.ManagerInitialize();
     }
 
     public void SetDialog()
