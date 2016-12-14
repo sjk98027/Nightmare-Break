@@ -13,27 +13,27 @@ public class Rabbit : Monster {
 	[SerializeField]GameObject middleboss;
 
 
-	public override void HitDamage(int _Damage,GameObject attacker)
-	{
-		IsHited = true;
-		currentHP -= _Damage;
-		if (currentHP > 0) {
-			for (int i = 0; i < player.Length; i++) {
-				if (player [i] == attacker) {
-					playerToMonsterDamage [i] += _Damage;
-					targetPlayer = player [i];
-				}
-			}
-			Pattern (StatePosition.TakeDamage);
-		}
-		if (currentHP <= 0) {
-			currentHP = 0;
-			IsAlive = false;
-			HittedBox.enabled = false;
-			monsterState = StatePosition.Death;
-			Pattern (monsterState);
-		}
-	}
+//	public override void HitDamage(int _Damage,GameObject attacker)
+//	{
+//		IsHited = true;
+//		currentHP -= _Damage;
+//		if (currentHP > 0) {
+//			for (int i = 0; i < player.Length; i++) {
+//				if (player [i] == attacker) {
+//					playerToMonsterDamage [i] += _Damage;
+//					targetPlayer = player [i];
+//				}
+//			}
+//			Pattern (StatePosition.TakeDamage);
+//		}
+//		if (currentHP <= 0) {
+//			currentHP = 0;
+//			IsAlive = false;
+//			HittedBox.enabled = false;
+//			monsterState = StatePosition.Death;
+//			Pattern (monsterState);
+//		}
+//	}
 
 	private Vector3 idlePoint = new Vector3(0,0,0);
 

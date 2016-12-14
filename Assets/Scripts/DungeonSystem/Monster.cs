@@ -22,7 +22,37 @@ public enum DefenseMoveDirectionArray
 	Comback
 }
 
+
+
+
+
 public class Monster : MonoBehaviour {
+	public void targetPlayerPosition(TargetPlayerPosition targetposition){
+		switch (targetposition) {
+		case TargetPlayerPosition.Zero:
+			movePoint = (targetPlayer.transform.position);
+			break;
+		case TargetPlayerPosition.Up:
+			movePoint = new Vector3 (targetPlayer.transform.position.x - transform.position.x + (searchRange*0.5f), 0, checkDirection.z);
+			break;
+		case TargetPlayerPosition.Down:
+			movePoint = new Vector3 (targetPlayer.transform.position.x - transform.position.x - (searchRange*0.5f), 0, checkDirection.z);
+			break;
+		case TargetPlayerPosition.Left:
+			movePoint = new Vector3 (checkDirection.x, 0, targetPlayer.transform.position.z - transform.position.z - (searchRange*0.5f));
+			break;
+		case TargetPlayerPosition.Right:
+			movePoint = new Vector3 (checkDirection.x, 0, targetPlayer.transform.position.z - transform.position.z + (searchRange*0.5f));
+			break;
+		}
+	}
+	public enum TargetPlayerPosition{
+		Zero = 0,
+		Up,
+		Down,
+		Left,
+		Right
+	}
     public enum StateDirecion
     {
         right = 0,
@@ -31,7 +61,7 @@ public class Monster : MonoBehaviour {
 
     protected Animator animator;
     protected AnimatorStateInfo aniState;
-	[SerializeField]protected BoxCollider HittedBox;
+	protected BoxCollider HittedBox;
 	[SerializeField]protected MonsterWeapon attackCollider;
 	[SerializeField]protected GameObject shockWaveInstantiate;
 
@@ -46,15 +76,15 @@ public class Monster : MonoBehaviour {
 	//mode,gateArraynumber,monsterArraynumber
 	protected bool moveAble;
 
-    [SerializeField] protected int monsterIndex;
-	[SerializeField] protected MonsterId monsterId;
-    [SerializeField] protected string _name;
-    [SerializeField] protected int level;
-    [SerializeField] protected int currentHP;
-	[SerializeField] protected int maxHP;
-    [SerializeField] protected int attack;
-    [SerializeField] protected int defense;
-    [SerializeField] protected int moveSpeed;
+    protected int monsterIndex;
+	protected MonsterId monsterId;
+    protected string _name;
+    protected int level;
+    protected int currentHP;
+	protected int maxHP;
+    protected int attack;
+    protected int defense;
+    protected int moveSpeed;
 
 
     //monster getting variable;
@@ -122,7 +152,6 @@ public class Monster : MonoBehaviour {
         animator = this.gameObject.GetComponent<Animator>();
         HittedBox = this.gameObject.GetComponent<BoxCollider>();
 
-
         isAlive = true;
         isHited = false;
         moveAble = true;
@@ -139,6 +168,7 @@ public class Monster : MonoBehaviour {
 
 		if (monster.Id == (int)MonsterId.Rabbit || monster.Id == (int)MonsterId.Frog) {
 			searchRange = 8;
+
 			attackCollider = this.transform.GetComponentInChildren<MonsterWeapon> ();
 			attackCollider.MonsterWeaponSet ();
 		}
@@ -146,8 +176,7 @@ public class Monster : MonoBehaviour {
 
 		if(monster.Id == (int)MonsterId.Duck){
 			shockWaveInstantiate = Resources.Load<GameObject>("Effect/Monster_ShockWave");
-
-			searchRange = 12;
+			searchRange = 8;
 			//Debug.Log (shockWaveInstantiate.AttackMonster);
 			//shockWaveInstantiate
 		}
@@ -172,8 +201,9 @@ public class Monster : MonoBehaviour {
         StartCoroutine(LookatChange());
     }
 
-	public void MonsterMoveAI(bool _normalMode){//moveAI->StartAI , 
-		_normalMode =false;
+	public void MonsterMoveAIStart(bool _normalMode){//moveAI->StartAI , 
+		//_normalMode =false;
+
 		if (!_normalMode) {
 			if (monsterIndex > 6) {
 				DefenseMoveSet (DefenseMoveDirectionArray.Up);
@@ -183,83 +213,100 @@ public class Monster : MonoBehaviour {
 				DefenseMoveSet (DefenseMoveDirectionArray.Down);
 			}
 		}
-		StartCoroutine(MonsterMoveAIStart (_normalMode));
-		StartCoroutine(MonsterActAI (_normalMode));
+		if(monsterId == MonsterId.Duck || monsterId == MonsterId.Rabbit|| monsterId == MonsterId.Frog ){
+			StartCoroutine(MonsterMoveAI (_normalMode));
+			StartCoroutine(MonsterActAI (_normalMode));
+		}
+
+		if(monsterId == MonsterId.Bear || monsterId == MonsterId.BlackBear){
+			StartCoroutine (BossAI());
+		}
+		
 
 //		if (monsterId == UnitId.Frog || monsterId == UnitId.Rabbit || monsterId == UnitId.Duck ||monsterId == UnitId.ManWarrior) {
 //			
 //		}
 	}
 
+	public void MonsterUpdate()
+	{
+		aniState = this.animator.GetCurrentAnimatorStateInfo(0);
+		if (aniState.IsName("Run"))
+		{
+			if (moveAble)
+			{
+				this.transform.Translate(movePoint.normalized * moveSpeed * Time.deltaTime, 0);
+			}
+		}
 
+		ChasePlayer();
+	}
 
-	IEnumerator MonsterMoveAIStart(bool _normalMode){
+	IEnumerator MonsterMoveAI(bool _normalMode){
 		while (IsAlive) {
 			//if (monsterId == UnitId.Frog || monsterId == UnitId.Rabbit || monsterId == UnitId.Duck) {
-			if(_normalMode){
+			if (_normalMode) {
 				if (targetPlayer != null) {
-					if (Mathf.Abs(targetPlayer.transform.position.z-transform.position.z) >8 || Mathf.Abs(targetPlayer.transform.position.x-this.gameObject.transform.position.x) > 0.6f )
-						if (currentDisTance > searchRange * 0.3f){
-						randomStandby = Random.Range(0,3);
-						if (randomStandby == 0) {
-							//for 문 -> Fuck go;
-							if (checkDirection.z>0) {
-                                for (int i = 0; i < 4; i++)
-                                {
-                                    movePoint = new Vector3(checkDirection.x, 0, checkDirection.z - 3f);
-                                    yield return new WaitForSeconds(2f);
-                                }
-                            }
-							if (checkDirection.z<0) {
-                                for (int i = 0; i < 4; i++)
-                                {
-                                    movePoint = new Vector3(checkDirection.x, 0, checkDirection.z + 3f);
-                                    yield return new WaitForSeconds(2f);
-                                }									
+					if (Mathf.Abs (targetPlayer.transform.position.z - transform.position.z) > 8 || Mathf.Abs (targetPlayer.transform.position.x - this.gameObject.transform.position.x) > 0.6f) {
+						if (currentDisTance < searchRange) {
+							randomStandby = Random.Range (0, 3);
+							if (randomStandby == 0) {
+								//for 문 -> Fuck go;
+								if (checkDirection.z > 0) {
+									for (int i = 0; i < 4; i++) {
+										movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z - 3f);
+										yield return new WaitForSeconds (2f);
+									}
+								}
+								if (checkDirection.z < 0) {
+									for (int i = 0; i < 4; i++) {
+										movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z + 3f);
+										yield return new WaitForSeconds (2f);
+									}									
+								}
 							}
-						}
 
 							if (randomStandby == 1) {
 
 								int a = Random.Range (0, 4);
 								if (a == 0) {
-									movePoint = new Vector3 (targetPlayer.transform.position.x-transform.position.x+1.5f, 0, checkDirection.z);
+									targetPlayerPosition (TargetPlayerPosition.Up);
 									yield return new WaitForSeconds (2f);
-									movePoint = new Vector3 (checkDirection.x, 0, targetPlayer.transform.position.z-transform.position.z-1.5f);
+									targetPlayerPosition (TargetPlayerPosition.Left);
 									yield return new WaitForSeconds (2f);
-									movePoint = new Vector3 (targetPlayer.transform.position.x-transform.position.x-1.5f, 0, checkDirection.z);
+									targetPlayerPosition (TargetPlayerPosition.Down);
 									yield return new WaitForSeconds (2f);
-									movePoint = new Vector3 (checkDirection.x, 0, targetPlayer.transform.position.z-transform.position.z+1.5f);
+									targetPlayerPosition (TargetPlayerPosition.Right);
 									yield return new WaitForSeconds (2f);
 								}
 								if (a == 1) {
-									movePoint = new Vector3 (targetPlayer.transform.position.x-transform.position.x+1.5f, 0, checkDirection.z);
+									targetPlayerPosition (TargetPlayerPosition.Up);
 									yield return new WaitForSeconds (2f);
-									movePoint = new Vector3 (checkDirection.x, 0, targetPlayer.transform.position.z-transform.position.z+1.5f);
+									targetPlayerPosition (TargetPlayerPosition.Right);
 									yield return new WaitForSeconds (2f);
-									movePoint = new Vector3 (targetPlayer.transform.position.x-transform.position.x-1.5f, 0, checkDirection.z);
+									targetPlayerPosition (TargetPlayerPosition.Down);
 									yield return new WaitForSeconds (2f);
-									movePoint = new Vector3 (checkDirection.x, 0, targetPlayer.transform.position.z-transform.position.z-1.5f);
+									targetPlayerPosition (TargetPlayerPosition.Left);
 									yield return new WaitForSeconds (2f);
 								}
 								if (a == 2) {
-									movePoint = new Vector3 (targetPlayer.transform.position.x-transform.position.x-1.5f, 0, checkDirection.z);
+									targetPlayerPosition (TargetPlayerPosition.Down);
 									yield return new WaitForSeconds (2f);
-									movePoint = new Vector3 (checkDirection.x, 0, targetPlayer.transform.position.z-transform.position.z-1.5f);
+									targetPlayerPosition (TargetPlayerPosition.Left);
 									yield return new WaitForSeconds (2f);
-									movePoint = new Vector3 (targetPlayer.transform.position.x-transform.position.x+1.5f, 0, checkDirection.z);
+									targetPlayerPosition (TargetPlayerPosition.Up);
 									yield return new WaitForSeconds (2f);
-									movePoint = new Vector3 (checkDirection.x, 0, targetPlayer.transform.position.z-transform.position.z+1.5f);
+									targetPlayerPosition (TargetPlayerPosition.Right);
 									yield return new WaitForSeconds (2f);
 								}
 								if (a == 3) {
-									movePoint = new Vector3 (targetPlayer.transform.position.x-transform.position.x-1.5f, 0, checkDirection.z);
+									targetPlayerPosition (TargetPlayerPosition.Down);
 									yield return new WaitForSeconds (2f);
-									movePoint = new Vector3 (checkDirection.x, 0, targetPlayer.transform.position.z-transform.position.z+1.5f);
+									targetPlayerPosition (TargetPlayerPosition.Right);
 									yield return new WaitForSeconds (2f);
-									movePoint = new Vector3 (targetPlayer.transform.position.x-transform.position.x+1.5f, 0, checkDirection.z);
+									targetPlayerPosition (TargetPlayerPosition.Up);
 									yield return new WaitForSeconds (2f);
-									movePoint = new Vector3 (checkDirection.x, 0, targetPlayer.transform.position.z-transform.position.z-1.5f);
+									targetPlayerPosition (TargetPlayerPosition.Left);
 									yield return new WaitForSeconds (2f);
 								}
 							}
@@ -307,7 +354,7 @@ public class Monster : MonoBehaviour {
 								}
 							}
 							yield return new WaitForSeconds (0.2f);
-						} else if(Mathf.Abs(targetPlayer.transform.position.z-transform.position.z) <8 && Mathf.Abs(targetPlayer.transform.position.x-this.gameObject.transform.position.x) <= 0.6f ) {
+						} else if (Mathf.Abs (targetPlayer.transform.position.z - transform.position.z) < 8 && Mathf.Abs (targetPlayer.transform.position.x - this.gameObject.transform.position.x) <= 0.6f) {
 							aniState = this.animator.GetCurrentAnimatorStateInfo (0);
 							if (!aniState.IsName ("Attack")) {
 								if (moveAble) {
@@ -329,42 +376,143 @@ public class Monster : MonoBehaviour {
 									}
 								}
 							}
-							
+
 						}
-				yield return new WaitForSeconds (2f);}
-				else
+						yield return new WaitForSeconds (2f);
+					} else
 						yield return new WaitForSeconds (3f);
-				}
-				else if(!IsAlive){
+				} else if (!IsAlive) {
 
 					yield return false;
 				}
 
-			//}
+				//}
 
 
-			while (!_normalMode) {
-				if (isAlive) {
-					for (int i = 0; i < pointVector.Length; i++) {
-						if (i > 0 && i < pointVector.Length - 1) {
-							movePoint = pointVector [i];
-							pointVector [i] = pointVector [i + 1];
-							pointVector [i + 1] = movePoint;
+				while (!_normalMode) {
+					if (isAlive) {
+						for (int i = 0; i < pointVector.Length; i++) {
+							if (i > 0 && i < pointVector.Length - 1) {
+								movePoint = pointVector [i];
+								pointVector [i] = pointVector [i + 1];
+								pointVector [i + 1] = movePoint;
+							}
+
+							if (i == pointVector.Length - 1) {
+								movePoint = pointVector [i];
+								pointVector [i] = pointVector [0];
+								pointVector [0] = movePoint;
+							}
 						}
-
-						if (i == pointVector.Length - 1) {
-							movePoint = pointVector [i];
-							pointVector [i] = pointVector [0];
-							pointVector [0] = movePoint;
-						}
+						yield return new WaitForSeconds (0.2f);
+					} else if (isAlive) {
+						break;
 					}
-					yield return new WaitForSeconds (0.2f);
-				} else
-					break;
+				}
+				yield return new WaitForSeconds (0.2f);
 			}
-			yield return new WaitForSeconds (0.2f);
 		}
 	}
+
+	public IEnumerator BossAI()
+	{
+		aniState = this.animator.GetCurrentAnimatorStateInfo (0);
+
+		while (IsAlive)
+		{
+			yield return new WaitForSeconds (10f);
+			int patterna;
+			int bossPatternCount;
+			bool bossSkill;
+			patterna = Random.Range (0, 3);
+			// pattern = 1;
+			bossSkill = true;
+			animator.SetBool ("BossSkill", true);
+
+			if (patterna == 0)
+			{
+				statePosition = StatePosition.BossJumpAttack;
+				Pattern(statePosition);
+
+			}
+			else if (patterna == 1)
+			{
+				statePosition = StatePosition.BossRoar;
+				Pattern(statePosition);
+
+
+			}
+			else if (patterna == 2)
+			{
+				statePosition = StatePosition.BossOneHandAttack;
+				Pattern(statePosition);
+
+			}
+
+
+			yield return new WaitForSeconds (1.0f);
+
+			bossSkill = false;
+			animator.SetBool ("BossSkill", false);
+		}
+	}
+
+
+	public void BigBearBossPattern (int bossState)
+	{
+
+		switch (bossState)
+		{
+
+		case 0:
+			statePosition = StatePosition.Idle;
+			animator.SetInteger ("state", 0);
+
+			break;
+		case 1:
+			statePosition = StatePosition.Run;
+			animator.SetInteger ("state", 1);
+
+			break;
+		case 2:
+			statePosition = StatePosition.Attack;
+			animator.SetInteger ("state", 2);
+
+
+			//isAttack = true;
+
+
+			//sound.BossSound (1,searchRange);
+			//this.bossAudio.PlayOneShot (normalAttack);
+			//this.bossAudio.loop = false;
+			break;
+
+		case 3:
+			statePosition = StatePosition.BossOneHandAttack;
+			animator.SetInteger ("state", 3);
+
+
+			break;
+
+		case 4:
+			statePosition = StatePosition.BossJumpAttack;
+			animator.SetInteger ("state", 4);
+		
+			break;
+
+		case 5:
+			statePosition = StatePosition.BossRoar;
+			animator.SetInteger ("state", 5);
+
+			break;
+
+		case 6:
+			statePosition = StatePosition.Death;
+			animator.SetTrigger ("BigBearBossDeath");
+			break;
+		}
+	}
+
 
 
 	
@@ -386,7 +534,7 @@ public class Monster : MonoBehaviour {
 		case StatePosition.Run:
 			{
 				AnimatorReset();
-				animator.SetInteger("State", 2);
+				animator.SetInteger("State", 1);
 				break;
 			}
 		case StatePosition.TakeDamage:
@@ -401,6 +549,17 @@ public class Monster : MonoBehaviour {
 				//				MonsterArrayEraser(this.gameObject);
 				break;
 			}
+		case StatePosition.BossOneHandAttack:
+			{
+				animator.SetInteger ("State",3);
+				break;
+			}
+		case StatePosition.BossJumpAttack:
+			{
+				animator.SetInteger ("State",4);
+				break;
+			}
+		
 		}
 	}
 
@@ -516,7 +675,7 @@ public class Monster : MonoBehaviour {
 				animator.SetInteger ("State", 0);
 			}
 			if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Base Layer.Idle")) {
-				animator.SetInteger ("State", 3);
+				animator.SetInteger ("State", 2);
 			}
 			if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Base Layer.Attack")) {
 				moveAble = false;
@@ -560,19 +719,10 @@ public class Monster : MonoBehaviour {
 	}
 
     
-    public void GuestMonsterUpdate()
-    {
-        aniState = this.animator.GetCurrentAnimatorStateInfo(0);
-        if (aniState.IsName("Run"))
-        {
-            if (moveAble)
-            {
-				this.transform.Translate(movePoint.normalized * moveSpeed * Time.deltaTime, 0);
-            }
-        }
-        ChasePlayer();
-    }
+    
 
+
+	//targetplayer change;
 	public void ChasePlayer(){
 		if(player[0] != null){
 			if (!isHited) {
@@ -591,8 +741,6 @@ public class Monster : MonoBehaviour {
 			}
 		}
 	}
-
-    //coutine need this method;
     public void NormalchasePlayer()
 	{
 		for (int i = 0; i < player.Length; i++) {
@@ -605,7 +753,6 @@ public class Monster : MonoBehaviour {
 		}
 
 	}
-	//coutine need this method;
 	public void HitedchasePlayer()
 	{
 		for (int i = 0; i < player.Length; i++) {
@@ -623,13 +770,15 @@ public class Monster : MonoBehaviour {
 		}
 	}
 
+
+
+	//defenseMode Setting;
 	public void DefenceMoveGetting(Vector3[] _v3){
 		pointVector = new Vector3[_v3.Length];
 		for (int i = 0; i < _v3.Length; i++) {
 			pointVector [i] = _v3 [i];
 		}
 	}
-
 	public void DefenseMoveSet(DefenseMoveDirectionArray defenseMoveDirectionArray)
 	{
 		pointVector = new Vector3[7];
@@ -671,28 +820,10 @@ public class Monster : MonoBehaviour {
 		}
 	}
 
-	public void MonsterArrayEraser(GameObject thisGameObject)
-	{
-		//gameObject = null;
-		this.gameObject.SetActive (false);
-//				section.RemoveMonsterArray ();
-	}
-
-	public virtual void AttackEnd(){
-		
-		StartCoroutine (LookatChange ());
-		moveAble=true;
-		isAttack = false;
-		animator.SetInteger ("State", 0);
-		if (attackCollider != null) {
-			attackCollider.AttackColliderOff();
-		}
-		else if (attackCollider == null) {
-			//Instantiate ();	
-		}
 
 
-	}
+
+	//monster animation event;
 	public void AttackStart(){
 		moveAble = false;
 		isAttack = true;
@@ -715,21 +846,99 @@ public class Monster : MonoBehaviour {
 				objShockWave.GetComponent<ShockWave>().SetDamage(attack,this);
 			}
 		}
+	}
+	public void AttackEnd(){
 
+		StartCoroutine (LookatChange ());
+		moveAble=true;
+		isAttack = false;
+		animator.SetInteger ("State", 0);
+		if (attackCollider != null) {
+			attackCollider.AttackColliderOff();
+		}
+		else if (attackCollider == null) {
+			//Instantiate ();	
+		}
+	}
+	//bossAnimation event
+	public void RoarHit()
+	{
+		Debug.Log (_StateDirecion);
+		if (_StateDirecion == StateDirecion.right)
+		{
+			Instantiate (Resources.Load<GameObject> ("Effect/WarningEffect"), new Vector3 (-3.55f, 0.15f, this.transform.position.z + 10f), Quaternion.Euler (-90, 0, 0));
+		}
+		else if (_StateDirecion == StateDirecion.left)
+		{
+			Instantiate (Resources.Load<GameObject> ("Effect/WarningEffect"), new Vector3 (3.55f, 0.15f, this.transform.position.z - 10f), Quaternion.Euler (-90, 0, 0));
+		} 
+
+		//GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<RedRenderImage> ().enabled = true;
+	}
+
+	public IEnumerator Shooting()
+	{
+		int shootNum = 0;
+
+		//		while (shootNum < shootNumber)
+		//		{
+		//			yield return new WaitForSeconds (0.2f);
+		//
+		//			int xPos = Random.Range (-2, 2);
+		//			int zPos = Random.Range (-2, 2);
+		//
+		//			Instantiate (Resources.Load<GameObject> ("Effect/BossDarkSphere"), handPos.transform.position + (Vector3.right * xPos) + (Vector3.forward * zPos), Quaternion.Euler (0, 0, 0));
+		//
+		//			shootNum++;
+		//		}
+		yield return new WaitForSeconds (0.2f);
+	}
+
+	//monsterdie event;
+	public void MonsterArrayEraser(GameObject thisGameObject)
+	{
+		if (monsterId == MonsterId.Frog) {
+		
+		}
+
+		this.gameObject.SetActive (false);
+		//				section.RemoveMonsterArray ();
 	}
 
 
-
-	public virtual void HitDamage(int _Damage, GameObject _weapon)
+	public void HitDamage(int _Damage, GameObject _weapon)
 	{
+		IsHited = true;
+		currentHP -= _Damage;
 
+		if (currentHP > 0) {
+			for (int i = 0; i < player.Length; i++) {
+				if (player [i] == _weapon) {
+					playerToMonsterDamage [i] += _Damage;
+				}
+			}
+			statePosition = StatePosition.TakeDamage;
+			Pattern (statePosition);
+		}
+
+			
+		if (currentHP <= 0) {
+			currentHP = 0;
+			IsAlive = false;
+			HittedBox.enabled = false;
+			statePosition = StatePosition.Death;
+			Pattern (statePosition);
+		}
 	}
 
 	public void GetTargetPlayer(GameObject _TargerPlayer){
 		
 	}
 
-	public void SendTargetPlayer(){}
+	public void SendTargetPlayer(){
+		
+	}
+
 
 
 }

@@ -63,30 +63,30 @@ public class MiddleBossMonster : Monster {
 		moveAble = true;
 		Debug.Log ("in");
 	}
-	public override void HitDamage (int _Damage, GameObject attacker)
-	{
-		stateInfo = this.animator.GetCurrentAnimatorStateInfo (0);
-
-		if (IsAlive)
-		{
-			maxHP -= _Damage;
-
-			//			uiManager.bossHp.fillAmount = maxLife / currentLife;
-			if (maxHP > 0)
-			{
-				//hitanimation
-			}
-			else if (maxHP <= 0)
-			{
-				if (!stateInfo.IsName ("MiddleBossDeath"))
-				{
-					MiddleBossPattern ((int)MiddleBossPatternName.MiddleBossDeath);
-					IsAlive = false;
-					return;
-				}
-			}
-		}
-	}
+//	public override void HitDamage (int _Damage, GameObject attacker)
+//	{
+//		stateInfo = this.animator.GetCurrentAnimatorStateInfo (0);
+//
+//		if (IsAlive)
+//		{
+//			maxHP -= _Damage;
+//
+//			//			uiManager.bossHp.fillAmount = maxLife / currentLife;
+//			if (maxHP > 0)
+//			{
+//				//hitanimation
+//			}
+//			else if (maxHP <= 0)
+//			{
+//				if (!stateInfo.IsName ("MiddleBossDeath"))
+//				{
+//					MiddleBossPattern ((int)MiddleBossPatternName.MiddleBossDeath);
+//					IsAlive = false;
+//					return;
+//				}
+//			}
+//		}
+//	}
 	public void changeDirection ()
 	{//캐릭터 이동시 보스가 보는 방향을 정한다.
 		for (int i = 0; i < bossplayer.Length; i++) {

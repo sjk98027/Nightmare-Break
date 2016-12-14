@@ -133,57 +133,57 @@ public void changeDirection ()
 }
 
 
-public override void HitDamage (int _Damage, GameObject attacker)
-{
-
-	stateInfo = this.animator.GetCurrentAnimatorStateInfo (0);
-
-
-	if (IsAlive)
-	{
-		currentHP -= _Damage;
-		shoutCount +=1;
-
-            //uiManager.bossHp.fillAmount = maxLife / currentLife;
-            if (currentHP > 0)
-            {
-                for (int i = 0; i < player.Length; i++)
-                {
-                    if (player[i] == attacker)
-                    {
-                        playerToMonsterDamage[i] += _Damage;
-                        targetPlayer = player[i];
-                    }
-                }
-                if (targetPlayer != null)
-                {
-                    currentDisTance = Vector3.Distance(targetPlayer.transform.position, transform.position);
-                }
-                if (currentDisTance <= RunRange && currentDisTance > attackRange)
-                {//원거리 케릭터가 공격시 원거리 공격
-                    PatternReserveListCleanUp((int)BigBearBossPatternName.BigBearBossOneHandAttack);
-                }
-                if (shoutCount >= 100)
-                {//100회 이상 데미지를 받을 경우
-                    PatternReserveListCleanUp((int)BigBearBossPatternName.BigBearBossRoar);
-                }
-                //hitanimation
-            }
-
-            else if (currentHP <= 0)
-            {
-                currentHP = 0;
-                if (!stateInfo.IsName("BigBearBossDeath"))
-                {
-                    BigBearBossState = BigBearBossPatternName.BigBearBossDeath;
-                    BigBearBossPattern((int)BigBearBossState);
-                    IsAlive = false;
-                    HittedBox.enabled = false;
-                    return;
-                }
-            }
-	}
-}
+//public override void HitDamage (int _Damage, GameObject attacker)
+//{
+//
+//	stateInfo = this.animator.GetCurrentAnimatorStateInfo (0);
+//
+//
+//	if (IsAlive)
+//	{
+//		currentHP -= _Damage;
+//		shoutCount +=1;
+//
+//            //uiManager.bossHp.fillAmount = maxLife / currentLife;
+//            if (currentHP > 0)
+//            {
+//                for (int i = 0; i < player.Length; i++)
+//                {
+//                    if (player[i] == attacker)
+//                    {
+//                        playerToMonsterDamage[i] += _Damage;
+//                        targetPlayer = player[i];
+//                    }
+//                }
+//                if (targetPlayer != null)
+//                {
+//                    currentDisTance = Vector3.Distance(targetPlayer.transform.position, transform.position);
+//                }
+//                if (currentDisTance <= RunRange && currentDisTance > attackRange)
+//                {//원거리 케릭터가 공격시 원거리 공격
+//                    PatternReserveListCleanUp((int)BigBearBossPatternName.BigBearBossOneHandAttack);
+//                }
+//                if (shoutCount >= 100)
+//                {//100회 이상 데미지를 받을 경우
+//                    PatternReserveListCleanUp((int)BigBearBossPatternName.BigBearBossRoar);
+//                }
+//                //hitanimation
+//            }
+//
+//            else if (currentHP <= 0)
+//            {
+//                currentHP = 0;
+//                if (!stateInfo.IsName("BigBearBossDeath"))
+//                {
+//                    BigBearBossState = BigBearBossPatternName.BigBearBossDeath;
+//                    BigBearBossPattern((int)BigBearBossState);
+//                    IsAlive = false;
+//                    HittedBox.enabled = false;
+//                    return;
+//                }
+//            }
+//	}
+//}
 
 public void BigBearBossPattern (int bossState)
 {

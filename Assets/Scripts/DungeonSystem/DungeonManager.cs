@@ -96,7 +96,7 @@ public class DungeonManager : MonoBehaviour
         {
             for (int i = 0; i < monsters.Length; i++)
             {
-                monsterData[i].GuestMonsterUpdate();
+                monsterData[i].MonsterUpdate();
 
                 //monsterData[i].HostUpdateConduct();
             }
@@ -106,7 +106,7 @@ public class DungeonManager : MonoBehaviour
         {
             for (int i = 0; i < section.Length; i++)
             {
-                section[i].HostUpdateConduct();
+                //section[i].HostUpdateConduct();
             }
         }
 	}
@@ -134,7 +134,7 @@ public class DungeonManager : MonoBehaviour
     {
 		if (normalMode)
         {
-			modeForm = false;
+			//modeForm = false;
             //player1,player2 ->  nextScene; 
             //respwanstart;
         }
@@ -242,7 +242,7 @@ public class DungeonManager : MonoBehaviour
         for (int monsterIndex = 0; monsterIndex < monsterData.Length; monsterIndex++)
         {
             monsterData[monsterIndex].player = players;
-            monsterData[monsterIndex].MonsterMoveAI(normalMode);
+            monsterData[monsterIndex].MonsterMoveAIStart(normalMode);
 
             for (int dataIndex = 0; dataIndex < dungeonData.MonsterNum; dataIndex++)
             {
@@ -255,7 +255,7 @@ public class DungeonManager : MonoBehaviour
 
             if (monsterData[monsterIndex].MonsterId < MonsterId.BlackBear)
             {
-                monsterData[monsterIndex].MonsterMoveAI(normalMode);
+				monsterData[monsterIndex].MonsterMoveAIStart(normalMode);
             }
             else
             {

@@ -7,10 +7,15 @@ public class MonsterSpawnPoint : MonoBehaviour {
 	public GameObject[] FrogSpawn;
 	public GameObject[] DuckSpawn;
 	public GameObject[] RabbitSpawn;
+	public GameObject[] BearSpawn;
+	public GameObject[] BlackBearSpawn;
 
 	public int FrogCount;	
 	public int DuckCount;
 	public int RabbitCount;
+	public int BearCount;
+	public int BlackBearCount;
+
 	public Vector3[] spawnVector;
 
 	public int sumMonsterCount;
