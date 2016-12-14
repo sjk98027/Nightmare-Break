@@ -14,6 +14,7 @@ public class MageManager : CharacterManager
 	public GameObject superArmorEffect;
 	public Armageddon armaDestroy;
 	public AudioClip ArmageddonFinishSound;
+	public AudioClip Meteor;
 
 	public override void ProcessSkill1 ()
 	{
@@ -205,6 +206,8 @@ public class MageManager : CharacterManager
 					else if (CharStatus.HealthPoint <= 0)
 					{
 						CharState ((int)CharacterState.Death);
+						CharAudio.PlayOneShot (Skill1Sound);
+
 						charAlive = false;
 					}
 				}
@@ -243,20 +246,23 @@ public class MageManager : CharacterManager
 
 		base.classSound ();
 
-		if (false)
+		if (true)
 		{
 			Skill1Sound = Resources.Load<AudioClip> ("Sound/ManMageFireBall");
 			Skill2Sound = Resources.Load<AudioClip> ("Sound/ManMageDestroy");
 			Skill3Sound = Resources.Load<AudioClip> ("Sound/ManMageHowling");
 			Skill4Sound = Resources.Load<AudioClip> ("Sound/ManMageArmageddon");
+			Meteor = Resources.Load<AudioClip> ("Sound/ManMageDestroyCast");
+			ArmageddonFinishSound = Resources.Load<AudioClip> ("Sound/ManGiganticSwordFinish");
 		}
-		else if (true)
+		else if (false)
 		{
 			Skill1Sound = Resources.Load<AudioClip> ("Sound/WoManMageFireBall");
-			Skill2Sound = Resources.Load<AudioClip> ("Sound/WoManMageDestroy");
+			Skill2Sound = Resources.Load<AudioClip> ("Sound/WoManDestroyCast");
 			Skill3Sound = Resources.Load<AudioClip> ("Sound/WoManMageHowling");
-			Skill4Sound = Resources.Load<AudioClip> ("Sound/WoManMageArmageddonStart");
-			ArmageddonFinishSound = Resources.Load<AudioClip> ("Sound/WoManMageArmageddonFinish");
+			Skill4Sound = Resources.Load<AudioClip> ("Sound/WomanSwordDance");
+			Meteor = Resources.Load<AudioClip> ("Sound/WoManMageDestroyCast");
+			ArmageddonFinishSound = Resources.Load<AudioClip> ("Sound/WoManMageArmageddon");
 
 		}
 	}
@@ -304,5 +310,9 @@ public class MageManager : CharacterManager
 	public void ArmageddonDestroySound()
 	{
 		CharAudio.PlayOneShot (ArmageddonFinishSound);
+	}
+	public void MeteorSound()
+	{
+		CharAudio.PlayOneShot (Meteor);
 	}
 }

@@ -50,8 +50,8 @@ public class CharacterManager : MonoBehaviour
 	public AudioClip Skill2Sound;
 	public AudioClip Skill3Sound;
 	public AudioClip Skill4Sound;
-	public AudioClip DieSound;
-	public AudioClip HitSound;
+	public AudioClip dieSound;
+	public AudioClip hitSound;
 
 	public float skillTime;
 
@@ -508,21 +508,21 @@ public class CharacterManager : MonoBehaviour
 
 	public virtual void classSound()
 	{
-		if (false)
+		if (true)
 		{
 			attack1 = Resources.Load<AudioClip> ("Sound/ManWarriorattack1");
 			attack2 = Resources.Load<AudioClip> ("Sound/ManWarriorattack2");
 			attack3 = Resources.Load<AudioClip> ("Sound/ManWarriorattack3");
-			DieSound = Resources.Load<AudioClip> ("Sound/ManDie");
-			HitSound = Resources.Load<AudioClip> ("Sound/ManHit");
+			dieSound = Resources.Load<AudioClip> ("Sound/ManDie");
+			hitSound = Resources.Load<AudioClip> ("Sound/ManHit");
 		}
-		else if (true)
+		else if (false)
 		{
 			attack1 = Resources.Load<AudioClip> ("Sound/WoManattack1");
 			attack2 = Resources.Load<AudioClip> ("Sound/WoManattack2");
 			attack3 = Resources.Load<AudioClip> ("Sound/WoManattack3");
-			DieSound = Resources.Load<AudioClip> ("Sound/WoManDie");
-			HitSound = Resources.Load<AudioClip> ("Sound/WoManHit");
+			dieSound = Resources.Load<AudioClip> ("Sound/WomanDie");
+			hitSound = Resources.Load<AudioClip> ("Sound/WoManHit");
 		}
 
 	}
@@ -531,8 +531,6 @@ public class CharacterManager : MonoBehaviour
 	{
 		charStatus.DecreaseMagicPoint (SkillManager.instance.SkillData.GetSkill ((int)charStatus.HClass, SkillArray).ManaCost);
 	}
-
-
     public IEnumerator ComboCheck(int count)
     {
         float checkTime = Time.time;
@@ -551,4 +549,12 @@ public class CharacterManager : MonoBehaviour
         }
         checkTime = 0;
     }
+	public void HitDamageSound()
+	{
+		CharAudio.PlayOneShot (hitSound);
+	}
+	public void DieSound()
+	{
+		CharAudio.PlayOneShot (dieSound);
+	}
 }

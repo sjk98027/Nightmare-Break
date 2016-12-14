@@ -188,7 +188,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.08007516
+      - time: 0.5059125
         functionName: HowlingSound
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 3e68f10eba9c99b4493f5859a0165efc,

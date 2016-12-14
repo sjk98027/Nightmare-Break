@@ -203,18 +203,18 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.96433353
-        functionName: AnimationEnd
+      - time: 0
+        functionName: DieSound
         data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 49494eaf77bde6e4a96a0fded9f18500,
+        objectReferenceParameter: {fileID: 11500000, guid: fdb525b02f4d10b45beafc22a321eb9f,
           type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0
-        functionName: ManDie
+      - time: 0.96433353
+        functionName: AnimationEnd
         data: 
-        objectReferenceParameter: {fileID: 11500000, guid: fdb525b02f4d10b45beafc22a321eb9f,
+        objectReferenceParameter: {fileID: 11500000, guid: 49494eaf77bde6e4a96a0fded9f18500,
           type: 3}
         floatParameter: 0
         intParameter: 0

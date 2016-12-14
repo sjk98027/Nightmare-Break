@@ -193,8 +193,16 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.94787735
-        functionName: AnimationEnd
+      - time: 0
+        functionName: MeteorStrikeSound
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 3e68f10eba9c99b4493f5859a0165efc,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.5415883
+        functionName: MeteorSound
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 3e68f10eba9c99b4493f5859a0165efc,
           type: 3}
@@ -209,8 +217,8 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0
-        functionName: MeteorStrikeSound
+      - time: 0.94787735
+        functionName: AnimationEnd
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 3e68f10eba9c99b4493f5859a0165efc,
           type: 3}
