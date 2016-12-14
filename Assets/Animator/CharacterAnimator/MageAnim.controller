@@ -223,7 +223,7 @@ AnimatorState:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Skill2
-  m_Speed: 2
+  m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 110189036}
@@ -779,7 +779,7 @@ AnimatorState:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Skill4
-  m_Speed: 1
+  m_Speed: 0.9
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101000012918277678}
@@ -791,7 +791,7 @@ AnimatorState:
   m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: aa482b4d265f1564397f5e8d9b9382ed, type: 3}
+  m_Motion: {fileID: 7400000, guid: 8b3b06eb13a42ac47a89b643afca7336, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

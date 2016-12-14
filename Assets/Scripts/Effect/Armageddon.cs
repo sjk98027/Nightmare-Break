@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Armageddon : MonoBehaviour {
+public class Armageddon : MonoBehaviour 
+{
 
 	public ParticleSystem FireBallparticleSystem;
 	public CharacterStatus charStatus;
@@ -12,10 +13,9 @@ public class Armageddon : MonoBehaviour {
 	public Rigidbody FireBallRigid;
     private ParticleSystem ps;
 	public SphereCollider spherecol;
+	public GameObject armageddonImpact;
 	int skillLv;
-	bool amaDestroy;
-
-	float zPos;
+	public Animator armageddonAni;
 
     void Start()
     {
@@ -24,78 +24,41 @@ public class Armageddon : MonoBehaviour {
 		charStatus = charManager.CharStatus;
         ps = GetComponent<ParticleSystem>();
 		FireBallRigid = GetComponent<Rigidbody> ();
-		FireBallSpeed = 5f;
-		FireBallRigid.velocity =(transform.forward* FireBallSpeed);
-        StartCoroutine(ArmageddonPause());
-
+		armageddonAni = GetComponent<Animator> ();
+		FireBallSpeed = 30f;
+		FireBallRigid.velocity =((transform.forward - transform.up) * FireBallSpeed);
+        
 		spherecol = this.GetComponent<SphereCollider> ();
-		spherecol.enabled = false;
-		spherecol.radius = 0.1f;
-		zPos = 0;
-		StartCoroutine(ArmageddonColl());
-
 		skillLv = charStatus.SkillLevel [4];
 		armageddonDamage =(int) ((SkillManager.instance.SkillData.GetSkill ((int)charStatus.HClass, 4).GetSkillData (skillLv).SkillValue)*  charStatus.Attack);
     }
 
 	void Update ()
 	{
-		if (amaDestroy)
-		{
-			Destroy (this.gameObject, 5f);
-		}
+		
 	}
-    IEnumerator ArmageddonPause()
-    {
-			yield return new WaitForSeconds (ps.duration - 0.2f);
-			ps.Pause ();
-			FireBallRigid.velocity = transform.forward * 0;
-			amaDestroy = true;
-    }
-
-	IEnumerator ArmageddonColl()
+	public void Destroy()
 	{
 		
-		while (true)
-		{
-			zPos = zPos + 0.035f;
-			if (spherecol.radius < 4.0f)
-			{
-				spherecol.radius = spherecol.radius + 0.1f;
-				//spherecol.center = new Vector3 (0, 0, 0);
+		armageddonAni.SetBool ("Strike",true);
+		armageddonImpact = Instantiate(Resources.Load<GameObject>("Effect/ArmageddonImpact"), transform.position, Quaternion.identity) as GameObject;
+		Instantiate (Resources.Load<GameObject> ("Effect/ArmageddonExplosion"), transform.position, Quaternion.identity); //as GameObject;
+		Instantiate (Resources.Load<GameObject> ("Effect/MeteorExplosion"), transform.position, Quaternion.identity); //as GameObject;
+		Destroy (armageddonImpact, 0.4f);
 
-				spherecol.center = new Vector3 (0, 0,zPos);
-			}
-			if (spherecol.enabled == false)
-			{
-				spherecol.enabled = true;
-			}
+		Destroy (this.gameObject, 1f);
+
 		
-
-			yield return new WaitForSeconds (0.1f);
-
-			if (spherecol.enabled == true)
-			{
-				spherecol.enabled = false;
-			}
-		}
 	}
 
 	void OnTriggerEnter(Collider coll)
 	{
 		if (coll.gameObject.layer == LayerMask.NameToLayer ("Enermy"))
 		{
-			Debug.Log ("in monster");
-			Monster monsterDamage = coll.gameObject.GetComponent<Monster> ();
-
-			if (monsterDamage != null)
-			{	
-				monsterDamage.HitDamage (armageddonDamage,character );
-				armageddonDamage = 0;
-			}
-
+			
 		}
 		
 	}
+
 
 }
