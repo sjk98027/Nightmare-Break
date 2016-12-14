@@ -36,6 +36,8 @@ public class CreateUIManager : MonoBehaviour
     private Button[] classBtn;
     private Button[] rotateBtn;
     private Button[] genderBtn;
+    private Button[] warriorSkillBtn;
+    private Button[] mageSkillBtn;
     private Button characterCreateBtn;
     private Button cancleBtn;
 
@@ -69,6 +71,8 @@ public class CreateUIManager : MonoBehaviour
         {
 			classBtn[i] = GameObject.Find ("ClassBtn"+(i + 1)).GetComponent<Button> ();
             selectImage[i] = GameObject.Find("Select" + (i + 1));
+            warriorSkillBtn[i] = GameObject.Find("WarriorSkill" + (i + 1)).GetComponent<Button>();
+            mageSkillBtn[i] = GameObject.Find("MageSkill" + (i + 1)).GetComponent<Button>();
             selectImage[i].SetActive(false);
         }
 
@@ -104,7 +108,17 @@ public class CreateUIManager : MonoBehaviour
     {
         characterCreateBtn.onClick.AddListener(() => OnClickCreateCharacterButton());
         cancleBtn.onClick.AddListener(() => Cancle());
-		genderBtn [0].onClick.AddListener (() => GenderChange (0));
+        warriorSkillBtn[0].onClick.AddListener(() => StartSkillAnim(1));
+        warriorSkillBtn[1].onClick.AddListener(() => StartSkillAnim(2));
+        warriorSkillBtn[2].onClick.AddListener(() => StartSkillAnim(3));
+        warriorSkillBtn[3].onClick.AddListener(() => StartSkillAnim(4));
+
+        mageSkillBtn[0].onClick.AddListener(() => StartSkillAnim(1));
+        mageSkillBtn[1].onClick.AddListener(() => StartSkillAnim(2));
+        mageSkillBtn[2].onClick.AddListener(() => StartSkillAnim(3));
+        mageSkillBtn[3].onClick.AddListener(() => StartSkillAnim(4));
+
+        genderBtn[0].onClick.AddListener (() => GenderChange (0));
 		genderBtn [1].onClick.AddListener (() => GenderChange (1));
 		classBtn [0].onClick.AddListener (() => ClassSelect (0));
 		classBtn [1].onClick.AddListener (() => ClassSelect (1));
