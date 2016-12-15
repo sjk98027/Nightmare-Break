@@ -7,7 +7,7 @@ public class Rabbit : Monster {
 
 //	public float currentDisTance;
 	float middleBossToMonsterLimitDistanceMonsterToCenter = 6.0f;
-	private float middleBossToMonsterMinDistance = 1.5f;
+//	private float middleBossToMonsterMinDistance = 1.5f;
 
 
 	[SerializeField]GameObject middleboss;
@@ -139,7 +139,7 @@ public class Rabbit : Monster {
 
 
 	public void MonSterPatternUpdateConduct(bool NormalMode){
-		attackCollider = transform.GetComponentInChildren<MonsterWeapon> ();
+		//attackCollider = transform.GetComponentInChildren<MonsterWeapon> ();
 		if (NormalMode) {
 			StartCoroutine (PatternNormalChange ());
 		} else if (!NormalMode) {

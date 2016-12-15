@@ -3413,6 +3413,8 @@ MonoBehaviour:
   Skill2Sound: {fileID: 0}
   Skill3Sound: {fileID: 0}
   Skill4Sound: {fileID: 0}
+  dieSound: {fileID: 0}
+  hitSound: {fileID: 0}
   skillTime: 0
   userNum: 0
   state: 0
@@ -4295,6 +4297,22 @@ Prefab:
     - target: {fileID: 4000013794348496, guid: 919f30860db5f744f95ab65fc4540658, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000011559270348, guid: 919f30860db5f744f95ab65fc4540658, type: 2}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000010227974010, guid: 919f30860db5f744f95ab65fc4540658, type: 2}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000010415871494, guid: 919f30860db5f744f95ab65fc4540658, type: 2}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000011026532710, guid: 919f30860db5f744f95ab65fc4540658, type: 2}
+      propertyPath: m_TagString
+      value: Wall
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 919f30860db5f744f95ab65fc4540658, type: 2}
@@ -5767,23 +5785,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HittedBox: {fileID: 0}
-  attackCollider: {fileID: 0}
+  attackCollider:
+  - {fileID: 0}
   shockWaveInstantiate: {fileID: 0}
   player: []
+  wall: []
+  nearWall: {fileID: 0}
   targetPlayer: {fileID: 0}
-  monsterIndex: 0
-  monsterId: 0
-  _name: 
-  level: 0
-  currentHP: 0
-  maxHP: 0
-  attack: 0
-  defense: 0
-  moveSpeed: 0
+  movePoint: {x: 0, y: 0, z: 0}
   currentDisTance: 0
   searchRange: 0
   currentDisTanceArray: []
+  currentDisTanceWall: []
   pointVector: []
   middleboss: {fileID: 0}
   monsterState: 0
@@ -8358,23 +8371,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HittedBox: {fileID: 0}
-  attackCollider: {fileID: 0}
+  attackCollider:
+  - {fileID: 0}
   shockWaveInstantiate: {fileID: 0}
   player: []
+  wall: []
+  nearWall: {fileID: 0}
   targetPlayer: {fileID: 0}
-  monsterIndex: 0
-  monsterId: 0
-  _name: 
-  level: 0
-  currentHP: 0
-  maxHP: 0
-  attack: 0
-  defense: 0
-  moveSpeed: 0
+  movePoint: {x: 0, y: 0, z: 0}
   currentDisTance: 0
   searchRange: 0
   currentDisTanceArray: []
+  currentDisTanceWall: []
   pointVector: []
   middleboss: {fileID: 0}
   monsterState: 0

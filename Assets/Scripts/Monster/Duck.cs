@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Duck : Monster {
 	float middleBossToMonsterLimitDistanceMonsterToCenter = 6.0f;
-	private float middleBossToMonsterMinDistance = 1.5f;
+//	private float middleBossToMonsterMinDistance = 1.5f;
 
 
 	[SerializeField]GameObject middleboss;
@@ -44,53 +44,54 @@ public class Duck : Monster {
 	public Vector3[] PointVector{
 		get {return pointVector; }
 		set{pointVector = value; }
-	}public void Pattern(StatePosition state){
-		switch (state)
-		{
-		case StatePosition.Idle:
-			{
-				//this.transform.Translate(idlePoint * Time.deltaTime, 0);
-				animator.SetInteger("State", 0);
-				break;
-			}
-
-		case StatePosition.Attack:
-			{
-				AttackProcess(isAttack);
-				break;
-			}
-		case StatePosition.Run:
-			{
-				AnimatorReset();
-				animator.SetInteger("State", 2);
-				break;
-			}
-		case StatePosition.TakeDamage:
-			{
-				animator.SetTrigger ("TakeDamage");
-				break;
-			}
-		case StatePosition.Death:
-			{
-				animator.SetTrigger ("Death");
-
-				//				MonsterArrayEraser(this.gameObject);
-				break;
-			}
-		case StatePosition.BossOneHandAttack:
-			{
-				animator.SetInteger ("State",3);
-				break;
-			}
-		case StatePosition.BossJumpAttack:
-			{
-				animator.SetInteger ("State",4);
-				break;
-			}
-
-		}
 	}
-
+//	public void Pattern(StatePosition state){
+//		switch (state)
+//		{
+//		case StatePosition.Idle:
+//			{
+//				//this.transform.Translate(idlePoint * Time.deltaTime, 0);
+//				animator.SetInteger("State", 0);
+//				break;
+//			}
+//
+//		case StatePosition.Attack:
+//			{
+//				AttackProcess(isAttack);
+//				break;
+//			}
+//		case StatePosition.Run:
+//			{
+//				AnimatorReset();
+//				animator.SetInteger("State", 2);
+//				break;
+//			}
+//		case StatePosition.TakeDamage:
+//			{
+//				animator.SetTrigger ("TakeDamage");
+//				break;
+//			}
+//		case StatePosition.Death:
+//			{
+//				animator.SetTrigger ("Death");
+//
+//				//				MonsterArrayEraser(this.gameObject);
+//				break;
+//			}
+//		case StatePosition.BossOneHandAttack:
+//			{
+//				animator.SetInteger ("State",3);
+//				break;
+//			}
+//		case StatePosition.BossJumpAttack:
+//			{
+//				animator.SetInteger ("State",4);
+//				break;
+//			}
+//
+//		}
+//	}
+//
 
 
 

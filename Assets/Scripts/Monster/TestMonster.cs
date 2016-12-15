@@ -16,13 +16,13 @@ public class TestMonster : Monster
         BigBearBossDeath
     };
 
-	public float searchRange;
-	public float moveSpeed;
+//	public float searchRange;
+//	public float moveSpeed;
 	public AudioClip bossStartSound;
 	private AudioSource bossAudio;
 	//public float searchRange;
 	float AttackTime;
-	int shootNumber;
+//	int shootNumber;
 	public const int bossPatternCount = 3;
 
 	public UIManager uiManager;
@@ -55,7 +55,7 @@ public class TestMonster : Monster
 
 	void Start ()
 	{
-		shootNumber = 6;
+		//shootNumber = 6;
 		RunRange = 30;
 		attackRange = 3;
 //		uiManager = GameObject.FindWithTag ("UIManager").GetComponent<UIManager> ();
@@ -68,7 +68,7 @@ public class TestMonster : Monster
 		animator = GetComponent<Animator> ();
 		BoxCollider[] MonsterWeapon = new BoxCollider[2];
 		StartCoroutine (SetTargetPlayer());
-		StartCoroutine (BossAI());
+		//StartCoroutine (BossAI());
 		StartCoroutine (CoChasePlayer());
 
 	}
@@ -127,10 +127,10 @@ public class TestMonster : Monster
 				}
 			}
 		}
-		else
-		{
-			Destroy (this.gameObject, 5);
-		}
+//		else
+//		{
+//			Destroy (this.gameObject, 5);
+//		}
 
 	}
 
