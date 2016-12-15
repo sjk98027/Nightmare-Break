@@ -159,15 +159,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0.08858558
-        functionName: TestSound
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 03d6bf8e6a2538c4eb6a25cc15af3f76,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask:
       - path: 
         weight: 1

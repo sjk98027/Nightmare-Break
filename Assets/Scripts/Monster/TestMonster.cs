@@ -107,7 +107,7 @@ public class TestMonster : Monster
 					if (stateInfo.IsName ("BigBearBossRun"))
 					{
 						changeDirection ();
-						transform.Translate ((chasePlayer.transform.position - transform.position) * moveSpeed * Time.deltaTime, 0);//반대로 걸어 가서 수정
+	transform.Translate ((chasePlayer.transform.position - transform.position) * moveSpeed * Time.deltaTime, 0);//반대로 걸어 가서 수정
 					}
 				}
 
@@ -157,40 +157,40 @@ public class TestMonster : Monster
 		}
 	}
 
-//	public IEnumerator BossAI()
-//	{
-//		stateInfo = this.animator.GetCurrentAnimatorStateInfo (0);
-//
-//		while (IsAlive)
-//		{
-//			yield return new WaitForSeconds (10f);
-//
-//			pattern = Random.Range (0, bossPatternCount);
-//			// pattern = 1;
-//			bossSkill = true;
-//			animator.SetBool ("BossSkill", true);
-//
-//			if (pattern == 0)
-//			{
-//				BigBearBossPattern ((int)BigBearBossPatternName.BigBearJumpAttack);			
-//			}
-//			else if (pattern == 1)
-//			{
-//				BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossRoar);
-//
-//			}
-//			else if (pattern == 2)
-//			{
-//				BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossOneHandAttack);
-//			}
-//
-//
-//			yield return new WaitForSeconds (1.0f);
-//
-//			bossSkill = false;
-//			animator.SetBool ("BossSkill", false);
-//		}
-//	}
+	public IEnumerator BossAI()
+	{
+		stateInfo = this.animator.GetCurrentAnimatorStateInfo (0);
+
+		while (IsAlive)
+		{
+			yield return new WaitForSeconds (10f);
+
+			pattern = Random.Range (0, bossPatternCount);
+			// pattern = 1;
+			bossSkill = true;
+			animator.SetBool ("BossSkill", true);
+
+			if (pattern == 0)
+			{
+				BigBearBossPattern ((int)BigBearBossPatternName.BigBearJumpAttack);			
+			}
+			else if (pattern == 1)
+			{
+				BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossRoar);
+
+			}
+			else if (pattern == 2)
+			{
+				BigBearBossPattern ((int)BigBearBossPatternName.BigBearBossOneHandAttack);
+			}
+
+
+			yield return new WaitForSeconds (1.0f);
+
+			bossSkill = false;
+			animator.SetBool ("BossSkill", false);
+		}
+	}
 	IEnumerator CoChasePlayer()
 	{ 
 		while (IsAlive) 
