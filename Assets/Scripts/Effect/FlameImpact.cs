@@ -8,6 +8,8 @@ public class FlameImpact : MonoBehaviour
 	public CharacterManager charManager;
 	public GameObject character;
 	public int flameImpactDamage;
+	AudioSource ringSound;
+	public AudioClip ringClipSound;
 	int skillLv;
 	// Use this for initialization
 	void Start () 
@@ -16,7 +18,9 @@ public class FlameImpact : MonoBehaviour
 		charManager = character.GetComponent<CharacterManager> ();
 		charStatus = charManager.CharStatus;
 		skillLv = charStatus.SkillLevel [0];
+		ringSound = this.gameObject.GetComponent<AudioSource> ();
 		flameImpactDamage =(int) ((SkillManager.instance.SkillData.GetSkill ((int)charStatus.HClass, 1).GetSkillData (skillLv).SkillValue)*  charStatus.Attack);
+
 	}
 
 	void OnTriggerEnter(Collider coll)

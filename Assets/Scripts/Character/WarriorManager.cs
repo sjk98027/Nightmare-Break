@@ -19,6 +19,7 @@ public class WarriorManager : CharacterManager
 	int skillLv;
 	public AudioClip swordFinishSound;
 	public AudioClip giganticSwordFinishSound;
+	public EspadaSwordEffect espadasword;
 	public bool poweroverwhelming;
 
 	public override void NormalAttack ()
@@ -92,6 +93,16 @@ public class WarriorManager : CharacterManager
 
 	public override void ProcessSkill3 ()
 	{
+
+	}
+
+	public override void ProcessSkill4 ()
+	{
+
+	}
+
+	public void SwordDanceEffect()
+	{
 		if (!SwordDance)
 		{
 			if (transform.rotation.y == 0)
@@ -103,11 +114,6 @@ public class WarriorManager : CharacterManager
 				SwordDance = Instantiate (Resources.Load<GameObject> ("Effect/SwordDance"), new Vector3 (transform.position.x, transform.position.y + 1.0f, transform.position.z - 0.5f), Quaternion.Euler (90, 0, 0)) as GameObject;
 			}
 		}
-	}
-
-	public override void ProcessSkill4 ()
-	{
-
 	}
 
 	public void CutOffMove ()
@@ -153,6 +159,7 @@ public class WarriorManager : CharacterManager
 		}
 
 		giganticSwordTemp = Instantiate (Resources.Load<GameObject> ("GiganticSword"), transform.position + new Vector3 (0.0f, 20.0f, giganticSwordPos), Quaternion.Euler (new Vector3 (90.0f, 90.0f, -180.0f))) as GameObject;
+		espadasword = giganticSwordTemp.GetComponent<EspadaSwordEffect> ();
 		giganticSwordTemp.gameObject.GetComponent<Rigidbody> ().AddForce (-Vector3.up * giganticSwordSpeed, ForceMode.Impulse);
 	}
 
@@ -323,35 +330,43 @@ public class WarriorManager : CharacterManager
 
 	public void AttackSound1()
 	{
-			CharAudio.PlayOneShot (attack1);
+		CharAudio.PlayOneShot (attack1);
+		weapon.AttackEffectSound1 ();
 	}
 	public void AttackSound2()
 	{
 		CharAudio.PlayOneShot (attack2);
+		weapon.AttackEffectSound2 ();
 	}
 	public void AttackSound3()
 	{
 		CharAudio.PlayOneShot (attack3);
+		weapon.AttackEffectSound3 ();
 	}
 	public void SwordDanceSound()
 	{
-			CharAudio.PlayOneShot (Skill3Sound);
+		CharAudio.PlayOneShot (Skill3Sound);
+		weapon.SwordDanceEffectSound ();
 	}
 	public void MealStromSound()
 	{
-			CharAudio.PlayOneShot (Skill1Sound);
+		CharAudio.PlayOneShot (Skill1Sound);
+		weapon.MealstromEffectSound ();
 	}
 	public void CutOffSound()
 	{
 		CharAudio.PlayOneShot (Skill2Sound);
+		weapon.CutOffEffectSound ();
 	}
 	public void SwordDanceFinishSound()
 	{
 		CharAudio.PlayOneShot (swordFinishSound);
+		weapon.SwordDanceFinishEffectSound();
 	}
 	public void GiganticSwordSoundStart()
 	{
 		CharAudio.PlayOneShot (Skill4Sound);
+		weapon.GiganticSwordSound ();
 	}
 	public void GiganticSwordSoundFinish()
 	{

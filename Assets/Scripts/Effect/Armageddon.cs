@@ -12,6 +12,9 @@ public class Armageddon : MonoBehaviour
 	public float FireBallSpeed;
 	public Rigidbody FireBallRigid;
     private ParticleSystem ps;
+	AudioSource armageddonSound;
+	public AudioClip armageddonClipSound;
+
 
 	public GameObject armageddonImpact;
 	public GameObject armageddonExplosion;
@@ -31,6 +34,8 @@ public class Armageddon : MonoBehaviour
 		FireBallRigid = GetComponent<Rigidbody> ();
 		armageddonAni = GetComponent<Animator> ();
 		armageddonBox = this.GetComponent<BoxCollider> ();
+		armageddonSound =this.gameObject.GetComponent<AudioSource> ();
+		armageddonClipSound = Resources.Load<AudioClip> ("Sound/MageEffectSound/DropArmageddon");
 		FireBallSpeed = 30f;
 		pieceAttack = false;
 		armageddonPiece = this.gameObject.GetComponentsInChildren<ArmageddonPiece> ();
@@ -38,6 +43,7 @@ public class Armageddon : MonoBehaviour
 		skillLv = charStatus.SkillLevel [4];
 		//armageddonDamage =(int) ((SkillManager.instance.SkillData.GetSkill ((int)charStatus.HClass, 4).GetSkillData (skillLv).SkillValue)*  charStatus.Attack);
 		armageddonDamage = 100;
+		armageddonSound.PlayOneShot (armageddonClipSound);
 	}
 	public void Destroy()
 	{
@@ -53,6 +59,8 @@ public class Armageddon : MonoBehaviour
 		Destroy (armageddonExplosion, 0.4f);
 		Destroy (meteorExplosion, 0.4f);
 		armageddonBox.enabled = false;
+		FireBallRigid.velocity = (-this.transform.up)*3f;
+
 
 		Destroy (this.gameObject, 2f);
 

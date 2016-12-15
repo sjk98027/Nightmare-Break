@@ -112,7 +112,6 @@ public class MageManager : CharacterManager
 			{
 				skillTime = 0;
 				howling = false;
-				Debug.Log ("in");
 				Destroy (mageRing, 0);
 			}
 		}
@@ -246,7 +245,7 @@ public class MageManager : CharacterManager
 
 		base.classSound ();
 
-		if (true)
+		if (false)
 		{
 			Skill1Sound = Resources.Load<AudioClip> ("Sound/ManMageFireBall");
 			Skill2Sound = Resources.Load<AudioClip> ("Sound/ManMageDestroy");
@@ -255,7 +254,7 @@ public class MageManager : CharacterManager
 			Meteor = Resources.Load<AudioClip> ("Sound/ManMageDestroyCast");
 			ArmageddonFinishSound = Resources.Load<AudioClip> ("Sound/ManGiganticSwordFinish");
 		}
-		else if (false)
+		else if (true)
 		{
 			Skill1Sound = Resources.Load<AudioClip> ("Sound/WoManMageFireBall");
 			Skill2Sound = Resources.Load<AudioClip> ("Sound/WoManDestroyCast");

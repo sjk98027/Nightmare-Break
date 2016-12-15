@@ -43,7 +43,7 @@ public class MageNormalAttack : MonoBehaviour {
 			Instantiate (Resources.Load<GameObject> ("Effect/MeteorExplosion"), this.transform.position, Quaternion.identity);
 
 		}
-		else if (coll.gameObject.layer == LayerMask.NameToLayer ("Wall"))
+		else if (coll.gameObject.layer == LayerMask.NameToLayer ("Map"))
 		{
 
 			Destroy (gameObject);
