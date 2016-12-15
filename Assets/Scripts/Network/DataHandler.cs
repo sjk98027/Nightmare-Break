@@ -339,11 +339,11 @@ public class DataHandler : MonoBehaviour
     //Server - 방 유저 정보 수신
     public void RoomUserData(DataPacket packet)
     {
-        Debug.Log("캐릭터 정보 수신");
-        RoomUserListPacket roomUserListPacket = new RoomUserListPacket(packet.msg);
-        RoomUserList roomUserList = roomUserListPacket.GetData();
+        Debug.Log("방 유저 정보 수신");
+        RoomDataPacket roomDataPacket = new RoomDataPacket(packet.msg);
+        RoomData roomData = roomDataPacket.GetData();
 
-        UIManager.Instance.RoomUIManager.SetUserList(roomUserList);
+        UIManager.Instance.RoomUIManager.SetUserList(roomData);
     }
 
     //Server - 방 퇴장 결과 수신

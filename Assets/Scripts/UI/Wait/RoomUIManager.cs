@@ -26,7 +26,7 @@ public class RoomUIManager : MonoBehaviour {
     private GameObject skillAddUI;
     private GameObject myInfoUI;
 
-    private RoomUserList roomUserList;
+    private RoomData roomData;
 
     public void ManagerInitialize()
     {
@@ -81,9 +81,9 @@ public class RoomUIManager : MonoBehaviour {
         skillCloseBtn.onClick.AddListener(() => CloseSkillUI());
     }
 
-    public void SetUserList(RoomUserList newRoomUserList)
+    public void SetUserList(RoomData newRoomUserList)
     {
-        roomUserList = newRoomUserList;
+        roomData = newRoomUserList;
     }
 
     public void SetUserData()
