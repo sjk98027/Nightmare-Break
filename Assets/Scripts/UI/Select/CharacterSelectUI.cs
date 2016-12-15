@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class CharacterSelectUI : MonoBehaviour {
    
     private const int maxImage = 3;
+  
     private int checkNum = 0;
     [SerializeField]
     private Button createButton;
@@ -21,6 +22,7 @@ public class CharacterSelectUI : MonoBehaviour {
 	[SerializeField]
 	private Animator[] characterAnim;
     private Color[] alphaChange = new Color[2];
+ 
 
     void Start()
     {
