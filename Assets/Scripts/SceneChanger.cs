@@ -88,10 +88,10 @@ public class SceneChanger : MonoBehaviour
             }
             else if (nextScene == (int)SceneName.WaitingScene)
             {
+                GameManager.Instance.SetManagerInWait();
+                UIManager.Instance.SetUIManager(UIManagerIndex.Waiting);
                 DataSender.Instance.RequestCharacterStatus();
                 DataSender.Instance.RequestRoomList();
-                UIManager.Instance.SetUIManager(UIManagerIndex.Waiting);
-                GameManager.Instance.SetManagerInWait();
 
                 StartCoroutine(CheckLoading());
             }
@@ -145,6 +145,7 @@ public class SceneChanger : MonoBehaviour
         {
             UIManager.Instance.SetUIManager(UIManagerIndex.Room);
             UIManager.Instance.RoomUIManager.ManagerInitialize();
+            DataSender.Instance.RequestRoomUserData(UIManager.Instance.WaitingUIManager.CurrentRoomNum);
 
             currentScene = SceneName.WaitingScene;
         }
