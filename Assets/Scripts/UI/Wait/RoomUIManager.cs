@@ -26,7 +26,15 @@ public class RoomUIManager : MonoBehaviour {
     private GameObject skillAddUI;
     private GameObject myInfoUI;
 
-    void Start()
+    private RoomUserList roomUserList;
+
+    public void ManagerInitialize()
+    {
+        SetUIObject();
+        InitializeAddListner();
+    }
+
+    public void SetUIObject()
     {
         characterBackImage = new Image[maxUser];
 
@@ -55,8 +63,8 @@ public class RoomUIManager : MonoBehaviour {
         myInfoUI.SetActive(false);
 
         for (int i = 0; i < maxUser; i++)
-        { 
-            characterBackImage[i] = GameObject.Find("CharacterBackImage"+(i+1)).GetComponent<Image>();
+        {
+            characterBackImage[i] = GameObject.Find("CharacterBackImage" + (i + 1)).GetComponent<Image>();
             characterBackImage[i].gameObject.SetActive(false);
         }
     }
@@ -71,6 +79,16 @@ public class RoomUIManager : MonoBehaviour {
         equipCloseBtn.onClick.AddListener(() => CloseEquipUI());
         myInfoCloseBtn.onClick.AddListener(() => CloseMyInfoUI());
         skillCloseBtn.onClick.AddListener(() => CloseSkillUI());
+    }
+
+    public void SetUserList(RoomUserList newRoomUserList)
+    {
+        roomUserList = newRoomUserList;
+    }
+
+    public void SetUserData()
+    {
+
     }
 
     void GameStart()

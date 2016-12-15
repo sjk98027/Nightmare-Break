@@ -15,7 +15,7 @@
     EquipUpgrade,
     CreateRoom,
     EnterRoom,
-    RoomUserData,
+    RequestRoomUserData,
     ExitRoom,
     StartGame,
     RequestUdpConnection,

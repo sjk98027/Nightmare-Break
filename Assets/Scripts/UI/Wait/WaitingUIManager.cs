@@ -8,7 +8,8 @@ public class WaitingUIManager : MonoBehaviour
     public const int maxRoomNum = 20;
     public const int maxPlayerNum = 4;
 
-    private int selectNum;
+    [SerializeField]private int selectNum;
+
     private Button roomCreateBtn;
     private Button skillAddBtn;
     private Button equipInfoBtn;
@@ -17,7 +18,9 @@ public class WaitingUIManager : MonoBehaviour
     private Button skillAddExitBtn;
     private Button equipInfoExitBtn;
     private Button myInfoExitBtn;
-	private GameObject roomCreateUI;
+    private Button roomCreateYesBtn;
+
+	[SerializeField] GameObject roomCreateUI;
 	private GameObject skillAddUI;
 	private GameObject equipInfoUI;
 	private GameObject myInfoUI;
@@ -38,6 +41,7 @@ public class WaitingUIManager : MonoBehaviour
 
     public void ManagerInitialize()
     {
+        selectNum = -1;
         dungeonId = 0;
         dungeonLevel = 1;
 
@@ -53,6 +57,7 @@ public class WaitingUIManager : MonoBehaviour
     public void SetUIObject()
     {
         roomCreateBtn = GameObject.Find("RoomCreateBtn").GetComponent<Button>();
+        roomCreateYesBtn = GameObject.Find("RoomCreateYesBtn").GetComponent<Button>();
         skillAddBtn = GameObject.Find("SkillAddBtn").GetComponent<Button>();
         equipInfoBtn = GameObject.Find("EquipBtn").GetComponent<Button>();
         myInfoBtn = GameObject.Find("MyInfoBtn").GetComponent<Button>();
@@ -63,24 +68,28 @@ public class WaitingUIManager : MonoBehaviour
         roomCreateExitBtn = roomCreateUI.transform.GetChild(6).GetComponent<Button>();
         skillAddExitBtn = skillAddUI.transform.GetChild(3).GetComponent<Button>();
         equipInfoExitBtn = equipInfoUI.transform.GetChild(2).GetComponent<Button>();
-        myInfoExitBtn = myInfoBtn.transform.GetChild(1).GetComponent<Button>();
+        myInfoExitBtn = myInfoUI.transform.GetChild(1).GetComponent<Button>();
+
+        createRoomName = GameObject.Find("CreateRoomName").GetComponent<Text>();
     }
 
     public void InitializeAddListner()
     {
+
         roomCreateBtn.onClick.AddListener(() => RoomCreate());
+        roomCreateYesBtn.onClick.AddListener(() => OnClickCreateRoomButton()); 
         skillAddBtn.onClick.AddListener(() => SkillAdd());
         equipInfoBtn.onClick.AddListener(() => EquipInfo());
         myInfoBtn.onClick.AddListener(() => MyInfo());
-        roomCreateBtn.onClick.AddListener(() => BtnActiveCheck(0));
-        skillAddExitBtn.onClick.AddListener(() => BtnActiveCheck(1));
-        equipInfoExitBtn.onClick.AddListener(() => BtnActiveCheck(2));
-        myInfoExitBtn.onClick.AddListener(() => BtnActiveCheck(4));
+        roomCreateExitBtn.onClick.AddListener(() => BtnActiveCheck());
+        skillAddExitBtn.onClick.AddListener(() => BtnActiveCheck());
+        equipInfoExitBtn.onClick.AddListener(() => BtnActiveCheck());
+        myInfoExitBtn.onClick.AddListener(() => BtnActiveCheck());
     }
 
     public void RoomCreate()
 	{
-		BtnActiveCheck (selectNum = 0);
+		BtnActiveCheck ();
 
 		roomCreateUI.SetActive (true);
 	}
@@ -106,31 +115,25 @@ public class WaitingUIManager : MonoBehaviour
 		myInfoUI.SetActive (true);
 	}
 
-	private void BtnActiveCheck()
+	public void BtnActiveCheck()
 	{
-		if (selectNum == 0) {
-			roomCreateUI.SetActive (false);
-		} else if (selectNum == 1) {
-			skillAddUI.SetActive (false);
-		} else if (selectNum == 2) {
-			equipInfoUI.SetActive (false);
-		} else if (selectNum == 3) {
-			myInfoUI.SetActive (false);
-		}
-	}
-
-	public void BtnActiveCheck(int btnIndex)
-	{
-		if (btnIndex == 0) {
-			roomCreateUI.SetActive (false);
-		} else if (btnIndex == 1) {
-			skillAddUI.SetActive (false);
-		} else if (btnIndex == 2) {
-			equipInfoUI.SetActive (false);
-		} else if (btnIndex == 3) {
-			myInfoUI.SetActive (false);
-		}
-	}
+        if(roomCreateUI.activeSelf)
+        {
+            roomCreateUI.SetActive(false);
+        }
+        else if (skillAddUI.activeSelf)
+        {
+            skillAddUI.SetActive(false);
+        }
+        else if (equipInfoUI.activeSelf)
+        {
+            equipInfoUI.SetActive(false);
+        }
+        else if (myInfoUI.activeSelf)
+        {
+            myInfoUI.SetActive(false);
+        }
+    }
 
     public void SetRoom(RoomListData roomListData)
     {
@@ -177,43 +180,73 @@ public class Room
     string roomName;
     int dungeonId;
     int dungeonLevel;
-    int[] userClass;
-    CharacterStatus.Gender[] userGender;
-    string[] userName;
-    int[] userLevel;
+    RoomUserData[] roomUserData;
 
     public string RoomName { get { return roomName; } }
     public int DungeonId { get { return dungeonId; } }
     public int DungeonLevel { get { return dungeonLevel; } }
-    public string[] UserName { get { return userName; } }
-    public CharacterStatus.Gender[] UserGender { get { return userGender; } }
-    public int[] UserClass { get { return userClass; } }
-    public int[] UserLevel { get { return userLevel; } }
+    public RoomUserData[] RoomUserData { get { return roomUserData; } }
 
     public Room()
     {
         roomName = "";
         dungeonId = 0;
         dungeonLevel = 0;
-        userName = new string[WaitingUIManager.maxPlayerNum];
-        userGender = new CharacterStatus.Gender[WaitingUIManager.maxPlayerNum];
-        userClass = new int[WaitingUIManager.maxPlayerNum];
-        userLevel = new int[WaitingUIManager.maxPlayerNum];
+        roomUserData = new RoomUserData[WaitingUIManager.maxPlayerNum];
+
+        for (int i = 0; i < WaitingUIManager.maxPlayerNum; i++)
+        {
+            roomUserData[i] = new RoomUserData();
+        }
     }
 
-    //데이터 수신시 초기화
-    public Room(string newName, int newDungeonId, int newDungeonLevel, string[] newUserName, byte[] newUserGender, byte[] newUserClass, byte[] newUserLevel)
+    public Room(string newName, int newDungeonId, int newDungeonLevel)
     {
         roomName = newName;
         dungeonId = newDungeonId;
         dungeonLevel = newDungeonLevel;
+        roomUserData = new RoomUserData[WaitingUIManager.maxPlayerNum];
 
         for (int i = 0; i < WaitingUIManager.maxPlayerNum; i++)
         {
-            userName[i] = newUserName[i];
-            userGender[i] = (CharacterStatus.Gender)newUserGender[i];
-            userClass[i] = newUserClass[i];
-            userLevel[i] = newUserLevel[i];
+            roomUserData[i] = new RoomUserData();
         }
+    }
+
+    public Room(string newName, byte newDungeonId, byte newDungeonLevel, RoomUserData[] newRoomUserData)
+    {
+        roomName = newName;
+        dungeonId = newDungeonId;
+        dungeonLevel = newDungeonLevel;
+        roomUserData = newRoomUserData;
+    }
+}
+
+public class RoomUserData
+{
+    string userName;
+    int userGender;
+    int userClass;
+    int userLevel;
+
+    public string UserName { get { return userName; } }
+    public int UserGender { get { return userGender; } }
+    public int UserClass { get { return userClass; } }
+    public int UserLevel { get { return userLevel; } }
+
+    public RoomUserData()
+    {
+        userName = "";
+        userGender = 0;
+        userClass = 0;
+        userLevel = 0;
+    }
+
+    public RoomUserData(string newUserName, int newUserGender, int newUserClass, int newUserLevel)
+    {
+        userName = newUserName;
+        userGender = newUserGender;
+        userClass = newUserClass;
+        userLevel = newUserLevel;
     }
 }

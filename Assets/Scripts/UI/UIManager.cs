@@ -8,6 +8,7 @@ public enum UIManagerIndex
     Select,
     Create,
     Waiting,
+    Room,
     Battle,
 }
 
@@ -18,12 +19,14 @@ public class UIManager : MonoBehaviour
     SelectUIManager selectUIManager;
     CreateUIManager createUIManager;
     WaitingUIManager waitingUIManager;
+    RoomUIManager roomUIManager;
     BattleUIManager battleUIManager;
 
     public LoginUIManager LoginUIManager { get { return loginUIManager; } }
     public SelectUIManager SelectUIManager { get { return selectUIManager; } }
     public CreateUIManager CreateUIManager { get { return createUIManager; } }
     public WaitingUIManager WaitingUIManager { get { return waitingUIManager; } }
+    public RoomUIManager RoomUIManager { get { return roomUIManager; } }
     public BattleUIManager BattleUIManager { get { return battleUIManager; } }
 
     public GameObject dialogPanel;
@@ -61,15 +64,23 @@ public class UIManager : MonoBehaviour
             case UIManagerIndex.Login:
                 loginUIManager = gameObject.AddComponent<LoginUIManager>();
                 break;
+
             case UIManagerIndex.Select:
                 selectUIManager = gameObject.AddComponent<SelectUIManager>();
                 break;
+
             case UIManagerIndex.Create:
                 createUIManager = gameObject.AddComponent<CreateUIManager>();
                 break;
+
             case UIManagerIndex.Waiting:
                 waitingUIManager = gameObject.AddComponent<WaitingUIManager>();
                 break;
+
+            case UIManagerIndex.Room:
+                roomUIManager = gameObject.AddComponent<RoomUIManager>();
+                break;
+
             case UIManagerIndex.Battle:
                 battleUIManager = gameObject.AddComponent<BattleUIManager>();
                 break;

@@ -303,8 +303,8 @@ public class DataHandler : MonoBehaviour
     public void CreateRoomResult(DataPacket packet)
     {
         Debug.Log("방 생성 결과 수신");
-        RoomResultPacket resultPacket = new RoomResultPacket(packet.msg);
-        RoomResultData resultData = resultPacket.GetData();
+        RoomNumberPacket resultPacket = new RoomNumberPacket(packet.msg);
+        RoomNumberData resultData = resultPacket.GetData();
 
         if (resultData.RoomNum < 0)
         {
@@ -321,8 +321,8 @@ public class DataHandler : MonoBehaviour
     public void EnterRoomResult(DataPacket packet)
     {
         Debug.Log("방 입장 결과 수신");
-        RoomResultPacket resultPacket = new RoomResultPacket(packet.msg);
-        RoomResultData resultData = resultPacket.GetData();
+        RoomNumberPacket resultPacket = new RoomNumberPacket(packet.msg);
+        RoomNumberData resultData = resultPacket.GetData();
 
         if (resultData.RoomNum < 0)
         {
@@ -331,8 +331,19 @@ public class DataHandler : MonoBehaviour
         else if (resultData.RoomNum <= WaitingUIManager.maxPlayerNum)
         {
             StartCoroutine(uiManager.Dialog(1.0f, "방 입장 성공"));
-            uiManager.WaitingUIManager.SetUserNum(resultData.RoomNum);
+            SceneChanger.Instance.SceneChange(SceneChanger.SceneName.RoomScene, false);
+            DataSender.Instance.RequestRoomUserData(resultData.RoomNum);
         }
+    }
+
+    //Server - 방 유저 정보 수신
+    public void RoomUserData(DataPacket packet)
+    {
+        Debug.Log("캐릭터 정보 수신");
+        RoomUserListPacket roomUserListPacket = new RoomUserListPacket(packet.msg);
+        RoomUserList roomUserList = roomUserListPacket.GetData();
+
+        UIManager.Instance.RoomUIManager.SetUserList(roomUserList);
     }
 
     //Server - 방 퇴장 결과 수신

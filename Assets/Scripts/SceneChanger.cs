@@ -57,7 +57,7 @@ public class SceneChanger : MonoBehaviour
 
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        #region 타이틀 씬 초기화
+        #region 타이틀 씬 로드
         if (scene.name == "TitleScene")
         {
             if (currentScene == SceneName.LoadingScene)
@@ -70,7 +70,7 @@ public class SceneChanger : MonoBehaviour
         }
         #endregion
 
-        #region 로딩 씬 초기화
+        #region 로딩 씬 로드
         else if (scene.name == "LoadingScene")
         {
             if (nextScene == (int)SceneName.SelectScene)
@@ -100,7 +100,7 @@ public class SceneChanger : MonoBehaviour
         }
         #endregion
 
-        #region 캐릭터 선택 씬 초기화
+        #region 캐릭터 선택 씬 로드
         else if (scene.name == "SelectScene")
         {
             if (currentScene == SceneName.LoadingScene)
@@ -120,7 +120,7 @@ public class SceneChanger : MonoBehaviour
         }
         #endregion
 
-        #region 캐릭터 생성 씬 초기화
+        #region 캐릭터 생성 씬 로드
         else if (scene.name == "CreateScene")
         {
             currentScene = SceneName.CreateScene;
@@ -130,13 +130,23 @@ public class SceneChanger : MonoBehaviour
         }
         #endregion
 
-        #region 대기 씬 초기화
+        #region 대기 씬 로드
         else if (scene.name == "WaitScene")
         {
-            currentScene = SceneName.WaitingScene;
-
             UIManager.Instance.SetUIManager(UIManagerIndex.Waiting);
             UIManager.Instance.WaitingUIManager.ManagerInitialize();
+
+            currentScene = SceneName.WaitingScene;
+        }
+        #endregion
+
+        #region 방 씬 로드
+        else if (scene.name == "RoomScene")
+        {
+            UIManager.Instance.SetUIManager(UIManagerIndex.Room);
+            UIManager.Instance.RoomUIManager.ManagerInitialize();
+
+            currentScene = SceneName.WaitingScene;
         }
         #endregion
     }

@@ -315,6 +315,20 @@ public class DataSender : MonoBehaviour
         sendMsgs.Enqueue(packet);
     }
 
+    //방 유저 정보 요청 -> Server
+    public void RequestRoomUserData(int roomNum)
+    {
+        Debug.Log("방 유저 정보 요청");
+
+        RoomNumberData roomNumberData = new RoomNumberData(roomNum);
+        RoomNumberPacket roomNumberPacket = new RoomNumberPacket(roomNumberData);
+        roomNumberPacket.SetPacketId((int)ClientPacketId.RequestRoomUserData);
+
+        DataPacket packet = new DataPacket(CreatePacket(roomNumberPacket), null);
+
+        sendMsgs.Enqueue(packet);
+    }
+
     //게임 시작 -> Server
     public void StartGame()
     {
