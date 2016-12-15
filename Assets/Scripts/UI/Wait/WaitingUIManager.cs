@@ -28,8 +28,7 @@ public class WaitingUIManager : MonoBehaviour
 	private GameObject myInfoUI;
 
     Room[] rooms;
-
-    Text createRoomName;
+    
     int currentRoomNum;
     int dungeonId;
     int dungeonLevel;
@@ -64,7 +63,6 @@ public class WaitingUIManager : MonoBehaviour
         equipInfoUI = GameObject.Find("EquipInfoUI");
         myInfoUI = GameObject.Find("MyInfoUI");
         roomName = GameObject.Find("RoomCreateInputField").GetComponent<InputField>();
-        createRoomName = GameObject.Find("CreateRoomName").GetComponent<Text>();
         roomCreateExitBtn = roomCreateUI.transform.GetChild(5).GetComponent<Button>();
         skillAddExitBtn = skillAddUI.transform.GetChild(3).GetComponent<Button>();
         equipInfoExitBtn = equipInfoUI.transform.GetChild(2).GetComponent<Button>();
@@ -151,7 +149,7 @@ public class WaitingUIManager : MonoBehaviour
 
     public void OnClickCreateRoomButton()
     {
-        DataSender.Instance.CreateRoom(createRoomName.text, dungeonId, dungeonLevel);
+        DataSender.Instance.CreateRoom(roomName.text, dungeonId, dungeonLevel);
     }
 
     public void OnClickEnterRoomButton()
