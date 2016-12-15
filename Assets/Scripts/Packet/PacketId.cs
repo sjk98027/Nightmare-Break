@@ -9,6 +9,7 @@
     RequestCharacterList,
     CreateCharacter,
     DeleteCharacter,
+    SelectCharacter,
     RequestCharacterStatus,
     RequestRoomList,
     SkillUp,

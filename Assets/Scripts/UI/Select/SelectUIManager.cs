@@ -166,6 +166,7 @@ public class SelectUIManager : MonoBehaviour {
 
     public void OnClickStartButton()
     {
+        DataSender.Instance.SelectCharacter(currentCharacterIndex);
         SceneChanger.Instance.SceneChange(SceneChanger.SceneName.WaitingScene, true);
     }
 }

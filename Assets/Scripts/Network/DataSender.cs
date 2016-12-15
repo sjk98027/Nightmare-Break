@@ -208,13 +208,28 @@ public class DataSender : MonoBehaviour
     {
         Debug.Log("캐릭터 삭제");
 
-        DeleteCharacterData deleteCharacterData = new DeleteCharacterData((byte)index);
-        DeleteCharacterPacket deleteCharacterPacket = new DeleteCharacterPacket(deleteCharacterData);
-        deleteCharacterPacket.SetPacketId((int)ClientPacketId.DeleteCharacter);
+        CharacterIndexData characterIndexData = new CharacterIndexData((byte)index);
+        CharacterIndexPacket characterIndexPacket = new CharacterIndexPacket(characterIndexData);
+        characterIndexPacket.SetPacketId((int)ClientPacketId.DeleteCharacter);
 
-        DataPacket packet = new DataPacket(CreatePacket(deleteCharacterPacket), null);
+        DataPacket packet = new DataPacket(CreatePacket(characterIndexPacket), null);
 
         sendMsgs.Enqueue(packet);
+    }
+
+    //캐릭터 선택 -> Server
+    public void SelectCharacter(int index)
+    {
+        Debug.Log("캐릭터 선택");
+
+        CharacterIndexData characterIndexData = new CharacterIndexData((byte)index);
+        CharacterIndexPacket characterIndexPacket = new CharacterIndexPacket(characterIndexData);
+        characterIndexPacket.SetPacketId((int)ClientPacketId.SelectCharacter);
+
+        DataPacket packet = new DataPacket(CreatePacket(characterIndexPacket), null);
+
+        sendMsgs.Enqueue(packet);
+
     }
 
     //캐릭터 정보 요청 -> Server
