@@ -23,10 +23,15 @@ public class LoginUIManager : MonoBehaviour
     Text deleteId;
     Text deletePw;
 
+    InputField loginPwField;
+    InputField accountPwField;
+
     public void ManagerInitialize()
     {
         SetUIObject();
         InitializeAddListener();
+        loginPwField.contentType = InputField.ContentType.Password;
+        accountPwField.contentType = InputField.ContentType.Password;
         createAccountPanel.SetActive(false);
     }
 
@@ -34,6 +39,8 @@ public class LoginUIManager : MonoBehaviour
     {
         loginPanel = GameObject.Find("LoginPanel");
         createAccountPanel = GameObject.Find("CreateAccountPanel");
+        loginPwField = GameObject.Find("PassWordInputField").GetComponent<InputField>();
+        accountPwField = GameObject.Find("CreatePwInputField").GetComponent<InputField>();
 
         loginButton = GameObject.Find("LoginButton").GetComponent<Button>();
         createAccountButton = GameObject.Find("CreateAccountButton").GetComponent<Button>();
