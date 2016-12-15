@@ -246,7 +246,7 @@ public class DataHandler : MonoBehaviour
 
         if (resultData.Result == (byte)Result.Success)
         {
-            StartCoroutine(uiManager.Dialog(1.0f, "캐릭터 삭제 성공"));
+            StartCoroutine(uiManager.Dialog(1.0f, "캐릭터 삭제 성공")); 
         }
         else if (resultData.Result == (byte)Result.Fail)
         {

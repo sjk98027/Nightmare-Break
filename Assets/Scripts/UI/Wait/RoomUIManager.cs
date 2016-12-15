@@ -34,6 +34,8 @@ public class RoomUIManager : MonoBehaviour {
     private RoomData roomData;
 
     Text roomName;
+    Text roomDungeon;
+    Text roomDungeonLevel;
     int dungeonId;
     int dungeonLevel;
 
@@ -52,9 +54,16 @@ public class RoomUIManager : MonoBehaviour {
 
     public void SetUIObject()
     {
+        rendPos = new GameObject[maxUser];
+
+        userName = new Text[maxUser];
+        classIcon = new Image[maxUser];
+
         characterBackImage = new Image[maxUser];
         userSkillBtn = new Button[maxSkill];
-        classIcon = new Image[maxUser];
+        roomName = GameObject.Find("RoomName").GetComponent<Text>();
+        roomDungeon = GameObject.Find("DungeonType").GetComponent<Text>();
+        roomDungeonLevel = GameObject.Find("DungeonLevel").GetComponent<Text>();
 
         skillBtn = GameObject.Find("SkillBtn").GetComponent<Button>();
         equipBtn = GameObject.Find("EquipBtn").GetComponent<Button>();
@@ -82,6 +91,9 @@ public class RoomUIManager : MonoBehaviour {
 
         for (int i = 0; i < maxUser; i++)
         {
+            rendPos[i] = GameObject.Find("RendPos1" + (i + 1));
+            userName[i] = GameObject.Find("UserName" + (i + 1)).GetComponent<Text>();
+            classIcon[i] = GameObject.Find("ClassIcon" + (i + 1)).GetComponent<Image>();
             characterBackImage[i] = GameObject.Find("CharacterBackImage" + (i + 1)).GetComponent<Image>();
             characterBackImage[i].gameObject.SetActive(false);
         }
@@ -108,7 +120,12 @@ public class RoomUIManager : MonoBehaviour {
     {
         for(int i=0; i<roomData.RoomUserData.Length; i++)
         {
-            
+            if(roomData.RoomUserData[i].UserLevel != 0)
+            {
+                GameObject character = Instantiate(Resources.Load<GameObject>("Class" + (roomData.RoomUserData[i].UserClass + roomData.RoomUserData[i].UserGender)), rendPos[i].transform) as GameObject ;
+                userName[i].text = "Lv." + roomData.RoomUserData[i].UserLevel.ToString() + " " + roomData.RoomUserData[i].UserName;
+                classIcon[i].sprite = Resources.Load<Sprite>("RoomClassIcon/Class" + roomData.RoomUserData[i].UserClass);
+            }
         }
     }
 

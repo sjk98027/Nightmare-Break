@@ -14,9 +14,7 @@ public class SelectUIManager : MonoBehaviour {
     Button returnToMainButton;
     Button startButton;
 
-    Text character1Name;
-    Text character2Name;
-    Text character3Name;    
+    Text[] nickName; 
 
 	[SerializeField]
 	private Image[] backImage;
@@ -41,25 +39,28 @@ public class SelectUIManager : MonoBehaviour {
     }
 
     public void SetUIObject()
-    {      
-        createCharacterButton = GameObject.Find("CreateCharacterButton").GetComponent<Button>();
-        deleteCharacterButton = GameObject.Find("DeleteCharacterButton").GetComponent<Button>();
-        startButton = GameObject.Find("StartButton").GetComponent<Button>();
-        returnToMainButton = GameObject.Find("ReturnToMainButton").GetComponent<Button>();
-
+    {
         backImage = new Image[maxCharacterNum];
         selectImage = new GameObject[maxCharacterNum];
         characterPos = new GameObject[maxCharacterNum];
         characterAnim = new Animator[maxCharacterNum];
         clickEvent = new EventTrigger.Entry[maxCharacterNum];
         alphaChange = new Color[2];
-       
+        nickName = new Text[maxCharacterNum];
+
+        createCharacterButton = GameObject.Find("CreateCharacterButton").GetComponent<Button>();
+        deleteCharacterButton = GameObject.Find("DeleteCharacterButton").GetComponent<Button>();
+        startButton = GameObject.Find("StartButton").GetComponent<Button>();
+        returnToMainButton = GameObject.Find("ReturnToMainButton").GetComponent<Button>();
+
         for (int i = 0; i < maxCharacterNum; i++)
         {
             if(i < alphaChange.Length)
             {
                 alphaChange[i] = new Color(0, 0, 0, i);
             }
+            nickName[i] = GameObject.Find("NickName" + (i+1)).GetComponent<Text>();
+            nickName[i].text = "";
             clickEvent[i]= new EventTrigger.Entry();
             clickEvent[i].eventID = EventTriggerType.PointerClick; 
             backImage[i] = GameObject.Find("BackImage" + (i + 1)).GetComponent<Image>();
@@ -75,6 +76,7 @@ public class SelectUIManager : MonoBehaviour {
         createCharacterButton.onClick.AddListener(() => OnClickCreateCharacterButton());
         returnToMainButton.onClick.AddListener(() => OnClickReturnToMainButton());
         startButton.onClick.AddListener(() => OnClickStartButton());
+        deleteCharacterButton.onClick.AddListener(() => OnClickDeleteCharacter());
         clickEvent[0].callback.AddListener((data) => Select(0));
         clickEvent[1].callback.AddListener((data) => Select(1));
         clickEvent[2].callback.AddListener((data) => Select(2));
@@ -144,6 +146,7 @@ public class SelectUIManager : MonoBehaviour {
                 if (className != "")
                 {
                     GameObject character = Instantiate(Resources.Load<GameObject>("UI/" + className), characterPos[CharacterIndex].transform) as GameObject;
+                    nickName[CharacterIndex].text = characterList.CharacterData[CharacterIndex].Name;
                     character.SetActive(true);
                     character.transform.localPosition = Vector3.zero;
                     character.transform.localRotation = Quaternion.identity;
@@ -167,5 +170,12 @@ public class SelectUIManager : MonoBehaviour {
     public void OnClickStartButton()
     {
         SceneChanger.Instance.SceneChange(SceneChanger.SceneName.WaitingScene, true);
+    }
+
+    public void OnClickDeleteCharacter()
+    {
+        DataSender.Instance.DeleteCharacter(currentCharacterIndex);
+        Destroy(characterPos[currentCharacterIndex].transform.GetChild(1).gameObject);
+        nickName[currentCharacterIndex].text = "";
     }
 }
