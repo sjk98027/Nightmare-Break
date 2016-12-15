@@ -295,10 +295,10 @@ public class Duck : Monster {
 					}
 					monsterState = StatePosition.Attack;
 					if (checkDirection.z > 0) {
-						LookAtPattern (StateDirecion.right);
+						LookAtPattern (right);
 					}
 					if (checkDirection.z < 0) {
-						LookAtPattern (StateDirecion.left);
+						LookAtPattern (left);
 					}
 					Pattern (monsterState);
 					yield return new WaitForSeconds (0.5f);
@@ -333,10 +333,10 @@ public class Duck : Monster {
 			if (IsHited) {
 
 				if (checkDirection.z > 0) {
-					LookAtPattern (StateDirecion.right);
+					LookAtPattern (right);
 				}
 				if (checkDirection.z <= 0) {
-					LookAtPattern (StateDirecion.left);
+					LookAtPattern (left);
 				}
 
 				currentDisTance = Vector3.Distance(targetPlayer.transform.position, this.gameObject.transform.position);
@@ -364,7 +364,7 @@ public class Duck : Monster {
 					}
 				}
 				if (currentDisTance >= middleBossToMonsterLimitDistanceMonsterToCenter*1.5f) {
-					LookAtPattern (StateDirecion.right);
+					LookAtPattern (right);
 					IsHited = false;
 					targetPlayer = null;
 					transform.Translate (boomObjectPosition*Time.deltaTime);
@@ -415,10 +415,10 @@ public class Duck : Monster {
 		}
 		if (IsHited) {
 			if (checkDirection.z > 0) {
-				LookAtPattern (StateDirecion.right);
+				LookAtPattern (right);
 			}
 			if (checkDirection.z <= 0) {
-				LookAtPattern (StateDirecion.left);
+				LookAtPattern (left);
 			}
 
 			currentDisTance = Vector3.Distance(targetPlayer.transform.position, this.gameObject.transform.position);
@@ -430,7 +430,7 @@ public class Duck : Monster {
 				if (currentDisTance >= searchRange * 0.2f)
 				{
 					if (moveAble) {
-						LookAtPattern (StateDirecion.right);
+						LookAtPattern (right);
 						Pattern (StatePosition.Run);
 						Debug.Log ("Run");
 					}
@@ -448,7 +448,7 @@ public class Duck : Monster {
 				}
 			}
 			if (currentDisTance >= middleBossToMonsterLimitDistanceMonsterToCenter*1.5f) {
-				LookAtPattern (StateDirecion.right);
+				LookAtPattern (right);
 				IsHited = false;
 				targetPlayer = null;
 				transform.Translate (boomObjectPosition*Time.deltaTime);

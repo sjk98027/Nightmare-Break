@@ -279,10 +279,10 @@ public class Frog : Monster {
 			if (IsHited) {
 
 				if (checkDirection.z > 0) {
-					LookAtPattern (StateDirecion.right);
+					LookAtPattern (right);
 				}
 				if (checkDirection.z <= 0) {
-					LookAtPattern (StateDirecion.left);
+					LookAtPattern (left);
 				}
 
 				currentDisTance = Vector3.Distance(targetPlayer.transform.position, this.gameObject.transform.position);
@@ -309,7 +309,7 @@ public class Frog : Monster {
 					}
 				}
 				if (currentDisTance >= middleBossToMonsterLimitDistanceMonsterToCenter*1.5f) {
-					LookAtPattern (StateDirecion.right);
+					LookAtPattern (right);
 					IsHited = false;
 					targetPlayer = null;
 					transform.Translate (middleBossAroundPosition*Time.deltaTime);
@@ -332,7 +332,7 @@ public class Frog : Monster {
 			}
 		}
 		if (aniState.IsName ("Attack")) {
-			LookAtPattern (StateDirecion.right);
+			LookAtPattern (right);
 		}
 
 		if (transform.position.z > 60) {
@@ -347,7 +347,7 @@ public class Frog : Monster {
 
 		if (aniState.IsName ("Run")) {
 			if (moveAble) {
-				LookAtPattern (StateDirecion.right);
+				LookAtPattern (right);
 				//this.transform.Translate (transitionVector * moveSpeed * 0.5f * Time.deltaTime);
 			}
 		}
@@ -360,10 +360,10 @@ public class Frog : Monster {
 //		}
 //		if (IsHited) {
 //			if (checkDirection.z > 0) {
-//				LookAtPattern (StateDirecion.right);
+//				LookAtPattern (right);
 //			}
 //			if (checkDirection.z <= 0) {
-//				LookAtPattern (StateDirecion.left);
+//				LookAtPattern (left);
 //			}
 //
 //			currentDisTance = Vector3.Distance(targetPlayer.transform.position, this.gameObject.transform.position);
@@ -392,7 +392,7 @@ public class Frog : Monster {
 //				}
 //			}
 //			if (currentDisTance >= middleBossToMonsterLimitDistanceMonsterToCenter*1.5f) {
-//				LookAtPattern (StateDirecion.right);
+//				LookAtPattern (right);
 //				IsHited = false;
 //				targetPlayer = null;
 //				transform.Translate (boomObjectPosition*Time.deltaTime);
