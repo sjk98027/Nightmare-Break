@@ -22,10 +22,6 @@ public enum DefenseMoveDirectionArray
 	Comback
 }
 
-
-
-
-
 public class Monster : MonoBehaviour {
 	public void targetPlayerPosition(TargetPlayerPosition targetposition){
 		switch (targetposition) {
@@ -34,40 +30,15 @@ public class Monster : MonoBehaviour {
 			break;
 		case TargetPlayerPosition.Up:
 			movePoint = new Vector3 (targetPlayer.transform.position.x - transform.position.x + (searchRange*0.5f), 0, checkDirection.z);
-//			if (Mathf.Abs (transform.position.x - nearWall.transform.position.x) < 1) {
-//				movePoint = new Vector3 (-movePoint.x,0,movePoint.z);
-//			}
-//			if (Mathf.Abs (transform.position.z - nearWall.transform.position.z) < 1) {
-//				movePoint = new Vector3 (movePoint.x,0,-movePoint.z);
-//			}
-
 			break;
 		case TargetPlayerPosition.Down:
 			movePoint = new Vector3 (targetPlayer.transform.position.x - transform.position.x - (searchRange*0.5f), 0, checkDirection.z);
-//			if (Mathf.Abs (transform.position.x - nearWall.transform.position.x) < 1) {
-//				movePoint = new Vector3 (-movePoint.x,0,movePoint.z);
-//			}
-//			if (Mathf.Abs (transform.position.z - nearWall.transform.position.z) < 1) {
-//				movePoint = new Vector3 (movePoint.x,0,-movePoint.z);
-//			}
 			break;
 		case TargetPlayerPosition.Left:
 			movePoint = new Vector3 (checkDirection.x, 0, targetPlayer.transform.position.z - transform.position.z - (searchRange*0.5f));
-//			if (Mathf.Abs (transform.position.x - nearWall.transform.position.x) < 1) {
-//				movePoint = new Vector3 (-movePoint.x,0,movePoint.z);
-//			}
-//			if (Mathf.Abs (transform.position.z - nearWall.transform.position.z) < 1) {
-//				movePoint = new Vector3 (movePoint.x,0,-movePoint.z);
-//			}
 			break;
 		case TargetPlayerPosition.Right:
 			movePoint = new Vector3 (checkDirection.x, 0, targetPlayer.transform.position.z - transform.position.z + (searchRange*0.5f));
-//			if (Mathf.Abs (transform.position.x - nearWall.transform.position.x) < 1) {
-//				movePoint = new Vector3 (-movePoint.x,0,movePoint.z);
-//			}
-//			if (Mathf.Abs (transform.position.z - nearWall.transform.position.z) < 1) {
-//				movePoint = new Vector3 (movePoint.x,0,-movePoint.z);
-//			}
 			break;
 		}
 	}
@@ -202,7 +173,6 @@ public class Monster : MonoBehaviour {
         moveAble = true;
 
         _name = monster.Name;
-		//monsterId = monster.Id; //->인식 안됨
         level = monster.MonsterLevelData[0].Level;
         attack = monster.MonsterLevelData[0].Attack;
         defense = monster.MonsterLevelData[0].Defense;
@@ -222,8 +192,7 @@ public class Monster : MonoBehaviour {
 		if(monster.Id == (int)MonsterId.Duck){
 			shockWaveInstantiate = Resources.Load<GameObject>("Effect/Monster_ShockWave");
 			searchRange = 8;
-			//Debug.Log (shockWaveInstantiate.AttackMonster);
-			//shockWaveInstantiate
+
 		}
 
 		if (monster.Id == (int)MonsterId.Bear || monster.Id == (int)MonsterId.BlackBear) {
@@ -235,21 +204,10 @@ public class Monster : MonoBehaviour {
 			RunRange = 30;
 		}
 
-
-
-		//test
-//		DungeonManager dungeonManager = GameObject.Find("DungeonManager").GetComponent<DungeonManager>();
-//		player = dungeonManager.Players;
-
         currentDisTanceArray = new float[player.Length];
 		aggroRank = new float[player.Length];
 		playerToMonsterDamage = new float[player.Length];
 
-//		if(shockWaveInstantiate != null|| attackCollider !=null){
-////			NormalMonsterRealizePattern ();
-//			//bossmonsterWeapon damageGet(basedamage);
-//		}
-        
         StartCoroutine(LookatChange());
     }
 
@@ -290,11 +248,8 @@ public class Monster : MonoBehaviour {
 			StartCoroutine (BossActAI());
 			StartCoroutine (BossSkillAI ());
 			StartCoroutine(BossNormalAttackCycleSet ());
-			//			StartCoroutine(SetTargetPlayer ());aaaaa
+
 		}
-
-
-
 	}
 
 	public void MonsterUpdate()
@@ -305,62 +260,11 @@ public class Monster : MonoBehaviour {
 			if (moveAble)
 			{
 				this.transform.Translate((targetPlayer.transform.position-this.transform.position )* moveSpeed * Time.deltaTime, 0);
-				//				if (Vector3.Distance (nearWall.transform.position, transform.transform.position) < 1) {
-				//					if (nearWall.transform.position.z<transform.position.z || nearWall.transform.position.x> transform.position.x) {
-				//						if (movePoint.z > 0 && movePoint.x > 0) {
-				//							transform.Translate ((-movePoint).normalized * moveSpeed * Time.deltaTime);
-				//						}
-				//						if (movePoint.z > 0 && movePoint.x <= 0) {
-				//							transform.Translate(new Vector3(movePoint.x,0,-movePoint.z).normalized* moveSpeed * Time.deltaTime);
-				//						}
-				//						// -> 위
-				//						//sideleft;
-				//					}
-				//
-				//					if (nearWall.transform.position.z < transform.position.z || nearWall.transform.position.x < transform.position.x) {
-				//
-				//						//	-> 아래
-				//					}
-				//
-				//					if (nearWall.transform.position.z > transform.position.z || nearWall.transform.position.x > transform.position.x) {
-				//						//<- 위
-				//					}
-				//
-				//					if (nearWall.transform.position.z > transform.position.z || nearWall.transform.position.x < transform.position.x) {
-				//						//-<아래
-				//					}
-				//
-				//				}
-				//
-				//
-				//				//if(nearWall.transform.position.x>transform.position.x && nearWall.transform.position.z < transform.position)
-				//
-				//				//nearWall
-				//
-				//				if (Mathf.Abs (transform.position.x - nearWall.transform.position.x) < 1) {
-				//					this.transform.Translate (new Vector3 (-movePoint.x, 0, movePoint.z).normalized*moveSpeed * Time.deltaTime, 0);
-				//				}
-				//				if (Mathf.Abs (transform.position.z - nearWall.transform.position.z) < 2) {
-				//					this.transform.Translate (new Vector3 (movePoint.x, 0, movePoint.z).normalized * moveSpeed * Time.deltaTime,0);
-				//				}
-				//				else
 			}
 		}
 		ChasePlayer();
 		NearWallCheck ();
 	}
-
-//	public void BossMonsterUpdate(){
-//		aniState = this.animator.GetCurrentAnimatorStateInfo(0);
-//		if (aniState.IsName("Run"))
-//		{
-//			if (moveAble)
-//			{
-//				this.transform.Translate(movePoint.normalized * moveSpeed * Time.deltaTime, 0);
-//			}
-//		}
-//		ChasePlayer();
-//	}
 
 	IEnumerator MonsterMoveAI(bool _normalMode){
 		while (IsAlive) {
@@ -609,34 +513,6 @@ public class Monster : MonoBehaviour {
 					Pattern (statePosition);
 				}
 
-				//			if (currentDisTance < middleBossToMonsterLimitDistanceMonsterToCenter*1.5f) {
-				//				movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
-				//				transform.Translate(movePoint.normalized * moveSpeed * Time.deltaTime, 0);
-				//				if (currentDisTance >= searchRange * 0.2f)
-				//				{
-				//					if (moveAble) {
-				//						Pattern (StatePosition.Run);
-				//						Debug.Log ("Run");
-				//					}
-				//				}
-				//				if (currentDisTance < searchRange * 0.2f)
-				//				{
-				//					attackCycle += Time.deltaTime;
-				//					if (attackCycle > 5) {
-				//						attackCycle = 0;
-				//						if (!isAttack) {
-				//							isAttack = true;
-				//							Pattern (StatePosition.Attack);
-				//						}
-				//					}
-				//				}
-				//			}
-				//			if (currentDisTance >= middleBossToMonsterLimitDistanceMonsterToCenter*1.5f) {
-				//				LookAtPattern (StateDirecion.right);
-				//				IsHited = false;
-				//				targetPlayer = null;
-				//				//transform.Translate (boomObjectPosition*Time.deltaTime);
-				//			}
 				yield return new WaitForSeconds (0.2f);
 			}else break;
 		}
@@ -718,34 +594,6 @@ public class Monster : MonoBehaviour {
 				Pattern (statePosition);
 			}
 
-			//			if (currentDisTance < middleBossToMonsterLimitDistanceMonsterToCenter*1.5f) {
-			//				movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
-			//				transform.Translate(movePoint.normalized * moveSpeed * Time.deltaTime, 0);
-			//				if (currentDisTance >= searchRange * 0.2f)
-			//				{
-			//					if (moveAble) {
-			//						Pattern (StatePosition.Run);
-			//						Debug.Log ("Run");
-			//					}
-			//				}
-			//				if (currentDisTance < searchRange * 0.2f)
-			//				{
-			//					attackCycle += Time.deltaTime;
-			//					if (attackCycle > 5) {
-			//						attackCycle = 0;
-			//						if (!isAttack) {
-			//							isAttack = true;
-			//							Pattern (StatePosition.Attack);
-			//						}
-			//					}
-			//				}
-			//			}
-			//			if (currentDisTance >= middleBossToMonsterLimitDistanceMonsterToCenter*1.5f) {
-			//				LookAtPattern (StateDirecion.right);
-			//				IsHited = false;
-			//				targetPlayer = null;
-			//				//transform.Translate (boomObjectPosition*Time.deltaTime);
-			//			}
 			yield return new WaitForSeconds (0.2f);
 		}
 	}
@@ -768,31 +616,14 @@ public class Monster : MonoBehaviour {
 								LookAtPattern (StateDirecion.left);								
 							}
 						}
-//						if (checkDirection.z > 0) {
-//							LookAtPattern (StateDirecion.right);
-//						}
-//						if (checkDirection.z < 0) {
-//							LookAtPattern (StateDirecion.left);								
-//						}
 
 						if (currentDisTance < attackRange && bossNormalAttackCycle) 
 						{
-							
 							statePosition = StatePosition.Attack;
 							bossNormalAttackCycle = false;
 							Pattern (statePosition);
 							yield return new WaitForSeconds (1);
 
-//							if(aniState.IsName("Attack")){
-//								currentDisTance = Vector3.Distance (targetPlayer.transform.position, transform.position);
-//								checkDirection = targetPlayer.transform.position - transform.position;
-//								if (checkDirection.z > 0) {
-//									LookAtPattern (StateDirecion.right);
-//								}
-//								if (checkDirection.z < 0) {
-//									LookAtPattern (StateDirecion.left);								
-//								}
-//							}
 						}
 						if (currentDisTance > searchRange) {
 							statePosition = StatePosition.Idle;
@@ -807,10 +638,7 @@ public class Monster : MonoBehaviour {
 							Pattern (statePosition);
 							movePoint = checkDirection;
 
-							if (aniState.IsName ("Run")) {
-								//changedirection
-								//translate
-							}
+
 						}
 
 						if (aniState.IsName ("Attack")) {
@@ -824,7 +652,6 @@ public class Monster : MonoBehaviour {
 							}
 						}
 				}
-					//Vector3.Distance(targetPlayer.transform.position,transform.position)
 
 				}
 				yield return new WaitForSeconds(0.2f);
@@ -892,64 +719,11 @@ public class Monster : MonoBehaviour {
 		}
 	}
 
-
-	public void BigBearBossPattern (int bossState)
-	{
-
-		switch (bossState)
-		{
-
-		case 0:
-			statePosition = StatePosition.Idle;
-			animator.SetInteger ("state", 0);
-
-			break;
-		case 1:
-			statePosition = StatePosition.Run;
-			animator.SetInteger ("state", 1);
-
-			break;
-		case 2:
-			statePosition = StatePosition.Attack;
-			Debug.Log ("Attani");
-			animator.SetInteger ("State", 2);
-			break;
-
-		case 3:
-			statePosition = StatePosition.BossOneHandAttack;
-			animator.SetInteger ("state", 3);
-
-
-			break;
-
-		case 4:
-			statePosition = StatePosition.BossJumpAttack;
-			animator.SetInteger ("state", 4);
-		
-			break;
-
-		case 5:
-			statePosition = StatePosition.BossRoar;
-			animator.SetInteger ("state", 5);
-
-			break;
-
-		case 6:
-			statePosition = StatePosition.Death;
-			animator.SetTrigger ("BigBearBossDeath");
-			break;
-		}
-	}
-
-
-
-	
 	public void Pattern(StatePosition state){
 		switch (state)
 		{
 		case StatePosition.Idle:
 			{
-				//this.transform.Translate(idlePoint * Time.deltaTime, 0);
 				animator.SetInteger("State", 0);
 				break;
 			}
@@ -976,7 +750,7 @@ public class Monster : MonoBehaviour {
 			{
 				animator.SetTrigger ("Death");
 
-				//				MonsterArrayEraser(this.gameObject);
+				//MonsterArrayEraser(this.gameObject);
 				break;
 			}
 		case StatePosition.BossOneHandAttack:
@@ -993,17 +767,10 @@ public class Monster : MonoBehaviour {
 		}
 	}
 
-
-
-
-
 	public void AttackProcess(bool isAttack){
-		
-
 		if (monsterId == MonsterId.Bear || monsterId == MonsterId.BlackBear) {
 			animator.SetInteger ("State", 2);
 		}
-
 		else
 			if (isAttack) {
 
@@ -1017,8 +784,6 @@ public class Monster : MonoBehaviour {
 				moveAble = false;
 			}
 		}
-			
-		
 	}
 
     public void LookAtPattern(StateDirecion state)
@@ -1119,15 +884,6 @@ public class Monster : MonoBehaviour {
 		}
 	}
 
-
-
-//	//defenseMode Setting;
-//	public void DefenceMoveGetting(Vector3[] _v3){
-//		pointVector = new Vector3[_v3.Length];
-//		for (int i = 0; i < _v3.Length; i++) {
-//			pointVector [i] = _v3 [i];
-//		}
-//	}
 	public void DefenseMoveSet(DefenseMoveDirectionArray defenseMoveDirectionArray)
 	{
 		pointVector = new Vector3[7];
@@ -1168,9 +924,6 @@ public class Monster : MonoBehaviour {
 
 		}
 	}
-
-
-
 
 	//monster animation event;
 	public void AttackStart(){
@@ -1258,7 +1011,6 @@ public class Monster : MonoBehaviour {
 		//				section.RemoveMonsterArray ();
 	}
 
-
 	public void HitDamage(int _Damage, GameObject _weapon)
 	{
 		IsHited = true;
@@ -1291,7 +1043,5 @@ public class Monster : MonoBehaviour {
 	public void SendTargetPlayer(){
 		
 	}
-
-
 
 }

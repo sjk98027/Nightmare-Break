@@ -160,7 +160,7 @@ GameObject:
   - 95: {fileID: 95000010955489746}
   - 54: {fileID: 54000010860672200}
   - 65: {fileID: 65000011054819604}
-  - 114: {fileID: 114000013340848608}
+  - 114: {fileID: 114000011135978266}
   m_Layer: 9
   m_Name: Bear
   m_TagString: Enermy
@@ -1549,6 +1549,29 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114000011135978266
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010977677556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f4445226db14946a625617aba881f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: []
+  targetPlayer: {fileID: 0}
+  movePoint: {x: 0, y: 0, z: 0}
+  moveSpeed: 0
+  RunRange: 0
+  attackRange: 0
+  attackCycle: 0
+  currentDisTance: 0
+  searchRange: 0
+  currentDisTanceArray: []
+  currentDisTanceWall: []
+  pointVector: []
 --- !u!114 &114000013295930594
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1563,57 +1586,6 @@ MonoBehaviour:
   monster: {fileID: 0}
   AttackCollider: {fileID: 65000011428498096}
   damage: 10
---- !u!114 &114000013340848608
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010977677556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03d6bf8e6a2538c4eb6a25cc15af3f76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: []
-  animator: {fileID: 0}
-  targetPlayer: {fileID: 0}
-  HittedBox: {fileID: 0}
-  MonsterRunAttackAround: 0
-  monsterArrayNumber: 0
-  movePoint: {x: 0, y: 0, z: 0}
-  currentLife: 0
-  maxLife: 0
-  RunRange: 0
-  attackRange: 0
-  attackCycle: 0
-  baseDamage: 0
-  isAlive: 0
-  isAttack: 0
-  playerToMonsterDamage: []
-  aggroRank: []
-  changeTargetTime: 0
-  attackCollider: {fileID: 0}
-  shockWaveInstantiate: {fileID: 0}
-  currentDisTanceArray: []
-  stateDirecion: 0
-  searchRange: 0
-  moveSpeed: 0
-  uiManager: {fileID: 0}
-  MonsterWeapon:
-  - {fileID: 65000012977015578}
-  - {fileID: 65000011428498096}
-  monsterAlive: 1
-  BigBearBossState: 0
-  skillInsertImage: {fileID: 0}
-  imageSpeed: 1
-  imageLerpTime: 0
-  roarTime: 0
-  oneHandTime: 0
-  jumpAttackTime: 0
-  handPos: {fileID: 1000011830148064}
-  handSphere: {fileID: 0}
-  handAttack: {fileID: 0}
-  imageState: 0
 --- !u!114 &114000013819207996
 MonoBehaviour:
   m_ObjectHideFlags: 1
