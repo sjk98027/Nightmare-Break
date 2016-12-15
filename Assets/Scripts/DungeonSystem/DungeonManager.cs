@@ -62,7 +62,7 @@ public class DungeonManager : MonoBehaviour
 
 		//Instantiate 스폰포인트 생성조건 - > mapNumber != 2;
 		mapNumber = 0;
-		normalMode = true;
+		normalMode = false;
 
 		//DungeonConstruct();
 
@@ -96,7 +96,7 @@ public class DungeonManager : MonoBehaviour
         {
             for (int i = 0; i < monsters.Length; i++)
             {
-                monsterData[i].MonsterUpdate();
+				monsterData[i].MonsterUpdate();
 
                 //monsterData[i].HostUpdateConduct();
             }
@@ -104,9 +104,10 @@ public class DungeonManager : MonoBehaviour
 
         if (!normalMode)
         {
-            for (int i = 0; i < section.Length; i++)
+			for (int i = 0; i < monsters.Length; i++)
             {
-                //section[i].HostUpdateConduct();
+
+				monsterData [i].MonsterUpdate ();
             }
         }
 	}
@@ -134,14 +135,14 @@ public class DungeonManager : MonoBehaviour
     {
 		if (normalMode)
         {
-			//modeForm = false;
+			modeForm = false;
             //player1,player2 ->  nextScene; 
             //respwanstart;
         }
 
         if (!modeForm)
         {
-            //(close socket) send to otherclient socket;
+			modeForm = true;
         }
     }
 
@@ -242,7 +243,7 @@ public class DungeonManager : MonoBehaviour
         for (int monsterIndex = 0; monsterIndex < monsterData.Length; monsterIndex++)
         {
             monsterData[monsterIndex].player = players;
-            monsterData[monsterIndex].MonsterMoveAIStart(normalMode);
+			monsterData[monsterIndex].MonsterAIStart(normalMode);
 
             for (int dataIndex = 0; dataIndex < dungeonData.MonsterNum; dataIndex++)
             {
@@ -255,7 +256,8 @@ public class DungeonManager : MonoBehaviour
 
             if (monsterData[monsterIndex].MonsterId < MonsterId.BlackBear)
             {
-				monsterData[monsterIndex].MonsterMoveAIStart(normalMode);
+				monsterData [monsterIndex].MonsterAIStart (normalMode);
+				monsterData[monsterIndex].MonsterActAI(normalMode);
             }
             else
             {

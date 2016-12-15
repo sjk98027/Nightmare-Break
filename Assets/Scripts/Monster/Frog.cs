@@ -8,7 +8,7 @@ public class Frog : Monster {
 
 //	public float currentDisTance;
 	float middleBossToMonsterLimitDistanceMonsterToCenter = 6.0f;
-	private float middleBossToMonsterMinDistance = 1.5f;
+//	private float middleBossToMonsterMinDistance = 1.5f;
 
 
 	[SerializeField]GameObject middleboss;

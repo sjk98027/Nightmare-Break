@@ -15,7 +15,7 @@ public class MiddleBossMonster : Monster {
 
 	public MiddleBossPatternName MiddleBossState;
 	AnimatorStateInfo stateInfo;
-	public float moveSpeed;//이동 속도
+//	public float moveSpeed;//이동 속도
 	public int ChaseCount = 0; //동작 시간 카운트
 	public bool MonsterUp = true; //몬스터 이동 방향 위일때 true
 	public float currentDistance; //중간 보스와 플레이어의 거리
