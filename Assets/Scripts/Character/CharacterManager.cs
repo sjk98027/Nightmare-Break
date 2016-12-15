@@ -460,7 +460,7 @@ public class CharacterManager : MonoBehaviour
             {
                 if (userNum == networkManager.MyIndex)
                 {
-                    DataSender.Instance.CharacterActionSend(Inputstate);
+                    DataSender.Instance.CharacterStateSend(Inputstate);
                 }
             }            
         }
@@ -485,7 +485,7 @@ public class CharacterManager : MonoBehaviour
 		Debug.Log (charStatus.HealthPoint);
 	}
 
-	public void SetPosition (CharacterPositionData newPositionData)
+	public void SetPosition (UnitPositionData newPositionData)
 	{
 		Debug.Log ("캐릭터 위치 설정 유저 번호 : " + userNum);
 

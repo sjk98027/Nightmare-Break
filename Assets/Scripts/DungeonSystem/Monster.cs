@@ -134,7 +134,6 @@ public class Monster : MonoBehaviour {
 		get{ return isHited;}
 		set{ isHited = value;}
 	}
-	public StatePosition _StatePosition { get { return statePosition; } }
     public int MaxHP
     {
         get { return maxHP; }
@@ -152,6 +151,8 @@ public class Monster : MonoBehaviour {
 		set{ movePoint = value;}
 	}
 
+    public StatePosition _StatePosition { get { return statePosition; } }
+    public bool Direction { get { return direction; } }
     public int Attack { get { return attack; } }
     public MonsterId MonsterId { get { return monsterId; } set { monsterId = value; } }
 
@@ -718,53 +719,59 @@ public class Monster : MonoBehaviour {
 		}
 	}
 
-	public void Pattern(StatePosition state){
-		switch (state)
-		{
-		case StatePosition.Idle:
-			{
-				animator.SetInteger("State", 0);
-				break;
-			}
+    public void Pattern(StatePosition state)
+    {
+        switch (state)
+        {
+            case StatePosition.Idle:
+                {
+                    animator.SetInteger("State", 0);
+                    break;
+                }
 
-		case StatePosition.Attack:
-			{
-				AttackProcess(isAttack);
-				break;
-			}
-		case StatePosition.Run:
-			{
-				if (!aniState.IsName ("Attack")) {
-					AnimatorReset ();
-				}
-				animator.SetInteger("State", 1);
-				break;
-			}
-		case StatePosition.TakeDamage:
-			{
-				animator.SetTrigger ("TakeDamage");
-				break;
-			}
-		case StatePosition.Death:
-			{
-				animator.SetTrigger ("Death");
+            case StatePosition.Attack:
+                {
+                    AttackProcess(isAttack);
+                    break;
+                }
 
-				//MonsterArrayEraser(this.gameObject);
-				break;
-			}
-		case StatePosition.BossOneHandAttack:
-			{
-				animator.SetInteger ("State",3);
-				break;
-			}
-		case StatePosition.BossJumpAttack:
-			{
-				animator.SetInteger ("State",4);
-				break;
-			}
-		
-		}
-	}
+            case StatePosition.Run:
+                {
+                    if (!aniState.IsName("Attack"))
+                    {
+                        AnimatorReset();
+                    }
+                    animator.SetInteger("State", 1);
+                    break;
+                }
+
+            case StatePosition.TakeDamage:
+                {
+                    animator.SetTrigger("TakeDamage");
+                    break;
+                }
+
+            case StatePosition.Death:
+                {
+                    animator.SetTrigger("Death");
+
+                    //MonsterArrayEraser(this.gameObject);
+                    break;
+                }
+
+            case StatePosition.BossOneHandAttack:
+                {
+                    animator.SetInteger("State", 3);
+                    break;
+                }
+
+            case StatePosition.BossJumpAttack:
+                {
+                    animator.SetInteger("State", 4);
+                    break;
+                }
+        }
+    }
 
 	public void AttackProcess(bool isAttack){
 		if (monsterId == MonsterId.Bear || monsterId == MonsterId.BlackBear) {

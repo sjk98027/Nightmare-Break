@@ -23,19 +23,21 @@
             }
 
             bool ret = true;
+            byte unitType = 0;
             bool dir = true;
-            byte unitIndex = 0;
             float posX = 0;
             float posY = 0;
             float posZ = 0;
+            byte unitIndex = 0;
 
+            ret &= Deserialize(ref unitType);
             ret &= Deserialize(ref dir);
-            ret &= Deserialize(ref unitIndex);
             ret &= Deserialize(ref posX);
             ret &= Deserialize(ref posY);
             ret &= Deserialize(ref posZ);
+            ret &= Deserialize(ref unitIndex);
 
-            element = new UnitPositionData(dir, unitIndex, posX, posY, posZ);
+            element = new UnitPositionData(unitType, dir, posX, posY, posZ, unitIndex);
 
             return ret;
         }
@@ -62,34 +64,45 @@
     }
 }
 
+public enum UnitType
+{
+    Hero = 0,
+    Monster = 1,
+}
+
 public class UnitPositionData
 {
+    byte unitType;
     bool dir;
-    byte unitIndex;
     float posX;
     float posY;
     float posZ;
+    byte unitIndex;
 
+    public byte UnitType { get { return unitType; } }
     public bool Dir { get { return dir; } }
-    public byte UnitIndex { get { return unitIndex; } }
     public float PosX { get { return posX; } }
     public float PosY { get { return posY; } }
     public float PosZ { get { return posZ; } }
+    public byte UnitIndex { get { return unitIndex; } }
+
     public UnitPositionData()
     {
+        unitType = 0;
         dir = true;
-        unitIndex = 0;
         posX = 0;
         posY = 0;
         posZ = 0;
+        unitIndex = 0;
     }
 
-    public UnitPositionData(bool newDir, byte newUserIndex, float newX, float newY, float newZ)
+    public UnitPositionData(byte newUnitType, bool newDir, float newX, float newY, float newZ, byte newUserIndex)
     {
+        unitType = newUnitType;
         dir = newDir;
-        unitIndex = newUserIndex;
         posX = newX;
         posY = newY;
         posZ = newZ;
+        unitIndex = newUserIndex;
     }
 }

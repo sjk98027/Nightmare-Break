@@ -77,8 +77,8 @@ public class DataHandler : MonoBehaviour
         p2p_notifier.Add((int)P2PPacketId.RequestConnectionCheck, RequestConnectionCheck);
         p2p_notifier.Add((int)P2PPacketId.UdpAnswer, AnswerCheck);
         p2p_notifier.Add((int)P2PPacketId.CreateUnit, CreateUnit);
-        p2p_notifier.Add((int)P2PPacketId.CharacterPosition, CharacterPosition);
-        p2p_notifier.Add((int)P2PPacketId.CharacterAction, CharacterAction);
+        p2p_notifier.Add((int)P2PPacketId.UnitPosition, UnitPosition);
+        p2p_notifier.Add((int)P2PPacketId.UnitState, UnitState);
     }
 
     public IEnumerator DataHandle()
@@ -491,7 +491,7 @@ public class DataHandler : MonoBehaviour
         Debug.Log("시간 지정 : " + dTime.ToString("hh:mm:ss"));
     }
 
-    //Client
+    //Client - 유닛 생성
     public void CreateUnit(DataPacket packet, int udpId)
     {
         Debug.Log(packet.endPoint.ToString() + "유닛 생성");
@@ -505,32 +505,35 @@ public class DataHandler : MonoBehaviour
         DataSender.Instance.UdpAnswer(packet.endPoint, udpId);
     }
 
-    //Client
-    public void CharacterPosition(DataPacket packet, int udpId)
-    {
-        CharacterPositionPacket characterPositionPacket = new CharacterPositionPacket(packet.msg);
-        CharacterPositionData characterPositionData = characterPositionPacket.GetData();
-
-        CharacterManager characterManager = dungeonManager.CharacterData[characterPositionData.UserIndex];
-        characterManager.SetPosition(characterPositionData);
-    }
-
-    //Client
+    //Client - 유닛 위치
     public void UnitPosition(DataPacket packet, int udpId)
     {
         UnitPositionPacket unitPositionPacket = new UnitPositionPacket(packet.msg);
         UnitPositionData unitPositionData = unitPositionPacket.GetData();
-
-        dungeonManager.SetMonsterPosition(unitPositionData);
+        
+        if (unitPositionData.UnitType == (byte)UnitType.Hero)
+        {
+            dungeonManager.SetCharacterPosition(unitPositionData);
+        }
+        else if (unitPositionData.UnitType == (byte)UnitType.Monster)
+        {
+            dungeonManager.SetMonsterPosition(unitPositionData);
+        }
     }
 
-    //Client
-    public void CharacterAction(DataPacket packet, int udpId)
+    //Client - 유닛 애니메이션
+    public void UnitState(DataPacket packet, int udpId)
     {
-        CharacterActionPacket characterActionPacket = new CharacterActionPacket(packet.msg);
-        CharacterActionData characterActionData = characterActionPacket.GetData();
+        UnitStatePacket unitStatePacket = new UnitStatePacket(packet.msg);
+        UnitStateData unitStateData = unitStatePacket.GetData();
 
-        CharacterManager characterManager = dungeonManager.CharacterData[characterActionData.userNum];
-        characterManager.CharState(characterActionData.action);
+        if (unitStateData.UnitType == (byte)UnitType.Hero)
+        {
+            dungeonManager.CharacterState(unitStateData);
+        }
+        else if (unitStateData.UnitType == (byte)UnitType.Monster)
+        {
+            dungeonManager.MonsterState(unitStateData);
+        }
     }
 }

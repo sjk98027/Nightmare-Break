@@ -29,7 +29,6 @@ public class DataSender : MonoBehaviour
     }
 
     NetworkManager networkManager;
-    CharacterManager characterManager;
 
     Socket tcpSock;
     Socket udpSock;
@@ -454,12 +453,10 @@ public class DataSender : MonoBehaviour
     }
 
     //캐릭터 위치 -> Client
-    public IEnumerator CharacterPositionSend()
+    public IEnumerator CharacterPositionSend(UnitType unitType, GameObject unit)
     {
-        if (characterManager == null)
-        {
-            characterManager = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterManager>();
-        }
+        CharacterManager characterManager = unit.GetComponent<CharacterManager>();
+
         Debug.Log("캐릭터 위치 보내기 시작");
 
         while (true)
@@ -471,11 +468,11 @@ public class DataSender : MonoBehaviour
             float yPos = characterManager.transform.position.y;
             float zPos = characterManager.transform.position.z;
 
-            CharacterPositionData CharacterPosition = new CharacterPositionData(dir, (byte)characterManager.UserNum, xPos, yPos, zPos);
-            CharacterPositionPacket characterPositionPacket = new CharacterPositionPacket(CharacterPosition);
-            characterPositionPacket.SetPacketId((int)P2PPacketId.CharacterPosition);
+            UnitPositionData unitPositionData = new UnitPositionData((byte)UnitType.Hero ,dir, xPos, yPos, zPos, (byte)characterManager.UserNum);
+            UnitPositionPacket unitPositionPacket = new UnitPositionPacket(unitPositionData);
+            unitPositionPacket.SetPacketId((int)P2PPacketId.UnitPosition);
 
-            byte[] msg = CreatePacket(characterPositionPacket);
+            byte[] msg = CreatePacket(unitPositionPacket);
 
             for (int index = 0; index < networkManager.UserIndex.Count; index++)
             {
@@ -483,7 +480,7 @@ public class DataSender : MonoBehaviour
 
                 if (networkManager.MyIndex != userIndex)
                 {
-                    DataPacket packet = new DataPacket(CreateUdpPacket(characterPositionPacket, udpId[userIndex]), networkManager.UserIndex[index].EndPoint);
+                    DataPacket packet = new DataPacket(CreateUdpPacket(unitPositionPacket, udpId[userIndex]), networkManager.UserIndex[index].EndPoint);
                     sendMsgs.Enqueue(packet);
                 }
             }
@@ -491,24 +488,49 @@ public class DataSender : MonoBehaviour
     }
 
     //유닛 위치 -> Client
-    public void UnitPositionSend()
+    public IEnumerator UnitPositionSend(UnitType unitType, GameObject unit)
     {
+        Debug.Log("몬스터 위치 보내기 시작");
+        Monster monster = unit.GetComponent<Monster>();
 
+        while (true)
+        {
+            yield return new WaitForSeconds(0.016f);
+
+            bool dir = monster.Direction;
+            float xPos = monster.transform.position.x;
+            float yPos = monster.transform.position.y;
+            float zPos = monster.transform.position.z;
+
+            UnitPositionData unitPositionData = new UnitPositionData((byte)UnitType.Hero, dir, xPos, yPos, zPos, (byte)monster.MonsterIndex);
+            UnitPositionPacket unitPositionPacket = new UnitPositionPacket(unitPositionData);
+            unitPositionPacket.SetPacketId((int)P2PPacketId.UnitPosition);
+
+            byte[] msg = CreatePacket(unitPositionPacket);
+
+            for (int index = 0; index < networkManager.UserIndex.Count; index++)
+            {
+                int userIndex = networkManager.UserIndex[index].UserNum;
+
+                if (networkManager.MyIndex != userIndex)
+                {
+                    DataPacket packet = new DataPacket(CreateUdpPacket(unitPositionPacket, udpId[userIndex]), networkManager.UserIndex[index].EndPoint);
+                    sendMsgs.Enqueue(packet);
+                }
+            }
+        }
     }
 
     //캐릭터 움직임(공격, 점프, 스킬 등등) -> Client
-    public void CharacterActionSend(int action)
+    public void CharacterStateSend(int state, GameObject unit)
     {
-        if(characterManager == null)
-        {
-            characterManager = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterManager>();
-        }
+        CharacterManager characterManager = unit.GetComponent<CharacterManager>();
 
-        CharacterActionData characterActionData = new CharacterActionData(action, (byte)characterManager.UserNum);
-        CharacterActionPacket characterActionPacket = new CharacterActionPacket(characterActionData);
-        characterActionPacket.SetPacketId((int)P2PPacketId.CharacterAction);
+        UnitStateData unitStateData = new UnitStateData((byte)UnitType.Hero, state, (byte)characterManager.UserNum);
+        UnitStatePacket unitStatePacket = new UnitStatePacket(unitStateData);
+        unitStatePacket.SetPacketId((int)P2PPacketId.UnitState);
 
-        byte[] msg = CreatePacket(characterActionPacket);
+        byte[] msg = CreatePacket(unitStatePacket);
 
         Debug.Log("캐릭터 상태 보냄");
         
@@ -518,33 +540,38 @@ public class DataSender : MonoBehaviour
 
             if (networkManager.MyIndex != userIndex)
             {
-                DataPacket packet = new DataPacket(CreateUdpPacket(characterActionPacket, udpId[userIndex]), networkManager.UserIndex[index].EndPoint);
+                DataPacket packet = new DataPacket(CreateUdpPacket(unitStatePacket, udpId[userIndex]), networkManager.UserIndex[index].EndPoint);
                 sendMsgs.Enqueue(packet);
             }
         }
     }
 
-    //0.1초 마다 Udp메시지를 큐에 넣는다.
-    //public IEnumerator EnqueueMessage()
-    //{
-    //    while (true)
-    //    {
-    //        yield return new WaitForFixedUpdate();
+    //몬스터 움직임(공격, 점프, 스킬 등등) -> Client
+    public void MonsterStateSend(int state, GameObject unit)
+    {
+        Monster monster = unit.GetComponent<Monster>();
 
-    //        DataPacket packet = new DataPacket(udpMsg, null);
+        UnitStateData unitStateData = new UnitStateData((byte)UnitType.Monster, state, (byte)monster.MonsterIndex);
+        UnitStatePacket unitStatePacket = new UnitStatePacket(unitStateData);
+        unitStatePacket.SetPacketId((int)P2PPacketId.UnitState);
 
-    //        foreach (EndPoint client in networkManager.UserIndex.Keys)
-    //        {
-    //            packet.endPoint = client;
-    //            sendMsgs.Enqueue(packet);
-    //        }
+        byte[] msg = CreatePacket(unitStatePacket);
 
-    //        udpMsg = new byte[0];
-    //    }
-    //}
+        Debug.Log("몬스터 상태 보냄");
+
+        for (int index = 0; index < networkManager.UserIndex.Count; index++)
+        {
+            int userIndex = networkManager.UserIndex[index].UserNum;
+
+            if (networkManager.MyIndex != userIndex)
+            {
+                DataPacket packet = new DataPacket(CreateUdpPacket(unitStatePacket, udpId[userIndex]), networkManager.UserIndex[index].EndPoint);
+                sendMsgs.Enqueue(packet);
+            }
+        }
+    }
 
     //패킷의 헤더 생성
-
     byte[] CreateHeader<T>(Packet<T> data)
     {
         byte[] msg = data.GetPacketData();
