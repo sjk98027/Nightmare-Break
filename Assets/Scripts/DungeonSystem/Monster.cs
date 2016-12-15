@@ -84,15 +84,15 @@ public class Monster : MonoBehaviour {
         left
     };
 
-    protected Animator animator;
-    protected AnimatorStateInfo aniState;
+	protected Animator animator;
+	protected AnimatorStateInfo aniState;
 	protected BoxCollider HittedBox;
-	[SerializeField]protected MonsterWeapon[] attackCollider;
-	[SerializeField]protected GameObject shockWaveInstantiate;
+	protected MonsterWeapon[] attackCollider;
+	protected GameObject shockWaveInstantiate;
 
     public GameObject[] player;
-	[SerializeField]protected GameObject[] wall;
-	[SerializeField]protected GameObject nearWall;
+	protected GameObject[] wall;
+	protected GameObject nearWall;
 	[SerializeField]protected GameObject targetPlayer;
 	[SerializeField]protected Vector3 movePoint;
 
@@ -111,13 +111,13 @@ public class Monster : MonoBehaviour {
 	protected int maxHP;
     protected int attack;
     protected int defense;
-    protected int moveSpeed;
+	[SerializeField]protected int moveSpeed;
 
 
     //monster getting variable;
-    protected float RunRange;
-    protected float attackRange;
-    protected float attackCycle;
+	[SerializeField]protected float RunRange;
+	[SerializeField]protected float attackRange;
+	[SerializeField]protected float attackCycle;
 	[SerializeField]protected float currentDisTance;
 	[SerializeField]protected float searchRange;
     StateDirecion stateDirecion;
@@ -227,7 +227,12 @@ public class Monster : MonoBehaviour {
 		}
 
 		if (monster.Id == (int)MonsterId.Bear || monster.Id == (int)MonsterId.BlackBear) {
+			attackCollider = this.transform.GetComponentsInChildren<MonsterWeapon> ();
+			attackCollider[0].MonsterWeaponSet ();
+			attackCollider[1].MonsterWeaponSet ();
 			searchRange = 12;
+			attackRange = 3;
+			RunRange = 30;
 		}
 
 
@@ -248,7 +253,7 @@ public class Monster : MonoBehaviour {
         StartCoroutine(LookatChange());
     }
 
-	IEnumerator CoChasePlayer()
+	IEnumerator BossNormalAttackCycleSet()
 	{ 
 		while (IsAlive) 
 		{
@@ -281,15 +286,14 @@ public class Monster : MonoBehaviour {
 		}
 
 		if(monsterId == MonsterId.Bear || monsterId == MonsterId.BlackBear){
+			bossSkill = false;
 			StartCoroutine (BossActAI());
 			StartCoroutine (BossSkillAI ());
+			StartCoroutine(BossNormalAttackCycleSet ());
+			//			StartCoroutine(SetTargetPlayer ());aaaaa
 		}
 
-		if (monsterId == MonsterId.BlackBear) {
-			StartCoroutine(CoChasePlayer ());
-			StartCoroutine(SetTargetPlayer ());
-		}
-		
+
 
 	}
 
@@ -300,7 +304,7 @@ public class Monster : MonoBehaviour {
 		{
 			if (moveAble)
 			{
-				this.transform.Translate (movePoint.normalized * moveSpeed * Time.deltaTime, 0);
+				this.transform.Translate((targetPlayer.transform.position-this.transform.position )* moveSpeed * Time.deltaTime, 0);
 				//				if (Vector3.Distance (nearWall.transform.position, transform.transform.position) < 1) {
 				//					if (nearWall.transform.position.z<transform.position.z || nearWall.transform.position.x> transform.position.x) {
 				//						if (movePoint.z > 0 && movePoint.x > 0) {
@@ -505,18 +509,26 @@ public class Monster : MonoBehaviour {
 			}
 			while (!_normalMode) {
 				if (isAlive) {
-					for (int i = 0; i < pointVector.Length; i++) {
-						if (i > 0 && i < pointVector.Length - 1) {
-							movePoint = pointVector [i];
-							pointVector [i] = pointVector [i + 1];
-							pointVector [i + 1] = movePoint;
-						}
+					if(!isHited){
+						for (int i = 0; i < pointVector.Length; i++) {
+							if (i > 0 && i < pointVector.Length - 1) {
+								movePoint = pointVector [i];
+								pointVector [i] = pointVector [i + 1];
+								pointVector [i + 1] = movePoint;
+							}
 
-						if (i == pointVector.Length - 1) {
-							movePoint = pointVector [i];
-							pointVector [i] = pointVector [0];
-							pointVector [0] = movePoint;
+							if (i == pointVector.Length - 1) {
+								movePoint = pointVector [i];
+								pointVector [i] = pointVector [0];
+								pointVector [0] = movePoint;
+							}
 						}
+					}
+					if (isHited) {
+						if (targetPlayer.transform.position.z > transform.position.z) {
+							movePoint = (targetPlayer.transform.position-transform.position);
+						} else
+							isHited = false;
 					}
 					yield return new WaitForSeconds (2f);
 				} 
@@ -568,29 +580,34 @@ public class Monster : MonoBehaviour {
 				if (targetPlayer != null) {
 					currentDisTance = Vector3.Distance (targetPlayer.transform.position, this.gameObject.transform.position);
 					checkDirection = targetPlayer.transform.position - this.gameObject.transform.position;
-
+				}
+				attackCycle += 0.2f;
+				//int 
+				if (attackCycle > 3) {
+					statePosition = StatePosition.Idle;
+					Pattern (statePosition);
+					yield return new WaitForSeconds (1.3f);
 					if (checkDirection.z > 0) {
 						LookAtPattern (StateDirecion.right);
 					}
 					if (checkDirection.z <= 0) {
 						LookAtPattern (StateDirecion.left);
 					}
+					moveAble = false;
+					isAttack = true;
+					statePosition = StatePosition.Attack;
+					Pattern (statePosition);
+					yield return new WaitForSeconds (2f);
+					attackCycle = 0;
+
 				}
-//				attackCycle += 2f;
-//				if (attackCycle > 5) {
-//					attackCycle = 0;
-//					moveAble = false;
-//					isAttack = true;
-//					statePosition = StatePosition.Attack;
-//					Pattern (statePosition);
-//					yield return new WaitForSeconds (15f);
-//				} 
-//				if (attackCycle <= 5) {
+				if (attackCycle <= 3) {
+					LookAtPattern (StateDirecion.right);
 					moveAble = true;
 					isAttack = false;
 					statePosition = StatePosition.Run;
 					Pattern (statePosition);
-//				}
+				}
 
 				//			if (currentDisTance < middleBossToMonsterLimitDistanceMonsterToCenter*1.5f) {
 				//				movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z);
@@ -620,7 +637,7 @@ public class Monster : MonoBehaviour {
 				//				targetPlayer = null;
 				//				//transform.Translate (boomObjectPosition*Time.deltaTime);
 				//			}
-				yield return new WaitForSeconds (2f);
+				yield return new WaitForSeconds (0.2f);
 			}else break;
 		}
 	}
@@ -669,28 +686,32 @@ public class Monster : MonoBehaviour {
 				yield return new WaitForSeconds (0.2f);
 		}
 		while (!_normalMode) {
-
 			if (targetPlayer != null) {
 				currentDisTance = Vector3.Distance (targetPlayer.transform.position, this.gameObject.transform.position);
 				checkDirection = targetPlayer.transform.position - this.gameObject.transform.position;
+			}
+			attackCycle += 0.2f;
 
+			if (attackCycle > 3) {
+				statePosition = StatePosition.Idle;
+				Pattern (statePosition);
+				yield return new WaitForSeconds (1.3f);
 				if (checkDirection.z > 0) {
 					LookAtPattern (StateDirecion.right);
 				}
 				if (checkDirection.z <= 0) {
 					LookAtPattern (StateDirecion.left);
 				}
-			}
-			attackCycle += 0.2f;
-			if (attackCycle > 5) {
-				attackCycle = 0;
 				moveAble = false;
 				isAttack = true;
 				statePosition = StatePosition.Attack;
 				Pattern (statePosition);
-				yield return new WaitForSeconds (15f);
-			} 
-			if (attackCycle < 5) {
+				yield return new WaitForSeconds (2f);
+				attackCycle = 0;
+
+			}
+			if (attackCycle <= 3) {
+				LookAtPattern (StateDirecion.right);
 				moveAble = true;
 				isAttack = false;
 				statePosition = StatePosition.Run;
@@ -729,6 +750,93 @@ public class Monster : MonoBehaviour {
 		}
 	}
 
+	public IEnumerator BossActAI(){
+		while (true) {
+			if (isAlive) {
+				if (!bossSkill) {
+					aniState = this.animator.GetCurrentAnimatorStateInfo (0);
+					if(targetPlayer != null){
+						currentDisTance = Vector3.Distance (targetPlayer.transform.position, transform.position);
+						checkDirection = targetPlayer.transform.position - transform.position;
+						if(!aniState.IsName ("Attack")) {
+							currentDisTance = Vector3.Distance (targetPlayer.transform.position, transform.position);
+							checkDirection = targetPlayer.transform.position - transform.position;
+							if (checkDirection.z > 0) {
+								LookAtPattern (StateDirecion.right);
+							}
+							if (checkDirection.z < 0) {
+								LookAtPattern (StateDirecion.left);								
+							}
+						}
+//						if (checkDirection.z > 0) {
+//							LookAtPattern (StateDirecion.right);
+//						}
+//						if (checkDirection.z < 0) {
+//							LookAtPattern (StateDirecion.left);								
+//						}
+
+						if (currentDisTance < attackRange && bossNormalAttackCycle) 
+						{
+							
+							statePosition = StatePosition.Attack;
+							bossNormalAttackCycle = false;
+							Pattern (statePosition);
+							yield return new WaitForSeconds (1);
+
+//							if(aniState.IsName("Attack")){
+//								currentDisTance = Vector3.Distance (targetPlayer.transform.position, transform.position);
+//								checkDirection = targetPlayer.transform.position - transform.position;
+//								if (checkDirection.z > 0) {
+//									LookAtPattern (StateDirecion.right);
+//								}
+//								if (checkDirection.z < 0) {
+//									LookAtPattern (StateDirecion.left);								
+//								}
+//							}
+						}
+						if (currentDisTance > searchRange) {
+							statePosition = StatePosition.Idle;
+							Pattern (statePosition);
+							if (aniState.IsName ("Idle")) {
+								//changedirection
+							}
+						} 
+						
+						else if (currentDisTance <= searchRange && currentDisTance > attackRange && moveAble) {
+							statePosition = StatePosition.Run;
+							Pattern (statePosition);
+							movePoint = checkDirection;
+
+							if (aniState.IsName ("Run")) {
+								//changedirection
+								//translate
+							}
+						}
+
+						if (aniState.IsName ("Attack")) {
+							for (int i = 0; i < attackCollider.Length; i++) {
+								attackCollider [i].enabled = true;
+							}
+							
+						} else if (aniState.IsName ("Attack")) {
+							for (int i = 0; i < attackCollider.Length; i++) {
+								attackCollider [i].enabled = false;
+							}
+						}
+				}
+					//Vector3.Distance(targetPlayer.transform.position,transform.position)
+
+				}
+				yield return new WaitForSeconds(0.2f);
+			}
+
+			if (!isAlive) {
+				break;
+			}
+		}
+	}
+
+
 	public IEnumerator BossSkillAI()
 	{
 		aniState = this.animator.GetCurrentAnimatorStateInfo (0);
@@ -740,6 +848,14 @@ public class Monster : MonoBehaviour {
 			bossSkill = true;
 			animator.SetBool ("BossSkill", true);
 
+				checkDirection = targetPlayer.transform.position - transform.position;
+				if (checkDirection.z > 0) {
+						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z - 3f);
+				}
+				if (checkDirection.z < 0) {
+						movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z + 3f);
+				}
+
 			if (bossRandomPattern == 0)
 			{
 				statePosition = StatePosition.BossJumpAttack;
@@ -750,8 +866,6 @@ public class Monster : MonoBehaviour {
 			{
 				statePosition = StatePosition.BossRoar;
 				Pattern(statePosition);
-
-
 			}
 			else if (bossRandomPattern == 2)
 			{
@@ -766,52 +880,6 @@ public class Monster : MonoBehaviour {
 			animator.SetBool ("BossSkill", false);
 		}
 	}
-
-	public IEnumerator BossActAI(){
-		while (true) {
-			if (isAlive) {
-				if (!bossSkill) {
-					aniState = this.animator.GetCurrentAnimatorStateInfo (0);
-					if (Vector3.Distance (targetPlayer.transform.position, transform.position)<attackRange && bossNormalAttackCycle) {
-						statePosition = StatePosition.Attack;
-						Pattern (statePosition);
-					}
-					if (Vector3.Distance (targetPlayer.transform.position, transform.position) > RunRange) {
-						statePosition = StatePosition.Idle;
-						Pattern (statePosition);
-						if (aniState.IsName ("Idle")) {
-							//changedirection
-						}
-					} else if (Vector3.Distance (targetPlayer.transform.position, transform.position) <= RunRange && Vector3.Distance (targetPlayer.transform.position, transform.position) > attackRange && moveAble) {
-						statePosition = StatePosition.Run;
-						if (aniState.IsName ("Run")) {
-							//changedirection
-							//translate
-						}
-					}
-					if (aniState.IsName ("Attack")) {
-						for (int i = 0; i < attackCollider.Length; i++) {
-							attackCollider [i].enabled = true;
-						}
-						
-					} else if (aniState.IsName ("Attack")) {
-						for (int i = 0; i < attackCollider.Length; i++) {
-							attackCollider [i].enabled = false;
-						}
-					}
-
-					//Vector3.Distance(targetPlayer.transform.position,transform.position)
-
-				}
-				yield return new WaitForSeconds(0.2f);
-			}
-
-			if (!isAlive) {
-				break;
-			}
-		}
-	}
-
 	public IEnumerator SetTargetPlayer()
 	{
 		while (IsAlive)
@@ -843,11 +911,8 @@ public class Monster : MonoBehaviour {
 			break;
 		case 2:
 			statePosition = StatePosition.Attack;
-			animator.SetInteger ("state", 2);
-			//isAttack = true;
-			//sound.BossSound (1,searchRange);
-			//this.bossAudio.PlayOneShot (normalAttack);
-			//this.bossAudio.loop = false;
+			Debug.Log ("Attani");
+			animator.SetInteger ("State", 2);
 			break;
 
 		case 3:
@@ -896,9 +961,9 @@ public class Monster : MonoBehaviour {
 			}
 		case StatePosition.Run:
 			{
-//				if (!aniState.IsName ("Attack")) {
+				if (!aniState.IsName ("Attack")) {
 					AnimatorReset ();
-//				}
+				}
 				animator.SetInteger("State", 1);
 				break;
 			}
@@ -933,7 +998,14 @@ public class Monster : MonoBehaviour {
 
 
 	public void AttackProcess(bool isAttack){
-		if (isAttack) {
+		
+
+		if (monsterId == MonsterId.Bear || monsterId == MonsterId.BlackBear) {
+			animator.SetInteger ("State", 2);
+		}
+
+		else
+			if (isAttack) {
 
 			if(animator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Run")){
 				animator.SetInteger ("State", 0);
@@ -945,6 +1017,8 @@ public class Monster : MonoBehaviour {
 				moveAble = false;
 			}
 		}
+			
+		
 	}
 
     public void LookAtPattern(StateDirecion state)
@@ -1047,13 +1121,13 @@ public class Monster : MonoBehaviour {
 
 
 
-	//defenseMode Setting;
-	public void DefenceMoveGetting(Vector3[] _v3){
-		pointVector = new Vector3[_v3.Length];
-		for (int i = 0; i < _v3.Length; i++) {
-			pointVector [i] = _v3 [i];
-		}
-	}
+//	//defenseMode Setting;
+//	public void DefenceMoveGetting(Vector3[] _v3){
+//		pointVector = new Vector3[_v3.Length];
+//		for (int i = 0; i < _v3.Length; i++) {
+//			pointVector [i] = _v3 [i];
+//		}
+//	}
 	public void DefenseMoveSet(DefenseMoveDirectionArray defenseMoveDirectionArray)
 	{
 		pointVector = new Vector3[7];

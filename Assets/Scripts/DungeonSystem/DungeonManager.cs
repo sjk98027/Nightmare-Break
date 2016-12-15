@@ -32,7 +32,7 @@ public class DungeonManager : MonoBehaviour
 
     public SceneChangeObject[] sceneChangeObject;
 	public BossMonsterKYW bossMonster;
-    public Section[] section;
+    //public Section[] section;
 
     InputManager inputManager;
     UIManager uiManager;
@@ -62,53 +62,66 @@ public class DungeonManager : MonoBehaviour
 
 		//Instantiate 스폰포인트 생성조건 - > mapNumber != 2;
 		mapNumber = 0;
-		normalMode = false;
+		normalMode = true;
 
 		//DungeonConstruct();
 
-        if (GameObject.FindGameObjectWithTag("GameManager") == null)
-        {
-            InitializeMonsterSpawnPoint();
+//        if (GameObject.FindGameObjectWithTag("GameManager") == null)
+//        {
+//            InitializeMonsterSpawnPoint();
+//
+//            MonsterSpawnData[] monsterSpawnData = new MonsterSpawnData[3];
+//            monsterSpawnData[0] = new MonsterSpawnData((int)MonsterId.Frog, 3);
+//            monsterSpawnData[1] = new MonsterSpawnData((int)MonsterId.Duck, 4);
+//            monsterSpawnData[2] = new MonsterSpawnData((int)MonsterId.Rabbit, 2);
+//            monsterSpawnList = new MonsterSpawnList(3, monsterSpawnData);
+//
+//            MonsterBaseData[] monsterBaseData = new MonsterBaseData[3];
+//            monsterBaseData[0] = new MonsterBaseData((int)MonsterId.Frog, "Frog");
+//            monsterBaseData[0].AddLevelData(new MonsterLevelData(1, 2, 0, 30, 5));
+//            monsterBaseData[1] = new MonsterBaseData((int)MonsterId.Duck, "Duck");
+//            monsterBaseData[1].AddLevelData(new MonsterLevelData(1, 3, 0, 35, 4));
+//            monsterBaseData[2] = new MonsterBaseData((int)MonsterId.Rabbit, "Rabbit");
+//            monsterBaseData[2].AddLevelData(new MonsterLevelData(1, 5, 0, 75, 4));
+//            dungeonData = new MonsterStatusData(3, monsterBaseData);
+//
+//            SpawnMonster();
+//            SetMonsterStatus();
+//        }        
+		if (GameObject.FindGameObjectWithTag("GameManager") == null)
+		{
+			//스폰 포인트 찾기
+			InitializeMonsterSpawnPoint();
 
-            MonsterSpawnData[] monsterSpawnData = new MonsterSpawnData[3];
-            monsterSpawnData[0] = new MonsterSpawnData((int)MonsterId.Frog, 5);
-            monsterSpawnData[1] = new MonsterSpawnData((int)MonsterId.Duck, 1);
-            monsterSpawnData[2] = new MonsterSpawnData((int)MonsterId.Rabbit, 3);
-            monsterSpawnList = new MonsterSpawnList(3, monsterSpawnData);
+			//서버에서 온 데이터 : monsterSpawnData
+			//여기서는 직접 데이터를 설정
+			MonsterSpawnData[] monsterSpawnData = new MonsterSpawnData[1];
+			monsterSpawnData[0] = new MonsterSpawnData((int)MonsterId.Bear, 1);
+			//monsterSpawnData[1] = new MonsterSpawnData((int)MonsterId.BlackBear, 1);
 
-            MonsterBaseData[] monsterBaseData = new MonsterBaseData[3];
-            monsterBaseData[0] = new MonsterBaseData((int)MonsterId.Frog, "Frog");
-            monsterBaseData[0].AddLevelData(new MonsterLevelData(1, 2, 0, 30, 5));
-            monsterBaseData[1] = new MonsterBaseData((int)MonsterId.Duck, "Duck");
-            monsterBaseData[1].AddLevelData(new MonsterLevelData(1, 3, 0, 35, 4));
-            monsterBaseData[2] = new MonsterBaseData((int)MonsterId.Rabbit, "Rabbit");
-            monsterBaseData[2].AddLevelData(new MonsterLevelData(1, 5, 0, 75, 4));
-            dungeonData = new MonsterStatusData(3, monsterBaseData);
+			//던전 데이터에서 몬스터 스폰 리스트를 monsterSpawnData로 설정
+			//그러면 몬스터 생성 숫자가 설정됨(종류, 개수)
+			monsterSpawnList = new MonsterSpawnList(1, monsterSpawnData);
 
-            SpawnMonster();
-            SetMonsterStatus();
-        }        
+			//서버에서 온 데이터 : monsterBaseData
+			MonsterBaseData[] monsterBaseData = new MonsterBaseData[1];
+			monsterBaseData[0] = new MonsterBaseData((int)MonsterId.Bear, "Bear");
+			monsterBaseData[0].AddLevelData(new MonsterLevelData(1, 2, 0, 30,1));
+
+			//던전 데이터에서 몬스터 스탯테이블을 monsterBaseData로 설정
+			//그러면 위의 몬스터 생성할때 스탯이 이렇게 설정됨
+			dungeonData = new MonsterStatusData(1, monsterBaseData);
+
+			SpawnMonster();
+			SetMonsterStatus();
+		}
 	}
 
 	void Update()
 	{
-        if (normalMode)
+        for (int i = 0; i < monsters.Length; i++)
         {
-            for (int i = 0; i < monsters.Length; i++)
-            {
-				monsterData[i].MonsterUpdate();
-
-                //monsterData[i].HostUpdateConduct();
-            }
-        }
-
-        if (!normalMode)
-        {
-			for (int i = 0; i < monsters.Length; i++)
-            {
-
-				monsterData [i].MonsterUpdate ();
-            }
+			monsterData[i].MonsterUpdate();
         }
 	}
 
@@ -153,48 +166,19 @@ public class DungeonManager : MonoBehaviour
 			mapNumber++;
             SceneManager.LoadScene(mapNumber + 1);// loadScene;
         }
-        //mapNumber == 3 -> 2 player SceneChange
-
-        //        if (mapNumber < section.Length)
-        //        {
-        //            mapNumber += 1;
-        //			//SceneManager.LoadScene ();
-        //        }
-        //
-        //        if (mapNumber == section.Length)
-        //        {
-        //            ModeChange(modeForm);
-        //        }
+     
     }
 
     void DungeonConstruct()
     {
 		
-		if(mapNumber != 2){
+		//if(mapNumber != 2){
 			GameObject spawnpointInstantiate = (GameObject)Instantiate (Resources.Load ("Monster/MonsterSpawnPoint" + mapNumber.ToString()), this.transform.parent);
             //요고의 차일드를 받으세요
 			normalMode = true;
 			//MonsterSet ();
-		}
+		//}
 
-		if (mapNumber == 2) {
-			normalMode = false;
-			section = new Section[3];
-			GameObject SectionInstantiate0 = (GameObject)Instantiate (Resources.Load("Monster/Section"),transform.parent);
-			GameObject SectionInstantiate1 = (GameObject)Instantiate (Resources.Load("Monster/Section"),transform.parent);
-			GameObject SectionInstantiate2 = (GameObject)Instantiate (Resources.Load("Monster/Section"),transform.parent);
-			section [0] = SectionInstantiate0.GetComponent<Section> ();
-			section [1] = SectionInstantiate1.GetComponent<Section> ();
-			section [2] = SectionInstantiate2.GetComponent<Section> ();
-
-
-			for (int i = 0; i < section.Length; i++) {
-				section [i].MonsterSet ();
-				section [i].GateNumber = i;
-				section [i].SetFalse ();
-			}
-			//StartCoroutine (section ());
-		}
 
 
         //if (mapNumber == 0) {
@@ -226,7 +210,7 @@ public class DungeonManager : MonoBehaviour
         {
             for (int j = 0; j < monsterSpawnList.MonsterSpawnData[i].MonsterNum; j++)
             {
-                monsters[monsterIndex] = CreateMonster(monsterSpawnList.MonsterSpawnData[i].MonsterId, monsterIndex, monsterSpawnPoints[monsterIndex].transform.position);
+               monsters[monsterIndex] = CreateMonster(monsterSpawnList.MonsterSpawnData[i].MonsterId, monsterIndex, monsterSpawnPoints[monsterIndex].transform.position);
                 monsterData[monsterIndex].MonsterIndex = monsterIndex++;
 
             }
@@ -243,7 +227,6 @@ public class DungeonManager : MonoBehaviour
         for (int monsterIndex = 0; monsterIndex < monsterData.Length; monsterIndex++)
         {
             monsterData[monsterIndex].player = players;
-			monsterData[monsterIndex].MonsterAIStart(normalMode);
 
             for (int dataIndex = 0; dataIndex < dungeonData.MonsterNum; dataIndex++)
             {
@@ -252,17 +235,9 @@ public class DungeonManager : MonoBehaviour
                     monsterData[monsterIndex].MonsterSet(dungeonData.MonsterData[dataIndex]);
                     break;
                 }
-            }
+			}
 
-            if (monsterData[monsterIndex].MonsterId < MonsterId.BlackBear)
-            {
-				monsterData [monsterIndex].MonsterAIStart (normalMode);
-				monsterData[monsterIndex].MonsterActAI(normalMode);
-            }
-            else
-            {
-                monsterData[monsterIndex].GetComponent<BossMonsterKYW>().BossMonsterPatternUpdateConduct();
-            }
+			monsterData[monsterIndex].MonsterAIStart(normalMode);
         }
 
         //for (int i = 0; i < frogMonster.Length; i++)
@@ -353,14 +328,12 @@ public class DungeonManager : MonoBehaviour
         else if(unitId == (int)MonsterId.BlackBear)
         {
             monster = (GameObject)Instantiate(Resources.Load("Monster/BlackBear"), createPoint, gameObject.transform.rotation);
-            monster.transform.SetParent(transform);
-            //bossMonster = monster.GetComponent<BlackBear>();
+
         }
         else if (unitId == (int)MonsterId.Bear)
         {
             monster = (GameObject)Instantiate(Resources.Load("Monster/Bear"), createPoint, gameObject.transform.rotation);
-            monster.transform.SetParent(transform);
-            //bossMonster = monster.GetComponent<Bear>();
+
         }
 
         monster.transform.SetParent(transform);
@@ -370,13 +343,7 @@ public class DungeonManager : MonoBehaviour
         return monster;
     }
 
-    IEnumerator SectionSet(){
-		for (int i = 0; i < section.Length; i++) {
-			section [i].SetTrue ();
-			new WaitForSeconds (10f);
-		}
-		return null;
-	}
+
 
     public IEnumerator CheckMapClear()
     {

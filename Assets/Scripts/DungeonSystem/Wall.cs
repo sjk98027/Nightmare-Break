@@ -10,10 +10,12 @@ public class Wall : MonoBehaviour {
 
 	void OnTriggerEnter(Collider coll){
 		if (coll.gameObject.layer == LayerMask.NameToLayer ("Enermy")) {
-			coll.gameObject.GetComponent<Monster> ().MovePoint = -coll.gameObject.GetComponent<Monster> ().MovePoint;
-//			if (!normalMode) {
-//				coll.gameObject.GetComponent<Monster> ().MovePoint = new Vector3(-coll.gameObject.GetComponent<Monster> ().MovePoint.x,coll.gameObject.GetComponent<Monster> ().MovePoint.y,coll.gameObject.GetComponent<Monster> ().MovePoint.z);
-//			}
+			if (normalMode) {
+				coll.gameObject.GetComponent<Monster> ().MovePoint = -coll.gameObject.GetComponent<Monster> ().MovePoint;
+			}
+			if (!normalMode) {
+				coll.gameObject.GetComponent<Monster> ().MovePoint = new Vector3(-coll.gameObject.GetComponent<Monster> ().MovePoint.x,coll.gameObject.GetComponent<Monster> ().MovePoint.y,coll.gameObject.GetComponent<Monster> ().MovePoint.z);
+			}
 
 		}
 	}
