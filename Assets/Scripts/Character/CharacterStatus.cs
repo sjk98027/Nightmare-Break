@@ -45,6 +45,8 @@ public class CharacterStatus : MonoBehaviour
     int[] equipLevel;
     bool[] activeSkillUse;
 
+	static CharacterStatus instance;
+
     public string HName { get { return hName; } }
     public Gender HGender { get { return hGender; } }
     public int Level { get { return level; } }
@@ -60,6 +62,7 @@ public class CharacterStatus : MonoBehaviour
     public int MpRegeneration { get { return mpRegeneration; } }
     public int Attack { get { return attack; } }
     public int Defense { get { return defense; } }
+	public int MaxSkillNum { get { return skillNum; } }
 
     public float MoveSpeed { get { return moveSpeed; } }
     public int SkillPoint { get { return skillPoint; } }
@@ -67,6 +70,7 @@ public class CharacterStatus : MonoBehaviour
     public int[] SkillLevel { get { return skillLevel; } }
     public int[] EquipLevel { get { return equipLevel; } }
     public bool[] ActiveSkillUse { get { return activeSkillUse; } }
+	public static CharacterStatus Instace { get { return instance; }}
 
     public void SetCharacterStatus()
     {
@@ -86,6 +90,7 @@ public class CharacterStatus : MonoBehaviour
         skillLevel = new int[skillNum];
         activeSkillUse = new bool[equipNum];
         equipLevel = new int[equipNum];
+		instance = this;
 
 		for (int i = 0; i < skillLevel.Length; i++)
 		{
