@@ -20,7 +20,7 @@ public class WaitingUIManager : MonoBehaviour
     private Button myInfoExitBtn;
     private Button roomCreateYesBtn;
 
-    private InputField CreateroomName;
+    private InputField createroomName;
 
 	[SerializeField] GameObject roomCreateUI;
 	private GameObject skillAddUI;
@@ -28,15 +28,10 @@ public class WaitingUIManager : MonoBehaviour
 	private GameObject myInfoUI;
 
     Room[] rooms;
-<<<<<<< HEAD
 
-    Text createRoomName;
     private Text[] roomName;
     private Text[] roomDungeonLevel;
     private Text[] roomCurrentUser;
-=======
-    
->>>>>>> 71f013766b9a412413dc8f4741a845905627bf17
     int currentRoomNum;
     int dungeonId;
     int dungeonLevel;
@@ -73,12 +68,9 @@ public class WaitingUIManager : MonoBehaviour
         skillAddUI = GameObject.Find("SkillAddUI");
         equipInfoUI = GameObject.Find("EquipInfoUI");
         myInfoUI = GameObject.Find("MyInfoUI");
-<<<<<<< HEAD
-        CreateroomName = GameObject.Find("RoomCreateInputField").GetComponent<InputField>();
-        createRoomName = GameObject.Find("CreateRoomName").GetComponent<Text>();
-=======
-        roomName = GameObject.Find("RoomCreateInputField").GetComponent<InputField>();
->>>>>>> 71f013766b9a412413dc8f4741a845905627bf17
+
+        createroomName = GameObject.Find("RoomCreateInputField").GetComponent<InputField>();
+
         roomCreateExitBtn = roomCreateUI.transform.GetChild(5).GetComponent<Button>();
         skillAddExitBtn = skillAddUI.transform.GetChild(3).GetComponent<Button>();
         equipInfoExitBtn = equipInfoUI.transform.GetChild(2).GetComponent<Button>();
@@ -130,7 +122,7 @@ public class WaitingUIManager : MonoBehaviour
 	{
         if(roomCreateUI.activeSelf)
         {
-            CreateroomName.text ="";
+            createroomName.text ="";
             roomCreateUI.SetActive(false);
         }
         else if (skillAddUI.activeSelf)
@@ -165,7 +157,7 @@ public class WaitingUIManager : MonoBehaviour
 
     public void OnClickCreateRoomButton()
     {
-        DataSender.Instance.CreateRoom(roomName.text, dungeonId, dungeonLevel);
+        DataSender.Instance.CreateRoom(createroomName.text, dungeonId, dungeonLevel);
     }
 
     public void OnClickEnterRoomButton()
