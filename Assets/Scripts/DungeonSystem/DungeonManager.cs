@@ -440,4 +440,10 @@ public class DungeonManager : MonoBehaviour
             CreateMonster(unitId, unitIndex, monsterSpawnPoints[unitIndex].transform.position);
         }
     }
+
+    public void SetMonsterPosition(UnitPositionData unitPositionData)
+    {
+        monsterData[unitPositionData.UnitIndex].LookAtPattern(unitPositionData.Dir);
+        monsters[unitPositionData.UnitIndex].transform.position = new Vector3(unitPositionData.PosX, unitPositionData.PosY, unitPositionData.PosZ);
+    }
 }

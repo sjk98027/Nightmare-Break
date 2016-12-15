@@ -49,13 +49,10 @@ public class Monster : MonoBehaviour {
 		Left,
 		Right
 	}
-    public enum StateDirecion
-    {
-        right = 0,
-        left
-    };
+    public const bool right = true;
+    public const bool left = false;
 
-	protected Animator animator;
+    protected Animator animator;
 	protected AnimatorStateInfo aniState;
 	protected BoxCollider HittedBox;
 	protected MonsterWeapon[] attackCollider;
@@ -91,8 +88,8 @@ public class Monster : MonoBehaviour {
 	[SerializeField]protected float attackCycle;
 	[SerializeField]protected float currentDisTance;
 	[SerializeField]protected float searchRange;
-    StateDirecion stateDirecion;
 	StatePosition statePosition;
+    bool direction;
     protected bool isAlive;
 	protected bool isAttack;
 	protected bool isHited;
@@ -137,7 +134,6 @@ public class Monster : MonoBehaviour {
 		get{ return isHited;}
 		set{ isHited = value;}
 	}
-    public StateDirecion _StateDirecion { get { return stateDirecion; } }
 	public StatePosition _StatePosition { get { return statePosition; } }
     public int MaxHP
     {
@@ -492,10 +488,10 @@ public class Monster : MonoBehaviour {
 					Pattern (statePosition);
 					yield return new WaitForSeconds (1.3f);
 					if (checkDirection.z > 0) {
-						LookAtPattern (StateDirecion.right);
+						LookAtPattern (right);
 					}
 					if (checkDirection.z <= 0) {
-						LookAtPattern (StateDirecion.left);
+						LookAtPattern (left);
 					}
 					moveAble = false;
 					isAttack = true;
@@ -506,7 +502,7 @@ public class Monster : MonoBehaviour {
 
 				}
 				if (attackCycle <= 3) {
-					LookAtPattern (StateDirecion.right);
+					LookAtPattern (left);
 					moveAble = true;
 					isAttack = false;
 					statePosition = StatePosition.Run;
@@ -532,10 +528,10 @@ public class Monster : MonoBehaviour {
 						}
 						statePosition = StatePosition.Attack;
 						if (checkDirection.z > 0) {
-							LookAtPattern (StateDirecion.right);
+							LookAtPattern (right);
 						}
 						if (checkDirection.z < 0) {
-							LookAtPattern (StateDirecion.left);
+							LookAtPattern (left);
 						}
 						Pattern (statePosition);
 						yield return new WaitForSeconds (0.5f);
@@ -573,10 +569,10 @@ public class Monster : MonoBehaviour {
 				Pattern (statePosition);
 				yield return new WaitForSeconds (1.3f);
 				if (checkDirection.z > 0) {
-					LookAtPattern (StateDirecion.right);
+					LookAtPattern (right);
 				}
 				if (checkDirection.z <= 0) {
-					LookAtPattern (StateDirecion.left);
+					LookAtPattern (left);
 				}
 				moveAble = false;
 				isAttack = true;
@@ -587,7 +583,7 @@ public class Monster : MonoBehaviour {
 
 			}
 			if (attackCycle <= 3) {
-				LookAtPattern (StateDirecion.right);
+				LookAtPattern (right);
 				moveAble = true;
 				isAttack = false;
 				statePosition = StatePosition.Run;
@@ -610,10 +606,10 @@ public class Monster : MonoBehaviour {
 							currentDisTance = Vector3.Distance (targetPlayer.transform.position, transform.position);
 							checkDirection = targetPlayer.transform.position - transform.position;
 							if (checkDirection.z > 0) {
-								LookAtPattern (StateDirecion.right);
+								LookAtPattern (right);
 							}
 							if (checkDirection.z < 0) {
-								LookAtPattern (StateDirecion.left);								
+								LookAtPattern (left);								
 							}
 						}
 
@@ -786,19 +782,19 @@ public class Monster : MonoBehaviour {
 		}
 	}
 
-    public void LookAtPattern(StateDirecion state)
+    public void LookAtPattern(bool dir)
     {
-        switch (state)
+        switch (dir)
         {
-            case StateDirecion.right:
+            case true:
                 {
                     transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-                    stateDirecion = StateDirecion.right; break;
+                    break;
                 }
-            case StateDirecion.left:
+            case false:
                 {
                     transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
-                    stateDirecion = StateDirecion.left; break;
+                    break;
                 }
         }
     }
@@ -810,9 +806,9 @@ public class Monster : MonoBehaviour {
 				if (targetPlayer != null) {
 					if (aniState.IsName ("Run")||aniState.IsName("Idle")){
 						if (movePoint.z > 0) {
-							LookAtPattern (StateDirecion.right);
+							LookAtPattern (right);
 						} else if (movePoint.z < 0) {
-							LookAtPattern (StateDirecion.left);
+							LookAtPattern (left);
 						}
 					}
 				}
@@ -942,11 +938,11 @@ public class Monster : MonoBehaviour {
 			}
 		} 
 		if (monsterId == MonsterId.Duck) {
-			if (stateDirecion == StateDirecion.left) {
+			if (direction == left) {
 				GameObject objShockWave = (GameObject)Instantiate (shockWaveInstantiate, new Vector3 (this.transform.position.x, this.transform.position.y + 1.5f, this.transform.position.z - 0.53f), this.transform.rotation);
 				objShockWave.GetComponent<ShockWave>().SetDamage(attack,this);
 			}
-			if (stateDirecion == StateDirecion.right) {
+			if (direction == right) {
 				GameObject objShockWave = (GameObject)Instantiate (shockWaveInstantiate, new Vector3 (this.transform.position.x, this.transform.position.y + 1.5f, this.transform.position.z + 0.53f), this.transform.rotation);	
 				objShockWave.GetComponent<ShockWave>().SetDamage(attack,this);
 			}
@@ -969,12 +965,12 @@ public class Monster : MonoBehaviour {
 	//bossAnimation event
 	public void RoarHit()
 	{
-		Debug.Log (_StateDirecion);
-		if (_StateDirecion == StateDirecion.right)
+		Debug.Log (direction);
+		if (direction == right)
 		{
 			Instantiate (Resources.Load<GameObject> ("Effect/WarningEffect"), new Vector3 (-3.55f, 0.15f, this.transform.position.z + 10f), Quaternion.Euler (-90, 0, 0));
 		}
-		else if (_StateDirecion == StateDirecion.left)
+		else if (direction == left)
 		{
 			Instantiate (Resources.Load<GameObject> ("Effect/WarningEffect"), new Vector3 (3.55f, 0.15f, this.transform.position.z - 10f), Quaternion.Euler (-90, 0, 0));
 		} 

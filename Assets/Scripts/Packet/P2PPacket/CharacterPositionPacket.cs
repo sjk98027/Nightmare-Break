@@ -6,11 +6,11 @@
         {
             bool ret = true;
 
-            ret &= Serialize(data.dir);
-            ret &= Serialize(data.userIndex);
-            ret &= Serialize(data.posX);
-            ret &= Serialize(data.posY);
-            ret &= Serialize(data.posZ);
+            ret &= Serialize(data.Dir);
+            ret &= Serialize(data.UserIndex);
+            ret &= Serialize(data.PosX);
+            ret &= Serialize(data.PosY);
+            ret &= Serialize(data.PosZ);
             return ret;
         }
 
@@ -34,11 +34,8 @@
             ret &= Deserialize(ref posX);
             ret &= Deserialize(ref posY);
             ret &= Deserialize(ref posZ);
-            element.dir = dir;
-            element.userIndex = userIndex;
-            element.posX = posX;
-            element.posY = posY;
-            element.posZ = posZ;
+
+            element = new CharacterPositionData(dir, userIndex, posX, posY, posZ);
 
             return ret;
         }
@@ -67,12 +64,17 @@
 
 public class CharacterPositionData
 {
-    public bool dir;
-    public byte userIndex;
-    public float posX;
-    public float posY;
-    public float posZ;
+    bool dir;
+    byte userIndex;
+    float posX;
+    float posY;
+    float posZ;
 
+    public bool Dir { get { return dir; } }
+    public byte UserIndex { get { return userIndex; } }
+    public float PosX { get { return posX; } }
+    public float PosY { get { return posY; } }
+    public float PosZ { get { return posZ; } }
     public CharacterPositionData()
     {
         dir = true;

@@ -511,8 +511,17 @@ public class DataHandler : MonoBehaviour
         CharacterPositionPacket characterPositionPacket = new CharacterPositionPacket(packet.msg);
         CharacterPositionData characterPositionData = characterPositionPacket.GetData();
 
-        CharacterManager characterManager = dungeonManager.CharacterData[characterPositionData.userIndex];
+        CharacterManager characterManager = dungeonManager.CharacterData[characterPositionData.UserIndex];
         characterManager.SetPosition(characterPositionData);
+    }
+
+    //Client
+    public void UnitPosition(DataPacket packet, int udpId)
+    {
+        UnitPositionPacket unitPositionPacket = new UnitPositionPacket(packet.msg);
+        UnitPositionData unitPositionData = unitPositionPacket.GetData();
+
+        dungeonManager.SetMonsterPosition(unitPositionData);
     }
 
     //Client
