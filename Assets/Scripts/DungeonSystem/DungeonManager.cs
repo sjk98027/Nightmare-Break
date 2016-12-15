@@ -61,60 +61,60 @@ public class DungeonManager : MonoBehaviour
         }		
 
 		//Instantiate 스폰포인트 생성조건 - > mapNumber != 2;
-		mapNumber = 0;
-		normalMode = true;
+		mapNumber = 2;
+		normalMode = false;
 
-		//DungeonConstruct();
+		DungeonConstruct();
 
-//        if (GameObject.FindGameObjectWithTag("GameManager") == null)
-//        {
-//            InitializeMonsterSpawnPoint();
+        if (GameObject.FindGameObjectWithTag("GameManager") == null)
+        {
+            InitializeMonsterSpawnPoint();
+
+            MonsterSpawnData[] monsterSpawnData = new MonsterSpawnData[3];
+            monsterSpawnData[0] = new MonsterSpawnData((int)MonsterId.Frog, 9);
+            monsterSpawnData[1] = new MonsterSpawnData((int)MonsterId.Duck, 12);
+            monsterSpawnData[2] = new MonsterSpawnData((int)MonsterId.Rabbit, 6);
+            monsterSpawnList = new MonsterSpawnList(3, monsterSpawnData);
+
+            MonsterBaseData[] monsterBaseData = new MonsterBaseData[3];
+            monsterBaseData[0] = new MonsterBaseData((int)MonsterId.Frog, "Frog");
+            monsterBaseData[0].AddLevelData(new MonsterLevelData(1, 2, 0, 30, 5));
+            monsterBaseData[1] = new MonsterBaseData((int)MonsterId.Duck, "Duck");
+            monsterBaseData[1].AddLevelData(new MonsterLevelData(1, 3, 0, 35, 4));
+            monsterBaseData[2] = new MonsterBaseData((int)MonsterId.Rabbit, "Rabbit");
+            monsterBaseData[2].AddLevelData(new MonsterLevelData(1, 5, 0, 75, 4));
+            dungeonData = new MonsterStatusData(3, monsterBaseData);
+
+            SpawnMonster();
+            SetMonsterStatus();
+        }        
+//		if (GameObject.FindGameObjectWithTag("GameManager") == null)
+//		{
+//			//스폰 포인트 찾기
+//			InitializeMonsterSpawnPoint();
 //
-//            MonsterSpawnData[] monsterSpawnData = new MonsterSpawnData[3];
-//            monsterSpawnData[0] = new MonsterSpawnData((int)MonsterId.Frog, 3);
-//            monsterSpawnData[1] = new MonsterSpawnData((int)MonsterId.Duck, 4);
-//            monsterSpawnData[2] = new MonsterSpawnData((int)MonsterId.Rabbit, 2);
-//            monsterSpawnList = new MonsterSpawnList(3, monsterSpawnData);
+//			//서버에서 온 데이터 : monsterSpawnData
+//			//여기서는 직접 데이터를 설정
+//			MonsterSpawnData[] monsterSpawnData = new MonsterSpawnData[1];
+//			monsterSpawnData[0] = new MonsterSpawnData((int)MonsterId.Bear, 1);
+//			//monsterSpawnData[1] = new MonsterSpawnData((int)MonsterId.BlackBear, 1);
 //
-//            MonsterBaseData[] monsterBaseData = new MonsterBaseData[3];
-//            monsterBaseData[0] = new MonsterBaseData((int)MonsterId.Frog, "Frog");
-//            monsterBaseData[0].AddLevelData(new MonsterLevelData(1, 2, 0, 30, 5));
-//            monsterBaseData[1] = new MonsterBaseData((int)MonsterId.Duck, "Duck");
-//            monsterBaseData[1].AddLevelData(new MonsterLevelData(1, 3, 0, 35, 4));
-//            monsterBaseData[2] = new MonsterBaseData((int)MonsterId.Rabbit, "Rabbit");
-//            monsterBaseData[2].AddLevelData(new MonsterLevelData(1, 5, 0, 75, 4));
-//            dungeonData = new MonsterStatusData(3, monsterBaseData);
+//			//던전 데이터에서 몬스터 스폰 리스트를 monsterSpawnData로 설정
+//			//그러면 몬스터 생성 숫자가 설정됨(종류, 개수)
+//			monsterSpawnList = new MonsterSpawnList(1, monsterSpawnData);
 //
-//            SpawnMonster();
-//            SetMonsterStatus();
-//        }        
-		if (GameObject.FindGameObjectWithTag("GameManager") == null)
-		{
-			//스폰 포인트 찾기
-			InitializeMonsterSpawnPoint();
-
-			//서버에서 온 데이터 : monsterSpawnData
-			//여기서는 직접 데이터를 설정
-			MonsterSpawnData[] monsterSpawnData = new MonsterSpawnData[1];
-			monsterSpawnData[0] = new MonsterSpawnData((int)MonsterId.Bear, 1);
-			//monsterSpawnData[1] = new MonsterSpawnData((int)MonsterId.BlackBear, 1);
-
-			//던전 데이터에서 몬스터 스폰 리스트를 monsterSpawnData로 설정
-			//그러면 몬스터 생성 숫자가 설정됨(종류, 개수)
-			monsterSpawnList = new MonsterSpawnList(1, monsterSpawnData);
-
-			//서버에서 온 데이터 : monsterBaseData
-			MonsterBaseData[] monsterBaseData = new MonsterBaseData[1];
-			monsterBaseData[0] = new MonsterBaseData((int)MonsterId.Bear, "Bear");
-			monsterBaseData[0].AddLevelData(new MonsterLevelData(1, 2, 0, 30,1));
-
-			//던전 데이터에서 몬스터 스탯테이블을 monsterBaseData로 설정
-			//그러면 위의 몬스터 생성할때 스탯이 이렇게 설정됨
-			dungeonData = new MonsterStatusData(1, monsterBaseData);
-
-			SpawnMonster();
-			SetMonsterStatus();
-		}
+//			//서버에서 온 데이터 : monsterBaseData
+//			MonsterBaseData[] monsterBaseData = new MonsterBaseData[1];
+//			monsterBaseData[0] = new MonsterBaseData((int)MonsterId.Bear, "Bear");
+//			monsterBaseData[0].AddLevelData(new MonsterLevelData(1, 2, 0, 30,1));
+//
+//			//던전 데이터에서 몬스터 스탯테이블을 monsterBaseData로 설정
+//			//그러면 위의 몬스터 생성할때 스탯이 이렇게 설정됨
+//			dungeonData = new MonsterStatusData(1, monsterBaseData);
+//
+//			SpawnMonster();
+//			SetMonsterStatus();
+//		}
 	}
 
 	void Update()
@@ -173,9 +173,9 @@ public class DungeonManager : MonoBehaviour
     {
 		
 		//if(mapNumber != 2){
-			GameObject spawnpointInstantiate = (GameObject)Instantiate (Resources.Load ("Monster/MonsterSpawnPoint" + mapNumber.ToString()), this.transform.parent);
+			GameObject monsterSpawnPoint= (GameObject)Instantiate (Resources.Load ("Monster/MonsterSpawnPoint" + mapNumber.ToString()), this.transform.parent);
             //요고의 차일드를 받으세요
-			normalMode = true;
+			
 			//MonsterSet ();
 		//}
 
@@ -201,6 +201,7 @@ public class DungeonManager : MonoBehaviour
 
     public void SpawnMonster()
     {
+		Debug.Log (monsterSpawnList.MonsterNum);
         monsters = new GameObject[monsterSpawnList.MonsterNum];
         monsterData = new Monster[monsterSpawnList.MonsterNum];
 
@@ -333,7 +334,6 @@ public class DungeonManager : MonoBehaviour
         else if (unitId == (int)MonsterId.Bear)
         {
             monster = (GameObject)Instantiate(Resources.Load("Monster/Bear"), createPoint, gameObject.transform.rotation);
-
         }
 
         monster.transform.SetParent(transform);
