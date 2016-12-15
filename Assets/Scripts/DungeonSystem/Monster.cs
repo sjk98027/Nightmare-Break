@@ -74,7 +74,7 @@ public class Monster : MonoBehaviour {
 	//mode,gateArraynumber,monsterArraynumber
 	protected bool moveAble;
 
-    protected int monsterIndex;
+	[SerializeField]protected int monsterIndex;
 	protected MonsterId monsterId;
     protected string _name;
     protected int level;
@@ -161,7 +161,6 @@ public class Monster : MonoBehaviour {
 
     public void MonsterSet(MonsterBaseData monster)
 	{
-		//wall = new GameObject[4];
 		wall = GameObject.FindGameObjectsWithTag("Wall");
 		currentDisTanceWall = new float[wall.Length];
 
@@ -222,12 +221,10 @@ public class Monster : MonoBehaviour {
 	}
 
 	public void MonsterAIStart(bool _normalMode){//moveAI->StartAI , 
-		//_normalMode =false;
-
 		if (!_normalMode) {
-			if (monsterIndex > 6) {
+			if (monsterIndex > 18) {
 				DefenseMoveSet (DefenseMoveDirectionArray.Up);
-			} else if (monsterIndex > 3) {
+			} else if (monsterIndex > 9) {
 				DefenseMoveSet (DefenseMoveDirectionArray.Middle);
 			} else if (monsterIndex >= 0) {
 				DefenseMoveSet (DefenseMoveDirectionArray.Down);
@@ -259,7 +256,13 @@ public class Monster : MonoBehaviour {
 		{
 			if (moveAble)
 			{
-				this.transform.Translate((targetPlayer.transform.position-this.transform.position )* moveSpeed * Time.deltaTime, 0);
+				if (monsterId != MonsterId.Bear && monsterId != MonsterId.BlackBear) {
+					this.transform.Translate (movePoint.normalized * moveSpeed * Time.deltaTime);
+				}
+				else
+				{
+					this.transform.Translate((targetPlayer.transform.position-this.transform.position )* moveSpeed * Time.deltaTime, 0);
+				}
 			}
 		}
 		ChasePlayer();
