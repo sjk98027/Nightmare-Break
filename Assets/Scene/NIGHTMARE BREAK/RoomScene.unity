@@ -516,7 +516,6 @@ GameObject:
   - 20: {fileID: 133201322}
   - 124: {fileID: 133201321}
   - 92: {fileID: 133201320}
-  - 81: {fileID: 133201319}
   m_Layer: 0
   m_Name: RendCamera
   m_TagString: Untagged
@@ -537,13 +536,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1451783320}
   m_RootOrder: 1
---- !u!81 &133201319
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 133201317}
-  m_Enabled: 1
 --- !u!92 &133201320
 Behaviour:
   m_ObjectHideFlags: 0
@@ -695,7 +687,6 @@ GameObject:
   - 20: {fileID: 181511393}
   - 124: {fileID: 181511392}
   - 92: {fileID: 181511391}
-  - 81: {fileID: 181511390}
   m_Layer: 0
   m_Name: RendCamera
   m_TagString: Untagged
@@ -716,13 +707,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 137338753}
   m_RootOrder: 1
---- !u!81 &181511390
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 181511388}
-  m_Enabled: 1
 --- !u!92 &181511391
 Behaviour:
   m_ObjectHideFlags: 0
@@ -3395,7 +3379,6 @@ GameObject:
   - 20: {fileID: 992950963}
   - 124: {fileID: 992950962}
   - 92: {fileID: 992950961}
-  - 81: {fileID: 992950960}
   m_Layer: 0
   m_Name: RendCamera
   m_TagString: Untagged
@@ -3403,13 +3386,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &992950960
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 992950959}
-  m_Enabled: 1
 --- !u!92 &992950961
 Behaviour:
   m_ObjectHideFlags: 0
@@ -6769,7 +6745,6 @@ GameObject:
   - 20: {fileID: 1957137595}
   - 124: {fileID: 1957137594}
   - 92: {fileID: 1957137593}
-  - 81: {fileID: 1957137592}
   m_Layer: 0
   m_Name: RendCamera
   m_TagString: Untagged
@@ -6790,13 +6765,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1935089989}
   m_RootOrder: 1
---- !u!81 &1957137592
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1957137590}
-  m_Enabled: 1
 --- !u!92 &1957137593
 Behaviour:
   m_ObjectHideFlags: 0

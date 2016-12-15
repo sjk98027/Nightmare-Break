@@ -279,6 +279,13 @@ public class DataHandler : MonoBehaviour
         RoomListPacket roomListPacket = new RoomListPacket(packet.msg);
         RoomListData roomListData = roomListPacket.GetData();
 
+        for (int i = 0; i < WaitingUIManager.maxRoomNum; i++)
+        {
+            Debug.Log(roomListData.Rooms[i].RoomName);
+            Debug.Log(roomListData.Rooms[i].DungeonId);
+            Debug.Log(roomListData.Rooms[i].DungeonLevel);
+        }
+
         uiManager.WaitingUIManager.SetRoom(roomListData);
 
         if (SceneChanger.Instance.CurrentScene == SceneChanger.SceneName.LoadingScene)
@@ -328,6 +335,7 @@ public class DataHandler : MonoBehaviour
         RoomNumberData roomNumberData = roomNumberPacket.GetData();
 
         Debug.Log(roomNumberData.RoomNum);
+        
         if (roomNumberData.RoomNum < 0)
         {
             StartCoroutine(uiManager.Dialog(1.0f, "방 입장 실패"));
@@ -346,6 +354,14 @@ public class DataHandler : MonoBehaviour
         Debug.Log("방 유저 정보 수신");
         RoomDataPacket roomDataPacket = new RoomDataPacket(packet.msg);
         RoomData roomData = roomDataPacket.GetData();
+
+        for (int i = 0; i < WaitingUIManager.maxPlayerNum; i++)
+        {
+            Debug.Log(roomData.RoomUserData[i].UserName);
+            Debug.Log(roomData.RoomUserData[i].UserGender);
+            Debug.Log(roomData.RoomUserData[i].UserClass);
+            Debug.Log(roomData.RoomUserData[i].UserLevel);
+        }
 
         UIManager.Instance.RoomUIManager.SetUserList(roomData);
     }

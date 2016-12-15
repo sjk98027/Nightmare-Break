@@ -15,3 +15,5 @@ EditorBuildSettings:
     path: Assets/Scene/NIGHTMARE BREAK/CreateScene.unity
   - enabled: 1
     path: Assets/Scene/NIGHTMARE BREAK/WaitScene.unity
+  - enabled: 1
+    path: Assets/Scene/NIGHTMARE BREAK/RoomScene.unity
