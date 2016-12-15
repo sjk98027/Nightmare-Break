@@ -64,17 +64,21 @@ public class CreateRoomData
     public byte dungeonLevel;
     public string roomName;
 
+    public byte DungeonId { get { return dungeonId; } }
+    public byte DungeonLevel { get { return dungeonLevel; } }
+    public string RoomName { get { return roomName; } }
+
     public CreateRoomData()
     {
-        roomName = "";
         dungeonId = 0;
         dungeonLevel = 0;
+        roomName = "";
     }
 
-    public CreateRoomData(string newRoomName, int newId, int newLevel)
+    public CreateRoomData(int newId, int newLevel, string newRoomName)
     {
-        roomName = "";
         dungeonId = (byte)newId;
         dungeonLevel = (byte)newLevel;
+        roomName = newRoomName;
     }
 }

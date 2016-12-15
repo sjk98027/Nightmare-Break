@@ -278,7 +278,7 @@ public class DataSender : MonoBehaviour
     {
         Debug.Log("방 생성");
 
-        CreateRoomData createRoomData = new CreateRoomData(roomName, dungeonId, dungeonLevel);
+        CreateRoomData createRoomData = new CreateRoomData(dungeonId, dungeonLevel, roomName);
         CreateRoomPacket createRoomPacket = new CreateRoomPacket(createRoomData);
         createRoomPacket.SetPacketId((int)ClientPacketId.CreateRoom);
 
