@@ -61,13 +61,13 @@ public class DataHandler : MonoBehaviour
         server_notifier.Add((int)ServerPacketId.DeleteChracterResult, DeleteCharacterResult);
         server_notifier.Add((int)ServerPacketId.RoomList, RoomList);
         server_notifier.Add((int)ServerPacketId.CharacterStatus, CharacterStatus);
-        server_notifier.Add((int)ServerPacketId.CreateRoomResult, CreateRoomResult);
-        server_notifier.Add((int)ServerPacketId.EnterRoomResult, EnterRoomResult);
-        server_notifier.Add((int)ServerPacketId.ExitRoomResult, ExitRoomResult);
-        server_notifier.Add((int)ServerPacketId.RoomUserData, RoomUserData);
+        server_notifier.Add((int)ServerPacketId.CreateRoomNumber, CreateRoomNumber);
+        server_notifier.Add((int)ServerPacketId.EnterRoomNumber, EnterRoomNumber);
+        server_notifier.Add((int)ServerPacketId.ExitRoomNumber, ExitRoomNumber);
+        server_notifier.Add((int)ServerPacketId.RoomData, RoomData);
         server_notifier.Add((int)ServerPacketId.StartGame, StartGame);
         server_notifier.Add((int)ServerPacketId.UdpConnection, UdpConnection);
-        server_notifier.Add((int)ServerPacketId.SpawnMonsterList, SpawnMonsterList);
+        server_notifier.Add((int)ServerPacketId.MonsterSpawnList, MonsterSpawnList);
         server_notifier.Add((int)ServerPacketId.DungeonData, DungeonData);
         server_notifier.Add((int)ServerPacketId.StartDungeon, StartDungeon);
     }
@@ -303,7 +303,7 @@ public class DataHandler : MonoBehaviour
     }
 
     //Server - 방 생성 결과 수신
-    public void CreateRoomResult(DataPacket packet)
+    public void CreateRoomNumber(DataPacket packet)
     {
         Debug.Log("방 생성 결과 수신");
         RoomNumberPacket resultPacket = new RoomNumberPacket(packet.msg);
@@ -316,31 +316,32 @@ public class DataHandler : MonoBehaviour
         else if (resultData.RoomNum <= WaitingUIManager.maxRoomNum)
         {
             StartCoroutine(uiManager.Dialog(1.0f, "방 생성 성공"));
-            uiManager.WaitingUIManager.CreateRoom(resultData.RoomNum - 1);
+            uiManager.WaitingUIManager.CreateRoom(resultData.RoomNum);
         }
     }
 
     //Server - 방 입장 결과 수신
-    public void EnterRoomResult(DataPacket packet)
+    public void EnterRoomNumber(DataPacket packet)
     {
         Debug.Log("방 입장 결과 수신");
-        RoomNumberPacket resultPacket = new RoomNumberPacket(packet.msg);
-        RoomNumberData resultData = resultPacket.GetData();
+        RoomNumberPacket roomNumberPacket = new RoomNumberPacket(packet.msg);
+        RoomNumberData roomNumberData = roomNumberPacket.GetData();
 
-        if (resultData.RoomNum < 0)
+        Debug.Log(roomNumberData.RoomNum);
+        if (roomNumberData.RoomNum < 0)
         {
             StartCoroutine(uiManager.Dialog(1.0f, "방 입장 실패"));
         }
-        else if (resultData.RoomNum <= WaitingUIManager.maxPlayerNum)
+        else if (roomNumberData.RoomNum <= WaitingUIManager.maxPlayerNum)
         {
             StartCoroutine(uiManager.Dialog(1.0f, "방 입장 성공"));
+            UIManager.Instance.WaitingUIManager.EnterRoom(roomNumberData.RoomNum);
             SceneChanger.Instance.SceneChange(SceneChanger.SceneName.RoomScene, false);
-            DataSender.Instance.RequestRoomUserData(resultData.RoomNum);
         }
     }
 
     //Server - 방 유저 정보 수신
-    public void RoomUserData(DataPacket packet)
+    public void RoomData(DataPacket packet)
     {
         Debug.Log("방 유저 정보 수신");
         RoomDataPacket roomDataPacket = new RoomDataPacket(packet.msg);
@@ -350,7 +351,7 @@ public class DataHandler : MonoBehaviour
     }
 
     //Server - 방 퇴장 결과 수신
-    public void ExitRoomResult(DataPacket packet)
+    public void ExitRoomNumber(DataPacket packet)
     {
 
     }
@@ -380,7 +381,7 @@ public class DataHandler : MonoBehaviour
     }
 
     //Server - 던전 몬스터 소환 데이터 수신
-    public void SpawnMonsterList(DataPacket packet)
+    public void MonsterSpawnList(DataPacket packet)
     {
         Debug.Log("던전 몬스터 소환 데이터 수신");
 

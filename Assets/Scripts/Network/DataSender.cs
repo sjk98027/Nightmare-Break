@@ -217,21 +217,6 @@ public class DataSender : MonoBehaviour
         sendMsgs.Enqueue(packet);
     }
 
-    //캐릭터 선택 -> Server
-    public void SelectCharacter(int index)
-    {
-        Debug.Log("캐릭터 선택");
-
-        CharacterIndexData characterIndexData = new CharacterIndexData((byte)index);
-        CharacterIndexPacket characterIndexPacket = new CharacterIndexPacket(characterIndexData);
-        characterIndexPacket.SetPacketId((int)ClientPacketId.SelectCharacter);
-
-        DataPacket packet = new DataPacket(CreatePacket(characterIndexPacket), null);
-
-        sendMsgs.Enqueue(packet);
-
-    }
-
     //캐릭터 정보 요청 -> Server
     public void RequestCharacterStatus()
     {

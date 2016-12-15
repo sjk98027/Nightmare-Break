@@ -35,6 +35,7 @@ public class WaitingUIManager : MonoBehaviour
     int dungeonLevel;
 
     public Room[] Rooms { get { return rooms; } }
+    public int CurrentRoomNum { get { return currentRoomNum; } }
 
     public void ManagerInitialize()
     {
@@ -140,8 +141,12 @@ public class WaitingUIManager : MonoBehaviour
     public void CreateRoom(int roomNum)
     {
         Debug.Log("방 생성 성공");
-        currentRoomNum = roomNum;
         DataSender.Instance.EnterRoom(roomNum);
+    }
+
+    public void EnterRoom(int roomNum)
+    {
+        currentRoomNum = roomNum;
     }
 
     public void OnClickCreateRoomButton()
