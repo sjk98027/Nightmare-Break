@@ -25,13 +25,13 @@ public class LoginUIManager : MonoBehaviour
 
     InputField loginPwField;
     InputField accountPwField;
+    InputField deletePwField;
 
     public void ManagerInitialize()
     {
         SetUIObject();
         InitializeAddListener();
-        loginPwField.contentType = InputField.ContentType.Password;
-        accountPwField.contentType = InputField.ContentType.Password;
+
         createAccountPanel.SetActive(false);
     }
 
@@ -81,9 +81,9 @@ public class LoginUIManager : MonoBehaviour
 
     public void OnClickCreateAccountYesButton()
     {
-        if (createId.text.Length >= 4 && createPw.text.Length >= 6)
+        if (createId.text.Length >= 4 && accountPwField.text.Length >= 6)
         {
-            DataSender.Instance.CreateAccount(createId.text, createPw.text);
+            DataSender.Instance.CreateAccount(createId.text, accountPwField.text);
         }
         else
         {
@@ -111,9 +111,9 @@ public class LoginUIManager : MonoBehaviour
 
     public void OnClickDeleteAccountButton()
     {
-        if (deleteId.text.Length >= 4 && deletePw.text.Length >= 6)
+        if (deleteId.text.Length >= 4 && deletePwField.text.Length >= 6)
         {
-            DataSender.Instance.DeleteAccount(deleteId.text, deletePw.text);
+            DataSender.Instance.DeleteAccount(deleteId.text, deletePwField.text);
         }
         else
         {
@@ -123,9 +123,9 @@ public class LoginUIManager : MonoBehaviour
 
     public void OnClickLoginButton()
     {
-        if (loginId.text.Length >= 4 && loginPw.text.Length >= 6)
+        if (loginId.text.Length >= 4 && loginPwField.text.Length >= 6)
         {
-            DataSender.Instance.Login(loginId.text, loginPw.text);
+            DataSender.Instance.Login(loginId.text, loginPwField.text);
         }
         else
         {

@@ -20,6 +20,8 @@ public class WaitingUIManager : MonoBehaviour
     private Button myInfoExitBtn;
     private Button roomCreateYesBtn;
 
+    private InputField roomName;
+
 	[SerializeField] GameObject roomCreateUI;
 	private GameObject skillAddUI;
 	private GameObject equipInfoUI;
@@ -65,17 +67,16 @@ public class WaitingUIManager : MonoBehaviour
         skillAddUI = GameObject.Find("SkillAddUI");
         equipInfoUI = GameObject.Find("EquipInfoUI");
         myInfoUI = GameObject.Find("MyInfoUI");
-        roomCreateExitBtn = roomCreateUI.transform.GetChild(6).GetComponent<Button>();
+        roomName = GameObject.Find("RoomCreateInputField").GetComponent<InputField>();
+        createRoomName = GameObject.Find("CreateRoomName").GetComponent<Text>();
+        roomCreateExitBtn = roomCreateUI.transform.GetChild(5).GetComponent<Button>();
         skillAddExitBtn = skillAddUI.transform.GetChild(3).GetComponent<Button>();
         equipInfoExitBtn = equipInfoUI.transform.GetChild(2).GetComponent<Button>();
         myInfoExitBtn = myInfoUI.transform.GetChild(1).GetComponent<Button>();
-
-        createRoomName = GameObject.Find("CreateRoomName").GetComponent<Text>();
     }
 
     public void InitializeAddListner()
     {
-
         roomCreateBtn.onClick.AddListener(() => RoomCreate());
         roomCreateYesBtn.onClick.AddListener(() => OnClickCreateRoomButton()); 
         skillAddBtn.onClick.AddListener(() => SkillAdd());
@@ -119,6 +120,7 @@ public class WaitingUIManager : MonoBehaviour
 	{
         if(roomCreateUI.activeSelf)
         {
+            roomName.text ="";
             roomCreateUI.SetActive(false);
         }
         else if (skillAddUI.activeSelf)

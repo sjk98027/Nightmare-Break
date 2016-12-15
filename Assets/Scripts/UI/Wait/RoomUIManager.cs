@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class RoomUIManager : MonoBehaviour {
 
     private const int maxUser = 4;
+    private const int maxSkill = 6;
 
     private Button skillBtn;
     private Button equipBtn;
@@ -19,12 +20,16 @@ public class RoomUIManager : MonoBehaviour {
     private Button equipCloseBtn;
     private Button skillCloseBtn;
     private Button myInfoCloseBtn;
+    private Button[] userSkillBtn;
 
     private Image[] characterBackImage;
+    private Image[] classIcon;
+    private Text[] userName;
 
     private GameObject equipInfoUI;
     private GameObject skillAddUI;
     private GameObject myInfoUI;
+    private GameObject[] rendPos;
 
     private RoomData roomData;
 
@@ -37,6 +42,8 @@ public class RoomUIManager : MonoBehaviour {
     public void SetUIObject()
     {
         characterBackImage = new Image[maxUser];
+        userSkillBtn = new Button[maxSkill];
+        classIcon = new Image[maxUser];
 
         skillBtn = GameObject.Find("SkillBtn").GetComponent<Button>();
         equipBtn = GameObject.Find("EquipBtn").GetComponent<Button>();
@@ -88,7 +95,10 @@ public class RoomUIManager : MonoBehaviour {
 
     public void SetUserData()
     {
-
+        for(int i=0; i<roomData.RoomUserData.Length; i++)
+        {
+            
+        }
     }
 
     void GameStart()

@@ -69,7 +69,7 @@ public class RoomListPacket : Packet<RoomListData>
                     ret &= Deserialize(ref userClass);
                     ret &= Deserialize(ref userLevel);
 
-                    roomUserData[i] = new RoomUserData(userName, userGender, userClass, userLevel);
+                    roomUserData[j] = new RoomUserData(userName, userGender, userClass, userLevel);
                 }
 
                 rooms[i] = new Room(roomName, dungeonId, dungeonLevel, roomUserData);
