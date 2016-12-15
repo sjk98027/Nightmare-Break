@@ -489,7 +489,7 @@ public class CharacterManager : MonoBehaviour
 	{
 		Debug.Log ("캐릭터 위치 설정 유저 번호 : " + userNum);
 
-		if (newPositionData.dir)
+		if (newPositionData.Dir)
 		{
 			transform.rotation = Quaternion.Euler (new Vector3 (0, 0.0f, 0));
 			charDir = true;
@@ -499,7 +499,7 @@ public class CharacterManager : MonoBehaviour
 			transform.rotation = Quaternion.Euler (new Vector3 (0, 180.0f, 0));
 			charDir = false;
 		}
-		transform.position = new Vector3 (newPositionData.posX, newPositionData.posY, newPositionData.posZ);
+		transform.position = new Vector3 (newPositionData.PosX, newPositionData.PosY, newPositionData.PosZ);
 	}
 
 	public virtual void SetCharacterType () { }
