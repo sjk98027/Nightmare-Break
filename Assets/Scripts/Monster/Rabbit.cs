@@ -308,10 +308,10 @@ public class Rabbit : Monster {
 				checkDirection = targetPlayer.transform.position - this.gameObject.transform.position;
 
 				if (checkDirection.z > 0) {
-					LookAtPattern (StateDirecion.right);
+					LookAtPattern (right);
 				}
 				if (checkDirection.z <= 0) {
-					LookAtPattern (StateDirecion.left);
+					LookAtPattern (left);
 				}
 
 
@@ -339,7 +339,7 @@ public class Rabbit : Monster {
 					}
 				}
 				if (currentDisTance >= middleBossToMonsterLimitDistanceMonsterToCenter*1.5f) {
-					LookAtPattern (StateDirecion.right);
+					LookAtPattern (right);
 					IsHited = false;
 					targetPlayer = null;
 					//transform.Translate (boomObjectPosition*Time.deltaTime);
@@ -379,10 +379,10 @@ public class Rabbit : Monster {
 		if (IsHited) {
 
 			if (checkDirection.z > 0) {
-				LookAtPattern (StateDirecion.right);
+				LookAtPattern (right);
 			}
 			if (checkDirection.z <= 0) {
-				LookAtPattern (StateDirecion.left);
+				LookAtPattern (left);
 			}
 
 			currentDisTance = Vector3.Distance(targetPlayer.transform.position, this.gameObject.transform.position);
@@ -414,7 +414,7 @@ public class Rabbit : Monster {
 				}
 			}
 			if (currentDisTance >= middleBossToMonsterLimitDistanceMonsterToCenter*1.5f) {
-				LookAtPattern (StateDirecion.right);
+				LookAtPattern (right);
 				IsHited = false;
 				targetPlayer = null;
 				//transform.Translate (boomObjectPosition*Time.deltaTime);

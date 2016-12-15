@@ -225,11 +225,11 @@ public class TestMonster : Monster
 ////	public void RoarHit()
 ////	{
 ////		Debug.Log (_StateDirecion);
-////		if (_StateDirecion == StateDirecion.right)
+////		if (_StateDirecion == right)
 ////		{
 ////			Instantiate (Resources.Load<GameObject> ("Effect/WarningEffect"), new Vector3 (-3.55f, 0.15f, this.transform.position.z + 10f), Quaternion.Euler (-90, 0, 0));
 ////		}
-////		else if (_StateDirecion == StateDirecion.left)
+////		else if (_StateDirecion == left)
 ////		{
 ////			Instantiate (Resources.Load<GameObject> ("Effect/WarningEffect"), new Vector3 (3.55f, 0.15f, this.transform.position.z - 10f), Quaternion.Euler (-90, 0, 0));
 ////		} 
@@ -249,11 +249,11 @@ public class TestMonster : Monster
 //
 //		if (checkDirection.z > 0) 
 //		{
-//			LookAtPattern (StateDirecion.right);
+//			LookAtPattern (right);
 //		}
 //		else if (checkDirection.z < 0) 
 //		{
-//			LookAtPattern (StateDirecion.left);
+//			LookAtPattern (left);
 //		}
 //
 //		transform.LookAt (vecLookPos);
