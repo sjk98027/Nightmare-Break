@@ -30,16 +30,11 @@ public class WaitingUIManager : MonoBehaviour
     Room[] rooms;
 
     Text createRoomName;
+    int currentRoomNum;
     int dungeonId;
     int dungeonLevel;
 
     public Room[] Rooms { get { return rooms; } }
-
-    //
-    int currentRoomNum;
-    int userNum;
-
-    public int UserNum { get { return userNum; } }
 
     public void ManagerInitialize()
     {
@@ -149,11 +144,6 @@ public class WaitingUIManager : MonoBehaviour
         DataSender.Instance.EnterRoom(roomNum);
     }
 
-    public void SetUserNum(int newUserNum)
-    {
-        userNum = newUserNum;
-    }
-
     public void OnClickCreateRoomButton()
     {
         DataSender.Instance.CreateRoom(createRoomName.text, dungeonId, dungeonLevel);
@@ -172,7 +162,7 @@ public class WaitingUIManager : MonoBehaviour
     public void OnClickStartGameButton()
     {
         DataSender.Instance.StartGame();
-        DataSender.Instance.RequestSpawnMonsterList();
+        DataSender.Instance.RequestMonsterSpawnList();
         DataSender.Instance.RequestDungeonData();
     }
 }

@@ -64,8 +64,11 @@ public class DataHandler : MonoBehaviour
         server_notifier.Add((int)ServerPacketId.CreateRoomResult, CreateRoomResult);
         server_notifier.Add((int)ServerPacketId.EnterRoomResult, EnterRoomResult);
         server_notifier.Add((int)ServerPacketId.ExitRoomResult, ExitRoomResult);
+        server_notifier.Add((int)ServerPacketId.RoomUserData, RoomUserData);
         server_notifier.Add((int)ServerPacketId.StartGame, StartGame);
         server_notifier.Add((int)ServerPacketId.UdpConnection, UdpConnection);
+        server_notifier.Add((int)ServerPacketId.SpawnMonsterList, SpawnMonsterList);
+        server_notifier.Add((int)ServerPacketId.DungeonData, DungeonData);
         server_notifier.Add((int)ServerPacketId.StartDungeon, StartDungeon);
     }
 
@@ -365,7 +368,7 @@ public class DataHandler : MonoBehaviour
             Debug.Log("게임 시작");
             DataSender.Instance.RequestUdpConnection();
 
-            if (uiManager.WaitingUIManager.UserNum == 0)
+            if (uiManager.RoomUIManager.UserNum == 0)
             {
                 DataSender.Instance.RequestDungeonData();
             }
@@ -374,6 +377,28 @@ public class DataHandler : MonoBehaviour
         {
             Debug.Log("게임 시작 실패");
         }
+    }
+
+    //Server - 던전 몬스터 소환 데이터 수신
+    public void SpawnMonsterList(DataPacket packet)
+    {
+        Debug.Log("던전 몬스터 소환 데이터 수신");
+
+        MonsterSpawnListPacket monsterSpawnListPacket = new MonsterSpawnListPacket(packet.msg);
+        MonsterSpawnList monsterSpawnList = monsterSpawnListPacket.GetData();
+
+        dungeonManager.SetMonsterSpawnList(monsterSpawnList);
+    }
+
+    //Server - 던전 데이터 수신
+    public void DungeonData(DataPacket packet)
+    {
+        Debug.Log("던전 데이터 수신");
+
+        MonsterStatusPacket dungeonDataPacket = new MonsterStatusPacket(packet.msg);
+        MonsterStatusData dungeonData = dungeonDataPacket.GetData();
+
+        dungeonManager.SetMonsterData(dungeonData);
     }
 
     //Server - 연결 시작
@@ -414,28 +439,6 @@ public class DataHandler : MonoBehaviour
                 networkManager.ConnectP2P(newEndPoint);
             }
         }
-    }
-
-    //Server - 던전 몬스터 소환 데이터 수신
-    public void SpawnMonsterData(DataPacket packet)
-    {
-        Debug.Log("던전 몬스터 소환 데이터 수신");
-
-        MonsterSpawnListPacket monsterSpawnListPacket = new MonsterSpawnListPacket(packet.msg);
-        MonsterSpawnList monsterSpawnList = monsterSpawnListPacket.GetData();
-
-        dungeonManager.SetMonsterSpawnList(monsterSpawnList);
-    }
-
-    //Server - 던전 데이터 수신
-    public void DungeonData(DataPacket packet)
-    {
-        Debug.Log("던전 데이터 수신");
-
-        MonsterStatusPacket dungeonDataPacket = new MonsterStatusPacket (packet.msg);
-        MonsterStatusData dungeonData = dungeonDataPacket.GetData();
-
-        dungeonManager.SetMonsterData(dungeonData);
     }
 
     //Client - 연결 확인 답장

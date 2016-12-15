@@ -83,7 +83,7 @@ public class DataSender : MonoBehaviour
                     tcpSock.Send(packet.msg, 0, packet.msg.Length, SocketFlags.None);
                 }
             }
-        }        
+        }
     }
 
     //비동기 콜백 메소드
@@ -358,13 +358,14 @@ public class DataSender : MonoBehaviour
     }
 
     //던전 몬스터 소환 데이터 요청 -> Server
-    public void RequestSpawnMonsterList()
+    public void RequestMonsterSpawnList()
     {
         Debug.Log("몬스터 소환 데이터 요청");
 
+        byte result = (byte)UIManager.Instance.RoomUIManager.DungeonId;
         ResultData resultData = new ResultData();
         ResultPacket resultPacket = new ResultPacket(resultData);
-        resultPacket.SetPacketId((int)ClientPacketId.RequestSpawnMonsterList);
+        resultPacket.SetPacketId((int)ClientPacketId.RequestMonsterSpawnList);
 
         DataPacket packet = new DataPacket(CreatePacket(resultPacket), null);
 

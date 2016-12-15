@@ -33,6 +33,17 @@ public class RoomUIManager : MonoBehaviour {
 
     private RoomData roomData;
 
+    Text roomName;
+    int dungeonId;
+    int dungeonLevel;
+
+    int roomNum;
+    int userNum;
+
+    public int UserNum { get { return userNum; } }
+    public int DungeonId { get { return dungeonId; } }
+    public int DungeonLevel { get { return dungeonLevel; } }
+
     public void ManagerInitialize()
     {
         SetUIObject();
@@ -99,6 +110,11 @@ public class RoomUIManager : MonoBehaviour {
         {
             
         }
+    }
+
+    public void SetMyNum(int newUserNum)
+    {
+        userNum = newUserNum;
     }
 
     void GameStart()
