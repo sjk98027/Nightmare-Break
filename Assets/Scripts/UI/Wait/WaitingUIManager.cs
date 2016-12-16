@@ -90,11 +90,11 @@ public class WaitingUIManager : MonoBehaviour
 		roomInfoUI = GameObject.Find ("RoomInfoUI");
 		createroomName = GameObject.Find("RoomCreateInputField").GetComponent<InputField>();
 
-		equipWeaponIcon = equipInfoUI.transform.GetChild (3).GetComponent<Image> ();
-        roomCreateExitBtn = roomCreateUI.transform.GetChild(5).GetComponent<Button>();
-        skillAddExitBtn = skillAddUI.transform.GetChild(9).GetComponent<Button>();
-        equipInfoExitBtn = equipInfoUI.transform.GetChild(5).GetComponent<Button>();
-        myInfoExitBtn = myInfoUI.transform.GetChild(1).GetComponent<Button>();
+        equipWeaponIcon = equipInfoUI.transform.FindChild("Weapon").GetComponent<Image>();
+        roomCreateExitBtn = roomCreateUI.transform.FindChild("ExitBtn").GetComponent<Button>();
+        skillAddExitBtn = skillAddUI.transform.FindChild("ExitBtn").GetComponent<Button>();
+        equipInfoExitBtn = equipInfoUI.transform.FindChild("ExitBtn").GetComponent<Button>();
+        myInfoExitBtn = myInfoUI.transform.FindChild("ExitBtn").GetComponent<Button>();
 
 		for (int i = 0; i < skillAddIcon.Length; i++) {
 			skillAddIcon [i] = skillAddUI.transform.GetChild (i).GetComponent<Image> ();
