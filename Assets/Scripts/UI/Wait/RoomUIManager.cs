@@ -148,7 +148,7 @@ public class RoomUIManager : MonoBehaviour {
 
     void GameStart()
     {
-        DataSender.Instance.EnterRoom(roomNum);
+        DataSender.Instance.StartGame();
     }
 
     void RoomExit()
