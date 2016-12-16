@@ -43,6 +43,7 @@ public class MonsterSpawnListPacket : Packet<DungeonData>
             byte monsterNum = 0;
 
             ret &= Deserialize(ref stageNum);
+            element = new DungeonData();
 
             for (int stageIndex = 0; stageIndex < stageNum; stageIndex++)
             {
@@ -55,7 +56,7 @@ public class MonsterSpawnListPacket : Packet<DungeonData>
                     ret &= Deserialize(ref monsterNum);
                 }
 
-                element.Stages[stageIndex] = new Stage(stageIndex);
+                element.Stages.Add(new Stage(stageIndex));
                 element.Stages[stageIndex].AddMonster(monsterId, monsterLevel, monsterNum);
             }
 
