@@ -11,6 +11,7 @@ public class WaitingUIManager : MonoBehaviour
     [SerializeField]private int selectNum;
 
     private Button roomCreateBtn;
+    private Button roomEntereBtn;
     private Button skillAddBtn;
     private Button equipInfoBtn;
     private Button myInfoBtn;
@@ -79,6 +80,7 @@ public class WaitingUIManager : MonoBehaviour
 		skillAddIcon = new Image[CharacterStatus.skillNum];
 
         roomCreateBtn = GameObject.Find("RoomCreateBtn").GetComponent<Button>();
+        roomEntereBtn = GameObject.Find("RoomEnterBtn").GetComponent<Button>();
         roomCreateYesBtn = GameObject.Find("RoomCreateYesBtn").GetComponent<Button>();
         skillAddBtn = GameObject.Find("SkillAddBtn").GetComponent<Button>();
         equipInfoBtn = GameObject.Find("EquipBtn").GetComponent<Button>();
@@ -117,6 +119,7 @@ public class WaitingUIManager : MonoBehaviour
     public void InitializeAddListner()
     {
         roomCreateBtn.onClick.AddListener(() => RoomCreate());
+        roomEntereBtn.onClick.AddListener(() => OnClickEnterRoomButton());
         roomCreateYesBtn.onClick.AddListener(() => OnClickCreateRoomButton()); 
         skillAddBtn.onClick.AddListener(() => SkillAdd());
         equipInfoBtn.onClick.AddListener(() => EquipInfo());
@@ -203,7 +206,9 @@ public class WaitingUIManager : MonoBehaviour
                 roomInfoGenderIcon[i].sprite = Resources.Load<Sprite>("RoomClassIcon/Gender" + rooms[roomNum].RoomUserData[i].UserGender);
             }
         }
-	}
+
+        currentRoomNum = roomNum;
+    }
 
     public void SetRoomListData(RoomListData roomListData)
     {
@@ -252,8 +257,6 @@ public class WaitingUIManager : MonoBehaviour
     public void OnClickStartGameButton()
     {
         DataSender.Instance.StartGame();
-        DataSender.Instance.RequestMonsterSpawnList();
-        DataSender.Instance.RequestDungeonData();
     }
 }
 

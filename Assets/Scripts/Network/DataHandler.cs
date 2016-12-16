@@ -361,7 +361,7 @@ public class DataHandler : MonoBehaviour
             Debug.Log(roomData.RoomUserData[i].UserLevel);
         }
 
-        UIManager.Instance.RoomUIManager.SetUserList(roomData);
+        UIManager.Instance.RoomUIManager.SetRoom(roomData);
     }
 
     //Server - 방 퇴장 결과 수신
@@ -395,9 +395,9 @@ public class DataHandler : MonoBehaviour
         Debug.Log("던전 몬스터 소환 데이터 수신");
 
         MonsterSpawnListPacket monsterSpawnListPacket = new MonsterSpawnListPacket(packet.msg);
-        MonsterSpawnList monsterSpawnList = monsterSpawnListPacket.GetData();
+        DungeonData monsterSpawnData = monsterSpawnListPacket.GetData();
 
-        dungeonManager.SetMonsterSpawnList(monsterSpawnList);
+        dungeonManager.SetMonsterSpawnList(monsterSpawnData);
 
         if (SceneChanger.Instance.CurrentScene == SceneChanger.SceneName.LoadingScene)
         {

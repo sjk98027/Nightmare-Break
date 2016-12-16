@@ -8,6 +8,12 @@ public class RoomDataPacket : Packet<RoomData>
         {
             bool ret = true;
 
+            ret &= Serialize((byte)Encoding.Unicode.GetBytes(data.RoomName).Length);
+            ret &= Serialize(data.RoomName);
+            ret &= Serialize(data.RoomNum);
+            ret &= Serialize(data.DungeonId);
+            ret &= Serialize(data.DungeonLevel);
+
             for (int i = 0; i < WaitingUIManager.maxPlayerNum; i++)
             {
                 ret &= Serialize((byte)Encoding.Unicode.GetBytes(data.RoomUserData[i].UserName).Length);
@@ -29,11 +35,24 @@ public class RoomDataPacket : Packet<RoomData>
             }
 
             bool ret = true;
+            byte roomNameLength = 0;
+            string roomName;
+            byte roomNum = 0;
+            byte dungeonId = 0;
+            byte dungeonLevel = 0;
+
             byte[] userNameLength = new byte[WaitingUIManager.maxPlayerNum];
             string[] userName = new string[WaitingUIManager.maxPlayerNum];
             byte[] userGender = new byte[WaitingUIManager.maxPlayerNum];
             byte[] userClass = new byte[WaitingUIManager.maxPlayerNum];
             byte[] userLevel = new byte[WaitingUIManager.maxPlayerNum];
+            RoomUserData[] roomUserData = new RoomUserData[WaitingUIManager.maxPlayerNum];
+
+            ret &= Deserialize(ref roomNameLength);
+            ret &= Deserialize(out roomName, roomNameLength);
+            ret &= Deserialize(ref roomNum);
+            ret &= Deserialize(ref dungeonId);
+            ret &= Deserialize(ref dungeonLevel);
 
             for (int i = 0; i < WaitingUIManager.maxPlayerNum; i++)
             {
@@ -42,9 +61,10 @@ public class RoomDataPacket : Packet<RoomData>
                 ret &= Deserialize(ref userGender[i]);
                 ret &= Deserialize(ref userClass[i]);
                 ret &= Deserialize(ref userLevel[i]);
+                roomUserData[i] = new RoomUserData(userName[i], userGender[i], userClass[i], userLevel[i]);
             }
 
-            element = new RoomData(userName, userGender, userClass, userLevel);
+            element = new RoomData(roomName, roomNum, dungeonId, dungeonLevel, roomUserData);
 
             return ret;
         }
@@ -73,8 +93,16 @@ public class RoomDataPacket : Packet<RoomData>
 
 public class RoomData
 {
+    string roomName;
+    byte roomNum;
+    byte dungeonId;
+    byte dungeonLevel;
     RoomUserData[] roomUserData;
 
+    public string RoomName { get { return roomName; } }
+    public byte RoomNum { get { return roomNum; } }
+    public byte DungeonId { get { return dungeonId; } }
+    public byte DungeonLevel { get { return dungeonLevel; } }
     public RoomUserData[] RoomUserData { get { return roomUserData; } }
 
     public RoomData()
@@ -87,14 +115,13 @@ public class RoomData
         }
     }
 
-    public RoomData(string[] newUserName, byte[] newUserGender, byte[] newUserClass, byte[] newUserLevel)
+    public RoomData(string newRoomName, byte newRoomNum, byte newDungeonId, byte newDungeonLevel, RoomUserData[] newRoomUserData)
     {
-        roomUserData = new RoomUserData[WaitingUIManager.maxPlayerNum];
-
-        for (int i = 0; i < WaitingUIManager.maxPlayerNum; i++)
-        {
-            roomUserData[i] = new RoomUserData(newUserName[i], newUserGender[i], newUserClass[i], newUserLevel[i]);
-        }
+        roomName = newRoomName;
+        roomNum = newRoomNum;
+        dungeonId = newDungeonId;
+        dungeonLevel = newDungeonLevel;
+        roomUserData = newRoomUserData;
     }
 
     public RoomData(Room room)
