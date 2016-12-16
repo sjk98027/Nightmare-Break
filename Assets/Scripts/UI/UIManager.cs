@@ -9,7 +9,7 @@ public enum UIManagerIndex
     Create,
     Waiting,
     Room,
-    Battle,
+    InGame,
 }
 
 public class UIManager : MonoBehaviour
@@ -81,7 +81,7 @@ public class UIManager : MonoBehaviour
                 roomUIManager = gameObject.AddComponent<RoomUIManager>();
                 break;
 
-            case UIManagerIndex.Battle:
+            case UIManagerIndex.InGame:
                 battleUIManager = gameObject.AddComponent<BattleUIManager>();
                 break;
         }

@@ -63,6 +63,11 @@ public class BattleUIManager : MonoBehaviour
     }
     #endregion
 
+    public void ManagerInitialize()
+    {
+
+    }
+
     public void hpBarCalculation(int maxHp, int currentHP)
     {
         hpBar.fillAmount = (float) currentHP / maxHp;

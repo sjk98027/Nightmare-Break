@@ -12,9 +12,9 @@ public class RoomListPacket : Packet<RoomListData>
             {
                 ret &= Serialize((byte)Encoding.Unicode.GetBytes(data.Rooms[i].RoomName).Length);
                 ret &= Serialize(data.Rooms[i].RoomName);
-                ret &= Serialize(data.Rooms[i].DungeonId);
-                ret &= Serialize(data.Rooms[i].DungeonLevel);
-                ret &= Serialize(data.Rooms[i].PlayerNum);
+                ret &= Serialize((byte)data.Rooms[i].DungeonId);
+                ret &= Serialize((byte)data.Rooms[i].DungeonLevel);
+                ret &= Serialize((byte)data.Rooms[i].PlayerNum);
 
                 for (int j = 0; j < WaitingUIManager.maxPlayerNum; j++)
                 {

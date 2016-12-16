@@ -6,6 +6,19 @@ using System.Collections.Generic;
 
 public class NetworkManager : MonoBehaviour
 {
+    private static NetworkManager instance = null;
+    public static NetworkManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = GameObject.FindWithTag("NetworkManager").GetComponent<NetworkManager>();
+            }
+
+            return instance;
+        }
+    }
     //패킷의 길이
     //패킷이 어디서 오는지
     //패킷의 종류

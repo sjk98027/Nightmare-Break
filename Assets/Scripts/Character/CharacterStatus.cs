@@ -125,7 +125,9 @@ public class CharacterStatus : MonoBehaviour
         hGender = (Gender)characterStatusData.Gender;
         charClass = (CharClass)characterStatusData.HClass;
         exp = characterStatusData.Exp;
+        maxExp = characterStatusData.Exp;
         healthPoint = characterStatusData.HealthPoint;
+        maxHealthPoint = characterStatusData.HealthPoint;
         magicPoint = characterStatusData.MagicPoint;
         hpRegeneration = characterStatusData.HpRegeneration;
         mpRegeneration = characterStatusData.MpRegeneration;

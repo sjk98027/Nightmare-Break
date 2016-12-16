@@ -95,6 +95,19 @@ public class SceneChanger : MonoBehaviour
 
                 StartCoroutine(CheckLoading());
             }
+            else if (nextScene == (int)SceneName.InGameScene)
+            {
+                GameManager.Instance.SetManagerInGame();
+
+                DungeonManager.Instance.ManagerInitialize(UIManager.Instance.RoomUIManager.DungeonId, UIManager.Instance.RoomUIManager.DungeonLevel);
+                UIManager.Instance.SetUIManager(UIManagerIndex.InGame);
+
+                DataSender.Instance.RequestUdpConnection();
+                DataSender.Instance.RequestMonsterSpawnList(DungeonManager.Instance.DungeonId, DungeonManager.Instance.DungeonLevel);
+                DataSender.Instance.RequestMonsterStatusData(DungeonManager.Instance.DungeonId, DungeonManager.Instance.DungeonLevel);
+
+                StartCoroutine(CheckLoading());
+            }
 
             currentScene = SceneName.LoadingScene;
         }
@@ -149,6 +162,21 @@ public class SceneChanger : MonoBehaviour
             currentScene = SceneName.WaitingScene;
         }
         #endregion
+
+        #region 던전 씬 로드
+        else if (scene.name == "InGameScene")
+        {
+            UIManager.Instance.BattleUIManager.ManagerInitialize();
+
+            NetworkManager.Instance.ReSendManager.characterCreating = true;
+
+            DungeonManager.Instance.InitializePlayer(NetworkManager.Instance.UserIndex.Count);
+            DungeonManager.Instance.CreatePlayer(0);
+
+            currentScene = SceneName.WaitingScene;
+        }
+        #endregion
+        
     }
 
     public void SceneChange(SceneName sceneName, bool needLoadingScene)
@@ -206,6 +234,10 @@ public class SceneChanger : MonoBehaviour
         else if (nextScene == (int)SceneName.WaitingScene)
         {
             loadingCheck = new bool[2];
+        }
+        else if (nextScene == (int)SceneName.InGameScene)
+        {
+            LoadingCheck = new bool[4];
         }
 
         bool checkComplete = false;

@@ -381,12 +381,7 @@ public class DataHandler : MonoBehaviour
         if (resultData.Result == (byte)Result.Success)
         {
             Debug.Log("게임 시작");
-            DataSender.Instance.RequestUdpConnection();
-
-            if (uiManager.RoomUIManager.UserNum == 0)
-            {
-                DataSender.Instance.RequestDungeonData();
-            }
+            SceneChanger.Instance.SceneChange(SceneChanger.SceneName.InGameScene, true);
         }
         else if (resultData.Result == (byte)Result.Fail)
         {
@@ -403,6 +398,11 @@ public class DataHandler : MonoBehaviour
         MonsterSpawnList monsterSpawnList = monsterSpawnListPacket.GetData();
 
         dungeonManager.SetMonsterSpawnList(monsterSpawnList);
+
+        if (SceneChanger.Instance.CurrentScene == SceneChanger.SceneName.LoadingScene)
+        {
+            SceneChanger.Instance.LoadingCheck[0] = true;
+        }
     }
 
     //Server - 던전 데이터 수신
@@ -414,6 +414,11 @@ public class DataHandler : MonoBehaviour
         MonsterStatusData dungeonData = dungeonDataPacket.GetData();
 
         dungeonManager.SetMonsterData(dungeonData);
+
+        if (SceneChanger.Instance.CurrentScene == SceneChanger.SceneName.LoadingScene)
+        {
+            SceneChanger.Instance.LoadingCheck[1] = true;
+        }
     }
 
     //Server - 연결 시작
@@ -454,6 +459,11 @@ public class DataHandler : MonoBehaviour
                 networkManager.ConnectP2P(newEndPoint);
             }
         }
+
+        if (SceneChanger.Instance.CurrentScene == SceneChanger.SceneName.LoadingScene)
+        {
+            SceneChanger.Instance.LoadingCheck[2] = true;
+        }
     }
 
     //Client - 연결 확인 답장
@@ -478,15 +488,13 @@ public class DataHandler : MonoBehaviour
     {
         Debug.Log("던전 시작");
 
-        gameManager.SetManagerInDungeon();
-        networkManager.ReSendManager.characterCreating = true;
-
-        dungeonManager = GameObject.FindGameObjectWithTag("DungeonManager").GetComponent<DungeonManager>();
-        dungeonManager.InitializePlayer(networkManager.UserIndex.Count);
-        dungeonManager.CreatePlayer(0);
-
         dTime = DateTime.Now;
         Debug.Log("시간 지정 : " + dTime.ToString("hh:mm:ss"));
+
+        if (SceneChanger.Instance.CurrentScene == SceneChanger.SceneName.LoadingScene)
+        {
+            SceneChanger.Instance.LoadingCheck[3] = true;
+        }
     }
 
     //Client - 유닛 생성
