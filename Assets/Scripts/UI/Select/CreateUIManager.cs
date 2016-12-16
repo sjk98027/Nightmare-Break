@@ -107,6 +107,7 @@ public class CreateUIManager : MonoBehaviour
         {
             classPrefeb[i] = Instantiate(Resources.Load<GameObject>("UI/Class" + (i + 1)), characterPos.transform) as GameObject;
             classPrefeb[i].transform.position = characterPos.position;
+            classPrefeb[i].SetActive(false);
         }
 
     }
@@ -131,10 +132,12 @@ public class CreateUIManager : MonoBehaviour
 		classBtn [1].onClick.AddListener (() => ClassSelect (1));
 		classBtn [2].onClick.AddListener (() => ClassSelect (2));
 		classBtn [3].onClick.AddListener (() => ClassSelect (3));
+
 		exitEvent[0].callback.AddListener((data)=> RotateCheckOut(0));
 		exitEvent[1].callback.AddListener((data)=> RotateCheckOut(1));
 		downEvent[0].callback.AddListener((data)=> PrefebRotate(0));
 		downEvent[1].callback.AddListener((data)=> PrefebRotate(1));
+
 		upEvent[0].callback.AddListener((data)=> RotateCheckOut(0));
 		upEvent[1].callback.AddListener((data)=> RotateCheckOut(1));
     }
@@ -216,7 +219,6 @@ public class CreateUIManager : MonoBehaviour
 			genderSelectImage[currentGender].SetActive(true);
 			characterAnim = classPrefeb[currentGender + currentClass].GetComponent<Animator>();
         }
-
         SetCharacterImage();
     }
 
@@ -248,11 +250,11 @@ public class CreateUIManager : MonoBehaviour
         {
             if (btnPushCheck[0])
             {
-				classPrefeb[currentClass + currentGender].transform.Rotate(0, rotateValue * time, 0);
+				classPrefeb[currentCharacter].transform.Rotate(0, rotateValue * time, 0);
             }
             else if (btnPushCheck[1])
             {
-				classPrefeb[currentClass + currentGender].transform.Rotate(0, -rotateValue * time, 0);
+				classPrefeb[currentCharacter].transform.Rotate(0, -rotateValue * time, 0);
             }
             yield return null;
         }
