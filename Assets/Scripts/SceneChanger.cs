@@ -133,7 +133,6 @@ public class SceneChanger : MonoBehaviour
         #region 대기 씬 로드
         else if (scene.name == "WaitScene")
         {
-            UIManager.Instance.SetUIManager(UIManagerIndex.Waiting);
             UIManager.Instance.WaitingUIManager.ManagerInitialize();
 
             currentScene = SceneName.WaitingScene;

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-[System.Serializable]
 public class CharacterStatus : MonoBehaviour
 {
     public enum Gender
@@ -45,7 +44,25 @@ public class CharacterStatus : MonoBehaviour
     int[] equipLevel;
     bool[] activeSkillUse;
 
-	static CharacterStatus instance;
+	private static CharacterStatus instance;
+
+    public static CharacterStatus Instance
+    {
+        get
+        {
+            instance = FindObjectOfType(typeof(CharacterStatus)) as CharacterStatus;
+
+            if (!instance)
+            {
+                GameObject container = new GameObject();
+                container.name = "CharacterStatus";
+                container.tag = "CharStatus";
+                instance = container.AddComponent(typeof(CharacterStatus)) as CharacterStatus;
+            }
+
+            return instance;
+        }
+    }
 
     public string HName { get { return hName; } }
     public Gender HGender { get { return hGender; } }
@@ -70,7 +87,6 @@ public class CharacterStatus : MonoBehaviour
     public int[] SkillLevel { get { return skillLevel; } }
     public int[] EquipLevel { get { return equipLevel; } }
     public bool[] ActiveSkillUse { get { return activeSkillUse; } }
-	public static CharacterStatus Instace { get { return instance; }}
 
     public void SetCharacterStatus()
     {
@@ -90,7 +106,6 @@ public class CharacterStatus : MonoBehaviour
         skillLevel = new int[skillNum];
         activeSkillUse = new bool[equipNum];
         equipLevel = new int[equipNum];
-		instance = this;
 
 		for (int i = 0; i < skillLevel.Length; i++)
 		{
@@ -100,8 +115,7 @@ public class CharacterStatus : MonoBehaviour
         for (int i = 0; i < activeSkillUse.Length; i++)
         {
             activeSkillUse[i] = true;
-        }		
-       
+        }       
     }
 
     public void SetCharacterStatus(CharacterStatusData characterStatusData)

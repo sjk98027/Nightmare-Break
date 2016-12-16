@@ -63,6 +63,8 @@ public class WaitingUIManager : MonoBehaviour
         equipInfoUI.SetActive(false);
         myInfoUI.SetActive(false);
 		roomInfoUI.SetActive (false);
+
+        SetRoom();
     }
 
     public void SetUIObject()
@@ -74,7 +76,7 @@ public class WaitingUIManager : MonoBehaviour
 		roomInfoUserName = new Text[maxPlayerNum];
 		roomInfoClassIcon = new Image[maxPlayerNum];
 		roomInfoGenderIcon = new Image[maxPlayerNum];
-		skillAddIcon = new Image[CharacterStatus.Instace.MaxSkillNum];
+		skillAddIcon = new Image[CharacterStatus.skillNum];
 
         roomCreateBtn = GameObject.Find("RoomCreateBtn").GetComponent<Button>();
         roomCreateYesBtn = GameObject.Find("RoomCreateYesBtn").GetComponent<Button>();
@@ -90,20 +92,21 @@ public class WaitingUIManager : MonoBehaviour
 
 		equipWeaponIcon = equipInfoUI.transform.GetChild (3).GetComponent<Image> ();
         roomCreateExitBtn = roomCreateUI.transform.GetChild(5).GetComponent<Button>();
-        skillAddExitBtn = skillAddUI.transform.GetChild(3).GetComponent<Button>();
-        equipInfoExitBtn = equipInfoUI.transform.GetChild(2).GetComponent<Button>();
+        skillAddExitBtn = skillAddUI.transform.GetChild(9).GetComponent<Button>();
+        equipInfoExitBtn = equipInfoUI.transform.GetChild(5).GetComponent<Button>();
         myInfoExitBtn = myInfoUI.transform.GetChild(1).GetComponent<Button>();
 
 		for (int i = 0; i < skillAddIcon.Length; i++) {
 			skillAddIcon [i] = skillAddUI.transform.GetChild (i).GetComponent<Image> ();
-			skillAddIcon [i].sprite = Resources.Load<Sprite> ("UI/SkillIcon/" + CharacterStatus.Instace.HClass.ToString ()+"/Skill"+(i+1));
+			skillAddIcon [i].sprite = Resources.Load<Sprite> ("UI/SkillIcon/" + CharacterStatus.Instance.HClass.ToString ()+"/Skill"+(i+1)) as Sprite;
 		}
 		for (int i = 0; i < maxRoomNum; i++) {
 			roomBtn [i] = GameObject.Find ("Room" + (i + 1)).GetComponent<Button> ();
 			roomName [i] = roomBtn [i].transform.GetChild (1).GetComponent<Text> ();
 			roomDungeonLevel [i] = roomBtn [i].transform.GetChild (2).GetComponent<Text> ();
 			roomCurrentUser [i] = roomBtn [i].transform.GetChild (3).GetComponent<Text> ();
-			if (i < maxRoomNum) {
+
+			if (i < maxPlayerNum) {
 				roomInfoClassIcon [i] = roomInfoUI.transform.GetChild (i).GetComponent<Image> ();
 				roomInfoUserName [i] = roomInfoClassIcon [i].transform.GetChild (0).GetComponent<Text> ();
 				roomInfoGenderIcon [i] = roomInfoClassIcon [i].transform.GetChild (1).GetComponent<Image> ();
@@ -191,24 +194,37 @@ public class WaitingUIManager : MonoBehaviour
 		UIActiveCheck ();
 		//룸 리퀘스트 호출
 		roomInfoUI.SetActive (true);
-		for (int i = 0; i < maxPlayerNum; i++) {
-			roomInfoClassIcon [i].sprite = Resources.Load<Sprite>("RoomClassIcon/Class" + (rooms [roomNum].RoomUserData [i].UserClass + 1));
-			roomInfoUserName [i].text = rooms [roomNum].RoomUserData [i].UserName;
-			roomInfoGenderIcon[i].sprite = Resources.Load<Sprite>("RoomClassIcon/Gender" + rooms [roomNum].RoomUserData [i].UserGender);
-		}
+        for (int i = 0; i < maxPlayerNum; i++)
+        {
+            if (rooms[i].PlayerNum > 0)
+            {
+                roomInfoClassIcon[i].sprite = Resources.Load<Sprite>("RoomClassIcon/Class" + (rooms[roomNum].RoomUserData[i].UserClass + 1));
+                roomInfoUserName[i].text = rooms[roomNum].RoomUserData[i].UserName;
+                roomInfoGenderIcon[i].sprite = Resources.Load<Sprite>("RoomClassIcon/Gender" + rooms[roomNum].RoomUserData[i].UserGender);
+            }
+        }
 	}
 
-    public void SetRoom(RoomListData roomListData)
+    public void SetRoomListData(RoomListData roomListData)
     {
         rooms = roomListData.Rooms;
+    }
 
-		for (int i = 0; i < maxPlayerNum; i++) {
-			if(rooms[i].PlayerNum != 0)
+    public void SetRoom()
+    {
+		for (int i = 0; i < maxRoomNum; i++) {
+            if (rooms[i].PlayerNum != 0)
 			{
 				roomName [i].text = rooms [i].RoomName;
 				roomDungeonLevel [i].text = rooms [i].DungeonLevel.ToString();
 				roomCurrentUser [i].text = (rooms [i].PlayerNum.ToString () + "/" + maxPlayerNum.ToString ());
 			}
+            else
+            {
+                roomName[i].text = "";
+                roomDungeonLevel[i].text = "0";
+                roomCurrentUser[i].text = "0/" + maxPlayerNum.ToString();
+            }
 		}
     }
 
@@ -216,11 +232,6 @@ public class WaitingUIManager : MonoBehaviour
     {
         Debug.Log("방 생성 성공");
         DataSender.Instance.EnterRoom(roomNum);
-    }
-
-    public void EnterRoom(int roomNum)
-    {
-        currentRoomNum = roomNum;
     }
 
     public void OnClickCreateRoomButton()
