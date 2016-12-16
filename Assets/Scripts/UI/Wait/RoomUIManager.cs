@@ -52,6 +52,7 @@ public class RoomUIManager : MonoBehaviour {
     public void SetUIObject()
     {
         rendPos = new GameObject[maxUser];
+        playerPrefeb = new GameObject[maxUser];
 
         userName = new Text[maxUser];
         classIcon = new Image[maxUser];
