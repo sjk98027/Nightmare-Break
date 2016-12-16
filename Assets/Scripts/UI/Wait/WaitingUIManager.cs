@@ -274,10 +274,10 @@ public class Room
     public Room()
     {
         roomName = "";
+        playerNum = 0;
         dungeonId = 0;
         dungeonLevel = 0;
         roomUserData = new RoomUserData[WaitingUIManager.maxPlayerNum];
-        playerNum = 0;
 
         for (int i = 0; i < WaitingUIManager.maxPlayerNum; i++)
         {
@@ -285,23 +285,33 @@ public class Room
         }
     }
 
-	public Room(string newName, int newDungeonId, int newDungeonLevel, int newPlayerNum)
+    public Room(string newName, int newDungeonId, int newDungeonLevel)
+    {
+        roomName = newName;
+        dungeonId = newDungeonId;
+        dungeonLevel = newDungeonLevel;
+        playerNum = 0;
+        roomUserData = new RoomUserData[WaitingUIManager.maxPlayerNum];
+
+        for (int i = 0; i < WaitingUIManager.maxPlayerNum; i++)
+        {
+            roomUserData[i] = new RoomUserData();
+        }
+    }
+
+    public Room(string newName, int newDungeonId, int newDungeonLevel, RoomUserData[] newRoomUserData, int newPlayerNum)
     {
         roomName = newName;
         dungeonId = newDungeonId;
         dungeonLevel = newDungeonLevel;
         playerNum = newPlayerNum;
-        roomUserData = new RoomUserData[WaitingUIManager.maxPlayerNum];
-
-        for (int i = 0; i < WaitingUIManager.maxPlayerNum; i++)
-        {
-            roomUserData[i] = new RoomUserData();
-        }
+        roomUserData = newRoomUserData;
     }
 
     public Room(string newName, byte newDungeonId, byte newDungeonLevel, RoomUserData[] newRoomUserData)
     {
         roomName = newName;
+        playerNum = 0;
         dungeonId = newDungeonId;
         dungeonLevel = newDungeonLevel;
         roomUserData = newRoomUserData;
