@@ -75,7 +75,7 @@ public class RoomListPacket : Packet<RoomListData>
                     roomUserData[j] = new RoomUserData(userName, userGender, userClass, userLevel);
                 }
 
-                rooms[i] = new Room(roomName, dungeonId, dungeonLevel, roomUserData);
+                rooms[i] = new Room(roomName, dungeonId, dungeonLevel, roomUserData, playerNum);
             }
 
             element = new RoomListData(rooms);
