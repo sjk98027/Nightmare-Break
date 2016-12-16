@@ -10,6 +10,7 @@ public class ArmageddonPiece : MonoBehaviour
 	public BoxCollider pieceBox;
 	public Armageddon armageddon;
 	public int armageddonPieceDamage;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -18,7 +19,7 @@ public class ArmageddonPiece : MonoBehaviour
 		charStatus = charManager.CharStatus;
 		pieceBox = GetComponent<BoxCollider> ();
 		armageddon = this.gameObject.GetComponentInParent<Armageddon> ();
-
+	
 		pieceBox.enabled = false;
 		armageddonPieceDamage = (int)((float)armageddon.armageddonDamage * 0.1f);
 	}
@@ -48,6 +49,7 @@ public class ArmageddonPiece : MonoBehaviour
 	{
 		if (coll.gameObject.layer == LayerMask.NameToLayer ("Enermy"))
 		{
+			Debug.Log ("ArmaPioece");
 			Monster monsterDamage = coll.gameObject.GetComponent<Monster> ();
 
 			if (monsterDamage != null)

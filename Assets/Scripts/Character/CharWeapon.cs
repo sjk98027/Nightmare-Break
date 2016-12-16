@@ -9,6 +9,15 @@ public class CharWeapon : MonoBehaviour
     bool normalAttack;
     bool skillAttack;
     int skillLv;
+	public AudioSource attackSound;
+	public AudioClip attack1;
+	public AudioClip attack2;
+	public AudioClip attack3;
+	public AudioClip cutOffEffectSound;
+	public AudioClip swordDanceEffectSound;
+	public AudioClip mealstromEffectSound;
+	public AudioClip swordDanceFinishEffectSound;
+	public AudioClip giganticSwordSound;
 
     public bool NormalAttack { get { return this.normalAttack; } }
     public bool SkillAttack { get { return this.skillAttack; } }
@@ -20,7 +29,17 @@ public class CharWeapon : MonoBehaviour
         charManager = character.GetComponent<CharacterManager>();
         charStatus = GameObject.FindGameObjectWithTag("CharStatus").GetComponent<CharacterStatus>();
         charStatus.SetCharacterStatus();
-        skillLv = charStatus.SkillLevel[5];
+		attackSound = this.gameObject.GetComponent<AudioSource> ();
+		attack1 = Resources.Load<AudioClip> ("Sound/EffectSound/AttackEffectSound1");
+		attack2 = Resources.Load<AudioClip> ("Sound/EffectSound/AttackEffectSound2");
+		attack3 = Resources.Load<AudioClip> ("Sound/EffectSound/AttackEffectSound3");
+		cutOffEffectSound = Resources.Load<AudioClip> ("Sound/WarriorEffectSound/CutOffEffectSound");
+		swordDanceEffectSound=Resources.Load<AudioClip> ("Sound/WarriorEffectSound/SwordDanceEffectSound");
+		mealstromEffectSound=Resources.Load<AudioClip> ("Sound/WarriorEffectSound/MealstromEffectSound");
+		swordDanceFinishEffectSound =Resources.Load<AudioClip> ("Sound/WarriorEffectSound/SwordDanceFinishEffectSound");
+		giganticSwordSound = Resources.Load<AudioClip> ("Sound/WarriorEffectSound/GiganticSwordSummonSound");
+		attackSound.volume = 0.1f;
+		skillLv = charStatus.SkillLevel[5];
     }
 
     // Update is called once per frame
@@ -29,6 +48,44 @@ public class CharWeapon : MonoBehaviour
         normalAttack = charManager.NormalAttackState;
         skillAttack = charManager.SkillAttackState;
     }
+
+	public void AttackEffectSound1()
+	{
+		attackSound.PlayOneShot (attack1);
+	}
+
+	public void AttackEffectSound2()
+	{
+		attackSound.PlayOneShot (attack2);
+	}
+
+	public void AttackEffectSound3 ()
+	{
+		attackSound.PlayOneShot (attack3);
+	}
+
+	public void CutOffEffectSound ()
+	{
+		attackSound.PlayOneShot (cutOffEffectSound);
+	}
+
+	public void SwordDanceEffectSound ()
+	{
+		attackSound.PlayOneShot (swordDanceEffectSound);
+	}
+
+	public void SwordDanceFinishEffectSound ()
+	{
+		attackSound.PlayOneShot (swordDanceFinishEffectSound);
+	}
+	public void MealstromEffectSound ()
+	{
+		attackSound.PlayOneShot (mealstromEffectSound);
+	}
+	public void GiganticSwordSound()
+	{
+		attackSound.PlayOneShot (giganticSwordSound);
+	}
 
     void OnTriggerEnter(Collider coll)
     {

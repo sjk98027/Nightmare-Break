@@ -23,6 +23,7 @@ public class CharacterManager : MonoBehaviour
 	public AnimatorStateInfo runState;
 	public Rigidbody rigdbody;
 	public BoxCollider charWeapon;
+	public CharWeapon weapon;
 
 	public InputManager inputmanager;
 	public CharacterStatus charStatus;
@@ -52,6 +53,9 @@ public class CharacterManager : MonoBehaviour
 	public AudioClip Skill4Sound;
 	public AudioClip dieSound;
 	public AudioClip hitSound;
+	public AudioClip MoveSound;
+
+	public bool runSoundbool;
 
 	public float skillTime;
 
@@ -81,6 +85,7 @@ public class CharacterManager : MonoBehaviour
 
 	void Start ()
 	{
+		
 		SetCharacterStatus ();
 		//uiManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
 		animator = GetComponent<Animator> ();
@@ -91,9 +96,12 @@ public class CharacterManager : MonoBehaviour
 		//testinput = GameObject.Find ("TestInputManager").GetComponent<TestInputManager> ();
 		charDir = true;
 		JumpMove = false;
+		weapon = this.gameObject.GetComponentInChildren<CharWeapon> ();
+		CharAudio.volume = 0.3f;
 		jumpPower = 10;
         comboCount = 0;
 		SetClassObject ();
+		//StartCoroutine (MoveSoundCol ());
 
 	}
 
@@ -162,7 +170,7 @@ public class CharacterManager : MonoBehaviour
 		JumpMove = false;
 		normalAttackState = false;
 		skillAttackState = false;
-
+		//runSoundbool = false;
 	}
 
 	//char state Method
@@ -170,13 +178,13 @@ public class CharacterManager : MonoBehaviour
 	{
 		if (state == CharacterState.Idle || state == CharacterState.Run)
 		{
-
 			runState = this.animator.GetCurrentAnimatorStateInfo (0);
 
 			if (!animator.GetBool ("Attack"))
 			{
 				if (ver != 0 || hor != 0)
 				{
+					runSoundbool = true;
 					animator.SetFloat ("Ver", ver);
 					animator.SetFloat ("Hor", hor);
 
@@ -197,7 +205,8 @@ public class CharacterManager : MonoBehaviour
 					}
 
 					if (runState.IsName ("Run"))
-					{
+					{							
+						
 						if (hor == -1.0f || hor == 1.0f)
 						{
 							transform.Translate ((Vector3.forward * ver - Vector3.right * hor) * Time.deltaTime * (charStatus.MoveSpeed - 3.0f), Space.World);
@@ -207,6 +216,7 @@ public class CharacterManager : MonoBehaviour
 						else
 						{
 							transform.Translate ((Vector3.forward * ver - Vector3.right * hor) * Time.deltaTime * (charStatus.MoveSpeed), Space.World);
+
 						}
 					}
 				}
@@ -307,7 +317,7 @@ public class CharacterManager : MonoBehaviour
 			//uiManager.BattleUIManager.mpBarCalculation(charStatus.MaxMagicPoint, charStatus.MagicPoint);
 			//StartCoroutine (charStatus.SkillCoolTimer (2, SkillManager.instance.SkillData.GetSkill ((int)charStatus.HClass, 3).SkillCoolTime));
 			//StartCoroutine(uiManager.BattleUIManager.SetSkillCoolTimeUI(2, SkillManager.instance.SkillData.GetSkill((int)charStatus.HClass, 3).SkillCoolTime));
-			if (state != CharacterState.Jump && state != CharacterState.Skill3 && state != CharacterState.Skill2 && state != CharacterState.Skill1 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
+			if (state != CharacterState.Jump && state != CharacterState.Attack && state != CharacterState.Skill3 && state != CharacterState.Skill2 && state != CharacterState.Skill1 && state != CharacterState.Skill4 && state != CharacterState.HitDamage && state != CharacterState.Death)
 			{
 				CharState ((int)CharacterState.Skill3);
 			}
@@ -508,6 +518,7 @@ public class CharacterManager : MonoBehaviour
 
 	public virtual void classSound()
 	{
+		MoveSound = Resources.Load<AudioClip> ("Sound/MoveSound");
 		if (true)
 		{
 			attack1 = Resources.Load<AudioClip> ("Sound/ManWarriorattack1");
@@ -531,6 +542,27 @@ public class CharacterManager : MonoBehaviour
 	{
 		charStatus.DecreaseMagicPoint (SkillManager.instance.SkillData.GetSkill ((int)charStatus.HClass, SkillArray).ManaCost);
 	}
+
+	public IEnumerator MoveSoundCol ()
+	{
+		if (runSoundbool)
+		{
+			Debug.Log ("in if");
+			CharAudio.PlayOneShot (MoveSound);
+			yield return new WaitForSeconds (0.4f);
+			StartCoroutine (MoveSoundCol ());
+			runSoundbool = false;
+
+		}
+		else
+		{
+			yield return new WaitForSeconds (0.4f);
+			StartCoroutine (MoveSoundCol ());
+			Debug.Log ("in Else");
+		}
+
+	}
+
     public IEnumerator ComboCheck(int count)
     {
         float checkTime = Time.time;

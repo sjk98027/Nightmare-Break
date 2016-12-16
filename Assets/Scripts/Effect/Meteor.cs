@@ -8,6 +8,8 @@ public class Meteor : MonoBehaviour {
 	public GameObject character;
 	public int MeteorDamage;
 	int skillLv;
+	AudioSource meteorSound;
+	public AudioClip meteorDropSound;
 
 	void Start()
 	{
@@ -16,7 +18,10 @@ public class Meteor : MonoBehaviour {
 		charStatus = charManager.CharStatus;
 		skillLv = charStatus.SkillLevel [1];
 		MeteorDamage =(int) ((SkillManager.instance.SkillData.GetSkill ((int)charStatus.HClass, 2).GetSkillData (skillLv).SkillValue)*  charStatus.Attack);
+		meteorSound = this.gameObject.GetComponent<AudioSource> ();
+		meteorDropSound = Resources.Load<AudioClip> ("Sound/MageEffectSound/MeteorDropSound");
 
+		meteorSound.PlayOneShot (meteorDropSound);
 	}
 
     void Update()
@@ -43,13 +48,18 @@ public class Meteor : MonoBehaviour {
 
 			if (monsterDamage != null)
 			{	
-				monsterDamage.HitDamage (MeteorDamage,character );
+				monsterDamage.HitDamage (MeteorDamage, character);
 				MeteorDamage = 0;
 			}
 
-			Destroy(gameObject);
-			Instantiate(Resources.Load<GameObject>("Effect/MeteorExplosion"), this.transform.position, Quaternion.identity);
-
+			Destroy (gameObject);
+			Instantiate (Resources.Load<GameObject> ("Effect/MeteorExplosion"), this.transform.position, Quaternion.identity);
+		}
+		else if (coll.gameObject.layer == LayerMask.NameToLayer ("Map"))
+		{
+			Destroy (gameObject);
+			Instantiate (Resources.Load<GameObject> ("Effect/MeteorExplosion"), this.transform.position, Quaternion.identity);
+		
 		}
 	}
 }

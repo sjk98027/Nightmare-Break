@@ -12,6 +12,9 @@ public class EspadaSwordEffect : MonoBehaviour
 	float giganticSwordAliveTime;
 	public GameObject character;
 	public int swordDamage;
+	public AudioSource swordSound;
+	public AudioClip swordSummonSound;
+	public AudioClip swordFinishSound;
 
 	public Rigidbody giganticSwordRigd;
 	public float swordSpeed;
@@ -21,7 +24,9 @@ public class EspadaSwordEffect : MonoBehaviour
 		count = true;
        // myParticle = transform.GetChild(0).GetComponent<ParticleSystem>();
 		character = GameObject.FindWithTag ("Player");
-
+		swordSound = this.gameObject.GetComponent<AudioSource> ();
+		swordSummonSound =  Resources.Load<AudioClip> ("Sound/WarriorEffectSound/GiganticSwordSummonEffectSound");
+		swordFinishSound = Resources.Load<AudioClip> ("Sound/WarriorEffectSound/GiganticSwordFinishEffectSound");
 		charManager = character.GetComponent<CharacterManager> ();
 		giganticSwordRigd = GetComponent<Rigidbody> ();
 		swordSpeed = 40;
@@ -29,9 +34,10 @@ public class EspadaSwordEffect : MonoBehaviour
 
         charStatus = charManager.CharStatus;
 		giganticSword = this.gameObject;
-
+		swordSound.volume = 0.1f;
 		rend = GetComponent<Renderer> ();
 		StartCoroutine(EffectMove());
+		swordSound.PlayOneShot (swordSummonSound);
 	}
 	void Update()
 	{
@@ -48,7 +54,7 @@ public class EspadaSwordEffect : MonoBehaviour
 			if(SwordAlpha <0.5)
 			{
 				SwordAlpha = 0;
-				Destroy (this.gameObject, 0.5f);
+				Destroy (this.gameObject, 1.3f);
 			}
 		}	
 	}
@@ -70,7 +76,7 @@ public class EspadaSwordEffect : MonoBehaviour
         {
             Instantiate(Resources.Load<GameObject>("Effect/Explosion"), transform.position, Quaternion.identity);
 			count = false;
-
+			swordSound.PlayOneShot (swordFinishSound);
 			Debug.Log ("in Field");
         }
     }
