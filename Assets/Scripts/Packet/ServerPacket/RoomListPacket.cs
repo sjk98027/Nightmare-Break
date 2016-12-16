@@ -43,6 +43,7 @@ public class RoomListPacket : Packet<RoomListData>
             string roomName;
             byte dungeonId = 0;
             byte dungeonLevel = 0;
+            byte playerNum = 0;
             byte userNameLength = 0;
             string userName;
             byte userGender = 0;

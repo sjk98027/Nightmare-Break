@@ -203,11 +203,11 @@ public class WaitingUIManager : MonoBehaviour
         rooms = roomListData.Rooms;
 
 		for (int i = 0; i < maxPlayerNum; i++) {
-			if(rooms[i].CurrentUser != 0)
+			if(rooms[i].PlayerNum != 0)
 			{
 				roomName [i].text = rooms [i].RoomName;
 				roomDungeonLevel [i].text = rooms [i].DungeonLevel.ToString();
-				roomCurrentUser [i].text = (rooms [i].CurrentUser.ToString () + "/" + maxPlayerNum.ToString ());
+				roomCurrentUser [i].text = (rooms [i].PlayerNum.ToString () + "/" + maxPlayerNum.ToString ());
 			}
 		}
     }
