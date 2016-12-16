@@ -345,7 +345,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011793264046}
-  m_LocalRotation: {x: 0.6147595, y: 0.6312392, z: 0.33876365, w: -0.32991973}
+  m_LocalRotation: {x: 0.61475956, y: 0.63123924, z: 0.33876368, w: -0.32991976}
   m_LocalPosition: {x: 0.009638963, y: 5.3197136, z: 3.4074135}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -695,7 +695,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -814,6 +814,7 @@ MonoBehaviour:
   armageddonImpact: {fileID: 0}
   armageddonExplosion: {fileID: 0}
   meteorExplosion: {fileID: 0}
+  meteorCenter: {fileID: 0}
   armageddonBox: {fileID: 0}
   armageddonAni: {fileID: 0}
   armageddonPiece: []
