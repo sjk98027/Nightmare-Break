@@ -402,7 +402,6 @@ public class Monster : MonoBehaviour {
 									}
 								}
 							}
-
 						}
 						yield return new WaitForSeconds (2f);
 					} else

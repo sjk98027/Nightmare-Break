@@ -47,13 +47,8 @@ public class WarriorManager : CharacterManager
 		float maelstromSpeed = 0.5f;
 		float maelstromDistance;
         skillTime += Time.deltaTime;
-        if (!wind)
-        {
-     	   wind = Instantiate(Resources.Load<GameObject>("Effect/Wind"), new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z), Quaternion.identity) as GameObject;
-			wind.transform.parent = this.gameObject.transform;
-        }
 
-		//transform.Translate ((Vector3.forward * testinput.vertical - Vector3.right * testinput.horizontal) * Time.deltaTime * (charStatus.MoveSpeed -6.0f), Space.World);
+		transform.Translate ((Vector3.forward * testinput.vertical - Vector3.right * testinput.horizontal) * Time.deltaTime * (charStatus.MoveSpeed-5f), Space.World);
 
 
         if (enermy != null)
@@ -77,6 +72,11 @@ public class WarriorManager : CharacterManager
 			skillTime = 0;
 		}
 
+	}
+	public void WindEffect()
+	{
+		wind = Instantiate(Resources.Load<GameObject>("Effect/Wind"), new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z), Quaternion.identity) as GameObject;
+		wind.transform.parent = this.gameObject.transform;
 	}
 
 	//Warrior Cutoff
@@ -105,7 +105,7 @@ public class WarriorManager : CharacterManager
 	{
 		if (!SwordDance)
 		{
-			if (transform.rotation.y == 0)
+			if (charDir)
 			{
 				SwordDance = Instantiate (Resources.Load<GameObject> ("Effect/SwordDance"), new Vector3 (transform.position.x, transform.position.y + 1.0f, transform.position.z + 0.5f), Quaternion.Euler (-90, 0, 0)) as GameObject;
 			}

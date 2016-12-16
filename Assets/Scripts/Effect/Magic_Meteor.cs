@@ -25,7 +25,7 @@ public class Magic_Meteor : MonoBehaviour {
             for (int i = 0; i < meteor.Length; i++)
             {
             pos = new Vector3(transform.parent.position.x + Random.Range(-3, 3), transform.parent.position.y + Random.Range(-3, 3), transform.parent.position.z);
-            meteor[i] = Instantiate(meteorEffect, pos, transform.rotation) as GameObject;
+			meteor[i] = Instantiate(meteorEffect, pos, transform.rotation) as GameObject;
                 yield return new WaitForSeconds(timeInterval);
             }
           //  yield return new WaitForSeconds(0.5f);

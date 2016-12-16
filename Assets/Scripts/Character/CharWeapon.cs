@@ -91,9 +91,10 @@ public class CharWeapon : MonoBehaviour
     {
         if (coll.gameObject.layer == LayerMask.NameToLayer("Enermy"))
         {
+			Debug.Log ("in deb");
             Monster monster = coll.gameObject.GetComponent<Monster>();
          //  charManager.UIManager.BattleUIManager.monsterHpBarCalculation(monster.gameObject.name, monster.MaxHP, monster.CurrentHP);
-           ComboSystem.instance.ComboProcess(++charManager.ComboCount);
+//           ComboSystem.instance.ComboProcess(++charManager.ComboCount);
            StartCoroutine(charManager.ComboCheck(charManager.ComboCount));
 
             Instantiate(Resources.Load<GameObject>("Effect/HitEffect"), new Vector3(coll.transform.position.x, coll.transform.position.y + 1.0f, coll.transform.position.z + 0.5f), Quaternion.identity);
