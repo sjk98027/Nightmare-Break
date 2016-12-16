@@ -17,7 +17,7 @@ public class Wall : MonoBehaviour {
 
 	void OnTriggerEnter(Collider coll){
 		if (coll.gameObject.layer == LayerMask.NameToLayer ("Enermy")) {
-			coll.gameObject.GetComponent<Monster> ().RandomStandBy = 0;
+			//coll.gameObject.GetComponent<Monster> ().RandomStandBy = 0;
 
 			//			if (normalMode) {
 //				coll.gameObject.GetComponent<Monster> ().MovePoint = -coll.gameObject.GetComponent<Monster> ().MovePoint;

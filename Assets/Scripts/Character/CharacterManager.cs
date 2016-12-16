@@ -470,7 +470,7 @@ public class CharacterManager : MonoBehaviour
             {
                 if (userNum == networkManager.MyIndex)
                 {
-                    DataSender.Instance.CharacterStateSend(Inputstate);
+                    DataSender.Instance.CharacterStateSend(Inputstate, userNum);
                 }
             }            
         }

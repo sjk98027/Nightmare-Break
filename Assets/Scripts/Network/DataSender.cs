@@ -453,7 +453,7 @@ public class DataSender : MonoBehaviour
     }
 
     //캐릭터 위치 -> Client
-    public IEnumerator CharacterPositionSend(UnitType unitType, GameObject unit)
+    public IEnumerator CharacterPositionSend(GameObject unit)
     {
         CharacterManager characterManager = unit.GetComponent<CharacterManager>();
 
@@ -488,7 +488,7 @@ public class DataSender : MonoBehaviour
     }
 
     //유닛 위치 -> Client
-    public IEnumerator UnitPositionSend(UnitType unitType, GameObject unit)
+    public IEnumerator UnitPositionSend(GameObject unit)
     {
         Debug.Log("몬스터 위치 보내기 시작");
         Monster monster = unit.GetComponent<Monster>();
@@ -522,11 +522,9 @@ public class DataSender : MonoBehaviour
     }
 
     //캐릭터 움직임(공격, 점프, 스킬 등등) -> Client
-    public void CharacterStateSend(int state, GameObject unit)
+    public void CharacterStateSend(int state, int unitIndex)
     {
-        CharacterManager characterManager = unit.GetComponent<CharacterManager>();
-
-        UnitStateData unitStateData = new UnitStateData((byte)UnitType.Hero, state, (byte)characterManager.UserNum);
+        UnitStateData unitStateData = new UnitStateData((byte)UnitType.Hero, state, (byte)unitIndex);
         UnitStatePacket unitStatePacket = new UnitStatePacket(unitStateData);
         unitStatePacket.SetPacketId((int)P2PPacketId.UnitState);
 
@@ -547,11 +545,9 @@ public class DataSender : MonoBehaviour
     }
 
     //몬스터 움직임(공격, 점프, 스킬 등등) -> Client
-    public void MonsterStateSend(int state, GameObject unit)
+    public void MonsterStateSend(int state, int unitIndex)
     {
-        Monster monster = unit.GetComponent<Monster>();
-
-        UnitStateData unitStateData = new UnitStateData((byte)UnitType.Monster, state, (byte)monster.MonsterIndex);
+        UnitStateData unitStateData = new UnitStateData((byte)UnitType.Monster, state, (byte)unitIndex);
         UnitStatePacket unitStatePacket = new UnitStatePacket(unitStateData);
         unitStatePacket.SetPacketId((int)P2PPacketId.UnitState);
 

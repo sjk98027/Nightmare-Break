@@ -210,6 +210,7 @@ public class DungeonManager : MonoBehaviour
             for (int j = 0; j < monsterSpawnList.MonsterSpawnData[i].MonsterNum; j++)
             {
                 monsters[monsterIndex] = CreateMonster(monsterSpawnList.MonsterSpawnData[i].MonsterId, monsterIndex, monsterSpawnPoints[monsterIndex].transform.position);
+                monsterIndex++;
             }
         }
 	}
@@ -240,7 +241,7 @@ public class DungeonManager : MonoBehaviour
 
     public GameObject CreateMonster(int unitId, int unitIndex, Vector3 createPoint)
     {
-        if (monsters[unitIndex] != null)
+        if (monsters[unitIndex] == null)
         {
             GameObject monster = null;
 
@@ -354,6 +355,7 @@ public class DungeonManager : MonoBehaviour
                 GameObject unit = Instantiate(Resources.Load("ManWarrior")) as GameObject;
                 unit.transform.position = newPosition;
                 unit.name = "Warrior";
+                unit.tag = "Untagged";
                 players[unitIndex] = unit;
 
                 characterData[unitIndex] = unit.GetComponent<CharacterManager>();

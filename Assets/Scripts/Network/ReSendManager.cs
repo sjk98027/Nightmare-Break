@@ -128,8 +128,8 @@ public class ReSendManager : MonoBehaviour
 
                 if (!characterCreating)
                 {
-                    //여기서 몬스터 생성
-                    StartCoroutine(DataSender.Instance.CharacterPositionSend());
+                    GameObject character = GameObject.FindWithTag("Player");
+                    StartCoroutine(DataSender.Instance.CharacterPositionSend(character));
                 }
             }
         }
