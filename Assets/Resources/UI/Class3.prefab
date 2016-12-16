@@ -1658,8 +1658,8 @@ Animator:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010207112864}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 49a2f56a9576c924594b15f6d705c43d, type: 3}
-  m_Controller: {fileID: 9100000, guid: 06eebb0b80a20c241a50f3579cc9bf98, type: 2}
+  m_Avatar: {fileID: 9000000, guid: 7c966e68dffa22f4aa1be56bd80afcc7, type: 3}
+  m_Controller: {fileID: 9100000, guid: 867d2e0dee26b784bbaf4542d3b0efe3, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1675,7 +1675,7 @@ SkinnedMeshRenderer:
   m_GameObject: {fileID: 1000013226175916}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
