@@ -168,13 +168,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCollider: {fileID: 0}
-  shockWaveInstantiate: {fileID: 0}
   player: []
   targetPlayer: {fileID: 0}
+  movePoint: {x: 0, y: 0, z: 0}
+  monsterIndex: 0
+  moveSpeed: 0
+  RunRange: 0
+  attackRange: 0
+  attackCycle: 0
   currentDisTance: 0
   searchRange: 0
   currentDisTanceArray: []
+  currentDisTanceWall: []
   pointVector: []
   middleboss: {fileID: 0}
   monsterState: 0
@@ -2154,7 +2159,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400104, guid: 4f94256e86220034ea2bf6a380b7bf32, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 1.65
       objectReference: {fileID: 0}
     - target: {fileID: 400104, guid: 4f94256e86220034ea2bf6a380b7bf32, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2182,7 +2187,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400104, guid: 4f94256e86220034ea2bf6a380b7bf32, type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 100104, guid: 4f94256e86220034ea2bf6a380b7bf32, type: 3}
       propertyPath: m_Name
@@ -3085,7 +3090,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7c966e68dffa22f4aa1be56bd80afcc7, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 7c966e68dffa22f4aa1be56bd80afcc7, type: 3}
       propertyPath: m_Name
@@ -4068,15 +4073,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dungeonManager: {fileID: 0}
-  Frog: []
-  Rabbit: []
-  shockWaveMonster: []
-  middleBoss1: {fileID: 0}
-  goToTheBoss: {fileID: 0}
-  FrogPosition: []
-  pointVector: []
-  monsterCount: 0
-  gateNumber: 0
 --- !u!4 &289901749
 Transform:
   m_ObjectHideFlags: 0
@@ -4722,13 +4718,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCollider: {fileID: 0}
-  shockWaveInstantiate: {fileID: 0}
   player: []
   targetPlayer: {fileID: 0}
+  movePoint: {x: 0, y: 0, z: 0}
+  monsterIndex: 0
+  moveSpeed: 0
+  RunRange: 0
+  attackRange: 0
+  attackCycle: 0
   currentDisTance: 0
   searchRange: 0
   currentDisTanceArray: []
+  currentDisTanceWall: []
   pointVector: []
   middleboss: {fileID: 0}
   monsterState: 0
@@ -5581,13 +5582,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCollider: {fileID: 0}
-  shockWaveInstantiate: {fileID: 0}
   player: []
   targetPlayer: {fileID: 0}
+  movePoint: {x: 0, y: 0, z: 0}
+  monsterIndex: 0
+  moveSpeed: 0
+  RunRange: 0
+  attackRange: 0
+  attackCycle: 0
   currentDisTance: 0
   searchRange: 0
   currentDisTanceArray: []
+  currentDisTanceWall: []
   pointVector: []
   middleboss: {fileID: 0}
   monsterState: 0
@@ -6214,13 +6220,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d29c9c80e3af91b4aa1922b026dfb9d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCollider: {fileID: 877203097}
-  shockWaveInstantiate: {fileID: 0}
   player: []
   targetPlayer: {fileID: 0}
+  movePoint: {x: 0, y: 0, z: 0}
+  monsterIndex: 0
+  moveSpeed: 0
+  RunRange: 0
+  attackRange: 0
+  attackCycle: 0
   currentDisTance: 0
   searchRange: 0
   currentDisTanceArray: []
+  currentDisTanceWall: []
   pointVector: []
   middleboss: {fileID: 0}
   monsterState: 0
@@ -6553,7 +6564,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000012003445268, guid: e46862edff31b9148ade419324d09439, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e46862edff31b9148ade419324d09439, type: 2}
@@ -7959,7 +7970,7 @@ Transform:
   - {fileID: 151249846}
   - {fileID: 505801945}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 8
 --- !u!1 &589169445
 GameObject:
   m_ObjectHideFlags: 0
@@ -8202,6 +8213,48 @@ Transform:
   - {fileID: 1557158653}
   m_Father: {fileID: 1941801531}
   m_RootOrder: 0
+--- !u!1001 &605231813
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4000013769310704, guid: d1ce386675a3e824091e4f83814a8785, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -12.875
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013769310704, guid: d1ce386675a3e824091e4f83814a8785, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 4.3072376
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013769310704, guid: d1ce386675a3e824091e4f83814a8785, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -121.901634
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013769310704, guid: d1ce386675a3e824091e4f83814a8785, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013769310704, guid: d1ce386675a3e824091e4f83814a8785, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013769310704, guid: d1ce386675a3e824091e4f83814a8785, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013769310704, guid: d1ce386675a3e824091e4f83814a8785, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013769310704, guid: d1ce386675a3e824091e4f83814a8785, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: d1ce386675a3e824091e4f83814a8785, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &606890430
 Prefab:
   m_ObjectHideFlags: 0
@@ -8611,7 +8664,7 @@ Transform:
   - {fileID: 1387371886}
   - {fileID: 1797509691}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 7
 --- !u!1 &652401454
 GameObject:
   m_ObjectHideFlags: 0
@@ -9242,13 +9295,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCollider: {fileID: 789529446}
-  shockWaveInstantiate: {fileID: 0}
   player: []
   targetPlayer: {fileID: 0}
+  movePoint: {x: 0, y: 0, z: 0}
+  monsterIndex: 0
+  moveSpeed: 0
+  RunRange: 0
+  attackRange: 0
+  attackCycle: 0
   currentDisTance: 0
   searchRange: 0
   currentDisTanceArray: []
+  currentDisTanceWall: []
   pointVector: []
   middleboss: {fileID: 0}
   monsterState: 0
@@ -9431,16 +9489,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b55df912c131d44d8c71db0893ecdc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  players:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  monsterSpawnPoints: []
-  monsterData: []
   sceneChangeObject: []
   bossMonster: {fileID: 0}
-  section: []
 --- !u!4 &739589852
 Transform:
   m_ObjectHideFlags: 0
@@ -9465,7 +9515,7 @@ Transform:
   - {fileID: 1533228483}
   - {fileID: 723040208}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 12
 --- !u!1 &741359594
 GameObject:
   m_ObjectHideFlags: 0
@@ -9929,7 +9979,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 19
 --- !u!1 &814003214
 GameObject:
   m_ObjectHideFlags: 0
@@ -10288,13 +10338,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCollider: {fileID: 0}
-  shockWaveInstantiate: {fileID: 0}
   player: []
   targetPlayer: {fileID: 0}
+  movePoint: {x: 0, y: 0, z: 0}
+  monsterIndex: 0
+  moveSpeed: 0
+  RunRange: 0
+  attackRange: 0
+  attackCycle: 0
   currentDisTance: 0
   searchRange: 0
   currentDisTanceArray: []
+  currentDisTanceWall: []
   pointVector: []
   middleboss: {fileID: 0}
   monsterState: 0
@@ -11383,7 +11438,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 15
 --- !u!1 &897099531
 GameObject:
   m_ObjectHideFlags: 0
@@ -11966,7 +12021,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 9
 --- !u!1 &958054537
 GameObject:
   m_ObjectHideFlags: 0
@@ -12027,13 +12082,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCollider: {fileID: 825418796}
-  shockWaveInstantiate: {fileID: 0}
   player: []
   targetPlayer: {fileID: 0}
+  movePoint: {x: 0, y: 0, z: 0}
+  monsterIndex: 0
+  moveSpeed: 0
+  RunRange: 0
+  attackRange: 0
+  attackCycle: 0
   currentDisTance: 0
   searchRange: 0
   currentDisTanceArray: []
+  currentDisTanceWall: []
   pointVector: []
   middleboss: {fileID: 0}
   monsterState: 0
@@ -12522,13 +12582,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCollider: {fileID: 0}
-  shockWaveInstantiate: {fileID: 0}
   player: []
   targetPlayer: {fileID: 0}
+  movePoint: {x: 0, y: 0, z: 0}
+  monsterIndex: 0
+  moveSpeed: 0
+  RunRange: 0
+  attackRange: 0
+  attackCycle: 0
   currentDisTance: 0
   searchRange: 0
   currentDisTanceArray: []
+  currentDisTanceWall: []
   pointVector: []
   middleboss: {fileID: 0}
   monsterState: 0
@@ -14939,6 +15004,56 @@ Transform:
   - {fileID: 390787027}
   m_Father: {fileID: 415268782}
   m_RootOrder: 0
+--- !u!1001 &1187001585
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4000012814548482, guid: d60aa75a6cf67db4e86039d12357b5dd, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0.7259483
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000012814548482, guid: d60aa75a6cf67db4e86039d12357b5dd, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 2.974144
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000012814548482, guid: d60aa75a6cf67db4e86039d12357b5dd, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -120.21261
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000012814548482, guid: d60aa75a6cf67db4e86039d12357b5dd, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000012814548482, guid: d60aa75a6cf67db4e86039d12357b5dd, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000012814548482, guid: d60aa75a6cf67db4e86039d12357b5dd, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000012814548482, guid: d60aa75a6cf67db4e86039d12357b5dd, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000012814548482, guid: d60aa75a6cf67db4e86039d12357b5dd, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000011075465152, guid: d60aa75a6cf67db4e86039d12357b5dd, type: 2}
+      propertyPath: m_Name
+      value: BossSword
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000011075465152, guid: d60aa75a6cf67db4e86039d12357b5dd, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: d60aa75a6cf67db4e86039d12357b5dd, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1192394527
 GameObject:
   m_ObjectHideFlags: 0
@@ -15396,13 +15511,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCollider: {fileID: 0}
-  shockWaveInstantiate: {fileID: 0}
   player: []
   targetPlayer: {fileID: 0}
+  movePoint: {x: 0, y: 0, z: 0}
+  monsterIndex: 0
+  moveSpeed: 0
+  RunRange: 0
+  attackRange: 0
+  attackCycle: 0
   currentDisTance: 0
   searchRange: 0
   currentDisTanceArray: []
+  currentDisTanceWall: []
   pointVector: []
   middleboss: {fileID: 0}
   monsterState: 0
@@ -16151,13 +16271,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCollider: {fileID: 0}
-  shockWaveInstantiate: {fileID: 0}
   player: []
   targetPlayer: {fileID: 0}
+  movePoint: {x: 0, y: 0, z: 0}
+  monsterIndex: 0
+  moveSpeed: 0
+  RunRange: 0
+  attackRange: 0
+  attackCycle: 0
   currentDisTance: 0
   searchRange: 0
   currentDisTanceArray: []
+  currentDisTanceWall: []
   pointVector: []
   middleboss: {fileID: 0}
   monsterState: 0
@@ -16236,7 +16361,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 10
 --- !u!1 &1280834242
 GameObject:
   m_ObjectHideFlags: 0
@@ -16568,13 +16693,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCollider: {fileID: 159653027}
-  shockWaveInstantiate: {fileID: 0}
   player: []
   targetPlayer: {fileID: 0}
+  movePoint: {x: 0, y: 0, z: 0}
+  monsterIndex: 0
+  moveSpeed: 0
+  RunRange: 0
+  attackRange: 0
+  attackCycle: 0
   currentDisTance: 0
   searchRange: 0
   currentDisTanceArray: []
+  currentDisTanceWall: []
   pointVector: []
   middleboss: {fileID: 0}
   monsterState: 0
@@ -16774,7 +16904,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 13
 --- !u!1 &1310383971
 GameObject:
   m_ObjectHideFlags: 0
@@ -16890,15 +17020,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dungeonManager: {fileID: 0}
-  Frog: []
-  Rabbit: []
-  shockWaveMonster: []
-  middleBoss1: {fileID: 0}
-  goToTheBoss: {fileID: 0}
-  FrogPosition: []
-  pointVector: []
-  monsterCount: 0
-  gateNumber: 0
 --- !u!1 &1314391824
 GameObject:
   m_ObjectHideFlags: 0
@@ -17058,7 +17179,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 17.098001, y: -91.993004, z: -0.588}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 14
 --- !u!114 &1317618693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17612,6 +17733,48 @@ Transform:
   - {fileID: 282928818}
   m_Father: {fileID: 833221686}
   m_RootOrder: 0
+--- !u!1001 &1375349584
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4000013201858814, guid: 22f6fc76b5b463b489f0e921016c9481, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 3.0236979
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013201858814, guid: 22f6fc76b5b463b489f0e921016c9481, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013201858814, guid: 22f6fc76b5b463b489f0e921016c9481, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -121.11223
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013201858814, guid: 22f6fc76b5b463b489f0e921016c9481, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013201858814, guid: 22f6fc76b5b463b489f0e921016c9481, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013201858814, guid: 22f6fc76b5b463b489f0e921016c9481, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013201858814, guid: 22f6fc76b5b463b489f0e921016c9481, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013201858814, guid: 22f6fc76b5b463b489f0e921016c9481, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 22f6fc76b5b463b489f0e921016c9481, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1375549879
 GameObject:
   m_ObjectHideFlags: 0
@@ -18105,7 +18268,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400086, guid: 4fb2dbab40afc084994dc3a1095f5565, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 100086, guid: 4fb2dbab40afc084994dc3a1095f5565, type: 3}
       propertyPath: m_Name
@@ -18443,23 +18606,27 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000010485329214, guid: 048a9e0f3d4d78f49912b6d42ac55e1b, type: 2}
       propertyPath: m_RootOrder
-      value: 16
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 4000014136162566, guid: 048a9e0f3d4d78f49912b6d42ac55e1b, type: 2}
       propertyPath: m_LocalRotation.x
-      value: 0.61475956
+      value: 0.6147595
       objectReference: {fileID: 0}
     - target: {fileID: 4000014136162566, guid: 048a9e0f3d4d78f49912b6d42ac55e1b, type: 2}
       propertyPath: m_LocalRotation.y
-      value: 0.63123924
+      value: 0.6312392
       objectReference: {fileID: 0}
     - target: {fileID: 4000014136162566, guid: 048a9e0f3d4d78f49912b6d42ac55e1b, type: 2}
       propertyPath: m_LocalRotation.z
-      value: 0.33876368
+      value: 0.33876365
       objectReference: {fileID: 0}
     - target: {fileID: 4000014136162566, guid: 048a9e0f3d4d78f49912b6d42ac55e1b, type: 2}
       propertyPath: m_LocalRotation.w
-      value: -0.32991976
+      value: -0.32991973
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000010462128540, guid: 048a9e0f3d4d78f49912b6d42ac55e1b, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 048a9e0f3d4d78f49912b6d42ac55e1b, type: 2}
@@ -18618,13 +18785,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCollider: {fileID: 1958231650}
-  shockWaveInstantiate: {fileID: 0}
   player: []
   targetPlayer: {fileID: 0}
+  movePoint: {x: 0, y: 0, z: 0}
+  monsterIndex: 0
+  moveSpeed: 0
+  RunRange: 0
+  attackRange: 0
+  attackCycle: 0
   currentDisTance: 0
   searchRange: 0
   currentDisTanceArray: []
+  currentDisTanceWall: []
   pointVector: []
   middleboss: {fileID: 0}
   monsterState: 0
@@ -19502,13 +19674,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCollider: {fileID: 0}
-  shockWaveInstantiate: {fileID: 0}
   player: []
   targetPlayer: {fileID: 0}
+  movePoint: {x: 0, y: 0, z: 0}
+  monsterIndex: 0
+  moveSpeed: 0
+  RunRange: 0
+  attackRange: 0
+  attackCycle: 0
   currentDisTance: 0
   searchRange: 0
   currentDisTanceArray: []
+  currentDisTanceWall: []
   pointVector: []
   middleboss: {fileID: 0}
   monsterState: 0
@@ -19603,13 +19780,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCollider: {fileID: 544767573}
-  shockWaveInstantiate: {fileID: 0}
   player: []
   targetPlayer: {fileID: 0}
+  movePoint: {x: 0, y: 0, z: 0}
+  monsterIndex: 0
+  moveSpeed: 0
+  RunRange: 0
+  attackRange: 0
+  attackCycle: 0
   currentDisTance: 0
   searchRange: 0
   currentDisTanceArray: []
+  currentDisTanceWall: []
   pointVector: []
   middleboss: {fileID: 0}
   monsterState: 0
@@ -20634,7 +20816,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000010048621978, guid: fbd1b7f67955ed141967c81fbe68a768, type: 2}
       propertyPath: m_RootOrder
-      value: 14
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 114000010112111054, guid: fbd1b7f67955ed141967c81fbe68a768,
         type: 2}
@@ -20731,13 +20913,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCollider: {fileID: 0}
-  shockWaveInstantiate: {fileID: 0}
   player: []
   targetPlayer: {fileID: 0}
+  movePoint: {x: 0, y: 0, z: 0}
+  monsterIndex: 0
+  moveSpeed: 0
+  RunRange: 0
+  attackRange: 0
+  attackCycle: 0
   currentDisTance: 0
   searchRange: 0
   currentDisTanceArray: []
+  currentDisTanceWall: []
   pointVector: []
   middleboss: {fileID: 0}
   monsterState: 0
@@ -22098,38 +22285,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03d6bf8e6a2538c4eb6a25cc15af3f76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCollider: {fileID: 0}
-  shockWaveInstantiate: {fileID: 0}
   player:
   - {fileID: 0}
   - {fileID: 0}
   targetPlayer: {fileID: 0}
+  movePoint: {x: 0, y: 0, z: 0}
+  monsterIndex: 0
+  moveSpeed: 1
+  RunRange: 0
+  attackRange: 0
+  attackCycle: 0
   currentDisTance: 0
   searchRange: 0
   currentDisTanceArray: []
+  currentDisTanceWall: []
   pointVector: []
-  searchRange: 0
-  moveSpeed: 1
-  bossStartSound: {fileID: 0}
-  uiManager: {fileID: 0}
-  MonsterWeapon:
-  - {fileID: 1457704206}
-  - {fileID: 1525211499}
-  BigBearBossState: 0
-  skillInsertImage: {fileID: 0}
-  imageSpeed: 1
-  imageLerpTime: 0
-  handPos: {fileID: 0}
-  handSphere: {fileID: 0}
-  handAttack: {fileID: 0}
-  bossplayer: []
-  chasePlayer: {fileID: 0}
-  roar: {fileID: 0}
-  bossSkill: 0
-  notMove: 0
-  ChaseCount: 0
-  normalAttackCycle: 0
-  sound: {fileID: 0}
 --- !u!4 &1696302531 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400086, guid: 4fb2dbab40afc084994dc3a1095f5565, type: 3}
@@ -22309,15 +22479,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dungeonManager: {fileID: 0}
-  Frog: []
-  Rabbit: []
-  shockWaveMonster: []
-  middleBoss1: {fileID: 0}
-  goToTheBoss: {fileID: 0}
-  FrogPosition: []
-  pointVector: []
-  monsterCount: 0
-  gateNumber: 0
 --- !u!4 &1699044388
 Transform:
   m_ObjectHideFlags: 0
@@ -22821,7 +22982,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 11
 --- !u!1 &1742202995
 GameObject:
   m_ObjectHideFlags: 0
@@ -23546,13 +23707,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCollider: {fileID: 0}
-  shockWaveInstantiate: {fileID: 0}
   player: []
   targetPlayer: {fileID: 0}
+  movePoint: {x: 0, y: 0, z: 0}
+  monsterIndex: 0
+  moveSpeed: 0
+  RunRange: 0
+  attackRange: 0
+  attackCycle: 0
   currentDisTance: 0
   searchRange: 0
   currentDisTanceArray: []
+  currentDisTanceWall: []
   pointVector: []
   middleboss: {fileID: 0}
   monsterState: 0
@@ -23737,18 +23903,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b55df912c131d44d8c71db0893ecdc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  players:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  monsterSpawnPoints: []
-  monsterData: []
   sceneChangeObject: []
   bossMonster: {fileID: 0}
-  section:
-  - {fileID: 1699044387}
-  - {fileID: 289901748}
 --- !u!4 &1797509691
 Transform:
   m_ObjectHideFlags: 0
@@ -26339,6 +26495,44 @@ Transform:
   - {fileID: 447347118}
   m_Father: {fileID: 562576162}
   m_RootOrder: 0
+--- !u!1 &1963034300 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000011075465152, guid: d60aa75a6cf67db4e86039d12357b5dd,
+    type: 2}
+  m_PrefabInternal: {fileID: 1187001585}
+--- !u!114 &1963034306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1963034300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b4f96da69bb0c7468c3e91bc790bf28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monster: {fileID: 0}
+  damage: 0
+  sphereRigid: {fileID: 0}
+  swingBox: {fileID: 0}
+  player: {fileID: 0}
+  swingRigd: {fileID: 0}
+  swingSpeed: 0
+--- !u!54 &1963034307
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1963034300}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 116
+  m_CollisionDetection: 0
 --- !u!1 &1965700539
 GameObject:
   m_ObjectHideFlags: 0
@@ -28027,13 +28221,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCollider: {fileID: 0}
-  shockWaveInstantiate: {fileID: 0}
   player: []
   targetPlayer: {fileID: 0}
+  movePoint: {x: 0, y: 0, z: 0}
+  monsterIndex: 0
+  moveSpeed: 0
+  RunRange: 0
+  attackRange: 0
+  attackCycle: 0
   currentDisTance: 0
   searchRange: 0
   currentDisTanceArray: []
+  currentDisTanceWall: []
   pointVector: []
   middleboss: {fileID: 0}
   monsterState: 0
@@ -28160,13 +28359,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c04ec75d8b4574479970db43cf655fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCollider: {fileID: 67537720}
-  shockWaveInstantiate: {fileID: 0}
   player: []
   targetPlayer: {fileID: 0}
+  movePoint: {x: 0, y: 0, z: 0}
+  monsterIndex: 0
+  moveSpeed: 0
+  RunRange: 0
+  attackRange: 0
+  attackCycle: 0
   currentDisTance: 0
   searchRange: 0
   currentDisTanceArray: []
+  currentDisTanceWall: []
   pointVector: []
   middleboss: {fileID: 0}
   monsterState: 0

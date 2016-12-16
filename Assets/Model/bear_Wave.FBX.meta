@@ -103,7 +103,15 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.86341465
+        functionName: BoxColliderOn
+        data: 
+        objectReferenceParameter: {fileID: 1000011111225652, guid: 22f6fc76b5b463b489f0e921016c9481,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
