@@ -26,6 +26,7 @@ public class RoomUIManager : MonoBehaviour {
     private GameObject skillAddUI;
     private GameObject myInfoUI;
     private GameObject[] rendPos;
+    private GameObject[] playerPrefeb;
 
     private RoomData roomData;
 
@@ -118,6 +119,7 @@ public class RoomUIManager : MonoBehaviour {
             if (roomData.RoomUserData[i].UserLevel > 0)
             {
                 GameObject character = Instantiate(Resources.Load<GameObject>("UI/Class" + (roomData.RoomUserData[i].UserClass + (roomData.RoomUserData[i].UserGender * CharacterCreateUI.minClass) + 1)), rendPos[i].transform) as GameObject;
+                playerPrefeb[i] = character;
                 character.transform.localPosition = Vector3.zero;
                 character.transform.localRotation = new Quaternion(0, 180, 0, 0);
                 userName[i].text = "Lv." + roomData.RoomUserData[i].UserLevel.ToString() + " " + roomData.RoomUserData[i].UserName;
@@ -125,6 +127,10 @@ public class RoomUIManager : MonoBehaviour {
             }
             else
             {
+                if(playerPrefeb != null)
+                {
+                    Destroy(playerPrefeb[i]);
+                }                
                 userName[i].text = "";
                 classIcon[i].color = new Color(0,0,0,0);
             }
