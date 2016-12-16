@@ -199,6 +199,11 @@ public class DungeonManager : MonoBehaviour
         monsterSpawnList = newMonsterSpawnList;
         monsters = new GameObject[monsterSpawnList.MonsterNum];
         monsterData = new Monster[monsterSpawnList.MonsterNum];
+
+        for(int monsterIndex = 0; monsterIndex <monsterSpawnList.MonsterNum; monsterIndex++)
+        {
+            monsterData[monsterIndex] = new Monster();
+        }
     }
 
     public void SpawnMonster()
