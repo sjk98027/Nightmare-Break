@@ -139,7 +139,7 @@ public class CharWeapon : MonoBehaviour
                             }
                         }
                     }
-                    monster.HitDamage(damage, this.gameObject.GetComponentInParent<CharacterManager>().gameObject);
+					monster.HitDamage (damage, this.gameObject.GetComponentInParent<CharacterManager>().gameObject);
                     damage = 0;
                 }
             }

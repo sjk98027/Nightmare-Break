@@ -40,7 +40,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011405449954}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.087661, y: 0.40000013, z: -1.704673}
+  m_LocalPosition: {x: 5.58, y: 4.74, z: -115.66}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -54,7 +54,7 @@ MeshRenderer:
   m_GameObject: {fileID: 1000011405449954}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -112,6 +112,7 @@ MonoBehaviour:
   charManager: {fileID: 0}
   character: {fileID: 0}
   MeteorDamage: 10
+  meteorDropSound: {fileID: 0}
 --- !u!135 &135000010998853408
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -174,7 +175,7 @@ ParticleSystem:
   moveWithTransform: 0
   autoRandomSeed: 1
   scalingMode: 1
-  randomSeed: -329505385
+  randomSeed: 2123485762
   InitialModule:
     serializedVersion: 2
     enabled: 1

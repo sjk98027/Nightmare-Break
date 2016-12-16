@@ -19,6 +19,7 @@ public class Armageddon : MonoBehaviour
 	public GameObject armageddonImpact;
 	public GameObject armageddonExplosion;
 	public GameObject meteorExplosion;
+	public GameObject meteorCenter;
 	public BoxCollider armageddonBox;
 	int skillLv;
 	public Animator armageddonAni;
@@ -55,11 +56,13 @@ public class Armageddon : MonoBehaviour
 		armageddonImpact = Instantiate(Resources.Load<GameObject>("Effect/ArmageddonImpact"), transform.position, Quaternion.identity) as GameObject;
 		armageddonExplosion =Instantiate (Resources.Load<GameObject> ("Effect/ArmageddonExplosion"), transform.position, Quaternion.identity)as GameObject;
 		meteorExplosion = Instantiate (Resources.Load<GameObject> ("Effect/MeteorExplosion"), transform.position, Quaternion.identity)as GameObject;
+		meteorCenter =Instantiate (Resources.Load<GameObject> ("Effect/MeteorBreakGround"),new Vector3(this.transform.position.x,this.transform.position.y+1.37f,this.transform.position.z), Quaternion.identity)as GameObject;
 		Destroy (armageddonImpact, 0.4f);
 		Destroy (armageddonExplosion, 0.4f);
 		Destroy (meteorExplosion, 0.4f);
+		Destroy (meteorCenter, 1f);
 		armageddonBox.enabled = false;
-		FireBallRigid.velocity = (-this.transform.up)*3f;
+	//	FireBallRigid.velocity = (-this.transform.up)*3f;
 
 
 		Destroy (this.gameObject, 2f);

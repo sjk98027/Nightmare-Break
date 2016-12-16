@@ -38,25 +38,7 @@ public class EspadaSwordEffect : MonoBehaviour
 		rend = GetComponent<Renderer> ();
 		StartCoroutine(EffectMove());
 		swordSound.PlayOneShot (swordSummonSound);
-	}
-	void Update()
-	{
-       // charStatus.SkillLevel [5] = 3;
-//		swordDamage = charStatus.SkillLevel [5] * charStatus.Attack;
-		if (!count)
-		{
-			giganticSwordAliveTime += Time.deltaTime;
-
-			float SwordAlpha = 1 - giganticSwordAliveTime ;
-
-			rend.material.color = new Color (0, 0, 0, (SwordAlpha) );
-
-			if(SwordAlpha <0.5)
-			{
-				SwordAlpha = 0;
-				Destroy (this.gameObject, 1.3f);
-			}
-		}	
+		Destroy (this.gameObject, 3.0f);
 	}
 
     IEnumerator EffectMove()
@@ -74,7 +56,7 @@ public class EspadaSwordEffect : MonoBehaviour
 		
         if (coll.gameObject.layer == LayerMask.NameToLayer("Map"))
         {
-            Instantiate(Resources.Load<GameObject>("Effect/Explosion"), transform.position, Quaternion.identity);
+			Instantiate(Resources.Load<GameObject>("Effect/SwordExplosion"), transform.position, Quaternion.identity);
 			count = false;
 			swordSound.PlayOneShot (swordFinishSound);
 			Debug.Log ("in Field");
@@ -91,6 +73,7 @@ public class EspadaSwordEffect : MonoBehaviour
 			if (monsterDamage != null)
 			{	
 				Debug.Log (character);
+
 				monsterDamage.HitDamage (swordDamage,character );
 				swordDamage = 0;
 

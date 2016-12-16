@@ -85,7 +85,7 @@ public class MageManager : CharacterManager
 		{
 			if (!mageRing)
 			{
-				mageRing = Instantiate (Resources.Load<GameObject> ("Effect/FlameImpact"), new Vector3 (transform.position.x, transform.position.y + 1.0f, transform.position.z), Quaternion.Euler (0, 0, 0))as GameObject;
+				mageRing = Instantiate (Resources.Load<GameObject> ("Effect/FlameImpact"), new Vector3 (transform.position.x, transform.position.y, transform.position.z), Quaternion.Euler (0, 0, 0))as GameObject;
 			}
 			float howlingSpeed = 5f;
 			float howlingDistance;

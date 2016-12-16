@@ -180,6 +180,8 @@ public class CharacterManager : MonoBehaviour
 		{
 			runState = this.animator.GetCurrentAnimatorStateInfo (0);
 
+			Ray MapDistance = new Ray (this.transform.position, transform.forward);
+			RaycastHit rayHit;
 			if (!animator.GetBool ("Attack"))
 			{
 				if (ver != 0 || hor != 0)
@@ -205,19 +207,16 @@ public class CharacterManager : MonoBehaviour
 					}
 
 					if (runState.IsName ("Run"))
-					{							
-						
+					{	
 						if (hor == -1.0f || hor == 1.0f)
 						{
 							transform.Translate ((Vector3.forward * ver - Vector3.right * hor) * Time.deltaTime * (charStatus.MoveSpeed - 3.0f), Space.World);
-
-
 						}
 						else
 						{
 							transform.Translate ((Vector3.forward * ver - Vector3.right * hor) * Time.deltaTime * (charStatus.MoveSpeed), Space.World);
-
 						}
+						
 					}
 				}
 				else if (ver == 0 && hor == 0)

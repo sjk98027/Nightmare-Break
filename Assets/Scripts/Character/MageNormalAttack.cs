@@ -8,7 +8,7 @@ public class MageNormalAttack : MonoBehaviour {
 	public CharacterStatus charStatus;
 
 	public int MageBallDamage;
-	public float MageBallSpeed = 50;
+	public float MageBallSpeed = 5;
 	public Rigidbody MageBallRigid;
 
 	void Start () 
