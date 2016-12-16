@@ -119,12 +119,15 @@ public class RoomUIManager : MonoBehaviour {
         {
             if (roomData.RoomUserData[i].UserLevel > 0)
             {
-                GameObject character = Instantiate(Resources.Load<GameObject>("UI/Class" + (roomData.RoomUserData[i].UserClass + (roomData.RoomUserData[i].UserGender * CharacterCreateUI.minClass) + 1)), rendPos[i].transform) as GameObject;
-                playerPrefeb[i] = character;
-                character.transform.localPosition = Vector3.zero;
-                character.transform.localRotation = new Quaternion(0, 180, 0, 0);
-                userName[i].text = "Lv." + roomData.RoomUserData[i].UserLevel.ToString() + " " + roomData.RoomUserData[i].UserName;
-                classIcon[i].sprite = Resources.Load<Sprite>("UI/RoomClassIcon/Class" + roomData.RoomUserData[i].UserClass);
+                if(playerPrefeb == null)
+                {
+                    GameObject character = Instantiate(Resources.Load<GameObject>("UI/Class" + (roomData.RoomUserData[i].UserClass + (roomData.RoomUserData[i].UserGender * CharacterCreateUI.minClass) + 1)), rendPos[i].transform) as GameObject;
+                    playerPrefeb[i] = character;
+                    character.transform.localPosition = Vector3.zero;
+                    character.transform.localRotation = new Quaternion(0, 180, 0, 0);
+                    userName[i].text = "Lv." + roomData.RoomUserData[i].UserLevel.ToString() + " " + roomData.RoomUserData[i].UserName;
+                    classIcon[i].sprite = Resources.Load<Sprite>("UI/RoomClassIcon/Class" + roomData.RoomUserData[i].UserClass);
+                }                
             }
             else
             {
