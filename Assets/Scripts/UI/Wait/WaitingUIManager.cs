@@ -307,15 +307,6 @@ public class Room
         playerNum = newPlayerNum;
         roomUserData = newRoomUserData;
     }
-
-    public Room(string newName, byte newDungeonId, byte newDungeonLevel, RoomUserData[] newRoomUserData)
-    {
-        roomName = newName;
-        playerNum = 0;
-        dungeonId = newDungeonId;
-        dungeonLevel = newDungeonLevel;
-        roomUserData = newRoomUserData;
-    }
 }
 
 public class RoomUserData
