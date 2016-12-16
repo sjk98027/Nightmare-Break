@@ -1,49 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BearRoar : MonoBehaviour 
+public class BossDarkSwing : MonoBehaviour 
 {
+
 	public Monster monster;
 	public int damage;
 	public Rigidbody sphereRigid;
-	public BoxCollider roarBox;
+	public CapsuleCollider swingBox;
 	public GameObject player;
+
+	public Rigidbody swingRigd;
+	public float swingSpeed;
+
 
 	// Use this for initialization
 	void Start () 
 	{
 		damage = 10;
+		swingSpeed = 10.0f;
+		swingRigd = GetComponent<Rigidbody> ();
 		player = GameObject.FindGameObjectWithTag ("Player");
-		roarBox = this.GetComponent<BoxCollider> ();
-		roarBox.enabled = false;
-		StartCoroutine (Roar());
+		swingBox = this.GetComponent<CapsuleCollider> ();
+		swingRigd.velocity = -transform.up * swingSpeed;
+		Destroy (this.gameObject , 3f);	
 	}
 
-	void Update ()
-	{
-		Destroy (this.gameObject , 3f);
-	}
-	
-	// Update is called once per frame
-
-	IEnumerator Roar()
-	{
-		while (true)
-		{
-			if (roarBox.enabled == false)
-			{
-				roarBox.enabled = true;
-			}
-
-			yield return new WaitForSeconds (0.1f);
-
-			if (roarBox.enabled == true)
-			{
-				roarBox.enabled = false;
-			}
-			
-		}
-	}
 	void OnTriggerEnter(Collider coll)
 	{
 		if (coll.gameObject.layer == LayerMask.NameToLayer ("Player"))
