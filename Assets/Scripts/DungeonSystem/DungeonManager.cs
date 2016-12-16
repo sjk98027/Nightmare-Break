@@ -85,6 +85,7 @@ public class DungeonManager : MonoBehaviour
             monsterBaseData[2].AddLevelData(new MonsterLevelData(1, 5, 0, 75, 4));
             dungeonData = new MonsterStatusData(3, monsterBaseData);
 
+            SetMonsterSpawnList(monsterSpawnList);
             SpawnMonster();
             SetMonsterStatus();
         }        

@@ -14,6 +14,7 @@ public class RoomListPacket : Packet<RoomListData>
                 ret &= Serialize(data.Rooms[i].RoomName);
                 ret &= Serialize(data.Rooms[i].DungeonId);
                 ret &= Serialize(data.Rooms[i].DungeonLevel);
+                ret &= Serialize(data.Rooms[i].PlayerNum);
 
                 for (int j = 0; j < WaitingUIManager.maxPlayerNum; j++)
                 {
@@ -60,6 +61,7 @@ public class RoomListPacket : Packet<RoomListData>
                 ret &= Deserialize(out roomName, roomNameLength);
                 ret &= Deserialize(ref dungeonId);
                 ret &= Deserialize(ref dungeonLevel);
+                ret &= Deserialize(ref playerNum);
 
                 for (int j = 0; j < WaitingUIManager.maxPlayerNum; j++)
                 {
