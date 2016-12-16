@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 using System.Net;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.SceneManagement;
+
 
 public enum UnitId
 {
@@ -20,6 +22,8 @@ public enum UnitId
 //this class manage monsterStageLevel, sumon, player sumon, player death;
 public class DungeonManager : MonoBehaviour
 {
+	
+	Scene scenmanager;
     GameObject[] playerSpawnPoints;
     GameObject[] monsterSpawnPoints;
     GameObject[] players;
@@ -39,9 +43,10 @@ public class DungeonManager : MonoBehaviour
     NetworkManager networkManager;
     GameObject m_camera;
 
-    int mapNumber;
+	[SerializeField]int mapNumber;
 
     bool normalMode; //false  -> normalBattle, true -> Defence; 
+	SceneManager scene;
 
     public GameObject[] Players { get { return players; } }
     public CharacterManager[] CharacterData { get { return characterData; } }
@@ -54,6 +59,7 @@ public class DungeonManager : MonoBehaviour
 
 	void Start()
 	{
+		//SceneManager = this.scene;
         //test
         if (GameObject.FindGameObjectWithTag("GameManager") == null)
         {
@@ -61,8 +67,16 @@ public class DungeonManager : MonoBehaviour
         }		
 
 		//Instantiate 스폰포인트 생성조건 - > mapNumber != 2;
-		mapNumber = 2;
-		normalMode = false;
+
+//		if (scenmanager.name == ("ProtoTypeCoPy3")) {
+			mapNumber = 3;
+//		}
+		if(mapNumber ==2){
+			normalMode = false;
+		}
+		if (mapNumber != 2) {
+			normalMode = true;
+		}
 
 		DungeonConstruct();
 
@@ -70,20 +84,61 @@ public class DungeonManager : MonoBehaviour
         {
             InitializeMonsterSpawnPoint();
 
-            MonsterSpawnData[] monsterSpawnData = new MonsterSpawnData[3];
-            monsterSpawnData[0] = new MonsterSpawnData((int)MonsterId.Frog, 9);
-            monsterSpawnData[1] = new MonsterSpawnData((int)MonsterId.Duck, 12);
-            monsterSpawnData[2] = new MonsterSpawnData((int)MonsterId.Rabbit, 6);
-            monsterSpawnList = new MonsterSpawnList(3, monsterSpawnData);
+//			if(mapNumber==3){
+				MonsterSpawnData[] monsterSpawnData = new MonsterSpawnData[4];
+				monsterSpawnData[0] = new MonsterSpawnData((int)MonsterId.Frog, 3);
+				monsterSpawnData[1] = new MonsterSpawnData((int)MonsterId.Duck, 4);
+				monsterSpawnData[2] = new MonsterSpawnData((int)MonsterId.Rabbit, 1);
+				monsterSpawnData[3] = new MonsterSpawnData((int)MonsterId.BlackBear, 1);
+				monsterSpawnList = new MonsterSpawnList(4, monsterSpawnData);
 
-            MonsterBaseData[] monsterBaseData = new MonsterBaseData[3];
-            monsterBaseData[0] = new MonsterBaseData((int)MonsterId.Frog, "Frog");
-            monsterBaseData[0].AddLevelData(new MonsterLevelData(1, 2, 0, 30, 5));
-            monsterBaseData[1] = new MonsterBaseData((int)MonsterId.Duck, "Duck");
-            monsterBaseData[1].AddLevelData(new MonsterLevelData(1, 3, 0, 35, 4));
-            monsterBaseData[2] = new MonsterBaseData((int)MonsterId.Rabbit, "Rabbit");
-            monsterBaseData[2].AddLevelData(new MonsterLevelData(1, 5, 0, 75, 4));
-            dungeonData = new MonsterStatusData(3, monsterBaseData);
+				MonsterBaseData[] monsterBaseData = new MonsterBaseData[4];
+				monsterBaseData[0] = new MonsterBaseData((int)MonsterId.Frog, "Frog");
+				monsterBaseData[0].AddLevelData(new MonsterLevelData(1, 2, 0, 30, 5));
+				monsterBaseData[1] = new MonsterBaseData((int)MonsterId.Duck, "Duck");
+				monsterBaseData[1].AddLevelData(new MonsterLevelData(1, 3, 0, 35, 4));
+				monsterBaseData[2] = new MonsterBaseData((int)MonsterId.Rabbit, "Rabbit");
+				monsterBaseData[2].AddLevelData(new MonsterLevelData(1, 5, 0, 1000, 4));
+				monsterBaseData[3] = new MonsterBaseData((int)MonsterId.BlackBear, "BlackBear");
+				monsterBaseData[3].AddLevelData(new MonsterLevelData(1, 5, 0, 1000, 1));
+				dungeonData = new MonsterStatusData(4, monsterBaseData);
+//			}
+
+//			if (mapNumber == 1) {
+//				MonsterSpawnData[] monsterSpawnData = new MonsterSpawnData[3];
+//				monsterSpawnData[0] = new MonsterSpawnData((int)MonsterId.Frog, 3);
+//				monsterSpawnData[1] = new MonsterSpawnData((int)MonsterId.Duck, 3);
+//				monsterSpawnData[2] = new MonsterSpawnData((int)MonsterId.Rabbit, 2);
+//				monsterSpawnList = new MonsterSpawnList(3, monsterSpawnData);
+//
+//				MonsterBaseData[] monsterBaseData = new MonsterBaseData[3];
+//				monsterBaseData[0] = new MonsterBaseData((int)MonsterId.Frog, "Frog");
+//				monsterBaseData[0].AddLevelData(new MonsterLevelData(1, 2, 0, 30, 5));
+//				monsterBaseData[1] = new MonsterBaseData((int)MonsterId.Duck, "Duck");
+//				monsterBaseData[1].AddLevelData(new MonsterLevelData(1, 3, 0, 35, 4));
+//				monsterBaseData[2] = new MonsterBaseData((int)MonsterId.Rabbit, "Rabbit");
+//				monsterBaseData[2].AddLevelData(new MonsterLevelData(1, 5, 0, 100, 4));
+//
+//				dungeonData = new MonsterStatusData(3, monsterBaseData);
+//			}
+
+//            MonsterSpawnData[] monsterSpawnData = new MonsterSpawnData[4];
+//            monsterSpawnData[0] = new MonsterSpawnData((int)MonsterId.Frog, 3);
+//            monsterSpawnData[1] = new MonsterSpawnData((int)MonsterId.Duck, 4);
+//            monsterSpawnData[2] = new MonsterSpawnData((int)MonsterId.Rabbit, 1);
+//			monsterSpawnData[3] = new MonsterSpawnData((int)MonsterId.BlackBear, 1);
+//            monsterSpawnList = new MonsterSpawnList(4, monsterSpawnData);
+//
+//            MonsterBaseData[] monsterBaseData = new MonsterBaseData[4];
+//            monsterBaseData[0] = new MonsterBaseData((int)MonsterId.Frog, "Frog");
+//            monsterBaseData[0].AddLevelData(new MonsterLevelData(1, 2, 0, 30, 5));
+//            monsterBaseData[1] = new MonsterBaseData((int)MonsterId.Duck, "Duck");
+//            monsterBaseData[1].AddLevelData(new MonsterLevelData(1, 3, 0, 35, 4));
+//            monsterBaseData[2] = new MonsterBaseData((int)MonsterId.Rabbit, "Rabbit");
+//            monsterBaseData[2].AddLevelData(new MonsterLevelData(1, 5, 0, 100, 4));
+//			monsterBaseData[3] = new MonsterBaseData((int)MonsterId.BlackBear, "BlackBear");
+//			monsterBaseData[3].AddLevelData(new MonsterLevelData(1, 5, 0, 1000, 4));
+//            dungeonData = new MonsterStatusData(4, monsterBaseData);
 
             SetMonsterSpawnList(monsterSpawnList);
             SpawnMonster();
@@ -236,6 +291,7 @@ public class DungeonManager : MonoBehaviour
             {
                 if ((int) monsterData[monsterIndex].MonsterId == dungeonData.MonsterData[dataIndex].Id)
                 {
+					Debug.Log (monsterData[monsterIndex].MonsterId);
                     monsterData[monsterIndex].MonsterSet(dungeonData.MonsterData[dataIndex]);
                     break;
                 }
@@ -251,22 +307,18 @@ public class DungeonManager : MonoBehaviour
         {
             GameObject monster = null;
 
-            if (unitId == (int)MonsterId.Frog)
-            {
-                monster = (GameObject)Instantiate(Resources.Load("Monster/Frog"), createPoint, gameObject.transform.rotation);
-            }
-            else if (unitId == (int)MonsterId.Duck)
-            {
-                monster = (GameObject)Instantiate(Resources.Load("Monster/Duck"), createPoint, gameObject.transform.rotation);
-            }
-            else if (unitId == (int)MonsterId.Rabbit)
-            {
-                monster = (GameObject)Instantiate(Resources.Load("Monster/Rabbit"), createPoint, gameObject.transform.rotation);
-            }
-            else if (unitId == (int)MonsterId.BlackBear)
-            {
-                monster = (GameObject)Instantiate(Resources.Load("Monster/BlackBear"), createPoint, gameObject.transform.rotation);
-            }
+			if (unitId == (int)MonsterId.Frog) {
+				monster = (GameObject)Instantiate (Resources.Load ("Monster/Frog"), createPoint, gameObject.transform.rotation);
+			} else if (unitId == (int)MonsterId.Duck) {
+				monster = (GameObject)Instantiate (Resources.Load ("Monster/Duck"), createPoint, gameObject.transform.rotation);
+			} else if (unitId == (int)MonsterId.Rabbit) {
+				monster = (GameObject)Instantiate (Resources.Load ("Monster/Rabbit"), createPoint, gameObject.transform.rotation);
+			} else if (unitId == (int)MonsterId.BlackBear) {
+				//if (scenmanager.name == "ProtoTypeCopy3") {
+					monster = (GameObject)Instantiate (Resources.Load ("Monster/BlackBear"), createPoint, gameObject.transform.rotation);
+          
+				//}
+			}
             else if (unitId == (int)MonsterId.Bear)
             {
                 monster = (GameObject)Instantiate(Resources.Load("Monster/Bear"), createPoint, gameObject.transform.rotation);

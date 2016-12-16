@@ -29,16 +29,20 @@ public class Monster : MonoBehaviour {
 			movePoint = (targetPlayer.transform.position);
 			break;
 		case TargetPlayerPosition.Up:
-			movePoint = new Vector3 (targetPlayer.transform.position.x - transform.position.x + (searchRange*0.5f), 0, checkDirection.z);
+			movePoint = new Vector3 (targetPlayer.transform.position.x - transform.position.x + 1, 0, checkDirection.z);
+			Debug.Log ("Up");
 			break;
 		case TargetPlayerPosition.Down:
-			movePoint = new Vector3 (targetPlayer.transform.position.x - transform.position.x - (searchRange*0.5f), 0, checkDirection.z);
+			movePoint = new Vector3 (targetPlayer.transform.position.x - transform.position.x - 1, 0, checkDirection.z);
+			Debug.Log ("Down");
 			break;
 		case TargetPlayerPosition.Left:
-			movePoint = new Vector3 (checkDirection.x, 0, targetPlayer.transform.position.z - transform.position.z - (searchRange*0.5f));
+			movePoint = new Vector3 (checkDirection.x, 0, targetPlayer.transform.position.z - transform.position.z - (2));
+			Debug.Log ("Left");
 			break;
 		case TargetPlayerPosition.Right:
-			movePoint = new Vector3 (checkDirection.x, 0, targetPlayer.transform.position.z - transform.position.z + (searchRange*0.5f));
+			movePoint = new Vector3 (checkDirection.x, 0, targetPlayer.transform.position.z - transform.position.z + (2));
+			Debug.Log ("right");
 			break;
 		}
 	}
@@ -52,7 +56,7 @@ public class Monster : MonoBehaviour {
     public const bool right = true;
     public const bool left = false;
 
-    protected Animator animator;
+	[SerializeField]protected Animator animator;
 	protected AnimatorStateInfo aniState;
 	protected BoxCollider HittedBox;
 	protected MonsterWeapon[] attackCollider;
@@ -66,7 +70,7 @@ public class Monster : MonoBehaviour {
 
     protected int monsterRunAttackAround;
 
-	protected int randomStandby;
+	[SerializeField]protected int randomStandby;
 	//public int RandomStandby;
 	//mode,gateArraynumber,monsterArraynumber
 	protected bool moveAble;
@@ -162,6 +166,7 @@ public class Monster : MonoBehaviour {
 		currentDisTanceWall = new float[wall.Length];
 
         animator = this.gameObject.GetComponent<Animator>();
+
         HittedBox = this.gameObject.GetComponent<BoxCollider>();
 
         isAlive = true;
@@ -204,7 +209,7 @@ public class Monster : MonoBehaviour {
 		aggroRank = new float[player.Length];
 		playerToMonsterDamage = new float[player.Length];
 
-        StartCoroutine(LookatChange());
+
     }
 
 	IEnumerator BossNormalAttackCycleSet()
@@ -218,6 +223,9 @@ public class Monster : MonoBehaviour {
 	}
 
 	public void MonsterAIStart(bool _normalMode){//moveAI->StartAI , 
+		if (_normalMode) {
+			StartCoroutine (LookatChange ());
+		}
 		if (!_normalMode) {
 			if (monsterIndex > 18) {
 				DefenseMoveSet (DefenseMoveDirectionArray.Up);
@@ -253,12 +261,13 @@ public class Monster : MonoBehaviour {
 		{
 			if (moveAble)
 			{
-				if (monsterId != MonsterId.Bear && monsterId != MonsterId.BlackBear) {
-					this.transform.Translate (movePoint.normalized * moveSpeed * Time.deltaTime);
+				if (monsterId == MonsterId.Bear || monsterId == MonsterId.BlackBear) {
+					this.transform.Translate((targetPlayer.transform.position-this.transform.position )* moveSpeed * Time.deltaTime, 0);
+
 				}
 				else
 				{
-					this.transform.Translate((targetPlayer.transform.position-this.transform.position )* moveSpeed * Time.deltaTime, 0);
+					this.transform.Translate (movePoint.normalized * moveSpeed * Time.deltaTime);
 				}
 			}
 		}
@@ -273,17 +282,19 @@ public class Monster : MonoBehaviour {
 				if (targetPlayer != null) {
 					if (Mathf.Abs (targetPlayer.transform.position.z - transform.position.z) > 8 || Mathf.Abs (targetPlayer.transform.position.x - this.gameObject.transform.position.x) > 0.6f) {
 						if (currentDisTance < searchRange) {
-							randomStandby = Random.Range (0, 3);
+							randomStandby = Random.Range (0, 2);
 							if (randomStandby == 0) {
 								//for 문 -> Fuck go;
 								if (checkDirection.z > 0) {
 									for (int i = 0; i < 4; i++) {
 										movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z - 3f);
+										//LookAtPattern (right);
 										yield return new WaitForSeconds (2f);
 									}
 								}
 								if (checkDirection.z < 0) {
 									for (int i = 0; i < 4; i++) {
+										//LookAtPattern (left);
 										movePoint = new Vector3 (checkDirection.x, 0, checkDirection.z + 3f);
 										yield return new WaitForSeconds (2f);
 									}									
@@ -296,40 +307,16 @@ public class Monster : MonoBehaviour {
 								if (a == 0) {
 									targetPlayerPosition (TargetPlayerPosition.Up);
 									yield return new WaitForSeconds (2f);
-									targetPlayerPosition (TargetPlayerPosition.Left);
-									yield return new WaitForSeconds (2f);
-									targetPlayerPosition (TargetPlayerPosition.Down);
-									yield return new WaitForSeconds (2f);
-									targetPlayerPosition (TargetPlayerPosition.Right);
-									yield return new WaitForSeconds (2f);
 								}
 								if (a == 1) {
-									targetPlayerPosition (TargetPlayerPosition.Up);
-									yield return new WaitForSeconds (2f);
 									targetPlayerPosition (TargetPlayerPosition.Right);
-									yield return new WaitForSeconds (2f);
-									targetPlayerPosition (TargetPlayerPosition.Down);
-									yield return new WaitForSeconds (2f);
-									targetPlayerPosition (TargetPlayerPosition.Left);
 									yield return new WaitForSeconds (2f);
 								}
 								if (a == 2) {
 									targetPlayerPosition (TargetPlayerPosition.Down);
 									yield return new WaitForSeconds (2f);
-									targetPlayerPosition (TargetPlayerPosition.Left);
-									yield return new WaitForSeconds (2f);
-									targetPlayerPosition (TargetPlayerPosition.Up);
-									yield return new WaitForSeconds (2f);
-									targetPlayerPosition (TargetPlayerPosition.Right);
-									yield return new WaitForSeconds (2f);
 								}
 								if (a == 3) {
-									targetPlayerPosition (TargetPlayerPosition.Down);
-									yield return new WaitForSeconds (2f);
-									targetPlayerPosition (TargetPlayerPosition.Right);
-									yield return new WaitForSeconds (2f);
-									targetPlayerPosition (TargetPlayerPosition.Up);
-									yield return new WaitForSeconds (2f);
 									targetPlayerPosition (TargetPlayerPosition.Left);
 									yield return new WaitForSeconds (2f);
 								}
@@ -384,7 +371,7 @@ public class Monster : MonoBehaviour {
 								if (moveAble) {
 									if (checkDirection.z > 0) {
 										if (checkDirection.x > 0) {
-											movePoint = new Vector3 (-checkDirection.x, 0, 0);
+											movePoint = new Vector3 (checkDirection.x, 0, 0);
 										}
 										if (checkDirection.x < 0) {
 											movePoint = new Vector3 (checkDirection.x, 0, 0);
@@ -392,7 +379,7 @@ public class Monster : MonoBehaviour {
 									}
 									if (checkDirection.z <= 0) {
 										if (checkDirection.x > 0) {
-											movePoint = new Vector3 (-checkDirection.x, 0, 0);
+											movePoint = new Vector3 (checkDirection.x, 0, 0);
 										}
 										if (checkDirection.x < 0) {
 											movePoint = new Vector3 (checkDirection.x, 0, 0);
@@ -452,7 +439,6 @@ public class Monster : MonoBehaviour {
 					if (currentDisTance > searchRange) {
 						statePosition = StatePosition.Idle; 
 						Pattern (statePosition);
-
 					}
 					//if this object get Attackmotion pattern(stateposition.boom -> attack), and this monsterlife is 20%, boomPattern start;
 					else if (currentDisTance <= searchRange) {
@@ -470,6 +456,12 @@ public class Monster : MonoBehaviour {
 								}
 								statePosition = StatePosition.Attack;
 								Pattern (statePosition);
+								if (checkDirection.z > 0) {
+									LookAtPattern (right);
+								}
+								if (checkDirection.z < 0) {
+									LookAtPattern (left);
+								}
 								yield return new WaitForSeconds (0.5f);
 							}
 						}
