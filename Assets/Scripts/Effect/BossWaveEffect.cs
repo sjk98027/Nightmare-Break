@@ -1,48 +1,32 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BearRoar : MonoBehaviour 
+public class BossWaveEffect : MonoBehaviour 
 {
 	public Monster monster;
 	public int damage;
 	public Rigidbody sphereRigid;
-	public BoxCollider roarBox;
+	public BoxCollider waveBox;
 	public GameObject player;
 
+	public Rigidbody waveRigd;
+	public float waveSpeed;
 	// Use this for initialization
 	void Start () 
 	{
 		damage = 10;
+		waveSpeed = 10.0f;
+		waveRigd = GetComponent<Rigidbody> ();
 		player = GameObject.FindGameObjectWithTag ("Player");
-		roarBox = this.GetComponent<BoxCollider> ();
-		roarBox.enabled = false;
-		StartCoroutine (Roar());
-	}
-
-	void Update ()
-	{
-		Destroy (this.gameObject , 3f);
-	}
-	
-	// Update is called once per frame
-
-	IEnumerator Roar()
-	{
-		while (true)
-		{
-			if (roarBox.enabled == false)
-			{
-				roarBox.enabled = true;
-			}
-
-			yield return new WaitForSeconds (0.1f);
-
-			if (roarBox.enabled == true)
-			{
-				roarBox.enabled = false;
-			}
+		waveBox = this.GetComponent<BoxCollider> ();
+		waveBox.enabled = false;
+		//Destroy (this.gameObject , 3f);
 			
-		}
+	}
+
+	public void BoxColliderOn()
+	{
+		waveBox.enabled = true;
 	}
 	void OnTriggerEnter(Collider coll)
 	{
@@ -56,5 +40,4 @@ public class BearRoar : MonoBehaviour
 			}
 		}
 	}
-
 }
