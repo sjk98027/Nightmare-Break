@@ -417,7 +417,7 @@ public class DataHandler : MonoBehaviour
         MonsterSpawnListPacket monsterSpawnListPacket = new MonsterSpawnListPacket(packet.msg);
         DungeonData monsterSpawnData = monsterSpawnListPacket.GetData();
 
-        dungeonManager.SetMonsterSpawnList(monsterSpawnData);
+        DungeonManager.Instance.SetMonsterSpawnList(monsterSpawnData);
 
         if (SceneChanger.Instance.CurrentScene == SceneChanger.SceneName.LoadingScene)
         {
@@ -433,7 +433,7 @@ public class DataHandler : MonoBehaviour
         MonsterStatusPacket dungeonDataPacket = new MonsterStatusPacket(packet.msg);
         MonsterStatusData dungeonData = dungeonDataPacket.GetData();
 
-        dungeonManager.SetMonsterData(dungeonData);
+        DungeonManager.Instance.SetMonsterData(dungeonData);
 
         if (SceneChanger.Instance.CurrentScene == SceneChanger.SceneName.LoadingScene)
         {
