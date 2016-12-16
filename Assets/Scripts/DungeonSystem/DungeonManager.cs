@@ -111,13 +111,13 @@ public class DungeonManager : MonoBehaviour
         }
 	}
 
-	void Update()
-	{
-        for (int i = 0; i < monsters.Length; i++)
-        {
-			monsterData[i].MonsterUpdate();
-        }
-	}
+	//void Update()
+	//{
+ //       for (int i = 0; i < monsters.Length; i++)
+ //       {
+	//		monsterData[i].MonsterUpdate();
+ //       }
+	//}
 
     //각종 매니저 초기화
     public void ManagerInitialize(int newDungeonId, int newDungeonLevel)

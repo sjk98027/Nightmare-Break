@@ -131,7 +131,7 @@ public class Stage
     List<MonsterSpawnData> monsterSpawnData;
 
     public int StageNum { get { return stageNum; } }
-    public List<MonsterSpawnData> MonsterSpawnData { get { return MonsterSpawnData; } }
+    public List<MonsterSpawnData> MonsterSpawnData { get { return monsterSpawnData; } }
 
     public Stage()
     {
