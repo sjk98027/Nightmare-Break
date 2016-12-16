@@ -72,9 +72,9 @@ public class RoomUIManager : MonoBehaviour {
         skillAddUI = GameObject.Find("SkillAddUI");
         myInfoUI = GameObject.Find("MyInfoUI");
 
-        equipCloseBtn = equipInfoUI.transform.GetChild(6).GetComponent<Button>();
-        skillCloseBtn = skillAddUI.transform.GetChild(9).GetComponent<Button>();
-        myInfoCloseBtn = myInfoUI.transform.GetChild(5).GetComponent<Button>();
+        equipCloseBtn = equipInfoUI.transform.FindChild("ExitBtn").GetComponent<Button>();
+        skillCloseBtn = skillAddUI.transform.FindChild("ExitBtn").GetComponent<Button>();
+        myInfoCloseBtn = myInfoUI.transform.FindChild("ExitBtn").GetComponent<Button>();
 
         equipInfoUI.SetActive(false);
         skillAddUI.SetActive(false);
