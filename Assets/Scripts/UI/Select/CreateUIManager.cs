@@ -176,9 +176,10 @@ public class CreateUIManager : MonoBehaviour
 		for (int i = 0; i < maxClass * currentMaxClass; i++) {
 			if (i < maxClass) {
 				selectImage [i].SetActive (false);
+                classPrefeb[currentCharacter].transform.rotation = new Quaternion(0, 180, 0, 0);
             }
 
-			if (i < genderSelectImage.Length) {
+            if (i < genderSelectImage.Length) {
 				genderSelectImage [i].SetActive (false);
                 classSkill[i].SetActive(false);
             }
@@ -197,7 +198,6 @@ public class CreateUIManager : MonoBehaviour
                 rotateBtn[i].interactable = true;
             }
         }
-
         SetCharacterImage();
 
         characterAnim = classPrefeb[currentCharacter].GetComponent<Animator>();
@@ -231,10 +231,10 @@ public class CreateUIManager : MonoBehaviour
                 if (classPrefeb[(classIndex * maxGender) + genderIndex].activeSelf)
                 {
                     classPrefeb[(classIndex * maxGender) + genderIndex].SetActive(false);
+                    classPrefeb[(classIndex * maxGender) + genderIndex].transform.rotation = new Quaternion(0, 180, 0, 0);
                 }
             }
         }
-
         classPrefeb[currentCharacter].SetActive(true);
     }
 
