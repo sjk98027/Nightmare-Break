@@ -119,7 +119,7 @@ public class RoomUIManager : MonoBehaviour {
         {
             if (roomData.RoomUserData[i].UserLevel > 0)
             {
-                if(playerPrefeb == null)
+                if(playerPrefeb[i] == null)
                 {
                     GameObject character = Instantiate(Resources.Load<GameObject>("UI/Class" + (roomData.RoomUserData[i].UserClass + (roomData.RoomUserData[i].UserGender * CharacterCreateUI.minClass) + 1)), rendPos[i].transform) as GameObject;
                     playerPrefeb[i] = character;
