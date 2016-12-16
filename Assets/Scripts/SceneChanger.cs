@@ -146,7 +146,17 @@ public class SceneChanger : MonoBehaviour
         #region 대기 씬 로드
         else if (scene.name == "WaitScene")
         {
-            UIManager.Instance.WaitingUIManager.ManagerInitialize();
+            if(currentScene == SceneName.LoadingScene)
+            {
+                UIManager.Instance.WaitingUIManager.ManagerInitialize();
+                UIManager.Instance.WaitingUIManager.SetRoom();
+            }
+            else if(currentScene == SceneName.RoomScene)
+            {
+                UIManager.Instance.SetUIManager(UIManagerIndex.Waiting);
+                UIManager.Instance.WaitingUIManager.ManagerInitialize();
+                DataSender.Instance.RequestRoomList();
+            }
 
             currentScene = SceneName.WaitingScene;
         }
@@ -159,7 +169,7 @@ public class SceneChanger : MonoBehaviour
             UIManager.Instance.RoomUIManager.ManagerInitialize();
             DataSender.Instance.RequestRoomUserData(UIManager.Instance.WaitingUIManager.CurrentRoomNum);
 
-            currentScene = SceneName.WaitingScene;
+            currentScene = SceneName.RoomScene;
         }
         #endregion
 
@@ -173,7 +183,7 @@ public class SceneChanger : MonoBehaviour
             DungeonManager.Instance.InitializePlayer(NetworkManager.Instance.UserIndex.Count);
             DungeonManager.Instance.CreatePlayer(0);
 
-            currentScene = SceneName.WaitingScene;
+            currentScene = SceneName.InGameScene;
         }
         #endregion
         

@@ -11,6 +11,8 @@ public class RoomDataPacket : Packet<RoomData>
             ret &= Serialize((byte)Encoding.Unicode.GetBytes(data.RoomName).Length);
             ret &= Serialize(data.RoomName);
             ret &= Serialize(data.RoomNum);
+            ret &= Serialize((byte)Encoding.Unicode.GetBytes(data.DungeonName).Length);
+            ret &= Serialize(data.DungeonName);
             ret &= Serialize(data.DungeonId);
             ret &= Serialize(data.DungeonLevel);
 
@@ -38,6 +40,8 @@ public class RoomDataPacket : Packet<RoomData>
             byte roomNameLength = 0;
             string roomName;
             byte roomNum = 0;
+            byte dungeonNameLength = 0;
+            string dungeonName;
             byte dungeonId = 0;
             byte dungeonLevel = 0;
 
@@ -51,6 +55,8 @@ public class RoomDataPacket : Packet<RoomData>
             ret &= Deserialize(ref roomNameLength);
             ret &= Deserialize(out roomName, roomNameLength);
             ret &= Deserialize(ref roomNum);
+            ret &= Deserialize(ref dungeonNameLength);
+            ret &= Deserialize(out dungeonName, dungeonNameLength);
             ret &= Deserialize(ref dungeonId);
             ret &= Deserialize(ref dungeonLevel);
 
@@ -64,7 +70,7 @@ public class RoomDataPacket : Packet<RoomData>
                 roomUserData[i] = new RoomUserData(userName[i], userGender[i], userClass[i], userLevel[i]);
             }
 
-            element = new RoomData(roomName, roomNum, dungeonId, dungeonLevel, roomUserData);
+            element = new RoomData(roomName, roomNum, dungeonName, dungeonId, dungeonLevel, roomUserData);
 
             return ret;
         }
@@ -95,18 +101,25 @@ public class RoomData
 {
     string roomName;
     byte roomNum;
+    string dungeonName;
     byte dungeonId;
     byte dungeonLevel;
     RoomUserData[] roomUserData;
 
     public string RoomName { get { return roomName; } }
     public byte RoomNum { get { return roomNum; } }
+    public string DungeonName { get { return dungeonName; } }
     public byte DungeonId { get { return dungeonId; } }
     public byte DungeonLevel { get { return dungeonLevel; } }
     public RoomUserData[] RoomUserData { get { return roomUserData; } }
 
     public RoomData()
     {
+        roomName = "";
+        roomNum = 0;
+        dungeonName = "";
+        dungeonId = 0;
+        dungeonLevel = 0;
         roomUserData = new RoomUserData[WaitingUIManager.maxPlayerNum];
 
         for (int i = 0; i < WaitingUIManager.maxPlayerNum; i++)
@@ -115,17 +128,24 @@ public class RoomData
         }
     }
 
-    public RoomData(string newRoomName, byte newRoomNum, byte newDungeonId, byte newDungeonLevel, RoomUserData[] newRoomUserData)
+    public RoomData(string newRoomName, byte newRoomNum, string newDungeonName, byte newDungeonId, byte newDungeonLevel, RoomUserData[] newRoomUserData)
     {
         roomName = newRoomName;
         roomNum = newRoomNum;
+        dungeonName = newDungeonName;
         dungeonId = newDungeonId;
         dungeonLevel = newDungeonLevel;
         roomUserData = newRoomUserData;
     }
 
-    public RoomData(Room room)
+    public RoomData(Room room, int newRoomNum)
     {
+        roomName = room.RoomName;
+        roomNum = (byte)newRoomNum;
+        dungeonName = room.DungeonName;
+        dungeonId = (byte)room.DungeonId;
+        dungeonLevel = (byte)room.DungeonLevel;
+
         roomUserData = room.RoomUserData;
     }
 }

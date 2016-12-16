@@ -52,6 +52,7 @@ public class UIManager : MonoBehaviour
         if (selectUIManager != null) Destroy(selectUIManager);
         if (createUIManager != null) Destroy(createUIManager);
         if (waitingUIManager != null) Destroy(waitingUIManager);
+        if (roomUIManager != null) Destroy(roomUIManager);
         if (battleUIManager != null) Destroy(battleUIManager);
     }
 

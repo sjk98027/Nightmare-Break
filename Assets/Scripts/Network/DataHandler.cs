@@ -291,6 +291,10 @@ public class DataHandler : MonoBehaviour
         {
             SceneChanger.Instance.LoadingCheck[0] = true;
         }
+        else if(SceneChanger.Instance.CurrentScene == SceneChanger.SceneName.WaitingScene)
+        {
+            UIManager.Instance.WaitingUIManager.SetRoom();
+        }
     }
 
     //Server - 캐릭터 정보 수신
@@ -342,6 +346,7 @@ public class DataHandler : MonoBehaviour
         else if (roomNumberData.RoomNum <= WaitingUIManager.maxPlayerNum)
         {
             StartCoroutine(uiManager.Dialog(1.0f, "방 입장 성공"));
+
             SceneChanger.Instance.SceneChange(SceneChanger.SceneName.RoomScene, false);
         }
     }
@@ -352,6 +357,8 @@ public class DataHandler : MonoBehaviour
         Debug.Log("방 유저 정보 수신");
         RoomDataPacket roomDataPacket = new RoomDataPacket(packet.msg);
         RoomData roomData = roomDataPacket.GetData();
+
+        Debug.Log(roomData.DungeonName);
 
         for (int i = 0; i < WaitingUIManager.maxPlayerNum; i++)
         {
@@ -367,7 +374,20 @@ public class DataHandler : MonoBehaviour
     //Server - 방 퇴장 결과 수신
     public void ExitRoomNumber(DataPacket packet)
     {
+        Debug.Log("방 퇴장 결과 수신");
+        RoomNumberPacket roomNumberPacket = new RoomNumberPacket(packet.msg);
+        RoomNumberData roomNumberData = roomNumberPacket.GetData();
 
+        Debug.Log(roomNumberData.RoomNum);
+
+        if (roomNumberData.RoomNum == (int)Result.Fail)
+        {
+
+        }
+        else if (roomNumberData.RoomNum == (int)Result.Success)
+        {
+            SceneChanger.Instance.SceneChange(SceneChanger.SceneName.WaitingScene, false);
+        }
     }
 
     //Server - 게임 시작

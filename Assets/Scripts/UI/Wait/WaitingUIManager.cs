@@ -30,8 +30,6 @@ public class WaitingUIManager : MonoBehaviour
 	private GameObject myInfoUI;
 	private GameObject roomInfoUI;
 
-    Room[] rooms;
-
     private Text[] roomName;
     private Text[] roomDungeonLevel;
     private Text[] roomCurrentUser;
@@ -42,6 +40,7 @@ public class WaitingUIManager : MonoBehaviour
 	private Image[] roomInfoGenderIcon;
 	private Image[] skillAddIcon;
 
+    Room[] rooms;
 
     int currentRoomNum;
     int dungeonId;
@@ -63,9 +62,7 @@ public class WaitingUIManager : MonoBehaviour
         skillAddUI.SetActive(false);
         equipInfoUI.SetActive(false);
         myInfoUI.SetActive(false);
-		roomInfoUI.SetActive (false);
-
-        SetRoom();
+        roomInfoUI.SetActive(false);
     }
 
     public void SetUIObject()
@@ -79,17 +76,17 @@ public class WaitingUIManager : MonoBehaviour
 		roomInfoGenderIcon = new Image[maxPlayerNum];
 		skillAddIcon = new Image[CharacterStatus.skillNum];
 
+        roomCreateUI = GameObject.Find("RoomCreateUI");
+        skillAddUI = GameObject.Find("SkillAddUI");
+        equipInfoUI = GameObject.Find("EquipInfoUI");
+        myInfoUI = GameObject.Find("MyInfoUI");
+        roomInfoUI = GameObject.Find("RoomInfoUI");
         roomCreateBtn = GameObject.Find("RoomCreateBtn").GetComponent<Button>();
         roomEntereBtn = GameObject.Find("RoomEnterBtn").GetComponent<Button>();
         roomCreateYesBtn = GameObject.Find("RoomCreateYesBtn").GetComponent<Button>();
         skillAddBtn = GameObject.Find("SkillAddBtn").GetComponent<Button>();
         equipInfoBtn = GameObject.Find("EquipBtn").GetComponent<Button>();
         myInfoBtn = GameObject.Find("MyInfoBtn").GetComponent<Button>();
-        roomCreateUI = GameObject.Find("RoomCreateUI");
-        skillAddUI = GameObject.Find("SkillAddUI");
-        equipInfoUI = GameObject.Find("EquipInfoUI");
-        myInfoUI = GameObject.Find("MyInfoUI");
-		roomInfoUI = GameObject.Find ("RoomInfoUI");
 		createroomName = GameObject.Find("RoomCreateInputField").GetComponent<InputField>();
 
         equipWeaponIcon = equipInfoUI.transform.FindChild("Weapon").GetComponent<Image>();
@@ -227,8 +224,8 @@ public class WaitingUIManager : MonoBehaviour
             else
             {
                 roomName[i].text = "";
-                roomDungeonLevel[i].text = "0";
-                roomCurrentUser[i].text = "0/" + maxPlayerNum.ToString();
+                roomDungeonLevel[i].text = "";
+                roomCurrentUser[i].text = "";
             }
 		}
     }
@@ -263,12 +260,14 @@ public class WaitingUIManager : MonoBehaviour
 public class Room
 {
     string roomName;
+    string dungeonName;
     int dungeonId;
     int dungeonLevel;
 	int playerNum;
     RoomUserData[] roomUserData;
 
     public string RoomName { get { return roomName; } }
+    public string DungeonName { get { return dungeonName; } }
     public int DungeonId { get { return dungeonId; } }
     public int DungeonLevel { get { return dungeonLevel; } }
 	public int PlayerNum { get { return playerNum; } }
@@ -277,6 +276,7 @@ public class Room
     public Room()
     {
         roomName = "";
+        dungeonName = "";
         playerNum = 0;
         dungeonId = 0;
         dungeonLevel = 0;
@@ -288,9 +288,10 @@ public class Room
         }
     }
 
-    public Room(string newName, int newDungeonId, int newDungeonLevel)
+    public Room(string newRoomName, string newDungeonName, int newDungeonId, int newDungeonLevel)
     {
-        roomName = newName;
+        roomName = newRoomName;
+        dungeonName = newDungeonName;
         dungeonId = newDungeonId;
         dungeonLevel = newDungeonLevel;
         playerNum = 0;
@@ -302,9 +303,20 @@ public class Room
         }
     }
 
-    public Room(string newName, int newDungeonId, int newDungeonLevel, RoomUserData[] newRoomUserData, int newPlayerNum)
+    public Room(string newRoomName, int newDungeonId, int newDungeonLevel, RoomUserData[] newRoomUserData, int newPlayerNum)
     {
-        roomName = newName;
+        roomName = newRoomName;
+        dungeonName = "";
+        dungeonId = newDungeonId;
+        dungeonLevel = newDungeonLevel;
+        playerNum = newPlayerNum;
+        roomUserData = newRoomUserData;
+    }
+
+    public Room(string newRoomName, string newDungeonName, int newDungeonId, int newDungeonLevel, RoomUserData[] newRoomUserData, int newPlayerNum)
+    {
+        roomName = newRoomName;
+        dungeonName = newDungeonName;
         dungeonId = newDungeonId;
         dungeonLevel = newDungeonLevel;
         playerNum = newPlayerNum;

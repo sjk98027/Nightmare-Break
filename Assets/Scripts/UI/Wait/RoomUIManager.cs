@@ -102,14 +102,16 @@ public class RoomUIManager : MonoBehaviour {
         skillCloseBtn.onClick.AddListener(() => CloseSkillUI());
     }
 
-    public void SetRoom(RoomData newRoomUserList)
+    public void SetRoom(RoomData newRoomData)
     {
-        roomName.text = newRoomUserList.RoomName;
-        roomNum = newRoomUserList.RoomNum;
-        dungeonId = newRoomUserList.DungeonId;
-        dungeonLevel = newRoomUserList.DungeonLevel;
+        roomName.text = newRoomData.RoomName;
+        roomNum = newRoomData.RoomNum;
+        dungeonId = newRoomData.DungeonId;
+        dungeonLevel = newRoomData.DungeonLevel;
+        roomDungeon.text = newRoomData.DungeonName;
+        roomDungeonLevel.text = dungeonLevel.ToString();
 
-        roomData = newRoomUserList;
+        roomData = newRoomData;
 
         for (int i = 0; i < roomData.RoomUserData.Length; i++)
         {
@@ -141,7 +143,7 @@ public class RoomUIManager : MonoBehaviour {
 
     void RoomExit()
     {
-        SceneChanger.Instance.SceneChange(SceneChanger.SceneName.WaitingScene, false);
+        DataSender.Instance.ExitRoom(roomNum);
     }
 
     void OpenEquipUI()
