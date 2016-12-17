@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 using System.Net;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.SceneManagement;
+
 
 public enum UnitId
 {
@@ -20,20 +22,8 @@ public enum UnitId
 //this class manage monsterStageLevel, sumon, player sumon, player death;
 public class DungeonManager : MonoBehaviour
 {
-    private static DungeonManager instance = null;
-    public static DungeonManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = GameObject.FindWithTag("DungeonManager").GetComponent<DungeonManager>();
-            }
-
-            return instance;
-        }
-    }
-
+	
+	Scene scenmanager;
     GameObject[] playerSpawnPoints;
     GameObject[] monsterSpawnPoints;
     GameObject[] players;
@@ -41,8 +31,8 @@ public class DungeonManager : MonoBehaviour
     CharacterManager[] characterData;
 	Monster[] monsterData;
 
-    DungeonData dungeonData;
-    MonsterStatusData monsterStatusData;
+    MonsterSpawnList monsterSpawnList;
+    MonsterStatusData dungeonData;
 
     public SceneChangeObject[] sceneChangeObject;
 	public BossMonsterKYW bossMonster;
@@ -53,17 +43,14 @@ public class DungeonManager : MonoBehaviour
     NetworkManager networkManager;
     GameObject m_camera;
 
-    int mapNumber;
-    int dungeonId;
-    int dungeonLevel;
+	[SerializeField]int mapNumber;
 
     bool normalMode; //false  -> normalBattle, true -> Defence; 
+	SceneManager scene;
 
     public GameObject[] Players { get { return players; } }
     public CharacterManager[] CharacterData { get { return characterData; } }
 
-    public int DungeonId { get { return dungeonId; } }
-    public int DungeonLevel { get { return dungeonLevel; } }
     public bool NormalMode
     {
 		get { return normalMode; }
@@ -72,6 +59,7 @@ public class DungeonManager : MonoBehaviour
 
 	void Start()
 	{
+		//SceneManager = this.scene;
         //test
         if (GameObject.FindGameObjectWithTag("GameManager") == null)
         {
@@ -79,8 +67,16 @@ public class DungeonManager : MonoBehaviour
         }		
 
 		//Instantiate 스폰포인트 생성조건 - > mapNumber != 2;
-		mapNumber = 2;
-		normalMode = false;
+
+//		if (scenmanager.name == ("ProtoTypeCoPy3")) {
+			mapNumber = 3;
+//		}
+		if(mapNumber ==2){
+			normalMode = false;
+		}
+		if (mapNumber != 2) {
+			normalMode = true;
+		}
 
 		DungeonConstruct();
 
@@ -88,46 +84,108 @@ public class DungeonManager : MonoBehaviour
         {
             InitializeMonsterSpawnPoint();
 
-            dungeonData = new DungeonData();
+//			if(mapNumber==3){
+				MonsterSpawnData[] monsterSpawnData = new MonsterSpawnData[4];
+				monsterSpawnData[0] = new MonsterSpawnData((int)MonsterId.Frog, 3);
+				monsterSpawnData[1] = new MonsterSpawnData((int)MonsterId.Duck, 4);
+				monsterSpawnData[2] = new MonsterSpawnData((int)MonsterId.Rabbit, 1);
+				monsterSpawnData[3] = new MonsterSpawnData((int)MonsterId.BlackBear, 1);
+				monsterSpawnList = new MonsterSpawnList(4, monsterSpawnData);
 
-            Stage stage1 = new Stage(1);
+				MonsterBaseData[] monsterBaseData = new MonsterBaseData[4];
+				monsterBaseData[0] = new MonsterBaseData((int)MonsterId.Frog, "Frog");
+				monsterBaseData[0].AddLevelData(new MonsterLevelData(1, 2, 0, 30, 5));
+				monsterBaseData[1] = new MonsterBaseData((int)MonsterId.Duck, "Duck");
+				monsterBaseData[1].AddLevelData(new MonsterLevelData(1, 3, 0, 35, 4));
+				monsterBaseData[2] = new MonsterBaseData((int)MonsterId.Rabbit, "Rabbit");
+				monsterBaseData[2].AddLevelData(new MonsterLevelData(1, 5, 0, 1000, 4));
+				monsterBaseData[3] = new MonsterBaseData((int)MonsterId.BlackBear, "BlackBear");
+				monsterBaseData[3].AddLevelData(new MonsterLevelData(1, 5, 0, 1000, 1));
+				dungeonData = new MonsterStatusData(4, monsterBaseData);
+//			}
 
-            stage1.MonsterSpawnData.Add(new MonsterSpawnData((int)MonsterId.Frog, 1, 3));
-            stage1.MonsterSpawnData.Add(new MonsterSpawnData((int)MonsterId.Duck, 1, 3));
-            stage1.MonsterSpawnData.Add(new MonsterSpawnData((int)MonsterId.Rabbit, 1, 3));
+//			if (mapNumber == 1) {
+//				MonsterSpawnData[] monsterSpawnData = new MonsterSpawnData[3];
+//				monsterSpawnData[0] = new MonsterSpawnData((int)MonsterId.Frog, 3);
+//				monsterSpawnData[1] = new MonsterSpawnData((int)MonsterId.Duck, 3);
+//				monsterSpawnData[2] = new MonsterSpawnData((int)MonsterId.Rabbit, 2);
+//				monsterSpawnList = new MonsterSpawnList(3, monsterSpawnData);
+//
+//				MonsterBaseData[] monsterBaseData = new MonsterBaseData[3];
+//				monsterBaseData[0] = new MonsterBaseData((int)MonsterId.Frog, "Frog");
+//				monsterBaseData[0].AddLevelData(new MonsterLevelData(1, 2, 0, 30, 5));
+//				monsterBaseData[1] = new MonsterBaseData((int)MonsterId.Duck, "Duck");
+//				monsterBaseData[1].AddLevelData(new MonsterLevelData(1, 3, 0, 35, 4));
+//				monsterBaseData[2] = new MonsterBaseData((int)MonsterId.Rabbit, "Rabbit");
+//				monsterBaseData[2].AddLevelData(new MonsterLevelData(1, 5, 0, 100, 4));
+//
+//				dungeonData = new MonsterStatusData(3, monsterBaseData);
+//			}
 
-            dungeonData.Stages.Add(stage1);
+//            MonsterSpawnData[] monsterSpawnData = new MonsterSpawnData[4];
+//            monsterSpawnData[0] = new MonsterSpawnData((int)MonsterId.Frog, 3);
+//            monsterSpawnData[1] = new MonsterSpawnData((int)MonsterId.Duck, 4);
+//            monsterSpawnData[2] = new MonsterSpawnData((int)MonsterId.Rabbit, 1);
+//			monsterSpawnData[3] = new MonsterSpawnData((int)MonsterId.BlackBear, 1);
+//            monsterSpawnList = new MonsterSpawnList(4, monsterSpawnData);
+//
+//            MonsterBaseData[] monsterBaseData = new MonsterBaseData[4];
+//            monsterBaseData[0] = new MonsterBaseData((int)MonsterId.Frog, "Frog");
+//            monsterBaseData[0].AddLevelData(new MonsterLevelData(1, 2, 0, 30, 5));
+//            monsterBaseData[1] = new MonsterBaseData((int)MonsterId.Duck, "Duck");
+//            monsterBaseData[1].AddLevelData(new MonsterLevelData(1, 3, 0, 35, 4));
+//            monsterBaseData[2] = new MonsterBaseData((int)MonsterId.Rabbit, "Rabbit");
+//            monsterBaseData[2].AddLevelData(new MonsterLevelData(1, 5, 0, 100, 4));
+//			monsterBaseData[3] = new MonsterBaseData((int)MonsterId.BlackBear, "BlackBear");
+//			monsterBaseData[3].AddLevelData(new MonsterLevelData(1, 5, 0, 1000, 4));
+//            dungeonData = new MonsterStatusData(4, monsterBaseData);
 
-            MonsterBaseData[] monsterBaseData = new MonsterBaseData[3];
-            monsterBaseData[0] = new MonsterBaseData((int)MonsterId.Frog, "Frog");
-            monsterBaseData[0].AddLevelData(new MonsterLevelData(1, 2, 0, 30, 5));
-            monsterBaseData[1] = new MonsterBaseData((int)MonsterId.Duck, "Duck");
-            monsterBaseData[1].AddLevelData(new MonsterLevelData(1, 3, 0, 35, 4));
-            monsterBaseData[2] = new MonsterBaseData((int)MonsterId.Rabbit, "Rabbit");
-            monsterBaseData[2].AddLevelData(new MonsterLevelData(1, 5, 0, 75, 4));
+            SetMonsterSpawnList(monsterSpawnList);
+            SpawnMonster();
+            SetMonsterStatus();
+        }        
+//		if (GameObject.FindGameObjectWithTag("GameManager") == null)
+//		{
+//			//스폰 포인트 찾기
+//			InitializeMonsterSpawnPoint();
+//
+//			//서버에서 온 데이터 : monsterSpawnData
+//			//여기서는 직접 데이터를 설정
+//			MonsterSpawnData[] monsterSpawnData = new MonsterSpawnData[1];
+//			monsterSpawnData[0] = new MonsterSpawnData((int)MonsterId.Bear, 1);
+//			//monsterSpawnData[1] = new MonsterSpawnData((int)MonsterId.BlackBear, 1);
+//
+//			//던전 데이터에서 몬스터 스폰 리스트를 monsterSpawnData로 설정
+//			//그러면 몬스터 생성 숫자가 설정됨(종류, 개수)
+//			monsterSpawnList = new MonsterSpawnList(1, monsterSpawnData);
+//
+//			//서버에서 온 데이터 : monsterBaseData
+//			MonsterBaseData[] monsterBaseData = new MonsterBaseData[1];
+//			monsterBaseData[0] = new MonsterBaseData((int)MonsterId.Bear, "Bear");
+//			monsterBaseData[0].AddLevelData(new MonsterLevelData(1, 2, 0, 30,1));
+//
+//			//던전 데이터에서 몬스터 스탯테이블을 monsterBaseData로 설정
+//			//그러면 위의 몬스터 생성할때 스탯이 이렇게 설정됨
+//			dungeonData = new MonsterStatusData(1, monsterBaseData);
+//
+//			SpawnMonster();
+//			SetMonsterStatus();
+//		}
+	}
 
-            MonsterStatusData monsterStatusData = new MonsterStatusData(3, monsterBaseData);
-            SetMonsterData(monsterStatusData);
-
-            SpawnMonster(1);
-            SetMonsterStatus(1);
+	void Update()
+	{
+        for (int i = 0; i < monsters.Length; i++)
+        {
+			monsterData[i].MonsterUpdate();
         }
 	}
 
-	//void Update()
-	//{
- //       for (int i = 0; i < monsters.Length; i++)
- //       {
-	//		monsterData[i].MonsterUpdate();
- //       }
-	//}
-
     //각종 매니저 초기화
-    public void ManagerInitialize(int newDungeonId, int newDungeonLevel)
+    public void Initialize(int userNum)
     {
+        Debug.Log("DungeonManager 초기화 - " + userNum);
         networkManager = GameObject.FindWithTag("NetworkManager").GetComponent<NetworkManager>();
-        dungeonId = newDungeonId;
-        dungeonLevel = newDungeonLevel;
     }
 
     public void InitializePlayer(int playerNum)
@@ -192,32 +250,54 @@ public class DungeonManager : MonoBehaviour
 
     }
 
-    public void SetMonsterSpawnList(DungeonData newDungeonData)
+    public void SetMonsterSpawnList(MonsterSpawnList newMonsterSpawnList)
+    {
+        monsterSpawnList = newMonsterSpawnList;
+        monsters = new GameObject[monsterSpawnList.MonsterNum];
+        monsterData = new Monster[monsterSpawnList.MonsterNum];
+
+        for(int monsterIndex = 0; monsterIndex <monsterSpawnList.MonsterNum; monsterIndex++)
+        {
+            monsterData[monsterIndex] = new Monster();
+        }
+    }
+
+    public void SpawnMonster()
+    {
+        int monsterIndex = 0;
+
+        for (int i = 0; i < monsterSpawnList.MonsterKind; i++)
+        {
+            for (int j = 0; j < monsterSpawnList.MonsterSpawnData[i].MonsterNum; j++)
+            {
+                monsters[monsterIndex] = CreateMonster(monsterSpawnList.MonsterSpawnData[i].MonsterId, monsterIndex, monsterSpawnPoints[monsterIndex].transform.position);
+                monsterIndex++;
+            }
+        }
+	}
+
+    public void SetMonsterData(MonsterStatusData newDungeonData)
     {
         dungeonData = newDungeonData;
     }
 
-    public void SpawnMonster(int stageIndex)
+    public void SetMonsterStatus()
     {
-        Stage stageData = dungeonData.GetStageData(stageIndex);
-
-        monsters = new GameObject[stageData.GetMonsterNum()];
-        monsterData = new Monster[stageData.GetMonsterNum()];
-
-        int spawnCount = stageData.MonsterSpawnData.Count;
-        int monsterIndex = 0;
-
-        //몬스터 종류별로
-        for (int spawnIndex = 0; spawnIndex < spawnCount; spawnIndex++)
+        for (int monsterIndex = 0; monsterIndex < monsterData.Length; monsterIndex++)
         {
-            int maxSpawnNum = stageData.MonsterSpawnData[spawnIndex].MonsterNum;
+            monsterData[monsterIndex].player = players;
 
-            //생성 횟수 만큼 생성
-            for (int spawnNum = 0; spawnNum < maxSpawnNum; spawnNum++)
+            for (int dataIndex = 0; dataIndex < dungeonData.MonsterNum; dataIndex++)
             {
-                monsters[monsterIndex] = CreateMonster(stageData.MonsterSpawnData[spawnIndex].MonsterId, monsterIndex, monsterSpawnPoints[monsterIndex].transform.position);
-                monsterIndex++;
-            }            
+                if ((int) monsterData[monsterIndex].MonsterId == dungeonData.MonsterData[dataIndex].Id)
+                {
+					Debug.Log (monsterData[monsterIndex].MonsterId);
+                    monsterData[monsterIndex].MonsterSet(dungeonData.MonsterData[dataIndex]);
+                    break;
+                }
+			}
+
+			monsterData[monsterIndex].MonsterAIStart(normalMode);
         }
     }
 
@@ -227,30 +307,21 @@ public class DungeonManager : MonoBehaviour
         {
             GameObject monster = null;
 
-            if (unitId == (int)MonsterId.Frog)
-            {
-                monster = (GameObject)Instantiate(Resources.Load("Monster/Frog"), createPoint, gameObject.transform.rotation);
-            }
-            else if (unitId == (int)MonsterId.Duck)
-            {
-                monster = (GameObject)Instantiate(Resources.Load("Monster/Duck"), createPoint, gameObject.transform.rotation);
-            }
-            else if (unitId == (int)MonsterId.Rabbit)
-            {
-                monster = (GameObject)Instantiate(Resources.Load("Monster/Rabbit"), createPoint, gameObject.transform.rotation);
-            }
-            else if (unitId == (int)MonsterId.BlackBear)
-            {
-                monster = (GameObject)Instantiate(Resources.Load("Monster/BlackBear"), createPoint, gameObject.transform.rotation);
-            }
+			if (unitId == (int)MonsterId.Frog) {
+				monster = (GameObject)Instantiate (Resources.Load ("Monster/Frog"), createPoint, gameObject.transform.rotation);
+			} else if (unitId == (int)MonsterId.Duck) {
+				monster = (GameObject)Instantiate (Resources.Load ("Monster/Duck"), createPoint, gameObject.transform.rotation);
+			} else if (unitId == (int)MonsterId.Rabbit) {
+				monster = (GameObject)Instantiate (Resources.Load ("Monster/Rabbit"), createPoint, gameObject.transform.rotation);
+			} else if (unitId == (int)MonsterId.BlackBear) {
+				//if (scenmanager.name == "ProtoTypeCopy3") {
+					monster = (GameObject)Instantiate (Resources.Load ("Monster/BlackBear"), createPoint, gameObject.transform.rotation);
+          
+				//}
+			}
             else if (unitId == (int)MonsterId.Bear)
             {
                 monster = (GameObject)Instantiate(Resources.Load("Monster/Bear"), createPoint, gameObject.transform.rotation);
-            }
-
-            if (monster == null)
-            {
-                return null;
             }
 
             monster.transform.SetParent(transform);
@@ -261,34 +332,6 @@ public class DungeonManager : MonoBehaviour
             return monster;
         }
         else { return null; }
-    }
-
-    public void SetMonsterData(MonsterStatusData newMonsterStatusData)
-    {
-        monsterStatusData = newMonsterStatusData;
-    }
-
-    public void SetMonsterStatus(int stageIndex)
-    {
-        Stage stageData = dungeonData.GetStageData(stageIndex);
-
-
-        int spawnCount = stageData.MonsterSpawnData.Count;
-        int monsterIndex = 0;
-
-        //몬스터 종류별로
-        for (int spawnIndex = 0; spawnIndex < spawnCount; spawnIndex++)
-        {
-            int maxSpawnNum = stageData.MonsterSpawnData[spawnIndex].MonsterNum;
-
-            //생성 횟수 만큼 설정
-            for (int spawnNum = 0; spawnNum < maxSpawnNum; spawnNum++)
-            {
-                Debug.Log(monsterIndex);
-                monsterData[monsterIndex].MonsterSet(monsterStatusData.MonsterData[spawnIndex]);
-                monsterIndex++;
-            }
-        }
     }
 
     public IEnumerator CheckMapClear()
