@@ -88,12 +88,12 @@ public class DungeonManager : MonoBehaviour
         {
             InitializeMonsterSpawnPoint();
 
-            DungeonData dungeonData = new DungeonData();
+            dungeonData = new DungeonData();
 
             Stage stage1 = new Stage(1);
 
-            stage1.MonsterSpawnData.Add(new MonsterSpawnData((int)MonsterId.Frog, 1, 4));
-            stage1.MonsterSpawnData.Add(new MonsterSpawnData((int)MonsterId.Duck, 1, 4));
+            stage1.MonsterSpawnData.Add(new MonsterSpawnData((int)MonsterId.Frog, 1, 3));
+            stage1.MonsterSpawnData.Add(new MonsterSpawnData((int)MonsterId.Duck, 1, 3));
             stage1.MonsterSpawnData.Add(new MonsterSpawnData((int)MonsterId.Rabbit, 1, 3));
 
             dungeonData.Stages.Add(stage1);
@@ -196,47 +196,25 @@ public class DungeonManager : MonoBehaviour
 
     public void SpawnMonster(int stageIndex)
     {
-        monsters = new GameObject[dungeonData.Stages[stageIndex].GetMonsterNum()];
-        monsterData = new Monster[dungeonData.Stages[stageIndex].GetMonsterNum()];
+        Stage stageData = dungeonData.GetStageData(stageIndex);
 
-        int spawnCount = dungeonData.Stages[stageIndex].MonsterSpawnData.Count;
+        monsters = new GameObject[stageData.GetMonsterNum()];
+        monsterData = new Monster[stageData.GetMonsterNum()];
+
+        int spawnCount = stageData.MonsterSpawnData.Count;
         int monsterIndex = 0;
 
         //몬스터 종류별로
         for (int spawnIndex = 0; spawnIndex < spawnCount; spawnIndex++)
         {
-            int maxSpawnNum = dungeonData.Stages[stageIndex].MonsterSpawnData[spawnIndex].MonsterNum;
+            int maxSpawnNum = stageData.MonsterSpawnData[spawnIndex].MonsterNum;
 
             //생성 횟수 만큼 생성
             for (int spawnNum = 0; spawnNum < maxSpawnNum; spawnNum++)
             {
-                monsters[monsterIndex] = CreateMonster(dungeonData.Stages[stageIndex].MonsterSpawnData[spawnIndex].MonsterId, monsterIndex, monsterSpawnPoints[monsterIndex].transform.position);
+                monsters[monsterIndex] = CreateMonster(stageData.MonsterSpawnData[spawnIndex].MonsterId, monsterIndex, monsterSpawnPoints[monsterIndex].transform.position);
                 monsterIndex++;
             }            
-        }
-    }
-
-    public void SetMonsterData(MonsterStatusData newMonsterStatusData)
-    {
-        monsterStatusData = newMonsterStatusData;
-    }
-
-    public void SetMonsterStatus(int stageIndex)
-    {
-        int spawnCount = dungeonData.Stages[stageIndex].MonsterSpawnData.Count;
-        int monsterIndex = 0;
-
-        //몬스터 종류별로
-        for (int spawnIndex = 0; spawnIndex < spawnCount; spawnIndex++)
-        {
-            int maxSpawnNum = dungeonData.Stages[stageIndex].MonsterSpawnData[spawnIndex].MonsterNum;
-
-            //생성 횟수 만큼 생성
-            for (int spawnNum = 0; spawnNum < maxSpawnNum; spawnNum++)
-            {
-                monsterData[monsterIndex].MonsterSet(monsterStatusData.MonsterData[monsterIndex]);
-                monsterIndex++;
-            }
         }
     }
 
@@ -267,6 +245,11 @@ public class DungeonManager : MonoBehaviour
                 monster = (GameObject)Instantiate(Resources.Load("Monster/Bear"), createPoint, gameObject.transform.rotation);
             }
 
+            if (monster == null)
+            {
+                return null;
+            }
+
             monster.transform.SetParent(transform);
             monsterData[unitIndex] = monster.GetComponent<Monster>();
             monsterData[unitIndex].MonsterId = (MonsterId)unitId;
@@ -275,6 +258,34 @@ public class DungeonManager : MonoBehaviour
             return monster;
         }
         else { return null; }
+    }
+
+    public void SetMonsterData(MonsterStatusData newMonsterStatusData)
+    {
+        monsterStatusData = newMonsterStatusData;
+    }
+
+    public void SetMonsterStatus(int stageIndex)
+    {
+        Stage stageData = dungeonData.GetStageData(stageIndex);
+
+
+        int spawnCount = stageData.MonsterSpawnData.Count;
+        int monsterIndex = 0;
+
+        //몬스터 종류별로
+        for (int spawnIndex = 0; spawnIndex < spawnCount; spawnIndex++)
+        {
+            int maxSpawnNum = stageData.MonsterSpawnData[spawnIndex].MonsterNum;
+
+            //생성 횟수 만큼 생성
+            for (int spawnNum = 0; spawnNum < maxSpawnNum; spawnNum++)
+            {
+                Debug.Log(monsterIndex);
+                monsterData[monsterIndex].MonsterSet(monsterStatusData.MonsterData[monsterIndex]);
+                monsterIndex++;
+            }
+        }
     }
 
     public IEnumerator CheckMapClear()

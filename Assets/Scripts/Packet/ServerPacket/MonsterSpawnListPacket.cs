@@ -113,6 +113,18 @@ public class DungeonData
         stages = new List<Stage>();
     }
 
+    public Stage GetStageData(int stageNum)
+    {
+        for (int i = 0; i < stages.Count; i++)
+        {
+            if(stages[i].StageNum == stageNum)
+            {
+                return stages[i];
+            }
+        }
+
+        return null;
+    }
     public int GetMonsterNum()
     {
         int count = 0;
