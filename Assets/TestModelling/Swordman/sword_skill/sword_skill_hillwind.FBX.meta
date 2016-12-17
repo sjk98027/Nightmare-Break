@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: d60db325213a2d940aead5e1f6d63635
-timeCreated: 1481781092
+guid: 3328bf5280f818344b5e212138611cee
+timeCreated: 1481889318
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -141,7 +141,7 @@ ModelImporter:
     4300014: pants
     4300016: face
     4300018: sword
-    7400000: WarriorMealStromNew
+    7400000: WarriorMealStromFinish
     9500000: //RootNode
     13700000: b_hair
     13700002: cloth
@@ -174,10 +174,10 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: WarriorMealStromNew
+      name: WarriorMealStromFinish
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 70
+      lastFrame: 100
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -205,15 +205,15 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.121733695
-        functionName: AttackEffect
+      - time: 0
+        functionName: WindEffect
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 49494eaf77bde6e4a96a0fded9f18500,
           type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.96874374
+      - time: 0.92036057
         functionName: AnimationEnd
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 49494eaf77bde6e4a96a0fded9f18500,

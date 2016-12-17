@@ -60,7 +60,7 @@ public class Armageddon : MonoBehaviour
 		Destroy (armageddonImpact, 0.4f);
 		Destroy (armageddonExplosion, 0.4f);
 		Destroy (meteorExplosion, 0.4f);
-		Destroy (meteorCenter, 1f);
+		Destroy (meteorCenter, 2f);
 		armageddonBox.enabled = false;
 	//	FireBallRigid.velocity = (-this.transform.up)*3f;
 

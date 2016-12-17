@@ -440,7 +440,4 @@ public class Frog : Monster {
 			yield return new WaitForSeconds (0.2f);
 		}
 	}
-
-
-
 }
