@@ -105,7 +105,10 @@ public class DungeonManager : MonoBehaviour
             monsterBaseData[1].AddLevelData(new MonsterLevelData(1, 3, 0, 35, 4));
             monsterBaseData[2] = new MonsterBaseData((int)MonsterId.Rabbit, "Rabbit");
             monsterBaseData[2].AddLevelData(new MonsterLevelData(1, 5, 0, 75, 4));
-            
+
+            MonsterStatusData monsterStatusData = new MonsterStatusData(3, monsterBaseData);
+            SetMonsterData(monsterStatusData);
+
             SpawnMonster(1);
             SetMonsterStatus(1);
         }
@@ -278,11 +281,11 @@ public class DungeonManager : MonoBehaviour
         {
             int maxSpawnNum = stageData.MonsterSpawnData[spawnIndex].MonsterNum;
 
-            //생성 횟수 만큼 생성
+            //생성 횟수 만큼 설정
             for (int spawnNum = 0; spawnNum < maxSpawnNum; spawnNum++)
             {
                 Debug.Log(monsterIndex);
-                monsterData[monsterIndex].MonsterSet(monsterStatusData.MonsterData[monsterIndex]);
+                monsterData[monsterIndex].MonsterSet(monsterStatusData.MonsterData[spawnIndex]);
                 monsterIndex++;
             }
         }

@@ -176,6 +176,10 @@ public class CharacterManager : MonoBehaviour
 	//char state Method
 	public void Move (float ver, float hor)
 	{
+        if (!animator)
+        {
+            animator = GetComponent<Animator>();
+        }
 		if (state == CharacterState.Idle || state == CharacterState.Run)
 		{
 			runState = this.animator.GetCurrentAnimatorStateInfo (0);
