@@ -279,18 +279,21 @@ public class DataHandler : MonoBehaviour
         RoomListPacket roomListPacket = new RoomListPacket(packet.msg);
         RoomListData roomListData = roomListPacket.GetData();
 
-        for (int i = 0; i < WaitingUIManager.maxRoomNum; i++)
+        uiManager.WaitingUIManager.SetRoomListData(roomListData);
+
+        for (int i =0; i< WaitingUIManager.maxRoomNum; i++)
         {
             Debug.Log(roomListData.Rooms[i].RoomName);
-            Debug.Log(roomListData.Rooms[i].DungeonId);
-            Debug.Log(roomListData.Rooms[i].DungeonLevel);
+            Debug.Log(roomListData.Rooms[i].PlayerNum);
         }
-
-        uiManager.WaitingUIManager.SetRoom(roomListData);
 
         if (SceneChanger.Instance.CurrentScene == SceneChanger.SceneName.LoadingScene)
         {
             SceneChanger.Instance.LoadingCheck[0] = true;
+        }
+        else if(SceneChanger.Instance.CurrentScene == SceneChanger.SceneName.WaitingScene)
+        {
+            UIManager.Instance.WaitingUIManager.SetRoom();
         }
     }
 
@@ -343,7 +346,7 @@ public class DataHandler : MonoBehaviour
         else if (roomNumberData.RoomNum <= WaitingUIManager.maxPlayerNum)
         {
             StartCoroutine(uiManager.Dialog(1.0f, "방 입장 성공"));
-            UIManager.Instance.WaitingUIManager.EnterRoom(roomNumberData.RoomNum);
+
             SceneChanger.Instance.SceneChange(SceneChanger.SceneName.RoomScene, false);
         }
     }
@@ -355,6 +358,8 @@ public class DataHandler : MonoBehaviour
         RoomDataPacket roomDataPacket = new RoomDataPacket(packet.msg);
         RoomData roomData = roomDataPacket.GetData();
 
+        Debug.Log(roomData.DungeonName);
+
         for (int i = 0; i < WaitingUIManager.maxPlayerNum; i++)
         {
             Debug.Log(roomData.RoomUserData[i].UserName);
@@ -363,13 +368,26 @@ public class DataHandler : MonoBehaviour
             Debug.Log(roomData.RoomUserData[i].UserLevel);
         }
 
-        UIManager.Instance.RoomUIManager.SetUserList(roomData);
+        UIManager.Instance.RoomUIManager.SetRoom(roomData);
     }
 
     //Server - 방 퇴장 결과 수신
     public void ExitRoomNumber(DataPacket packet)
     {
+        Debug.Log("방 퇴장 결과 수신");
+        RoomNumberPacket roomNumberPacket = new RoomNumberPacket(packet.msg);
+        RoomNumberData roomNumberData = roomNumberPacket.GetData();
 
+        Debug.Log(roomNumberData.RoomNum);
+
+        if (roomNumberData.RoomNum == (int)Result.Fail)
+        {
+
+        }
+        else if (roomNumberData.RoomNum == (int)Result.Success)
+        {
+            SceneChanger.Instance.SceneChange(SceneChanger.SceneName.WaitingScene, false);
+        }
     }
 
     //Server - 게임 시작
@@ -383,12 +401,7 @@ public class DataHandler : MonoBehaviour
         if (resultData.Result == (byte)Result.Success)
         {
             Debug.Log("게임 시작");
-            DataSender.Instance.RequestUdpConnection();
-
-            if (uiManager.RoomUIManager.UserNum == 0)
-            {
-                DataSender.Instance.RequestDungeonData();
-            }
+            SceneChanger.Instance.SceneChange(SceneChanger.SceneName.InGameScene, true);
         }
         else if (resultData.Result == (byte)Result.Fail)
         {
@@ -402,9 +415,14 @@ public class DataHandler : MonoBehaviour
         Debug.Log("던전 몬스터 소환 데이터 수신");
 
         MonsterSpawnListPacket monsterSpawnListPacket = new MonsterSpawnListPacket(packet.msg);
-        MonsterSpawnList monsterSpawnList = monsterSpawnListPacket.GetData();
+        DungeonData monsterSpawnData = monsterSpawnListPacket.GetData();
 
-        dungeonManager.SetMonsterSpawnList(monsterSpawnList);
+        DungeonManager.Instance.SetMonsterSpawnList(monsterSpawnData);
+
+        if (SceneChanger.Instance.CurrentScene == SceneChanger.SceneName.LoadingScene)
+        {
+            SceneChanger.Instance.LoadingCheck[0] = true;
+        }
     }
 
     //Server - 던전 데이터 수신
@@ -415,7 +433,12 @@ public class DataHandler : MonoBehaviour
         MonsterStatusPacket dungeonDataPacket = new MonsterStatusPacket(packet.msg);
         MonsterStatusData dungeonData = dungeonDataPacket.GetData();
 
-        dungeonManager.SetMonsterData(dungeonData);
+        DungeonManager.Instance.SetMonsterData(dungeonData);
+
+        if (SceneChanger.Instance.CurrentScene == SceneChanger.SceneName.LoadingScene)
+        {
+            SceneChanger.Instance.LoadingCheck[1] = true;
+        }
     }
 
     //Server - 연결 시작
@@ -456,6 +479,11 @@ public class DataHandler : MonoBehaviour
                 networkManager.ConnectP2P(newEndPoint);
             }
         }
+
+        if (SceneChanger.Instance.CurrentScene == SceneChanger.SceneName.LoadingScene)
+        {
+            SceneChanger.Instance.LoadingCheck[2] = true;
+        }
     }
 
     //Client - 연결 확인 답장
@@ -480,15 +508,13 @@ public class DataHandler : MonoBehaviour
     {
         Debug.Log("던전 시작");
 
-        gameManager.SetManagerInDungeon();
-        networkManager.ReSendManager.characterCreating = true;
-
-        dungeonManager = GameObject.FindGameObjectWithTag("DungeonManager").GetComponent<DungeonManager>();
-        dungeonManager.InitializePlayer(networkManager.UserIndex.Count);
-        dungeonManager.CreatePlayer(0);
-
         dTime = DateTime.Now;
         Debug.Log("시간 지정 : " + dTime.ToString("hh:mm:ss"));
+
+        if (SceneChanger.Instance.CurrentScene == SceneChanger.SceneName.LoadingScene)
+        {
+            SceneChanger.Instance.LoadingCheck[3] = true;
+        }
     }
 
     //Client - 유닛 생성

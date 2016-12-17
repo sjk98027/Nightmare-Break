@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
             return myIP;
         }
     }
-    
+
     private static GameManager instance = null;
     public static GameManager Instance
     {
@@ -86,11 +86,12 @@ public class GameManager : MonoBehaviour
         characterStatus = (Instantiate(Resources.Load("Manager/CharacterStatus")) as GameObject).GetComponent<CharacterStatus>();
         characterStatus.name = "CharacterStatus";
         characterStatus.tag = "CharStatus";
+        DontDestroyOnLoad(characterStatus);
 
         networkManager.DataHandler.SetCharacterStatus();
     }
 
-    public void SetManagerInDungeon()
+    public void SetManagerInGame()
     {
         dungeonManager = (Instantiate(Resources.Load("Manager/DungeonManager")) as GameObject).GetComponent<DungeonManager>();
         dungeonManager.name = "DungeonManager";
@@ -99,9 +100,6 @@ public class GameManager : MonoBehaviour
         inputManager = (Instantiate(Resources.Load("Manager/InputManager")) as GameObject).GetComponent<InputManager>();
         inputManager.name = "InputManager";
         inputManager.tag = "InputManager";
-
-        dungeonManager.Initialize(networkManager.UserIndex.Count);
-        //uiManager.SetBattleUIManager();
     }
 
     public void OnApplicationQuit()

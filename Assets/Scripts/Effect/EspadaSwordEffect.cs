@@ -11,6 +11,7 @@ public class EspadaSwordEffect : MonoBehaviour
 	public CharacterManager charManager;
 	float giganticSwordAliveTime;
 	public GameObject character;
+	public GameObject swordEffect;
 	public int swordDamage;
 	public AudioSource swordSound;
 	public AudioClip swordSummonSound;
@@ -31,50 +32,22 @@ public class EspadaSwordEffect : MonoBehaviour
 		giganticSwordRigd = GetComponent<Rigidbody> ();
 		swordSpeed = 40;
 		giganticSwordRigd.velocity = (transform.forward* swordSpeed);
-
+		swordDamage = 10000;
         charStatus = charManager.CharStatus;
 		giganticSword = this.gameObject;
 		swordSound.volume = 0.1f;
 		rend = GetComponent<Renderer> ();
-		StartCoroutine(EffectMove());
 		swordSound.PlayOneShot (swordSummonSound);
+		Destroy (this.gameObject, 3.0f);
 	}
-	void Update()
-	{
-       // charStatus.SkillLevel [5] = 3;
-//		swordDamage = charStatus.SkillLevel [5] * charStatus.Attack;
-		if (!count)
-		{
-			giganticSwordAliveTime += Time.deltaTime;
-
-			float SwordAlpha = 1 - giganticSwordAliveTime ;
-
-			rend.material.color = new Color (0, 0, 0, (SwordAlpha) );
-
-			if(SwordAlpha <0.5)
-			{
-				SwordAlpha = 0;
-				Destroy (this.gameObject, 1.3f);
-			}
-		}	
-	}
-
-    IEnumerator EffectMove()
-    {
-        while (myParticle.isPlaying)
-        {
-            myParticle.gameObject.transform.Translate(0, 0, 4 * Time.deltaTime, Space.Self);
-
-            yield return null;
-        }
-    }
-
     void OnCollisionEnter(Collision coll)
     {
 		
         if (coll.gameObject.layer == LayerMask.NameToLayer("Map"))
         {
-            Instantiate(Resources.Load<GameObject>("Effect/Explosion"), transform.position, Quaternion.identity);
+			swordEffect =Instantiate(Resources.Load<GameObject>("Effect/SwordExplosion"), transform.position,new Quaternion(90,-90,0,0))as GameObject;
+
+			Destroy (swordEffect, 2.5f);
 			count = false;
 			swordSound.PlayOneShot (swordFinishSound);
 			Debug.Log ("in Field");
@@ -91,6 +64,7 @@ public class EspadaSwordEffect : MonoBehaviour
 			if (monsterDamage != null)
 			{	
 				Debug.Log (character);
+
 				monsterDamage.HitDamage (swordDamage,character );
 				swordDamage = 0;
 

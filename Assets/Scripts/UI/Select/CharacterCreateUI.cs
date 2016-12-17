@@ -4,9 +4,9 @@ using UnityEngine.UI;
 
 public class CharacterCreateUI : MonoBehaviour {
 
-	private const int maxClass = 4;
+	public const int maxClass = 4;
     private const int rotateValue = 30;
-    private const int minClass = 2;
+    public const int minClass = 2;
     private const int maxRotateBtn = 2;
 	private string nickName; 
 	private int currentPickClass;

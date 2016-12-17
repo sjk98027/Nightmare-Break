@@ -118,5 +118,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2bd29d40648a049ab11c9d333d6046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meteorEffect: {fileID: 1000011405449954, guid: 1d56201a8714b4e479c5e33c215ffb6c,
+  meteorEffect: {fileID: 1000013154771396, guid: 359f86b57b97e634bbce115c79bd5ff6,
     type: 2}

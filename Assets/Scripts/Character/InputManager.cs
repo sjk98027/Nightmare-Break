@@ -35,12 +35,6 @@ public class InputManager : MonoBehaviour
             {
                 characterManager.NormalAttack();
             }
-
-            if (Input.GetKeyDown(KeyCode.C))
-            {
-                characterManager.Jump();
-            }
-
             if (Input.GetButtonDown("Skill1"))
             {
                 characterManager.Skill1();

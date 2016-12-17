@@ -94,7 +94,7 @@ public class Monster : MonoBehaviour {
 	[SerializeField]protected float searchRange;
 	StatePosition statePosition;
     bool direction;
-    protected bool isAlive;
+	public  bool isAlive;
 	protected bool isAttack;
 	protected bool isHited;
 
@@ -275,8 +275,10 @@ public class Monster : MonoBehaviour {
 		NearWallCheck ();
 	}
 
-	IEnumerator MonsterMoveAI(bool _normalMode){
-		while (IsAlive) {
+	IEnumerator MonsterMoveAI(bool _normalMode)
+	{
+		while (IsAlive)
+		{
 			//if (monsterId == UnitId.Frog || monsterId == UnitId.Rabbit || monsterId == UnitId.Duck) {
 			if (_normalMode) {
 				if (targetPlayer != null) {
@@ -387,14 +389,15 @@ public class Monster : MonoBehaviour {
 									}
 								}
 							}
-
 						}
 						yield return new WaitForSeconds (2f);
 					} else
 						yield return new WaitForSeconds (3f);
-				} else if (!IsAlive) {
-
-					yield return false;
+				} 
+				else if (!IsAlive)
+				{
+					StopAllCoroutines();
+					//yield return false;
 				}
 				yield return new WaitForSeconds (0.2f);
 			}
@@ -423,14 +426,16 @@ public class Monster : MonoBehaviour {
 					}
 					yield return new WaitForSeconds (2f);
 				} 
-				else if (isAlive) {
+				else {
+					
 					break;
 				}
 			}
 		}
+
 	}
 
-	public IEnumerator MonsterActAI(bool _normal){
+	IEnumerator MonsterActAI(bool _normal){
 		while (_normal) {
 			if (isAlive) {
 				if (targetPlayer != null) {	
@@ -590,7 +595,7 @@ public class Monster : MonoBehaviour {
 		}
 	}
 
-	public IEnumerator BossActAI(){
+	IEnumerator BossActAI(){
 		while (true) {
 			if (isAlive) {
 				if (!bossSkill) {
@@ -656,7 +661,7 @@ public class Monster : MonoBehaviour {
 	}
 
 
-	public IEnumerator BossSkillAI()
+	IEnumerator BossSkillAI()
 	{
 		aniState = this.animator.GetCurrentAnimatorStateInfo (0);
 
@@ -699,7 +704,7 @@ public class Monster : MonoBehaviour {
 			animator.SetBool ("BossSkill", false);
 		}
 	}
-	public IEnumerator SetTargetPlayer()
+	IEnumerator SetTargetPlayer()
 	{
 		while (IsAlive)
 		{
@@ -821,7 +826,7 @@ public class Monster : MonoBehaviour {
 
     
 	public void NearWallCheck(){
-		if(wall[0] !=null){
+		/*if(wall[0] !=null){
 			for (int i = 0; i < wall.Length; i++) {
 				currentDisTanceWall [i] = Vector3.Distance (wall [i].transform.position, transform.position);
 			}
@@ -830,7 +835,7 @@ public class Monster : MonoBehaviour {
 					nearWall = wall [j];
 				}
 			}
-		}
+		}*/
 	}
 
 
@@ -980,7 +985,7 @@ public class Monster : MonoBehaviour {
 		//GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<RedRenderImage> ().enabled = true;
 	}
 
-	public IEnumerator Shooting()
+	IEnumerator Shooting()
 	{
 		int shootNum = 0;
 
@@ -1011,21 +1016,24 @@ public class Monster : MonoBehaviour {
 
 	public void HitDamage(int _Damage, GameObject _weapon)
 	{
-		IsHited = true;
+		
+//		
 		currentHP -= _Damage;
 
-		if (currentHP > 0) {
-			for (int i = 0; i < player.Length; i++) {
-				if (player [i] == _weapon) {
+		if (currentHP > 0)
+		{
+			for (int i = 0; i < player.Length; i++)
+			{
+				if (player [i] == _weapon)
+				{
 					playerToMonsterDamage [i] += _Damage;
 				}
 			}
 			statePosition = StatePosition.TakeDamage;
 			Pattern (statePosition);
 		}
-
-			
-		if (currentHP <= 0) {
+		else
+		{
 			currentHP = 0;
 			IsAlive = false;
 			HittedBox.enabled = false;

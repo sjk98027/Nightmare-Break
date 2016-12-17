@@ -357,30 +357,29 @@ public class DataSender : MonoBehaviour
     }
 
     //던전 몬스터 소환 데이터 요청 -> Server
-    public void RequestMonsterSpawnList()
+    public void RequestMonsterSpawnList(int dungeonId, int dungeonLevel)
     {
         Debug.Log("몬스터 소환 데이터 요청");
 
-        byte result = (byte)UIManager.Instance.RoomUIManager.DungeonId;
-        ResultData resultData = new ResultData();
-        ResultPacket resultPacket = new ResultPacket(resultData);
-        resultPacket.SetPacketId((int)ClientPacketId.RequestMonsterSpawnList);
+        RequestDungeonData requestDungeonData = new RequestDungeonData((byte)dungeonId, (byte)dungeonLevel);
+        RequestDungeonDataPacket requestDungeonDataPacket = new RequestDungeonDataPacket(requestDungeonData);
+        requestDungeonDataPacket.SetPacketId((int)ClientPacketId.RequestMonsterSpawnList);
 
-        DataPacket packet = new DataPacket(CreatePacket(resultPacket), null);
+        DataPacket packet = new DataPacket(CreatePacket(requestDungeonDataPacket), null);
 
         sendMsgs.Enqueue(packet);
     }
 
     //던전 데이터 요청 -> Server
-    public void RequestDungeonData()
+    public void RequestMonsterStatusData(int dungeonId, int dungeonLevel)
     {
         Debug.Log("던전 데이터 요청");
 
-        ResultData resultData = new ResultData();
-        ResultPacket resultPacket = new ResultPacket(resultData);
-        resultPacket.SetPacketId((int)ClientPacketId.RequestDungeonData);
+        RequestDungeonData requestDungeonData = new RequestDungeonData((byte)dungeonId, (byte)dungeonLevel);
+        RequestDungeonDataPacket requestDungeonDataPacket = new RequestDungeonDataPacket(requestDungeonData);
+        requestDungeonDataPacket.SetPacketId((int)ClientPacketId.RequestMonsterStatusData);
 
-        DataPacket packet = new DataPacket(CreatePacket(resultPacket), null);
+        DataPacket packet = new DataPacket(CreatePacket(requestDungeonDataPacket), null);
 
         sendMsgs.Enqueue(packet);
     }

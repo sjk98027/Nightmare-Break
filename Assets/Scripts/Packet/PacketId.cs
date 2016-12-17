@@ -21,7 +21,7 @@
     StartGame,
     RequestUdpConnection,
     RequestMonsterSpawnList,
-    RequestDungeonData,
+    RequestMonsterStatusData,
     UdpConnectComplete,
 }
 

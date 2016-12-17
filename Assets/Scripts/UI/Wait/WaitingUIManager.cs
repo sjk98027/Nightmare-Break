@@ -11,6 +11,7 @@ public class WaitingUIManager : MonoBehaviour
     [SerializeField]private int selectNum;
 
     private Button roomCreateBtn;
+    private Button roomEntereBtn;
     private Button skillAddBtn;
     private Button equipInfoBtn;
     private Button myInfoBtn;
@@ -29,8 +30,6 @@ public class WaitingUIManager : MonoBehaviour
 	private GameObject myInfoUI;
 	private GameObject roomInfoUI;
 
-    Room[] rooms;
-
     private Text[] roomName;
     private Text[] roomDungeonLevel;
     private Text[] roomCurrentUser;
@@ -41,6 +40,7 @@ public class WaitingUIManager : MonoBehaviour
 	private Image[] roomInfoGenderIcon;
 	private Image[] skillAddIcon;
 
+    Room[] rooms;
 
     int currentRoomNum;
     int dungeonId;
@@ -62,7 +62,7 @@ public class WaitingUIManager : MonoBehaviour
         skillAddUI.SetActive(false);
         equipInfoUI.SetActive(false);
         myInfoUI.SetActive(false);
-		roomInfoUI.SetActive (false);
+        roomInfoUI.SetActive(false);
     }
 
     public void SetUIObject()
@@ -74,36 +74,38 @@ public class WaitingUIManager : MonoBehaviour
 		roomInfoUserName = new Text[maxPlayerNum];
 		roomInfoClassIcon = new Image[maxPlayerNum];
 		roomInfoGenderIcon = new Image[maxPlayerNum];
-		skillAddIcon = new Image[CharacterStatus.Instace.MaxSkillNum];
+		skillAddIcon = new Image[CharacterStatus.skillNum];
 
-        roomCreateBtn = GameObject.Find("RoomCreateBtn").GetComponent<Button>();
-        roomCreateYesBtn = GameObject.Find("RoomCreateYesBtn").GetComponent<Button>();
-        skillAddBtn = GameObject.Find("SkillAddBtn").GetComponent<Button>();
-        equipInfoBtn = GameObject.Find("EquipBtn").GetComponent<Button>();
-        myInfoBtn = GameObject.Find("MyInfoBtn").GetComponent<Button>();
         roomCreateUI = GameObject.Find("RoomCreateUI");
         skillAddUI = GameObject.Find("SkillAddUI");
         equipInfoUI = GameObject.Find("EquipInfoUI");
         myInfoUI = GameObject.Find("MyInfoUI");
-		roomInfoUI = GameObject.Find ("RoomInfoUI");
+        roomInfoUI = GameObject.Find("RoomInfoUI");
+        roomCreateBtn = GameObject.Find("RoomCreateBtn").GetComponent<Button>();
+        roomEntereBtn = GameObject.Find("RoomEnterBtn").GetComponent<Button>();
+        roomCreateYesBtn = GameObject.Find("RoomCreateYesBtn").GetComponent<Button>();
+        skillAddBtn = GameObject.Find("SkillAddBtn").GetComponent<Button>();
+        equipInfoBtn = GameObject.Find("EquipBtn").GetComponent<Button>();
+        myInfoBtn = GameObject.Find("MyInfoBtn").GetComponent<Button>();
 		createroomName = GameObject.Find("RoomCreateInputField").GetComponent<InputField>();
 
-		equipWeaponIcon = equipInfoUI.transform.GetChild (3).GetComponent<Image> ();
-        roomCreateExitBtn = roomCreateUI.transform.GetChild(5).GetComponent<Button>();
-        skillAddExitBtn = skillAddUI.transform.GetChild(3).GetComponent<Button>();
-        equipInfoExitBtn = equipInfoUI.transform.GetChild(2).GetComponent<Button>();
-        myInfoExitBtn = myInfoUI.transform.GetChild(1).GetComponent<Button>();
+        equipWeaponIcon = equipInfoUI.transform.FindChild("Weapon").GetComponent<Image>();
+        roomCreateExitBtn = roomCreateUI.transform.FindChild("ExitBtn").GetComponent<Button>();
+        skillAddExitBtn = skillAddUI.transform.FindChild("ExitBtn").GetComponent<Button>();
+        equipInfoExitBtn = equipInfoUI.transform.FindChild("ExitBtn").GetComponent<Button>();
+        myInfoExitBtn = myInfoUI.transform.FindChild("ExitBtn").GetComponent<Button>();
 
 		for (int i = 0; i < skillAddIcon.Length; i++) {
 			skillAddIcon [i] = skillAddUI.transform.GetChild (i).GetComponent<Image> ();
-			skillAddIcon [i].sprite = Resources.Load<Sprite> ("UI/SkillIcon/" + CharacterStatus.Instace.HClass.ToString ()+"/Skill"+(i+1));
+			skillAddIcon [i].sprite = Resources.Load<Sprite> ("UI/SkillIcon/" + CharacterStatus.Instance.HClass.ToString ()+"/Skill"+(i+1)) as Sprite;
 		}
 		for (int i = 0; i < maxRoomNum; i++) {
 			roomBtn [i] = GameObject.Find ("Room" + (i + 1)).GetComponent<Button> ();
 			roomName [i] = roomBtn [i].transform.GetChild (1).GetComponent<Text> ();
 			roomDungeonLevel [i] = roomBtn [i].transform.GetChild (2).GetComponent<Text> ();
 			roomCurrentUser [i] = roomBtn [i].transform.GetChild (3).GetComponent<Text> ();
-			if (i < maxRoomNum) {
+
+			if (i < maxPlayerNum) {
 				roomInfoClassIcon [i] = roomInfoUI.transform.GetChild (i).GetComponent<Image> ();
 				roomInfoUserName [i] = roomInfoClassIcon [i].transform.GetChild (0).GetComponent<Text> ();
 				roomInfoGenderIcon [i] = roomInfoClassIcon [i].transform.GetChild (1).GetComponent<Image> ();
@@ -114,6 +116,7 @@ public class WaitingUIManager : MonoBehaviour
     public void InitializeAddListner()
     {
         roomCreateBtn.onClick.AddListener(() => RoomCreate());
+        roomEntereBtn.onClick.AddListener(() => OnClickEnterRoomButton());
         roomCreateYesBtn.onClick.AddListener(() => OnClickCreateRoomButton()); 
         skillAddBtn.onClick.AddListener(() => SkillAdd());
         equipInfoBtn.onClick.AddListener(() => EquipInfo());
@@ -191,24 +194,39 @@ public class WaitingUIManager : MonoBehaviour
 		UIActiveCheck ();
 		//룸 리퀘스트 호출
 		roomInfoUI.SetActive (true);
-		for (int i = 0; i < maxPlayerNum; i++) {
-			roomInfoClassIcon [i].sprite = Resources.Load<Sprite>("RoomClassIcon/Class" + (rooms [roomNum].RoomUserData [i].UserClass + 1));
-			roomInfoUserName [i].text = rooms [roomNum].RoomUserData [i].UserName;
-			roomInfoGenderIcon[i].sprite = Resources.Load<Sprite>("RoomClassIcon/Gender" + rooms [roomNum].RoomUserData [i].UserGender);
-		}
-	}
+        for (int i = 0; i < maxPlayerNum; i++)
+        {
+            if (rooms[i].PlayerNum > 0)
+            {
+                roomInfoClassIcon[i].sprite = Resources.Load<Sprite>("RoomClassIcon/Class" + (rooms[roomNum].RoomUserData[i].UserClass + 1));
+                roomInfoUserName[i].text = rooms[roomNum].RoomUserData[i].UserName;
+                roomInfoGenderIcon[i].sprite = Resources.Load<Sprite>("RoomClassIcon/Gender" + rooms[roomNum].RoomUserData[i].UserGender);
+            }
+        }
 
-    public void SetRoom(RoomListData roomListData)
+        currentRoomNum = roomNum;
+    }
+
+    public void SetRoomListData(RoomListData roomListData)
     {
         rooms = roomListData.Rooms;
+    }
 
-		for (int i = 0; i < maxPlayerNum; i++) {
-			if(rooms[i].PlayerNum != 0)
+    public void SetRoom()
+    {
+		for (int i = 0; i < maxRoomNum; i++) {
+            if (rooms[i].PlayerNum != 0)
 			{
 				roomName [i].text = rooms [i].RoomName;
 				roomDungeonLevel [i].text = rooms [i].DungeonLevel.ToString();
 				roomCurrentUser [i].text = (rooms [i].PlayerNum.ToString () + "/" + maxPlayerNum.ToString ());
 			}
+            else
+            {
+                roomName[i].text = "";
+                roomDungeonLevel[i].text = "";
+                roomCurrentUser[i].text = "";
+            }
 		}
     }
 
@@ -216,11 +234,6 @@ public class WaitingUIManager : MonoBehaviour
     {
         Debug.Log("방 생성 성공");
         DataSender.Instance.EnterRoom(roomNum);
-    }
-
-    public void EnterRoom(int roomNum)
-    {
-        currentRoomNum = roomNum;
     }
 
     public void OnClickCreateRoomButton()
@@ -241,20 +254,20 @@ public class WaitingUIManager : MonoBehaviour
     public void OnClickStartGameButton()
     {
         DataSender.Instance.StartGame();
-        DataSender.Instance.RequestMonsterSpawnList();
-        DataSender.Instance.RequestDungeonData();
     }
 }
 
 public class Room
 {
     string roomName;
+    string dungeonName;
     int dungeonId;
     int dungeonLevel;
 	int playerNum;
     RoomUserData[] roomUserData;
 
     public string RoomName { get { return roomName; } }
+    public string DungeonName { get { return dungeonName; } }
     public int DungeonId { get { return dungeonId; } }
     public int DungeonLevel { get { return dungeonLevel; } }
 	public int PlayerNum { get { return playerNum; } }
@@ -263,10 +276,11 @@ public class Room
     public Room()
     {
         roomName = "";
+        dungeonName = "";
+        playerNum = 0;
         dungeonId = 0;
         dungeonLevel = 0;
         roomUserData = new RoomUserData[WaitingUIManager.maxPlayerNum];
-        playerNum = 0;
 
         for (int i = 0; i < WaitingUIManager.maxPlayerNum; i++)
         {
@@ -274,12 +288,13 @@ public class Room
         }
     }
 
-	public Room(string newName, int newDungeonId, int newDungeonLevel, int newPlayerNum)
+    public Room(string newRoomName, string newDungeonName, int newDungeonId, int newDungeonLevel)
     {
-        roomName = newName;
+        roomName = newRoomName;
+        dungeonName = newDungeonName;
         dungeonId = newDungeonId;
         dungeonLevel = newDungeonLevel;
-        playerNum = newPlayerNum;
+        playerNum = 0;
         roomUserData = new RoomUserData[WaitingUIManager.maxPlayerNum];
 
         for (int i = 0; i < WaitingUIManager.maxPlayerNum; i++)
@@ -288,11 +303,23 @@ public class Room
         }
     }
 
-    public Room(string newName, byte newDungeonId, byte newDungeonLevel, RoomUserData[] newRoomUserData)
+    public Room(string newRoomName, int newDungeonId, int newDungeonLevel, RoomUserData[] newRoomUserData, int newPlayerNum)
     {
-        roomName = newName;
+        roomName = newRoomName;
+        dungeonName = "";
         dungeonId = newDungeonId;
         dungeonLevel = newDungeonLevel;
+        playerNum = newPlayerNum;
+        roomUserData = newRoomUserData;
+    }
+
+    public Room(string newRoomName, string newDungeonName, int newDungeonId, int newDungeonLevel, RoomUserData[] newRoomUserData, int newPlayerNum)
+    {
+        roomName = newRoomName;
+        dungeonName = newDungeonName;
+        dungeonId = newDungeonId;
+        dungeonLevel = newDungeonLevel;
+        playerNum = newPlayerNum;
         roomUserData = newRoomUserData;
     }
 }

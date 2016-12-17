@@ -7,8 +7,6 @@ public class BearRoar : MonoBehaviour
 	public int damage;
 	public Rigidbody sphereRigid;
 	public BoxCollider roarBox;
-
-	// Use this for initialization
 	public GameObject player;
 
 	// Use this for initialization

@@ -12,10 +12,6 @@ public class RoomUIManager : MonoBehaviour {
     private Button myInfoBtn;
     private Button gameStartBtn;
     private Button roomExitBtn;
-    private Button nextTypeBtn;
-    private Button previousTypeBtn;
-    private Button nextLevelBtn;
-    private Button previousLevelBtn;
 
     private Button equipCloseBtn;
     private Button skillCloseBtn;
@@ -30,6 +26,7 @@ public class RoomUIManager : MonoBehaviour {
     private GameObject skillAddUI;
     private GameObject myInfoUI;
     private GameObject[] rendPos;
+    private GameObject[] playerPrefeb;
 
     private RoomData roomData;
 
@@ -55,6 +52,7 @@ public class RoomUIManager : MonoBehaviour {
     public void SetUIObject()
     {
         rendPos = new GameObject[maxUser];
+        playerPrefeb = new GameObject[maxUser];
 
         userName = new Text[maxUser];
         classIcon = new Image[maxUser];
@@ -72,18 +70,13 @@ public class RoomUIManager : MonoBehaviour {
         gameStartBtn = GameObject.Find("GameStartBtn").GetComponent<Button>();
         roomExitBtn = GameObject.Find("RoomExitBtn").GetComponent<Button>();
 
-        nextTypeBtn = GameObject.Find("NextTypeBtn").GetComponent<Button>();
-        previousLevelBtn = GameObject.Find("PreviousTypeBtn").GetComponent<Button>();
-        nextLevelBtn = GameObject.Find("NextLevelBtn").GetComponent<Button>();
-        previousLevelBtn = GameObject.Find("PreviousLevelBtn").GetComponent<Button>();
-
         equipInfoUI = GameObject.Find("EquipInfoUI");
         skillAddUI = GameObject.Find("SkillAddUI");
         myInfoUI = GameObject.Find("MyInfoUI");
 
-        equipCloseBtn = equipInfoUI.transform.GetChild(6).GetComponent<Button>();
-        skillCloseBtn = skillAddUI.transform.GetChild(9).GetComponent<Button>();
-        myInfoCloseBtn = myInfoUI.transform.GetChild(5).GetComponent<Button>();
+        equipCloseBtn = equipInfoUI.transform.FindChild("ExitBtn").GetComponent<Button>();
+        skillCloseBtn = skillAddUI.transform.FindChild("ExitBtn").GetComponent<Button>();
+        myInfoCloseBtn = myInfoUI.transform.FindChild("ExitBtn").GetComponent<Button>();
 
         equipInfoUI.SetActive(false);
         skillAddUI.SetActive(false);
@@ -91,7 +84,7 @@ public class RoomUIManager : MonoBehaviour {
 
         for (int i = 0; i < maxUser; i++)
         {
-            rendPos[i] = GameObject.Find("RendPos1" + (i + 1));
+            rendPos[i] = GameObject.Find("RendPos" + (i + 1));
             userName[i] = GameObject.Find("UserName" + (i + 1)).GetComponent<Text>();
             classIcon[i] = GameObject.Find("ClassIcon" + (i + 1)).GetComponent<Image>();
             characterBackImage[i] = GameObject.Find("CharacterBackImage" + (i + 1)).GetComponent<Image>();
@@ -111,20 +104,39 @@ public class RoomUIManager : MonoBehaviour {
         skillCloseBtn.onClick.AddListener(() => CloseSkillUI());
     }
 
-    public void SetUserList(RoomData newRoomUserList)
+    public void SetRoom(RoomData newRoomData)
     {
-        roomData = newRoomUserList;
-    }
+        roomName.text = newRoomData.RoomName;
+        roomNum = newRoomData.RoomNum;
+        dungeonId = newRoomData.DungeonId;
+        dungeonLevel = newRoomData.DungeonLevel;
+        roomDungeon.text = newRoomData.DungeonName;
+        roomDungeonLevel.text = dungeonLevel.ToString();
 
-    public void SetUserData()
-    {
-        for(int i=0; i<roomData.RoomUserData.Length; i++)
+        roomData = newRoomData;
+
+        for (int i = 0; i < roomData.RoomUserData.Length; i++)
         {
-            if(roomData.RoomUserData[i].UserLevel != 0)
+            if (roomData.RoomUserData[i].UserLevel > 0)
             {
-                GameObject character = Instantiate(Resources.Load<GameObject>("Class" + (roomData.RoomUserData[i].UserClass + roomData.RoomUserData[i].UserGender)), rendPos[i].transform) as GameObject ;
-                userName[i].text = "Lv." + roomData.RoomUserData[i].UserLevel.ToString() + " " + roomData.RoomUserData[i].UserName;
-                classIcon[i].sprite = Resources.Load<Sprite>("RoomClassIcon/Class" + roomData.RoomUserData[i].UserClass);
+                if(playerPrefeb[i] == null)
+                {
+                    GameObject character = Instantiate(Resources.Load<GameObject>("UI/Class" + (roomData.RoomUserData[i].UserClass + (roomData.RoomUserData[i].UserGender * CharacterCreateUI.minClass) + 1)), rendPos[i].transform) as GameObject;
+                    playerPrefeb[i] = character;
+                    character.transform.localPosition = Vector3.zero;
+                    character.transform.localRotation = new Quaternion(0, 180, 0, 0);
+                    userName[i].text = "Lv." + roomData.RoomUserData[i].UserLevel.ToString() + " " + roomData.RoomUserData[i].UserName;
+                    classIcon[i].sprite = Resources.Load<Sprite>("UI/RoomClassIcon/Class" + roomData.RoomUserData[i].UserClass);
+                }                
+            }
+            else
+            {
+                if(playerPrefeb != null)
+                {
+                    Destroy(playerPrefeb[i]);
+                }                
+                userName[i].text = "";
+                classIcon[i].color = new Color(0,0,0,0);
             }
         }
     }
@@ -136,12 +148,12 @@ public class RoomUIManager : MonoBehaviour {
 
     void GameStart()
     {
-        SceneChanger.Instance.SceneChange(SceneChanger.SceneName.InGameScene, true);
+        DataSender.Instance.StartGame();
     }
 
     void RoomExit()
     {
-        SceneChanger.Instance.SceneChange(SceneChanger.SceneName.WaitingScene, false);
+        DataSender.Instance.ExitRoom(roomNum);
     }
 
     void OpenEquipUI()
